@@ -35,8 +35,12 @@ class qCal_iCal_Parser
             list($param, $val) = explode(":", $line);
             switch (strtolower($param))
             {
+                case 'begin':
+                    // need to generate a component object based on value of $val
+                    break;
                 case 'version':
-                    $this->_cal->setVersion($val);
+                    // need to set version on qCal Component
+                    $this->_cal->setProperty('version', $val);
                     break;
             }
         }
