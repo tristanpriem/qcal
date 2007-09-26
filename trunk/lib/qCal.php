@@ -1,5 +1,6 @@
 <?php
 require_once 'qCal/rfc2445.php';
+require_once 'qCal/Component/Abstract.php';
 
 class qCal extends qCal_Component_Abstract
 {
@@ -16,13 +17,9 @@ class qCal extends qCal_Component_Abstract
      */
     protected $_log = array();
     
-    protected $_name = 'VCALENDAR';
-    protected $_allowedProperties = array (
-        
-    );
-    protected $_allowedComponents = array (
-        
-    );
+    protected $_name = 'vcalendar';
+    protected $_allowedProperties = array ();
+    protected $_allowedComponents = array ();
     
     /**
      * Class constructor - instantiates object
@@ -31,13 +28,15 @@ class qCal extends qCal_Component_Abstract
      */
     public function __construct()
     {
-        $this->_prodid = '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN';
+        $this->_allowedProperties = qCal_rfc2445::getAllowedParams($this->_name);
+        $this->_allowedComponents = qCal_rfc2445::getAllowedComponents($this->_name);
+        $this->setParam('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
     }
     /**
      *
      * @var $param version number or range
      */
-    public function setParameter($param, $value)
+    public function setParam($param, $value)
     {
         if (!qCal_rfc2445::isValidVersion($version))
         {
