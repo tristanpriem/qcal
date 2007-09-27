@@ -20,7 +20,8 @@ class qCal extends qCal_Component_Abstract
     const LINE_FOLD_LENGTH  = 75;
     const PROPERTY_OPTIONAL = 1; // binary 0001
     const PROPERTY_ONCE     = 2; // binary 0010
-    const PROPERTY_REQUIRED = 3; // binary 0100
+    const PROPERTY_REQUIRED = 3; // binary 0011
+    
     /**
      * Contains the name of this component
      *
@@ -36,7 +37,7 @@ class qCal extends qCal_Component_Abstract
         // need to allow x-name properties also
     );
     protected $_allowedComponents = array (
-    );
+    ); 
     
     /**
      * Class constructor - instantiates object
@@ -56,5 +57,23 @@ class qCal extends qCal_Component_Abstract
     public static function isValidVersion($version)
     {
         return true;
+    }
+    
+    public function setProperty($key, $val)
+    {
+        if ((array_key_exists(strtoupper($key), $this->_allowedProperties)) // METHOD
+        {
+            if($key ! only_allowed_once)
+            {
+                // create an array if it doesn't exist inside the properties property
+                if (!is_array($this->_properties[$key]) $this->_properties[$key] = array();
+                // now add to the properties ($key) array
+                $this->_properties[$key][] = $val;
+            }
+            else
+            {
+                // overwrite value in $this->_properties[$key]
+            }
+        }
     }
 }
