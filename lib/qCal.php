@@ -59,21 +59,4 @@ class qCal extends qCal_Component_Abstract
         return true;
     }
     
-    public function setProperty($key, $val)
-    {
-        if ((array_key_exists(strtoupper($key), $this->_allowedProperties)) // METHOD
-        {
-            if($key ! only_allowed_once)
-            {
-                // create an array if it doesn't exist inside the properties property
-                if (!is_array($this->_properties[$key]) $this->_properties[$key] = array();
-                // now add to the properties ($key) array
-                $this->_properties[$key][] = $val;
-            }
-            else
-            {
-                // overwrite value in $this->_properties[$key]
-            }
-        }
-    }
 }
