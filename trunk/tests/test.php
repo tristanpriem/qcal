@@ -1,4 +1,12 @@
 <?php
+
+/************************************************
+ * How many of the following functions are we
+ * planning to implement? Do we really need
+ * an qCal_Import_DatabaseCustom() for inititial
+ * testing?
+ * **********************************************/
+
 // create icalendar object
 $cal = new qCal();
 
