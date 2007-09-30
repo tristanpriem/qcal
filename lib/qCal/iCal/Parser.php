@@ -1,7 +1,7 @@
 <?php
 
 /**
- * qCal iCalendar library
+ * qCal iCalendar library - icalendar parser
  * Please read the LICENSE file
  * @author Luke Visinoni <luke@mc2design.com>
  * @author Josh Davies <josh@mc2design.com>

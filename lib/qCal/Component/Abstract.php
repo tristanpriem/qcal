@@ -9,6 +9,8 @@
  * @license GNU Lesser General Public License
  */
 
+require_once 'qCal/Component/Exception.php';
+
 abstract class qCal_Component_Abstract
 {
 	protected $_name = null;
@@ -21,27 +23,23 @@ abstract class qCal_Component_Abstract
 	 * is in $this->_allowedProperties
 	 * 
 	 * @var $param version number or range
-	 */
-	public function setProperty($key, $value)
+     * @throws qCal_Component_Exception
+     */
+	public function addProperty($key, $value)
 	{
-		if ((array_key_exists(strtoupper($key), $this->_allowedProperties)) // METHOD
-		{
-			if($key ! only_allowed_once)
-			{
-				// create an array if it doesn't exist inside the properties property
-				if (!is_array($this->_properties[$key]) $this->_properties[$key] = array();
-				// now add to the properties ($key) array
-				$this->_properties[$key][] = $val;
-			}
-			else
-			{
-				// overwrite value in $this->_properties[$key]
-			}
-		}
+        if (!$this->isValidProperty($key, $value))
+        {
+            throw new qCal_Component_Exception('"' . $key . '" is not an allowed property for a ' . $this->_name);
+        }
 	}
     
-    public function addProperty()
+    protected function isValidProperty($key, $value)
     {
+        $key = strtoupper($key);
+		if (!array_key_exists($key, $this->_allowedProperties)
+		{
+            return false;
+		}
     }
 }	
 
