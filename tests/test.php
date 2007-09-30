@@ -5,10 +5,14 @@
  * planning to implement? Do we really need
  * an qCal_Import_DatabaseCustom() for inititial
  * testing?
+ *
+ * No we don't. That was just to show the
+ * library's ability to use custom-written import
+ * classes. It is just pseudo-code. - luke
  * **********************************************/
 
 // create icalendar object
-$cal = new qCal();
+$cal = new qCal(); // qCal extends qCal_Component
 
 // create import of external calendar and import it into our calendar
 $import = new qCal_Import_file($cal); // implements the qCal_Import_Interface
@@ -21,28 +25,28 @@ $anotherimport->import();
 
 // create a renderer to render our calendar to html hCal format
 $renderer = new qCal_Renderer_hCal($cal); // implements qCal_Renderer_Interface or qCal_Renderer_Abstract
-$renderer->render('../html/calendar_display.html');
+$hcal $renderer->render('../html/calendar_display.html');
 
 // create a renderer to render our calendar to rss
 $renderer = new qCal_Renderer_rss($cal); // implements qCal_Renderer_Interface or qCal_Renderer_Abstract
-$renderer->render('../rss/rss.xml');
+$xml = $renderer->render('../rss/rss.xml');
 
 // renders to a custom html output of our calendar
-$renderer = new qCal_Renderer_HTMLCustoqCalendar($cal);
-$renderer->render('../templates/some-template.phtml');
+$renderer = new qCal_Renderer_HTMLCustomCalendar($cal);
+$html = $renderer->render('../templates/some-template.phtml');
 
 // create an event object
-$event = new qCal_Event(); // extends qCal_Attachable
-$event->setStartDate(new qCal_Date('04/23/2007')); // internally it will accept qCal_Date and if not one, it will accept a string with date
-$event->setRecurringRule(new qCal_Event_Recur()); // this is possible (not sure of the syntax)
+$event = new qCal_Event(); // extends qCal_Component
+$event->addProperty('', new qCal_Date('04/23/2007')); // internally it will accept qCal_Date and if not one, it will accept a string with date
+$event->addProperty(new qCal_Event_Recur()); // this is possible (not sure of the syntax)
 
 // attach the event object
-// detach & attach accept qCal objects, any kind of qCal_Attachable object, uids (detach only), or arrays of any combination
+// detach & attach accept qCal_Component objects (can be whole qCal objects)
 // if event uids of $events conflict with uids from $cal, the $events overwrite
 $cal->attach($event);
 
 // create a todo object
-$todo = new qCal_Todo(); // extends qCal_Attachable
+$todo = new qCal_Todo(); // extends qCal_Component
 $todo->setDate(new qCal_Date('04/23/2007'));
 $cal->attach($todo);
 
