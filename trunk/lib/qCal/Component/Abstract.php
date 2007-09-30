@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * qCal iCalendar library - abstract component
+ * Please read the LICENSE file
+ * @author Luke Visinoni <luke@mc2design.com>
+ * @author Josh Davies <josh@mc2design.com>
+ * @package qCal
+ * @license GNU Lesser General Public License
+ */
+
 abstract class qCal_Component_Abstract
 {
 	protected $_name = null;
@@ -30,5 +39,9 @@ abstract class qCal_Component_Abstract
 			}
 		}
 	}
+    
+    public function addProperty()
+    {
+    }
 }	
 

@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * qCal iCalendar library
+ * Please read the LICENSE file
+ * @author Luke Visinoni <luke@mc2design.com>
+ * @author Josh Davies <josh@mc2design.com>
+ * @package qCal
+ * @license GNU Lesser General Public License
+ */
+
 require_once 'qCal.php';
 
 class qCal_iCal_Parser
