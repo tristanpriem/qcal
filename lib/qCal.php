@@ -26,7 +26,7 @@ class qCal extends qCal_Component_Abstract
      */
     const LINE_ENDING = "\r\n";
     /**
-     * Per RFC
+     * Per RFC 2445
      */
     const CONTENT_TYPE = "text/calendar";
     /**
@@ -45,24 +45,25 @@ class qCal extends qCal_Component_Abstract
      * @var array
      */
     protected $_name = 'VCALENDAR';
-    // I stole this idea from bennu :(
-    protected $_allowedProperties = array ();
-    protected $_allowedComponents = array (); 
     /**
-     * Class constructor - instantiates object
+     * @todo: add support for x-name properties
+     * @todo: find all allowed properties in rfc
+     */
+    protected $_allowedProperties = array('CALSCALE', 'METHOD', 'PRODID', 'VERSION');
+    /**
+     * @todo: add support for x-name properties
+     * @todo: find all allowed components in rfc
+     */
+    protected $_allowedComponents = array('VEVENT', 'VTODO', 'VJOURNAL', 'VALARM');
+    /**
+     * Initialize this object
      *
      * @var none
      */
-    public function __construct()
+    public function init()
     {
-        $this->_allowedProperties = array(
-            'CALSCALE' => self::OPTIONAL | self::ONCE, // binary 0011
-            'METHOD' => self::OPTIONAL | self::ONCE, // binary 0011
-            'PRODID' => self::REQUIRED | self::ONCE, // binary 0101
-            'VERSION' => self::REQUIRED | self::ONCE // binary 0101
-            // need to allow x-name properties also
-        );
         // can be overwritten
-        $this->setProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
+        $this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
+        $tjos->addProperty('version', '2.0');
     }
 }
