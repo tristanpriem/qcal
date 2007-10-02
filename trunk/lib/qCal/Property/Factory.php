@@ -19,14 +19,14 @@ class qCal_Property_Factory
      * @returns false|qCal_Property_Abstract
      * @throws qCal_Component_Exception
      */
-    public static function createInstance($property)
+    public static function createInstance($property, $value = null)
     {
         $classname = 'qCal_Property_' . strtolower($property);
         $path = './' . str_replace('_', '/', $classname) . '.php';
         if ($includepath = self::canInclude($path))
         {
             require_once $includepath;
-            if (class_exists($classname)) return new $classname;
+            if (class_exists($classname)) return new $classname($value);
         }
         throw new qCal_Component_Exception('"' . $property . '" is not a valid property name');
     }

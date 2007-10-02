@@ -14,31 +14,34 @@ require_once 'qCal/Component/Exception.php';
 abstract class qCal_Property_Abstract
 {
     /**
+     * Property's value - defaults to null
+     */
+    protected $_value;
+    /**
+     * Class constructor 
+     */
+    public function __construct($value = null)
+    {
+        $this->setValue($value);
+    }
+    /**
+     * Should you forget to set the value upon instantiation, you can set it here
+     * 
+     * @param $value - the value of the property
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+    }
+    /**
      * All validation logic should be applied here. Objects such as qCal_Property_prodid
      * will extend this class.
      * 
-     * @param $value - the value to be validated
      * @returns bool
      */
-    abstract public function isValid($value);
-    /**
-     * Factory method - given a property name, it will create an instance of said
-     * property's respective class.
-     * 
-     * @param $key - property name
-     * @returns false|qCal_Property_Abstract
-     * @throws qCal_Component_Exception
-     */
-    public static function factory($key)
+    abstract public function isValid();
+    public function __toString()
     {
-        $classname = 'qCal_Property_' . strtolower($key);
-        $filename = str_replace('_', '/', $classname);
-        $filename .= '.php';
-        if (file_exists($filename))
-        {
-            require_once $filename;
-            return new $classname;
-        }
-        return false;
+        return (string) $this->_value;
     }
 }

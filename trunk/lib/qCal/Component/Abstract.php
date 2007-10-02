@@ -10,6 +10,7 @@
  */
 
 require_once 'qCal/Component/Exception.php';
+require_once 'qCal/Property/Factory.php';
 
 abstract class qCal_Component_Abstract
 {
@@ -37,33 +38,46 @@ abstract class qCal_Component_Abstract
 	 * Add a property for this component. Parameters can only be set if their key
 	 * is in $this->_allowedProperties and if they comply with RFC 2445
 	 * 
-	 * @var key - the property name we are trying to set
+	 * @var name - the property name we are trying to set
      * @var value - the value of the property
      */
-	public function addProperty($key, $value)
+	public function addProperty($name, $value)
 	{
-        if ($this->isValidProperty($key, $value))
+        if ($this->isValidProperty($name, $value))
         {
-            $this->_properties[$key] = $value;
+            $this->_properties[$name] = qCal_Property_Factory::createInstance($name, $value);
         }
+	}
+	/**
+	 * Retrieve a property from this component
+	 * 
+	 * @var name - the property name we are trying to set
+     */
+	public function getProperty($name)
+	{
+        if (array_key_exists($name, $this->_properties))
+        {
+            return $this->_properties[$name];
+        }
+        return null;
 	}
 	/**
 	 * Verifies a property for this component - first checks that the key is in 
      * allowedProperties, and then if it is, creates a property object and validates
 	 * 
-	 * @var key - the property name we are trying to set
+	 * @var name - the property name we are trying to set
      * @var value - the value of the property
      */
-    protected function isValidProperty($key, $value)
+    protected function isValidProperty($name, $value)
     {
         // per rfc 2445 - property names are to be capitalized
-        $key = strtoupper($key);
-        // check that property ($key) is allowed to be set on this component
-		if (array_key_exists($key, $this->_allowedProperties))
+        $name = strtoupper($name);
+        // check that property ($name) is allowed to be set on this component
+		if (in_array($name, $this->_allowedProperties))
 		{
             try {
-                $property = qCal_Property_Abstract::factory($key);
-                return $property->isValid($value);
+                $property = qCal_Property_Factory::createInstance($name, $value);
+                return $property->isValid();
             } catch (qCal_Component_Exception $e) {
                 // @todo: maybe log that this happened so the user can figure it out?
                 return false;
