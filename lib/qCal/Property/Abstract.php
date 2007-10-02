@@ -31,15 +31,41 @@ abstract class qCal_Property_Abstract
      */
     public function setValue($value)
     {
-        $this->_value = $value;
+        $this->_value = $this->format($value);
     }
     /**
-     * All validation logic should be applied here. Objects such as qCal_Property_prodid
-     * will extend this class.
+     * Any formatting that should be done on the value is done here
+     * (kind of like a filter) - it defaults to no formatting
+     * 
+     * @param $value - the value of the property
+     */
+    protected function format($value)
+    {
+        return $value;
+    }
+    /**
+     * Validation logic that happens to ALL properties - we want to make sure user
+     * cannot extend this method
      * 
      * @returns bool
      */
-    abstract public function isValid();
+    final public function isValid()
+    {
+        // @todo: add global property validation
+        return $this->evaluateIsValid();
+    }
+    /**
+     * All validation logic should be applied here. Objects such as qCal_Property_prodid
+     * will extend this class and implement this method
+     * 
+     * @returns bool
+     */
+    abstract protected function evaluateIsValid();
+    /**
+     * Magic PHP method - outputs $this->_value as a string
+     * 
+     * @returns string
+     */
     public function __toString()
     {
         return (string) $this->_value;

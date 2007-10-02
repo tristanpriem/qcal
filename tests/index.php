@@ -24,14 +24,45 @@ function d($value)
 
 class TestOfqCalCore extends UnitTestCase
 {
+    public function testDefaults()
+    {
+        $cal = new qCal();
+        $this->assertEqual($cal->getProperty('prodid'), '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
+        // @todo: we may not want to default to 2.0 - not sure yet
+        $this->assertEqual($cal->getProperty('version'), '2.0');
+    }
     public function testCalendarSetAndGetVersion()
     {
-        $version = '2.0';
+        $version = '1.5';
         $cal = new qCal();
         $cal->addProperty('version', $version);
         $property = $cal->getProperty('version');
-        $this->assertIsA($property, 'qCal_Property_Abstract');
+        $this->assertIsA($property, 'qCal_Property_version');
         $this->assertEqual($property->__toString(), $version);
+        
+        // test internal formatting
+        $cal2 = new qCal();
+        $cal2->addProperty('version', 1);
+        $this->assertEqual($cal2->getProperty('version')->__toString(), '1.0');
+        
+        $multiversion = '1.25/2.0';
+        $cal3 = new qCal();
+        $cal3->addProperty('version', $multiversion);
+        $this->assertEqual($cal3->getProperty('version')->__toString(), $multiversion);
+        
+        $invalidversion = '1.25/2.0-098P';
+        $cal3 = new qCal();
+        $cal3->addProperty('version', $invalidversion);
+        $this->assertEqual($cal3->getProperty('version')->__toString(), '2.0'); // because lib defaults to 2.0
+    }
+    public function testCalendarSetAndGetProdid()
+    {
+        $prodid = 'I am a product id';
+        $cal = new qCal();
+        $cal->addProperty('prodid', $prodid);
+        $property = $cal->getProperty('prodid');
+        $this->assertIsA($property, 'qCal_Property_prodid');
+        $this->assertEqual($property->__toString(), $prodid);
     }
 }
 /*
