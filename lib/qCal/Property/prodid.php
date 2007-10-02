@@ -20,4 +20,8 @@ class qCal_Property_prodid extends qCal_Property_Abstract
     {
         return true;
     }
+    protected function format($value)
+    {
+        return $value;
+    }
 }

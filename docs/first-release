@@ -1,7 +1,12 @@
 Features we'd like for the first release (v0.10)
 
- * 
- 
+ * Import an icalendar file, add events to it, output it again.
+
+Unit tests we need
+
+ * We need to test all property classes to see that they comply with the rfc (parameter names, values)
+ * We need to test that qCal only accepts the values permitted in the rfc
+
 Miscillaneous Notes:
 
  * I'm wondering if we should include some type of log inside the core qCal class so that when errors happen they are logged rather than shoved in the user's face
