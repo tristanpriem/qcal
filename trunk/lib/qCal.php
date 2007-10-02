@@ -54,6 +54,7 @@ class qCal extends qCal_Component_Abstract
      * @todo: find all allowed components in rfc
      */
     protected $_allowedComponents = array('VEVENT', 'VTODO', 'VJOURNAL', 'VALARM');
+    protected static $_charset = null;
     /**
      * Initialize this object
      *
@@ -64,5 +65,14 @@ class qCal extends qCal_Component_Abstract
         // can be overwritten
         $this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
         $this->addProperty('version', '2.0');
+    }
+    /**
+     * Get character set for this calendar
+     * 
+     * @var default - if charset has not been set use this
+     */
+    public static function charset($default = 'utf-8')
+    {
+        return is_null(self::$_charset) ? $default : self::$_charset;
     }
 }
