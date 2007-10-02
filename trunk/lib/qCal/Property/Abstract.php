@@ -1,7 +1,7 @@
 <?php
 
 /**
- * qCal iCalendar library - icalendar property
+ * qCal iCalendar library - icalendar property (abstract)
  * Please read the LICENSE file
  * @author Luke Visinoni <luke@mc2design.com>
  * @author Josh Davies <josh@mc2design.com>
@@ -9,9 +9,27 @@
  * @license GNU Lesser General Public License
  */
 
-class qCal_Property_Abstract
+require_once 'qCal/Component/Exception.php';
+ 
+abstract class qCal_Property_Abstract
 {
-    public function isValid()
+    /**
+     * All validation logic should be applied here. Objects such as qCal_Property_prodid
+     * will extend this class.
+     * 
+     * @param $value - the value to be validated
+     * @returns bool
+     */
+    abstract public function isValid($value);
+    /**
+     * Factory method - given a property name, it will create an instance of said
+     * property's respective class.
+     * 
+     * @param $key - property name
+     * @returns qCal_Property_Abstract
+     * @throws qCal_Component_Exception
+     */
+    public static function factory()
     {
     }
 }
