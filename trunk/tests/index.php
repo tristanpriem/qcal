@@ -11,8 +11,12 @@ set_include_path(
 
 require_once 'simpletest/unit_tester.php';
 require_once 'simpletest/reporter.php';
+require_once 'simpletest/mock_objects.php';
 
 require_once 'qCal.php';
+require_once 'qCal/Component/Abstract.php';
+require_once 'qCal/Property/Abstract.php';
+require_once 'qCal/Property/Factory.php';
 
 // used for debugging in html
 function d($value)
@@ -76,9 +80,6 @@ class TestOfqCaliCalendarParser extends UnitTestCase
     }
 }
 */
-require_once 'qCal/Component/Abstract.php';
-require_once 'qCal/Property/Abstract.php';
-require_once 'qCal/Property/Factory.php';
 class TestOfProperties extends UnitTestCase
 {
     public function testFactory()

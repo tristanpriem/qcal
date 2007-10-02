@@ -10,7 +10,6 @@
  * @license GNU Lesser General Public License
  */
 
-require_once 'qCal/rfc2445.php';
 require_once 'qCal/Component/Abstract.php';
 
 class qCal extends qCal_Component_Abstract
