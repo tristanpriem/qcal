@@ -9,6 +9,7 @@
  * @license GNU Lesser General Public License
  */
 
+require_once 'qCal.php';
 require_once 'qCal/Component/Exception.php';
 require_once 'qCal/Property/Factory.php';
 
@@ -84,6 +85,18 @@ abstract class qCal_Component_Abstract
             }
 		}
         return false;
+    }
+    
+    public function serialize()
+    {
+        $output = '';
+        foreach ($this->
+    }
+    
+    public function __toString()
+    {
+        header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
+        return $this->serialize();
     }
 }	
 
