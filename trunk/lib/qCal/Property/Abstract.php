@@ -26,10 +26,19 @@ abstract class qCal_Property_Abstract
      * property's respective class.
      * 
      * @param $key - property name
-     * @returns qCal_Property_Abstract
+     * @returns false|qCal_Property_Abstract
      * @throws qCal_Component_Exception
      */
-    public static function factory()
+    public static function factory($key)
     {
+        $classname = 'qCal_Property_' . strtolower($key);
+        $filename = str_replace('_', '/', $classname);
+        $filename .= '.php';
+        if (file_exists($filename))
+        {
+            require_once $filename;
+            return new $classname;
+        }
+        return false;
     }
 }

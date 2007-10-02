@@ -63,7 +63,7 @@ class qCal extends qCal_Component_Abstract
     public function init()
     {
         // can be overwritten
-        $this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
-        $tjos->addProperty('version', '2.0');
+        //$this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
+        //$this->addProperty('version', '2.0');
     }
 }

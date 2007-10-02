@@ -59,7 +59,7 @@ abstract class qCal_Component_Abstract
         // per rfc 2445 - property names are to be capitalized
         $key = strtoupper($key);
         // check that property ($key) is allowed to be set on this component
-		if (array_key_exists($key, $this->_allowedProperties)
+		if (array_key_exists($key, $this->_allowedProperties))
 		{
             try {
                 $property = qCal_Property_Abstract::factory($key);
