@@ -30,7 +30,7 @@ abstract class qCal_Component_Abstract
     }
     /**
      * Initialize your component. This is where you set the allowable components, 
-     * properties, etc.
+     * properties, etc. - see comments in __construct for more info
      */
     abstract protected function init();
 	/**
@@ -56,7 +56,9 @@ abstract class qCal_Component_Abstract
      */
     protected function isValidProperty($key, $value)
     {
+        // per rfc 2445 - property names are to be capitalized
         $key = strtoupper($key);
+        // check that property ($key) is allowed to be set on this component
 		if (array_key_exists($key, $this->_allowedProperties)
 		{
             $property = qCal_Component_Abstract::factory($key);
