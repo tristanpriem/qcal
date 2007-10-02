@@ -61,8 +61,13 @@ abstract class qCal_Component_Abstract
         // check that property ($key) is allowed to be set on this component
 		if (array_key_exists($key, $this->_allowedProperties)
 		{
-            $property = qCal_Component_Abstract::factory($key);
-            return $property->isValid($value);
+            try {
+                $property = qCal_Property_Abstract::factory($key);
+                return $property->isValid($value);
+            } catch (qCal_Component_Exception $e) {
+                // @todo: maybe log that this happened so the user can figure it out?
+                return false;
+            }
 		}
         return false;
     }

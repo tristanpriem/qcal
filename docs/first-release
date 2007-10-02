@@ -1,3 +1,7 @@
 Features we'd like for the first release (v0.10)
 
  * 
+ 
+Miscillaneous Notes:
+
+ * I'm wondering if we should include some type of log inside the core qCal class so that when errors happen they are logged rather than shoved in the user's face
