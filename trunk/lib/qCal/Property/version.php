@@ -14,10 +14,22 @@ require_once 'Abstract.php';
 class qCal_Property_version extends qCal_Property_Abstract
 {
     /**
-     * @todo: add body to this method
+     * Verify that the value in this property conforms with rfc 2445
+     * @returns boolean
      */
-    public function isValid()
+    protected function evaluateIsValid()
     {
-        return true;
+        // @todo: make sure this fits the rfc
+        return preg_match('/^[0-9]+\.[0-9]{1,2}(\/[0-9]+\.[0-9]{1,2})?$/', $this->_value, $matches);
+    }
+    protected function format($value)
+    {
+        $value = (string) $value;
+        // if there is no dot in the version, add one
+        if (!strpos($value, '.'))
+        {
+            $value .= '.0';
+        }
+        return $value;
     }
 }

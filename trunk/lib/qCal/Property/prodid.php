@@ -16,7 +16,7 @@ class qCal_Property_prodid extends qCal_Property_Abstract
     /**
      * @todo: add body to this method
      */
-    public function isValid()
+    protected function evaluateIsValid()
     {
         return true;
     }
