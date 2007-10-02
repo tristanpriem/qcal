@@ -11,7 +11,7 @@
 
 require_once 'Abstract.php';
 
-class qCal_Property_prodid extends qCal_Property_Abstract
+class qCal_Property_version extends qCal_Property_Abstract
 {
     /**
      * @todo: add body to this method
