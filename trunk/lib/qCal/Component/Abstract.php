@@ -81,6 +81,7 @@ abstract class qCal_Component_Abstract
                 return $property->isValid();
             } catch (qCal_Component_Exception $e) {
                 // @todo: maybe log that this happened so the user can figure it out?
+                // @todo: qCal_Logger - qCal_Logger::setOptions(); qCal_Logger::getLog()
                 return false;
             }
 		}
@@ -90,7 +91,7 @@ abstract class qCal_Component_Abstract
     public function serialize()
     {
         $output = '';
-        foreach ($this->
+        //foreach ($this->
     }
     
     public function __toString()
