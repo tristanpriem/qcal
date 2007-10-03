@@ -44,7 +44,8 @@ abstract class qCal_Property_Abstract
     }
     /**
      * Validation logic that happens to ALL properties - we want to make sure user
-     * cannot extend this method
+     * cannot extend this method - set as final because child classes implement
+     * evaluateIsValid, not isValid()
      * 
      * @returns bool
      */
