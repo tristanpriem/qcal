@@ -87,7 +87,17 @@ abstract class qCal_Component_Abstract
 		}
         return false;
     }
-    
+	/**
+	 * Add a component for this component. Parameters can only be set if their key
+	 * is in $this->_allowedComponents and if they comply with RFC 2445
+	 * 
+	 * @var name - the component name we are trying to set
+     * @var value - the value of the component
+     */
+	public function addComponent($name, $value)
+	{
+        $this->_components[$name] = $value;
+	}
     public function serialize()
     {
         $name = strtoupper($this->_name) . qCal::LINE_ENDING;
