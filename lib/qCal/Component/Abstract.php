@@ -91,7 +91,18 @@ abstract class qCal_Component_Abstract
     public function serialize()
     {
         $output = '';
-        //foreach ($this->
+        foreach ($this->_properties as $key => $property)
+        {
+            $output .= strtoupper($key) . ':' . $property . qCal::LINE_ENDING;
+        }
+        foreach ($this->_components as $key => $component)
+        {
+            $output .= 'BEGIN:' . strtoupper($key)
+                . qCal::LINE_ENDING
+                . $component->serialize()
+                . qCal::LINE_ENDING .  'END:' . strtoupper($key);
+        }
+        return $output;
     }
     
     public function __toString()
