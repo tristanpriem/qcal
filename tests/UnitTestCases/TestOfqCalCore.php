@@ -14,7 +14,5 @@ class TestOfqCalCore extends UnitTestCase
     }
     public function testqCalSerialize()
     {
-        $cal = new qCal();
-        echo '<pre>' . $cal . '</pre>';
     }
 }

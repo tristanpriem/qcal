@@ -10,4 +10,10 @@ Unit tests we need
 
 Miscillaneous Notes:
 
- * I'm wondering if we should include some type of log inside the core qCal class so that when errors happen they are logged rather than shoved in the user's face
+ * I'm wondering if we should include some type of log inside the core qCal class so that when errors
+   happen they are logged rather than shoved in the user's face
+   
+ * Josh, I'd like to talk to you about how to handle the setProperty / addProperty issue. I haven't
+   yet provided a setProperty method, because some properties can be set multiple times, which would
+   make that command ambiguous or at least confusing. I don't yet know what the solution to this 
+   problem is. Maybe some type of $cal->setPropertyMultiple situation or something. We'll talk.
