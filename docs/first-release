@@ -1,6 +1,7 @@
 Features we'd like for the first release (v0.10)
 
- * Import an icalendar file, add events to it, output it again.
+ * Import an icalendar file, add events to it, output it again. 
+ *  
 
 Unit tests we need
 
