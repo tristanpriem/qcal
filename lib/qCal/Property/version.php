@@ -13,6 +13,7 @@ require_once 'Abstract.php';
 
 class qCal_Property_version extends qCal_Property_Abstract
 {
+    protected $_name = 'VERSION';
     /**
      * Verify that the value in this property conforms with rfc 2445
      * @returns boolean

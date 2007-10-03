@@ -18,6 +18,10 @@ abstract class qCal_Property_Abstract
      */
     protected $_value;
     /**
+     * Property's name
+     */
+    protected $_name;
+    /**
      * Class constructor 
      */
     public function __construct($value = null)
@@ -41,6 +45,14 @@ abstract class qCal_Property_Abstract
     public function __toString()
     {
         return (string) $this->_value;
+    }
+    public function getValue()
+    {
+        return $this->_value;
+    }
+    public function serialize()
+    {
+        return strtoupper($this->_name) . ':' . $this->getValue();
     }
     /**
      * Validation logic that happens to ALL properties - we want to make sure user
