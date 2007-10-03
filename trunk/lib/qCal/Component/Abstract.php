@@ -15,6 +15,8 @@ require_once 'qCal/Property/Factory.php';
 
 abstract class qCal_Component_Abstract
 {
+    const BEGIN = 'BEGIN:';
+    const END = 'END:';
 	protected $_name = null;
 	protected $_properties = array();
 	protected $_components = array();
@@ -100,20 +102,16 @@ abstract class qCal_Component_Abstract
 	}
     public function serialize()
     {
-        $name = strtoupper($this->_name) . qCal::LINE_ENDING;
-        $begin = 'BEGIN:' . $name;
-        $end = 'END:' . $name;
-        $output = '';
+        $lines = array();
+        // uppercase the name of this component and add a line ending
+        $lines[] = strtoupper(self::BEGIN . $this->_name);
         
-        foreach ($this->_properties as $key => $property)
-        {
-            $output .= strtoupper($key) . ':' . $property . qCal::LINE_ENDING;;
-        }
-        foreach ($this->_components as $key => $component)
-        {
-            $output .= $component->serialize() . qCal::LINE_ENDING;;
-        }
-        return $begin . $output . $end;
+        // add this component's
+        foreach ($this->_properties as $property) $lines[] = $property->serialize();
+        foreach ($this->_components as $component) $lines[] = $component->serialize();
+        
+        $lines[] = self::BEGIN . $name;
+        return implode(qCal::LINE_ENDING, $lines);
     }
     
     public function __toString()

@@ -7,6 +7,10 @@ class TestOfqCalProperties extends UnitTestCase
     public function testRequiredqCalProperties()
     {
         $cal = new qCal();
-//        $cal->addProperty('');
+        $cal->addComponent(new qCal());
+        
+        echo '<pre>';
+        echo $cal;
+        echo '</pre>';
     }
 }
