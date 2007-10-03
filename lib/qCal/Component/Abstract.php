@@ -96,8 +96,12 @@ abstract class qCal_Component_Abstract
 	 * @var name - the component name we are trying to set
 	 * @var value - the value of the component
 	 */
-	public function addComponent($name, $value)
+	public function addComponent($value, $name = null)
 	{
+		/*I changed the arguments for this, it seemed like it wouldn't
+		 * be uncommon to not need a name when the object is added.
+		 * I'm willing to admit I could be totally wrong here :)
+		 * ***********************************************************/
 		$this->_components[$name] = $value;
 	}
 	public function serialize()
