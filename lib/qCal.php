@@ -33,11 +33,12 @@ class qCal extends qCal_Component_Abstract
      */
     const LINE_FOLD_LENGTH  = 75;
     /**
-     * Flags for allowed properties / com
+     * Flags for allowed properties / components
+     * these still have not provided a use to me yet - they still may though
      */
     const OPTIONAL = 1; // binary 0001
     const ONCE     = 2; // binary 0010
-    const REQUIRED = 3; // binary 0011
+    const REQUIRED = 4; // binary 0100 
     /**
      * Contains the name of this component
      *
