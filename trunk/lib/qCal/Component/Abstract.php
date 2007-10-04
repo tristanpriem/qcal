@@ -107,7 +107,7 @@ abstract class qCal_Component_Abstract
 	public function serialize()
 	{
 		$lines = array();
-		// uppercase the name of this component and add a line ending
+		// uppercase the name of this component
 		$lines[] = strtoupper(self::BEGIN . $this->_name);
 
 		// add this component's (... component's what?-JD)
@@ -120,7 +120,6 @@ abstract class qCal_Component_Abstract
 
 	public function __toString()
 	{
-		header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
 		return $this->serialize();
 	}
 }	

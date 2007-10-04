@@ -75,4 +75,9 @@ class qCal extends qCal_Component_Abstract
     {
         return is_null(self::$_charset) ? $default : self::$_charset;
     }
+    public function __toString()
+    {
+		header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
+        return parent::__toString();
+    }
 }
