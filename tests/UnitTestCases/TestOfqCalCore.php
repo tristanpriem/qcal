@@ -1,4 +1,7 @@
 <?php
+
+Mock::Generate('qCal');
+
 class TestOfqCalCore extends UnitTestCase
 {
     public function testqCalIsAComponent()
@@ -9,10 +12,43 @@ class TestOfqCalCore extends UnitTestCase
     public function testqCalDefaults()
     {
         $cal = new qCal();
-        $this->assertEqual($cal->getProperty('version')->__toString(), '2.0');
-        $this->assertEqual($cal->getProperty('prodid')->__toString(), '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
+        $version = (string) $cal->getProperty('version');
+        $prodid = (string) $cal->getProperty('prodid');
+        $this->assertEqual($version, '2.0');
+        $this->assertEqual($prodid, '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
     }
     public function testqCalSerialize()
+    {
+    }
+    public function testSendsRightContentType()
+    {
+    }
+    // @todo: check that it is a requirement to have at least one component... I think it is - luke
+    public function testToStringFailsWithoutAnyComponents()
+    {
+    }
+    public function testCannotAddInvalidComponents()
+    {
+    }
+    public function testCanAddValidComponents()
+    {
+    }
+    public function testCanRemoveComponents()
+    {
+    }
+    public function testCanEditComponent()
+    {
+    }
+    public function testCannotAddInvalidProperties()
+    {
+    }
+    public function testCanAddValidProperties()
+    {
+    }
+    public function testCanRemoveProperties()
+    {
+    }
+    public function testCanEditProperties()
     {
     }
 }
