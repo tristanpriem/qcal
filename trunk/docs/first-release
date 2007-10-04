@@ -17,3 +17,7 @@ Miscillaneous Notes:
    yet provided a setProperty method, because some properties can be set multiple times, which would
    make that command ambiguous or at least confusing. I don't yet know what the solution to this 
    problem is. Maybe some type of $cal->setPropertyMultiple situation or something. We'll talk.
+   
+ * I am considering changing the way that abstract classes are handled. I normally name an abstract 
+   class or a base class in the following format: qCal_Property_Abstract or qCal_Property_Base, but I
+   think that I would rather just shorten it to qCal_Property in either case - the _Abstract isnt needed

@@ -21,6 +21,7 @@ class qCal_Property_calscale extends qCal_Property_Abstract
     protected function evaluateIsValid()
     {
         // @todo: find out how to validate this value
+        return true;
     }
     protected function format($value)
     {
