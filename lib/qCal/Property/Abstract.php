@@ -50,6 +50,14 @@ abstract class qCal_Property_Abstract
     {
         return $this->_value;
     }
+    public function getName()
+    {
+        return strtoupper($this->_name);
+    }
+    public function isProperty($name)
+    {
+        return $this->getName() == strtoupper($name);
+    }
     public function serialize()
     {
         return strtoupper($this->_name) . ':' . $this->getValue();

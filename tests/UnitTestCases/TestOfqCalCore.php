@@ -1,5 +1,6 @@
 <?php
 
+require_once 'qCal/Property/calscale.php';
 Mock::Generate('qCal');
 
 class TestOfqCalCore extends UnitTestCase
@@ -17,6 +18,14 @@ class TestOfqCalCore extends UnitTestCase
         $this->assertEqual($version, '2.0');
         $this->assertEqual($prodid, '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
     }
+    public function testAddProperty()
+    {
+        $value = 'value';
+        $cal = new qCal();
+        $cal->addProperty(new qCal_Property_calscale($value));
+        $calscale = (string) $cal->getProperty('calscale');
+        $this->assertEqual($calscale, $value);
+    }
     public function testqCalSerialize()
     {
     }
@@ -29,6 +38,8 @@ class TestOfqCalCore extends UnitTestCase
     }
     public function testCannotAddInvalidComponents()
     {
+        $cal = new qCal();
+        //$cal->addProperty();
     }
     public function testCanAddValidComponents()
     {

@@ -13,11 +13,20 @@ require_once 'qCal.php';
 require_once 'qCal/Component/Exception.php';
 require_once 'qCal/Property/Factory.php';
 
+// @todo: I was pondering the idea of changing the structure of things a bit I was
+// thinking that it may be a good idea to make qCal not actually a qCal component
+// but instead create an object called qCal_Component_icalendar since you can 
+// actually add more than one icalendar object in the rfc - I am definitely going
+// to do this - then qCal will be more of just a container of components - in order
+// to do this though we'll need to make absolute sure that you are allowed to add
+// more than one icalendar object to an icalendar file
+
 abstract class qCal_Component_Abstract
 {
 	const BEGIN = 'BEGIN:';
 	const END = 'END:';
 	protected $_name = null;
+    // @todo: research the possibility of merging these two as $_children
 	protected $_properties = array();
 	protected $_components = array();
 	protected $_allowedProperties = array();
@@ -41,14 +50,18 @@ abstract class qCal_Component_Abstract
 	 * Add a property for this component. Parameters can only be set if their key
 	 * is in $this->_allowedProperties and if they comply with RFC 2445
 	 * 
-	 * @var name - the property name we are trying to set
 	 * @var value - the value of the property
 	 */
-	public function addProperty($name, $value)
+	public function addProperty($property, $value = null)
 	{
-		if ($this->isValidProperty($name, $value))
+        if (is_string($property))
+        {
+            // createInstance creates a property object from property's internal name
+            $property = qCal_Property_Factory::createInstance($property, $value);
+        }
+		if ($property->isValid())
 		{
-			$this->_properties[$name] = qCal_Property_Factory::createInstance($name, $value);
+			$this->_properties[] = $property;
 		}
 	}
 	/**
@@ -58,36 +71,11 @@ abstract class qCal_Component_Abstract
 	 */
 	public function getProperty($name)
 	{
-		if (array_key_exists($name, $this->_properties))
-		{
-			return $this->_properties[$name];
-		}
-		return null;
-	}
-	/**
-	 * Verifies a property for this component - first checks that the key is in 
-	 * allowedProperties, and then if it is, creates a property object and validates
-	 * 
-	 * @var name - the property name we are trying to set
-	 * @var value - the value of the property
-	 */
-	protected function isValidProperty($name, $value)
-	{
-		// per rfc 2445 - property names are to be capitalized
-		$name = strtoupper($name);
-		// check that property ($name) is allowed to be set on this component
-		if (in_array($name, $this->_allowedProperties))
-		{
-			try {
-				$property = qCal_Property_Factory::createInstance($name, $value);
-				return $property->isValid();
-			} catch (qCal_Component_Exception $e) {
-				// @todo: maybe log that this happened so the user can figure it out?
-				// @todo: qCal_Logger - qCal_Logger::setOptions(); qCal_Logger::getLog()
-				return false;
-			}
-		}
-		return false;
+		foreach ($this->_properties as $property)
+        {
+            if ($property->isProperty($name)) return $property;
+        }
+        return false;
 	}
 	/**
 	 * Add a component for this component. Components can only be set if their type
