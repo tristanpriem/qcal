@@ -33,10 +33,10 @@ class TestOfqCalCore extends UnitTestCase
     public function testCanAddValidComponents()
     {
     }
-    public function testCanRemoveComponents()
+    public function testRemoveComponents()
     {
     }
-    public function testCanEditComponent()
+    public function testEditComponent()
     {
     }
     public function testCannotAddInvalidProperties()
@@ -45,10 +45,10 @@ class TestOfqCalCore extends UnitTestCase
     public function testCanAddValidProperties()
     {
     }
-    public function testCanRemoveProperties()
+    public function testRemoveProperties()
     {
     }
-    public function testCanEditProperties()
+    public function testEditProperties()
     {
     }
 }
