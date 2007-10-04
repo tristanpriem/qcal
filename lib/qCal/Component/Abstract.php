@@ -90,19 +90,26 @@ abstract class qCal_Component_Abstract
 		return false;
 	}
 	/**
-	 * Add a component for this component. Parameters can only be set if their key
+	 * Add a component for this component. Components can only be set if their type
 	 * is in $this->_allowedComponents and if they comply with RFC 2445
 	 * 
 	 * @var name - the component name we are trying to set
 	 * @var value - the value of the component
 	 */
-	public function addComponent($value, $name = null)
+	public function addComponent(qCal_Component_Abstract $component)
 	{
 		/*I changed the arguments for this, it seemed like it wouldn't
 		 * be uncommon to not need a name when the object is added.
 		 * I'm willing to admit I could be totally wrong here :)
+         *  
+         * nope, you're absolutely right - nice catch
+         * in fact, a key is completely unnecessary  - luke :)
 		 * ***********************************************************/
-		$this->_components[$name] = $value;
+         
+         // by the way, from now on if you want to add comments just do it like this
+         // the comments above the methods are written like that because they are what
+         // is called docblocks. look up phpdocumentor and php docblocks on google - luke
+		$this->_components = $value;
 	}
 	public function serialize()
 	{
