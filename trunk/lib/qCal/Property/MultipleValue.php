@@ -1,6 +1,6 @@
 <?php 
-require 'qCal/Property/Abstract.php';
-abstract class qCal_Property_MultipleValue extends qCal_Property_Abstract
+require 'qCal/Property.php';
+abstract class qCal_Property_MultipleValue extends qCal_Property
 {
     protected $_multiple = true;
     protected $_value = array();

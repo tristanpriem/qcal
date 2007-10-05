@@ -16,7 +16,7 @@ class qCal_Property_Factory
      * property's respective class.
      * 
      * @param $property - property name
-     * @returns false|qCal_Property_Abstract
+     * @returns false|qCal_Property
      * @throws qCal_Component_Exception
      */
     public static function createInstance($property, $value = null)
