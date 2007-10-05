@@ -58,7 +58,7 @@ abstract class qCal_Property_Abstract
     {
         return (string) $this->getValue();
     }
-    public function getValue()
+    protected function getValue()
     {
         return $this->_value;
     }
@@ -75,7 +75,7 @@ abstract class qCal_Property_Abstract
     }
     public function serialize()
     {
-        return strtoupper($this->_name) . ':' . $this->getValue();
+        return $this->getName() . ':' . $this->getValue();
     }
     /**
      * Is the component this is being added to allowed?
@@ -111,11 +111,6 @@ abstract class qCal_Property_Abstract
         if (!$this->allowsParent($component))
         {
             throw new qCal_Component_Exception('Property ' . $this->_name . ' may not be set on a ' . $component->getType() . ' component');
-        }
-        // if property is allowed multiple times, allow, otherqise check if it is already set
-        if (!$this->_multiple && $component->hasProperty($this->_name))
-        {
-            throw new qCal_Component_Exception('Property ' . $this->_name . ' may only be set once on a ' . $component->getType() . ' component');
         }
         return true;
     }
