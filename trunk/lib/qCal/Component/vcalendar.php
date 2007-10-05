@@ -12,7 +12,7 @@
 
 require_once 'qCal/Component.php';
 
-class qCal_Component_vcalendar extends qCal_Component_Abstract
+class qCal_Component_vcalendar extends qCal_Component
 {
     /**
      * Contains the name of this component

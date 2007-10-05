@@ -80,7 +80,7 @@ abstract class qCal_Property
     /**
      * Is the component this is being added to allowed?
      */
-    public function allowsParent(qCal_Component_Abstract $component)
+    public function allowsParent(qCal_Component $component)
     {
         return (in_array($component->getType(), $this->_validParents));
     }
@@ -96,7 +96,7 @@ abstract class qCal_Property
      * 
      * @returns bool
      */
-    final public function isValid(qCal_Component_Abstract $component)
+    final public function isValid(qCal_Component $component)
     {
         // if this is required and it's not set, return false
         if (!$component->hasProperty($this->_name) && $this->_required) return false;
@@ -105,7 +105,7 @@ abstract class qCal_Property
     }
     
     // tells whether this property can be attached to a parent component
-    public function canAttachTo(qCal_Component_Abstract $component)
+    public function canAttachTo(qCal_Component $component)
     {
         // if this parent is allowed this property, and 
         if (!$this->allowsParent($component))
