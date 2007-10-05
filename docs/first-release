@@ -1,7 +1,8 @@
 Features we'd like for the first release (v0.10)
 
- * Import an icalendar file, add events to it, output it again. 
- *  
+ * Create a fully rfc-compliant icalendar file from scratch
+ * output it to the screen (with right headers etc.)
+ * be able to save to a file on local drive
 
 Unit tests we need
 
