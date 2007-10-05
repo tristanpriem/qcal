@@ -22,6 +22,18 @@ abstract class qCal_Property_Abstract
      */
     protected $_name;
     /**
+     * Is this property required?
+     */
+    protected $_required = true;
+    /**
+     * Is this property allowed more than once?
+     */
+    protected $_multiple = false;
+    /**
+     * The components this is allowed to attach to
+     */
+    protected $_validParents = array();
+    /**
      * Class constructor 
      */
     public function __construct($value = null)
@@ -44,7 +56,7 @@ abstract class qCal_Property_Abstract
      */
     public function __toString()
     {
-        return (string) $this->_value;
+        return (string) $this->getValue();
     }
     public function getValue()
     {
@@ -54,7 +66,10 @@ abstract class qCal_Property_Abstract
     {
         return strtoupper($this->_name);
     }
-    public function isProperty($name)
+    /**
+     * Pass in a property name and this will tell you whether this property is of that type
+     */
+    public function isA($name)
     {
         return $this->getName() == strtoupper($name);
     }
@@ -63,16 +78,46 @@ abstract class qCal_Property_Abstract
         return strtoupper($this->_name) . ':' . $this->getValue();
     }
     /**
+     * Is the component this is being added to allowed?
+     */
+    public function allowsParent(qCal_Component_Abstract $component)
+    {
+        return (in_array($component->getType(), $this->_validParents));
+    }
+    /**
      * Validation logic that happens to ALL properties - we want to make sure user
      * cannot extend this method - set as final because child classes implement
      * evaluateIsValid, not isValid()
+     *
+     * the component uses this method to verify that a property can be added to it
+     * so the component this property lives in is passed as a parameter. this way
+     * you can tell if it is 
+     * required for the component it is set on
      * 
      * @returns bool
      */
-    final public function isValid()
+    final public function isValid(qCal_Component_Abstract $component)
     {
+        // if this is required and it's not set, return false
+        if (!$component->hasProperty($this->_name) && $this->_required) return false;
         // @todo: add global property validation
         return $this->evaluateIsValid();
+    }
+    
+    // tells whether this property can be attached to a parent component
+    public function canAttachTo(qCal_Component_Abstract $component)
+    {
+        // if this parent is allowed this property, and 
+        if (!$this->allowsParent($component))
+        {
+            throw new qCal_Component_Exception('Property ' . $this->_name . ' may not be set on a ' . $component->getType() . ' component');
+        }
+        // if property is allowed multiple times, allow, otherqise check if it is already set
+        if (!$this->_multiple && $component->hasProperty($this->_name))
+        {
+            throw new qCal_Component_Exception('Property ' . $this->_name . ' may only be set once on a ' . $component->getType() . ' component');
+        }
+        return true;
     }
     /**
      * Any formatting that should be done on the value is done here

@@ -14,6 +14,7 @@ require_once 'Abstract.php';
 class qCal_Property_prodid extends qCal_Property_Abstract
 {
     protected $_name = 'PRODID';
+    protected $_validParents = array('VCALENDAR');
     /**
      * @todo: add body to this method
      */

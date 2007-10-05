@@ -26,11 +26,10 @@ abstract class qCal_Component_Abstract
 	const BEGIN = 'BEGIN:';
 	const END = 'END:';
 	protected $_name = null;
+	protected $_validParents = array();
     // @todo: research the possibility of merging these two as $_children
 	protected $_properties = array();
 	protected $_components = array();
-	protected $_allowedProperties = array();
-	protected $_allowedComponents = array();
 	/**
 	 * Relay initialization to an init() method so that children can do initialization
 	 * and not risk forgetting a parent::__construct()
@@ -46,9 +45,16 @@ abstract class qCal_Component_Abstract
 	 * properties, etc. - see comments in __construct for more info
 	 */
 	abstract protected function init();
+    /**
+     * Get the type of component
+     */
+    public function getType()
+    {
+        return strtoupper($this->_name);
+    }
 	/**
-	 * Add a property for this component. Parameters can only be set if their key
-	 * is in $this->_allowedProperties and if they comply with RFC 2445
+	 * Add a property for this component. Parameters can only be set if this component
+     * is in their _validParents array
 	 * 
 	 * @var value - the value of the property
 	 */
@@ -59,7 +65,7 @@ abstract class qCal_Component_Abstract
             // createInstance creates a property object from property's internal name
             $property = qCal_Property_Factory::createInstance($property, $value);
         }
-		if ($property->isValid())
+		if ($property->canAttachTo($this))
 		{
 			$this->_properties[] = $property;
 		}
@@ -73,9 +79,24 @@ abstract class qCal_Component_Abstract
 	{
 		foreach ($this->_properties as $property)
         {
-            if ($property->isProperty($name)) return $property;
+            // returns first property of correct type
+            // still am not sure if properties can be set multiple times - luke
+            if ($property->isA($name)) return $property;
         }
-        return false;
+	}
+	/**
+	 * Check if  a property is in this component
+	 * 
+	 * @var name - the property name
+	 */
+	public function hasProperty($name)
+	{
+		foreach ($this->_properties as $property)
+        {
+            // returns first property of correct type
+            // still am not sure if properties can be set multiple times - luke
+            if ($property->isA($name)) return true;
+        }
 	}
 	/**
 	 * Add a component for this component. Components can only be set if their type
@@ -96,8 +117,8 @@ abstract class qCal_Component_Abstract
          
          // by the way, from now on if you want to add comments just do it like this
          // the comments above the methods are written like that because they are what
-         // is called docblocks. look up phpdocumentor and php docblocks on google - luke
-		$this->_components = $value;
+         // is called docblocks. look up "php docblocks" on google - luke
+		$this->_properties[] = $property;
 	}
 	public function serialize()
 	{

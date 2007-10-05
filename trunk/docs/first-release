@@ -18,6 +18,18 @@ Miscillaneous Notes:
    make that command ambiguous or at least confusing. I don't yet know what the solution to this 
    problem is. Maybe some type of $cal->setPropertyMultiple situation or something. We'll talk.
    
+ * OK, I figured out the solution - a property object (if it allows multiple parameters) will extend
+   a qCal_Property_MultipleValue object that in turn extends qCal_Component - this multiple (abstract)
+   class will define $value as an array or something (instead of a standard value). Then when it serializes,
+   it will just do a implode(';', $this->value)
+   
  * I am considering changing the way that abstract classes are handled. I normally name an abstract 
    class or a base class in the following format: qCal_Property_Abstract or qCal_Property_Base, but I
    think that I would rather just shorten it to qCal_Property in either case - the _Abstract isnt needed
+   
+ * Also, I may be adding a qCal_Component_icalendar component instead of making the base qCal object a 
+   component. I am not sure yet... I'll play around with it 
+   
+ * Josh - Didn't you mention something about doing $this->allowedParents instead of 
+   $this->allowedProperties and $this->allowedComponents? Well if you did, that's a great idea. I'm
+   going to play around with that for a while. :)
