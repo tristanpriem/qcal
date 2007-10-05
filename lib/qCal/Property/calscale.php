@@ -9,9 +9,9 @@
  * @license GNU Lesser General Public License
  */
 
-require_once 'Abstract.php';
+require_once 'qCal/Property.php';
 
-class qCal_Property_calscale extends qCal_Property_Abstract
+class qCal_Property_calscale extends qCal_Property
 {
     protected $_name = 'CALSCALE';
     protected $_validParents = array('VCALENDAR');

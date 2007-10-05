@@ -11,7 +11,7 @@
 
 require_once 'Abstract.php';
 
-class qCal_Property_method extends qCal_Property_Abstract
+class qCal_Property_method extends qCal_Property
 {
     protected $_name = 'METHOD';
     protected $_validParents = array('VCALENDAR');
