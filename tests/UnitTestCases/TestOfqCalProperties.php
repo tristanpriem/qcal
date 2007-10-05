@@ -1,6 +1,6 @@
 <?php
 /**
- * Testing everything related to qCal_Property_Abstract
+ * Testing everything related to qCal_Property
  */
 class TestOfqCalProperties extends UnitTestCase
 {

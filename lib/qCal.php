@@ -10,9 +10,9 @@
  * @license GNU Lesser General Public License
  */
 
-require_once 'qCal/Component/Abstract.php';
-
-class qCal extends qCal_Component_Abstract
+require_once 'qCal/Component/vcalendar.php';
+ 
+class qCal
 {
     /**
      * Version of this library
@@ -40,27 +40,14 @@ class qCal extends qCal_Component_Abstract
     const ONCE     = 2; // binary 0010
     const REQUIRED = 4; // binary 0100 
     /**
-     * Contains the name of this component
-     *
-     * @var array
-     */
-    protected $_name = 'VCALENDAR';
-    /**
      * @todo: add support for x-name properties
      * @todo: find all allowed components in rfc
     protected $_allowedComponents = array('VEVENT', 'VTODO', 'VJOURNAL', 'VALARM', 'VFREEBUSY', 'VTIMEZONE');
      */
     protected static $_charset = null;
-    /**
-     * Initialize this object
-     *
-     * @var none
-     */
-    public function init()
+    public static function create()
     {
-        // can be overwritten
-        $this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . self::VERSION . '//EN');
-        $this->addProperty('version', '2.0');
+        return new qCal_Component_vcalendar();
     }
     /**
      * Get character set for this calendar
@@ -70,10 +57,5 @@ class qCal extends qCal_Component_Abstract
     public static function charset($default = 'utf-8')
     {
         return is_null(self::$_charset) ? $default : self::$_charset;
-    }
-    public function __toString()
-    {
-		header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
-        return parent::__toString();
     }
 }

@@ -25,7 +25,7 @@ Miscillaneous Notes:
    it will just do a implode(';', $this->value)
    
  * I am considering changing the way that abstract classes are handled. I normally name an abstract 
-   class or a base class in the following format: qCal_Property_Abstract or qCal_Property_Base, but I
+   class or a base class in the following format: qCal_Property or qCal_Property_Base, but I
    think that I would rather just shorten it to qCal_Property in either case - the _Abstract isnt needed
    
  * Also, I may be adding a qCal_Component_icalendar component instead of making the base qCal object a 

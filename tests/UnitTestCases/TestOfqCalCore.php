@@ -6,7 +6,7 @@ require_once 'qCal/Property/calscale.php';
 Mock::Generate('qCal');
 Mock::Generate('qCal_Property_MultipleValue');
 
-class Mock_qCal_Property extends qCal_Property_Abstract
+class Mock_qCal_Property extends qCal_Property
 {
     protected $_name = 'QCALTESTPROPERTY';
     public function evaluateIsValid()
@@ -58,7 +58,7 @@ class TestOfqCalCore extends UnitTestCase
     }*/
     public function testAddExistingNonMultiplePropertyThrowsException()
     {
-        $cal = new qCal();
+        $cal = qCal::create();
         $property = new Mock_qCal_Property();
         
         $this->expectException(new qCal_Component_Exception('Property ' . $property->getName() . ' may not be set on a VCALENDAR component'));
