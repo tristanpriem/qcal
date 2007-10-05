@@ -47,14 +47,9 @@ class qCal extends qCal_Component_Abstract
     protected $_name = 'VCALENDAR';
     /**
      * @todo: add support for x-name properties
-     * @todo: find all allowed properties in rfc
-     */
-    protected $_allowedProperties = array('CALSCALE', 'METHOD', 'PRODID', 'VERSION');
-    /**
-     * @todo: add support for x-name properties
      * @todo: find all allowed components in rfc
-     */
     protected $_allowedComponents = array('VEVENT', 'VTODO', 'VJOURNAL', 'VALARM', 'VFREEBUSY', 'VTIMEZONE');
+     */
     protected static $_charset = null;
     /**
      * Initialize this object

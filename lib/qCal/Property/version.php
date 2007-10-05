@@ -14,9 +14,11 @@ require_once 'Abstract.php';
 class qCal_Property_version extends qCal_Property_Abstract
 {
     protected $_name = 'VERSION';
+    protected $_validParents = array('VCALENDAR');
     /**
      * Verify that the value in this property conforms with rfc 2445
      * @returns boolean
+     *
      */
     protected function evaluateIsValid()
     {
