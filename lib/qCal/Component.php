@@ -21,7 +21,7 @@ require_once 'qCal/Property/Factory.php';
 // to do this though we'll need to make absolute sure that you are allowed to add
 // more than one icalendar object to an icalendar file
 
-abstract class qCal_Component_Abstract
+abstract class qCal_Component
 {
 	const BEGIN = 'BEGIN:';
 	const END = 'END:';
