@@ -75,6 +75,10 @@ abstract class qCal_Property
         return $this->getName() == strtoupper($name);
     }
      */
+    public function isMultiple()
+    {
+        return (bool) $this->_multiple;
+    }
     public function serialize()
     {
         return $this->getName() . ':' . $this->getValue();
@@ -106,16 +110,6 @@ abstract class qCal_Property
         return $this->evaluateIsValid();
     }
     
-    // tells whether this property can be attached to a parent component
-    public function canAttachTo(qCal_Component $component)
-    {
-        // if this parent is allowed this property, and 
-        if (!$this->allowsParent($component))
-        {
-            throw new qCal_Component_Exception('Property ' . $this->_name . ' may not be set on a ' . $component->getType() . ' component');
-        }
-        return true;
-    }
     /**
      * Any formatting that should be done on the value is done here
      * (kind of like a filter) - it defaults to no formatting

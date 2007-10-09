@@ -2,7 +2,9 @@
 
 
 require_once 'qCal/Property.php';
+require_once 'qCal/Property/MultipleValue.php';
 Mock::Generate('qCal_Property');
+Mock::Generate('qCal_Property_MultipleValue');
         
 function d($val)
 {
@@ -22,24 +24,10 @@ class TestOfqCalCore extends UnitTestCase
         // create property mock object
         $property->setReturnValue('serialize', $value);
         $property->setReturnValue('getType', $type);
+        $property->setReturnValue('allowsParent', true);
         
         $this->mockProperty = $property;
     }
-/*
-    public function testqCalIsAComponent()
-    {
-        $cal = new qCal();
-        $this->assertIsA($cal, 'qCal_Component_Abstract');
-    }
-    public function testqCalDefaults()
-    {
-        $cal = new qCal();
-        $version = (string) $cal->getProperty('version');
-        $prodid = (string) $cal->getProperty('prodid');
-        d($cal);
-        $this->assertEqual($version, '2.0');
-        $this->assertEqual($prodid, '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
-    }*/
     public function testInstantiateqCal()
     {
         $cal = qCal::create();
@@ -63,28 +51,43 @@ class TestOfqCalCore extends UnitTestCase
         $cal->removeProperty('PRODID');
         $this->assertNull($cal->getProperty('PRODID'));
     }
-    /*
     public function testAddExistingNonMultiplePropertyThrowsException()
     {
         $cal = qCal::create();
-        $property = new Mock_qCal_Property('test');
+        $property = new MockqCal_Property;
+        $property->setReturnValue('getType', 'PROPERTY');
+        $property->setReturnValue('isMultiple', false);
+        $property->setReturnValue('allowsParent', true);
         
-        $this->expectException(new qCal_Component_Exception('Property ' . $property->getName() . ' may not be set on a VCALENDAR component'));
-        // should throw an exception because prodid is already set (by default)
+        $this->expectException(new qCal_Exception('Property ' . $property->getType() . ' is already set'));
+        $cal->addProperty($property);
         $cal->addProperty($property);
     }
-    public function testAddExistingMultiplePropertyAddsProperty()
+    public function testAddExistingMultiplePropertyAddsToProperty()
     {
-        $cal = new qCal();
-        $property = new Mock_qCal_Property_MultipleValue();
-        $property->setValue('test');
-        $property->setValue('test_number_two');
-        d($property);
+        $compare = array('value', 'value');
         
-        $value = 'QCALTESTPROPERTY:test' . qCal::LINE_ENDING . 'QCALTESTPROPERTY:test_number_two';
+        $cal = qCal::create();
         
-        $this->assertEqual($property->serialize(), $value);
+        $property = new MockqCal_Property_MultipleValue;
+        $property->setReturnValue('getType', 'PROPERTY');
+        $property->setReturnValue('isMultiple', true);
+        $property->setReturnValue('allowsParent', true);
+        $property->setReturnValue('getValue', $compare);
+        
+        $property2 = new MockqCal_Property_MultipleValue;
+        $property2->setReturnValue('getType', 'PROPERTY');
+        $property2->setReturnValue('isMultiple', true);
+        $property2->setReturnValue('allowsParent', true);
+        
+        $cal->addProperty($property);
+        $cal->addProperty($property2);
+        
+        $properties = $cal->getProperty('PROPERTY');
+        
+        $this->assertEqual($compare, $properties->getValue());
     }
+    /*
     public function testAddProperty()
     {
         $value = 'value';

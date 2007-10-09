@@ -33,7 +33,7 @@ class qCal_Component_vcalendar extends qCal_Component
     }
     public function __toString()
     {
-		header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
+        header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
         return parent::__toString();
     }
 }
