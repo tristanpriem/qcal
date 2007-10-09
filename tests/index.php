@@ -15,7 +15,7 @@ require_once 'simpletest/mock_objects.php';
 
 require_once 'qCal.php';
 require_once 'qCal/Component.php';
-require_once 'qCal/Property/MultipleValue.php';
+//require_once 'qCal/Property/MultipleValue.php';
 
 require_once 'UnitTestCases/TestOfqCalCore.php';
 require_once 'UnitTestCases/TestOfqCalProperties.php';

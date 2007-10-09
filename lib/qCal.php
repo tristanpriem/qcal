@@ -45,6 +45,7 @@ class qCal
     protected $_allowedComponents = array('VEVENT', 'VTODO', 'VJOURNAL', 'VALARM', 'VFREEBUSY', 'VTIMEZONE');
      */
     protected static $_charset = null;
+    private function __construct() { }
     public static function create()
     {
         return new qCal_Component_vcalendar();
