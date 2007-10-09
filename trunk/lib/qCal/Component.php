@@ -65,11 +65,20 @@ abstract class qCal_Component
             // createInstance creates a property object from property's internal name
             $property = qCal_Property_Factory::createInstance($property, $value);
         }
-		if ($property->canAttachTo($this))
-		{
+		/*if ($property->canAttachTo($this))
+		{*/
 			$this->_properties[] = $property;
-		}
+		/*}*/
 	}
+    public function removeProperty($name)
+    {
+		foreach ($this->_properties as $key => $property)
+        {
+            // returns first property of correct type
+            // still am not sure if properties can be set multiple times - luke
+            if ($property->getType() == $name) unset($this->_properties[$key]);
+        }
+    }
 	/**
 	 * Retrieve a property from this component
 	 * 
@@ -81,7 +90,7 @@ abstract class qCal_Component
         {
             // returns first property of correct type
             // still am not sure if properties can be set multiple times - luke
-            if ($property->isA($name)) return $property;
+            if ($property->getType() == $name) return $property;
         }
 	}
 	/**
@@ -94,8 +103,8 @@ abstract class qCal_Component
 		foreach ($this->_properties as $property)
         {
             // returns first property of correct type
-            // still am not sure if properties can be set multiple times - luke
-            if ($property->isA($name)) return true;
+            // properties who can be set multiple times will get an object back with multiple values
+            if ($property->getType() == $name) return true;
         }
 	}
 	/**

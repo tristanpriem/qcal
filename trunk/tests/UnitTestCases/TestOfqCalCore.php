@@ -1,37 +1,9 @@
 <?php
 
-require_once 'qCal.php';
-require_once 'qCal/Property/calscale.php';
 
-Mock::Generate('qCal');
-Mock::Generate('qCal_Property_MultipleValue');
-
-class Mock_qCal_Property extends qCal_Property
-{
-    protected $_name = 'QCALTESTPROPERTY';
-    public function evaluateIsValid()
-    {
-        return true;
-    }
-    public function format($value)
-    {
-        return $value;
-    }
-}
-
-class Mock_qCal_Property_MultipleValue extends qCal_Property_MultipleValue
-{
-    protected $_name = 'QCALTESTPROPERTY';
-    public function evaluateIsValid()
-    {
-        return true;
-    }
-    public function format($value)
-    {
-        return $value;
-    }
-}
-
+require_once 'qCal/Property.php';
+Mock::Generate('qCal_Property');
+        
 function d($val)
 {
     echo "<pre>";
@@ -41,6 +13,18 @@ function d($val)
 
 class TestOfqCalCore extends UnitTestCase
 {
+    protected $mockProperty;
+    public function setup()
+    {
+        $property = new MockqCal_Property;
+        $type = 'PRODID';
+        $value = 'value';
+        // create property mock object
+        $property->setReturnValue('serialize', $value);
+        $property->setReturnValue('getType', $type);
+        
+        $this->mockProperty = $property;
+    }
 /*
     public function testqCalIsAComponent()
     {
@@ -56,16 +40,39 @@ class TestOfqCalCore extends UnitTestCase
         $this->assertEqual($version, '2.0');
         $this->assertEqual($prodid, '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
     }*/
+    public function testInstantiateqCal()
+    {
+        $cal = qCal::create();
+        $this->assertIsA($cal, 'qCal_Component_vcalendar');
+    }
+    public function testAddProperty()
+    {
+        
+        $cal = qCal::create();
+        $cal->addProperty($this->mockProperty);
+        $compareprop = $cal->getProperty('PRODID');
+        
+        $this->assertEqual($compareprop->serialize(), 'value');
+    }
+    public function testRemoveProperty()
+    {
+        $cal = qCal::create();
+        $cal->addProperty($this->mockProperty);
+        $this->assertEqual($cal->getProperty('PRODID')->serialize(), 'value');
+        
+        $cal->removeProperty('PRODID');
+        $this->assertNull($cal->getProperty('PRODID'));
+    }
+    /*
     public function testAddExistingNonMultiplePropertyThrowsException()
     {
         $cal = qCal::create();
-        $property = new Mock_qCal_Property();
+        $property = new Mock_qCal_Property('test');
         
         $this->expectException(new qCal_Component_Exception('Property ' . $property->getName() . ' may not be set on a VCALENDAR component'));
         // should throw an exception because prodid is already set (by default)
         $cal->addProperty($property);
     }
-    /*
     public function testAddExistingMultiplePropertyAddsProperty()
     {
         $cal = new qCal();

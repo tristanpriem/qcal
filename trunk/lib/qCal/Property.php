@@ -1,5 +1,4 @@
 <?php
-
 /**
  * qCal iCalendar library - icalendar property (abstract)
  * Please read the LICENSE file
@@ -40,6 +39,9 @@ abstract class qCal_Property
     {
         $this->setValue($value);
     }
+    public function getType()
+    {
+    }
     /**
      * Should you forget to set the value upon instantiation, you can set it here
      * 
@@ -68,11 +70,11 @@ abstract class qCal_Property
     }
     /**
      * Pass in a property name and this will tell you whether this property is of that type
-     */
     public function isA($name)
     {
         return $this->getName() == strtoupper($name);
     }
+     */
     public function serialize()
     {
         return $this->getName() . ':' . $this->getValue();

@@ -10,7 +10,7 @@
  * library's ability to use custom-written import
  * classes. It is just pseudo-code. - luke
  * **********************************************/
-
+/*
 // create icalendar object
 $cal = new qCal(); // qCal extends qCal_Component
 
@@ -79,3 +79,20 @@ $export->export('../calendars/newcalendar.ics');
 // export calendar with custom database object that implements qCal_Export_Interface or qCal_Interface_Abstract
 $export = new qCal_Export_DatabaseCustom($cal); // custom-written import class for application
 $export->export();
+*/
+set_include_path(
+    //'\\\\Mc2-server\\Software Downloads\\PHP Libs' . PATH_SEPARATOR .
+    //'\\\\Mc2-server\\Projects\\MC2 Design\\002967_qCal_ Library_and_App\\Web_Build\\lib' . PATH_SEPARATOR .
+    'C:\\htdocs\\qCal\\lib' . PATH_SEPARATOR .
+    'C:\\phplib' . PATH_SEPARATOR .
+    'C:\\phplib\\qCal\\tests' . PATH_SEPARATOR .
+    // add simpletest directory here
+    get_include_path()
+);
+
+require_once 'Mock/qCal/Property.php';
+require_once 'qCal/Property.php';
+require_once 'qCal.php';
+
+$cal = qCal::create();
+$cal->addProperty(new Mock_qCal_Property());

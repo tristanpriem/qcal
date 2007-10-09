@@ -28,8 +28,8 @@ class qCal_Component_vcalendar extends qCal_Component
     public function init()
     {
         // can be overwritten
-        $this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
-        $this->addProperty('version', '2.0');
+        // $this->addProperty('prodid', '-//MC2 Design Group, Inc.//qCal v' . qCal::VERSION . '//EN');
+        // $this->addProperty('version', '2.0');
     }
     public function __toString()
     {
