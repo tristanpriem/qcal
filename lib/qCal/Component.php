@@ -11,6 +11,7 @@
 
 require_once 'qCal.php';
 require_once 'qCal/Exception.php';
+require_once 'qCal/Attachable.php';
 require_once 'qCal/Property/Factory.php';
 
 // @todo: I was pondering the idea of changing the structure of things a bit I was
@@ -21,12 +22,10 @@ require_once 'qCal/Property/Factory.php';
 // to do this though we'll need to make absolute sure that you are allowed to add
 // more than one icalendar object to an icalendar file
 
-abstract class qCal_Component
+abstract class qCal_Component extends qCal_Attachable
 {
     const BEGIN = 'BEGIN:';
     const END = 'END:';
-    protected $_name = null;
-    protected $_validParents = array();
     // @todo: research the possibility of merging these two as $_children
     protected $_properties = array();
     protected $_components = array();
@@ -41,10 +40,11 @@ abstract class qCal_Component
         $this->init();
     }
     /**
-     * Initialize your component. This is where you set the allowable components, 
-     * properties, etc. - see comments in __construct for more info
+     * Initialize your component.
      */
-    abstract protected function init();
+    protected function init()
+    {
+    }
     /**
      * Get the type of component
      */
@@ -128,7 +128,7 @@ abstract class qCal_Component
      * @var name - the component name we are trying to set
      * @var value - the value of the component
      */
-    public function addComponent(qCal_Component_Abstract $component)
+    public function addComponent(qCal_Component $component)
     {
         /*I changed the arguments for this, it seemed like it wouldn't
          * be uncommon to not need a name when the object is added.
@@ -164,15 +164,6 @@ abstract class qCal_Component
     public function __toString()
     {
         return $this->serialize();
-    }
-    /**
-     * Tells whether this component is RFC-Compliant
-     *
-     * @returns boolean
-     */
-    public function isValid()
-    {
-        return true;
     }
 }
 

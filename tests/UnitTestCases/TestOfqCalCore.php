@@ -2,9 +2,13 @@
 
 
 require_once 'qCal/Property.php';
+require_once 'qCal/Component.php';
 require_once 'qCal/Property/MultipleValue.php';
 Mock::Generate('qCal_Property');
 Mock::Generate('qCal_Property_MultipleValue');
+
+Mock::Generate('qCal_Component');
+
         
 function d($val)
 {
@@ -99,6 +103,14 @@ class TestOfqCalCore extends UnitTestCase
     public function testPrintCalendarSendsRightContentType()
     {
         // @todo: don't know how to test this
+    }
+    public function testAddComponent()
+    {
+        $cal = qCal::create();
+        
+        $component = new MockqCal_Component;
+        
+        $cal->addComponent($component);
     }
     /*
     // @todo: check that it is a requirement to have at least one component... I think it is - luke

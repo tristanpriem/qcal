@@ -8,18 +8,15 @@
  * @license GNU Lesser General Public License
  */
 
+require_once 'qCal/Attachable.php';
 require_once 'qCal/Component/Exception.php';
  
-abstract class qCal_Property
+abstract class qCal_Property extends qCal_Attachable
 {
     /**
      * Property's value - defaults to null
      */
     protected $_value;
-    /**
-     * Property's name
-     */
-    protected $_name;
     /**
      * Is this property required?
      */
@@ -82,13 +79,6 @@ abstract class qCal_Property
     public function serialize()
     {
         return $this->getName() . ':' . $this->getValue();
-    }
-    /**
-     * Is the component this is being added to allowed?
-     */
-    public function allowsParent(qCal_Component $component)
-    {
-        return (in_array($component->getType(), $this->_validParents));
     }
     /**
      * Validation logic that happens to ALL properties - we want to make sure user
