@@ -109,8 +109,12 @@ class TestOfqCalCore extends UnitTestCase
         $cal = qCal::create();
         
         $component = new MockqCal_Component;
+        $component->setReturnValue('getType', 'test');
+        $component->setReturnValue('serialize', 'test');
         
         $cal->addComponent($component);
+        $comparecomponent = $cal->getComponent('test');
+        $this->assertEqual($comparecomponent->serialize(), 'test');
     }
     /*
     // @todo: check that it is a requirement to have at least one component... I think it is - luke
