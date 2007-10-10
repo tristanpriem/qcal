@@ -28,7 +28,11 @@ class TestOfqCalCore extends UnitTestCase
         
         $this->mockProperty = $property;
     }
-    public function testInstantiateqCal()
+    public function testCannontInstantiateqCal()
+    {
+        // @todo: don't know how to test this
+    }
+    public function testCreatevCalendarObject()
     {
         $cal = qCal::create();
         $this->assertIsA($cal, 'qCal_Component_vcalendar');
@@ -59,7 +63,7 @@ class TestOfqCalCore extends UnitTestCase
         $property->setReturnValue('isMultiple', false);
         $property->setReturnValue('allowsParent', true);
         
-        $this->expectException(new qCal_Exception('Property ' . $property->getType() . ' is already set'));
+        $this->expectException(new qCal_Exception('Property ' . $property->getType() . ' is already set and does not allow multiple values'));
         $cal->addProperty($property);
         $cal->addProperty($property);
     }
@@ -87,30 +91,17 @@ class TestOfqCalCore extends UnitTestCase
         
         $this->assertEqual($compare, $properties->getValue());
     }
+    public function testqCalInvalidWithoutAnyComponents()
+    {
+        $cal = qCal::create();
+        $this->assertFalse($cal->isValid());
+    }
+    public function testPrintCalendarSendsRightContentType()
+    {
+        // @todo: don't know how to test this
+    }
     /*
-    public function testAddProperty()
-    {
-        $value = 'value';
-        $cal = new qCal();
-        
-        $cal->addProperty(new qCal_Property_calscale($value));
-        $calscale = (string) $cal->getProperty('calscale');
-        //$this->assertEqual($calscale, $value);
-        
-        $cal->addProperty('prodid', $value);
-        $prodid = (string) $cal->getProperty('prodid');
-        //$this->assertEqual($prodid, $value);
-    }
-    public function testqCalSerialize()
-    {
-    }
-    public function testSendsRightContentType()
-    {
-    }
     // @todo: check that it is a requirement to have at least one component... I think it is - luke
-    public function testToStringFailsWithoutAnyComponents()
-    {
-    }
     public function testCannotAddInvalidComponents()
     {
         $value = 'value';

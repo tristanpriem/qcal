@@ -75,7 +75,7 @@ abstract class qCal_Component
         {
             if (!$property->isMultiple())
             {
-                throw new qCal_Exception('Property ' . $property->getType() . ' is already set');
+                throw new qCal_Exception('Property ' . $property->getType() . ' is already set and does not allow multiple values');
             }
             if ($localProperty = $this->getProperty($property->getType()))
             {
@@ -156,10 +156,23 @@ abstract class qCal_Component
         $lines[] = self::BEGIN . $name;
         return implode(qCal::LINE_ENDING, $lines);
     }
-
+    /**
+     * PHP overload function - prints out the component
+     *
+     * @returns boolean
+     */
     public function __toString()
     {
         return $this->serialize();
     }
-}    
+    /**
+     * Tells whether this component is RFC-Compliant
+     *
+     * @returns boolean
+     */
+    public function isValid()
+    {
+        return true;
+    }
+}
 
