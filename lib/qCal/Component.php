@@ -96,7 +96,7 @@ abstract class qCal_Component extends qCal_Attachable
     /**
      * Retrieve a property from this component
      * 
-     * @var name - the property name we are trying to set
+     * @var name - the property name we are trying to get
      */
     public function getProperty($name)
     {
@@ -141,7 +141,21 @@ abstract class qCal_Component extends qCal_Attachable
          // by the way, from now on if you want to add comments just do it like this
          // the comments above the methods are written like that because they are what
          // is called docblocks. look up "php docblocks" on google - luke
-        $this->_properties[] = $property;
+        $this->_components[] = $component;
+    }
+    /**
+     * Retrieve a component from this component
+     * 
+     * @var name - the component name we are trying to get
+     */
+    public function getComponent($name)
+    {
+        foreach ($this->_components as $component)
+        {
+            // returns first property of correct type
+            // still am not sure if properties can be set multiple times - luke
+            if ($component->getType() == $name) return $component;
+        }
     }
     public function serialize()
     {
