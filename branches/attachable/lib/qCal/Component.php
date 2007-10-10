@@ -26,9 +26,6 @@ abstract class qCal_Component extends qCal_Attachable
 {
     const BEGIN = 'BEGIN:';
     const END = 'END:';
-    // @todo: research the possibility of merging these two as $_children
-    protected $_properties = array();
-    protected $_components = array();
     /**
      * Relay initialization to an init() method so that children can do initialization
      * and not risk forgetting a parent::__construct()
@@ -46,115 +43,77 @@ abstract class qCal_Component extends qCal_Attachable
     {
     }
     /**
-     * Get the type of component
-     */
-    public function getType()
-    {
-        return strtoupper($this->_name);
-    }
-    /**
-     * Add a property for this component. Parameters can only be set if this component
-     * is in their _validParents array
+     * Add a property/component to this component. Can only be set if this component
+     * is in the attachable's _validParents array
      * 
      * @var value - the value of the property
      */
-    public function addProperty($property, $value = null)
+    public function attach($attachable, $value = null)
     {
-        if (is_string($property))
+        if (is_string($attachable))
         {
-            // createInstance creates a property object from property's internal name
-            $property = qCal_Property_Factory::createInstance($property, $value);
+            // createInstance creates a property/component object from property/component's internal name
+            $attachable = qCal_Attachable_Factory::createInstance($attachable, $value);
+        }
+        if (!$attachable instanceof qCal_Attachable)
+        {
+            d(get_class($attachable));
+            d($attachable);
+            exit;
+            throw new qCal_Exception($attachable . ' must be an instance of qCal_Attachable');
         }
         
         // if this parent is allowed this property, and 
-        if (!$property->allowsParent($this))
+        if (!$attachable->allowsParent($this))
         {
-            throw new qCal_Exception('Property ' . $property->getType() . ' may not be set on a ' . $this->getType() . ' component');
+            throw new qCal_Exception('A ' . $attachable . ' may not be set on a ' . $this);
         }
-        if ($this->hasProperty($property->getType()))
+        if ($this->has($attachable->getType()))
         {
-            if (!$property->isMultiple())
+            if (!$attachable->isMultiple())
             {
-                throw new qCal_Exception('Property ' . $property->getType() . ' is already set and does not allow multiple values');
+                throw new qCal_Exception('A ' . $attachable . ' is already set and does not allow multiple values');
             }
-            if ($localProperty = $this->getProperty($property->getType()))
+            if ($localattachable = $this->get($attachable->getType()))
             {
-                $localProperty->addValue($property->getValue());
+                $localattachable->addValue($attachable);
             }
         }
-        $this->_properties[] = $property;
+        $this->_children[] = $attachable;
     }
-    public function removeProperty($name)
+    public function remove($name)
     {
-        foreach ($this->_properties as $key => $property)
+        foreach ($this->_children as $key => $child)
         {
-            // returns first property of correct type
-            // still am not sure if properties can be set multiple times - luke
-            if ($property->getType() == $name) unset($this->_properties[$key]);
+            // removes first property of correct type
+            if ($child->getType() == $name) unset($this->_children[$key]);
         }
     }
     /**
-     * Retrieve a property from this component
+     * Retrieve a property/component from this component
      * 
      * @var name - the property name we are trying to get
      */
-    public function getProperty($name)
+    public function get($name)
     {
-        foreach ($this->_properties as $property)
-        {
-            // returns first property of correct type
-            // still am not sure if properties can be set multiple times - luke
-            if ($property->getType() == $name) return $property;
-        }
-    }
-    /**
-     * Check if  a property is in this component
-     * 
-     * @var name - the property name
-     */
-    public function hasProperty($name)
-    {
-        foreach ($this->_properties as $property)
+        foreach ($this->_children as $child)
         {
             // returns first property of correct type
             // properties who can be set multiple times will get an object back with multiple values
-            if ($property->getType() == $name) return true;
+            if ($child->getType() == $name) return $child;
         }
     }
     /**
-     * Add a component for this component. Components can only be set if their type
-     * is in $this->_allowedComponents and if they comply with RFC 2445
+     * Check if  a property/component is in this component
      * 
-     * @var name - the component name we are trying to set
-     * @var value - the value of the component
+     * @var name - the property name
      */
-    public function addComponent(qCal_Component $component)
+    public function has($name)
     {
-        /*I changed the arguments for this, it seemed like it wouldn't
-         * be uncommon to not need a name when the object is added.
-         * I'm willing to admit I could be totally wrong here :)
-         *  
-         * nope, you're absolutely right - nice catch
-         * in fact, a key is completely unnecessary  - luke :)
-         * ***********************************************************/
-         
-         // by the way, from now on if you want to add comments just do it like this
-         // the comments above the methods are written like that because they are what
-         // is called docblocks. look up "php docblocks" on google - luke
-        $this->_components[] = $component;
-    }
-    /**
-     * Retrieve a component from this component
-     * 
-     * @var name - the component name we are trying to get
-     */
-    public function getComponent($name)
-    {
-        foreach ($this->_components as $component)
+        foreach ($this->_properties as $property)
         {
             // returns first property of correct type
-            // still am not sure if properties can be set multiple times - luke
-            if ($component->getType() == $name) return $component;
+            if ($property->getType() == $name) return true;
         }
     }
     public function serialize()

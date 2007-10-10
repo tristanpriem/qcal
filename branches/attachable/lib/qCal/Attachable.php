@@ -15,6 +15,13 @@ abstract class qCal_Attachable
         return (in_array($component->getType(), $this->_validParents));
     }
     /**
+     * Get the type of component
+     */
+    public function getType()
+    {
+        return strtoupper($this->_name);
+    }
+    /**
      * Tells whether this component is RFC-Compliant
      *
      * @returns boolean

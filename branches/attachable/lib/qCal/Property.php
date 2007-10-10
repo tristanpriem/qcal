@@ -65,13 +65,6 @@ abstract class qCal_Property extends qCal_Attachable
     {
         return strtoupper($this->_name);
     }
-    /**
-     * Pass in a property name and this will tell you whether this property is of that type
-    public function isA($name)
-    {
-        return $this->getName() == strtoupper($name);
-    }
-     */
     public function isMultiple()
     {
         return (bool) $this->_multiple;
@@ -99,7 +92,6 @@ abstract class qCal_Property extends qCal_Attachable
         // @todo: add global property validation
         return $this->evaluateIsValid();
     }
-    
     /**
      * Any formatting that should be done on the value is done here
      * (kind of like a filter) - it defaults to no formatting
