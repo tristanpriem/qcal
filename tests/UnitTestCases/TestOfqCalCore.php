@@ -2,6 +2,7 @@
 
 
 require_once 'qCal/Property.php';
+require_once 'qCal/Property/prodid.php';
 require_once 'qCal/Component.php';
 require_once 'qCal/Property/MultipleValue.php';
 Mock::Generate('qCal_Property');
@@ -39,24 +40,24 @@ class TestOfqCalCore extends UnitTestCase
     public function testCreatevCalendarObject()
     {
         $cal = qCal::create();
-        $this->assertIsA($cal, 'qCal_Component_vcalendar');
+        $this->assertTrue($cal instanceof qCal_Component_vcalendar);
     }
-    public function testAddProperty()
+    public function testAttachProperty()
     {
         
         $cal = qCal::create();
-        $cal->addProperty($this->mockProperty);
-        $compareprop = $cal->getProperty('PRODID');
+        $cal->attach($this->mockProperty);
+        $compareprop = $cal->get('PRODID');
         
         $this->assertEqual($compareprop->serialize(), 'value');
     }
     public function testRemoveProperty()
     {
         $cal = qCal::create();
-        $cal->addProperty($this->mockProperty);
-        $this->assertEqual($cal->getProperty('PRODID')->serialize(), 'value');
+        $cal->attach($this->mockProperty);
+        $this->assertEqual($cal->get('PRODID')->serialize(), 'value');
         
-        $cal->removeProperty('PRODID');
+        $cal->remove('PRODID');
         $this->assertNull($cal->getProperty('PRODID'));
     }
     public function testAddExistingNonMultiplePropertyThrowsException()
@@ -68,8 +69,8 @@ class TestOfqCalCore extends UnitTestCase
         $property->setReturnValue('allowsParent', true);
         
         $this->expectException(new qCal_Exception('Property ' . $property->getType() . ' is already set and does not allow multiple values'));
-        $cal->addProperty($property);
-        $cal->addProperty($property);
+        $cal->attach($property);
+        $cal->attach($property);
     }
     public function testAddExistingMultiplePropertyAddsToProperty()
     {
@@ -88,8 +89,8 @@ class TestOfqCalCore extends UnitTestCase
         $property2->setReturnValue('isMultiple', true);
         $property2->setReturnValue('allowsParent', true);
         
-        $cal->addProperty($property);
-        $cal->addProperty($property2);
+        $cal->attach($property);
+        $cal->attach($property2);
         
         $properties = $cal->getProperty('PROPERTY');
         
@@ -113,7 +114,7 @@ class TestOfqCalCore extends UnitTestCase
         $component->setReturnValue('serialize', 'test');
         
         $cal->addComponent($component);
-        $comparecomponent = $cal->getComponent('test');
+        $comparecomponent = $cal->get('test');
         $this->assertEqual($comparecomponent->serialize(), 'test');
     }
     /*
