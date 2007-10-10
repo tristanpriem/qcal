@@ -36,4 +36,13 @@ class qCal_Component_vcalendar extends qCal_Component
         header('Content-Type: ' . qCal::CONTENT_TYPE . '; charset=' . qCal::charset());
         return parent::__toString();
     }
+    /**
+     * Tells whether this component is RFC-Compliant
+     *
+     * @returns boolean
+     */
+    public function isValid()
+    {
+        return !empty($this->_components);
+    }
 }

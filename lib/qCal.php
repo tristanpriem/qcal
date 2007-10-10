@@ -33,19 +33,18 @@ class qCal
      */
     const LINE_FOLD_LENGTH  = 75;
     /**
-     * Flags for allowed properties / components
-     * these still have not provided a use to me yet - they still may though
-     */
-    const OPTIONAL = 1; // binary 0001
-    const ONCE     = 2; // binary 0010
-    const REQUIRED = 4; // binary 0100 
-    /**
-     * @todo: add support for x-name properties
-     * @todo: find all allowed components in rfc
-    protected $_allowedComponents = array('VEVENT', 'VTODO', 'VJOURNAL', 'VALARM', 'VFREEBUSY', 'VTIMEZONE');
+     * Character set of this object
      */
     protected static $_charset = null;
+    /**
+     * You cannot instantiate this object - use qCal::create()
+     */
     private function __construct() { }
+    /**
+     * You cannot instantiate this object since it isn't a component
+     * This method returns an actual vcalendar component
+     * while I don't especially like this... I don't know any way around it
+     */
     public static function create()
     {
         return new qCal_Component_vcalendar();
