@@ -1,5 +1,5 @@
 <?php
-
+require_once 'qCal/Component/vcalendar.php';
 class qCal
 {
     public function __construct()
@@ -9,5 +9,6 @@ class qCal
     
     public static function create()
     {
+        return new qCal_Component_vcalendar();
     }
 }
