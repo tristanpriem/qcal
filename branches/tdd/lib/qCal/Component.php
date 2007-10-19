@@ -8,5 +8,6 @@ abstract class qCal_Component extends qCal_Attachable
         {
             throw new qCal_Exception('You have supplied an invalid object to qCal_Component::attach');
         }
+        return true;
     }
 }

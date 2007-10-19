@@ -58,6 +58,14 @@ class Test_Of_qCal_Component extends UnitTestCase
         $attachable->setReturnValue('canAttachTo', false);
         $calendar->attach($attachable);
     }
+    
+    public function test_qCal_Can_Attach_Valid_Attachable()
+    {
+        $calendar = qCal::create();
+        $attachable = new Mock_qCal_Attachable(); // property or component
+        $attachable->setReturnValue('canAttachTo', true);
+        $this->assertTrue($calendar->attach($attachable));
+    }
 }
 
 $test = new GroupTest('Core qCal Tests');
