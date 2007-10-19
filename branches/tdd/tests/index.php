@@ -30,13 +30,18 @@ class Test_Of_qCal_Component extends UnitTestCase
         $calendar = new Mock_qCal_Component;
         $this->assertTrue($calendar instanceof qCal_Attachable);
     }
-    
+    public function test_qCal_Get_Type()
+    {
+        $this->assertEqual(qCal::create()->getType(), 'VCALENDAR');
+    }
+}
+class Test_Of_qCal_Core_Component extends UnitTestCase
+{
     public function test_qCal_Cannot_Be_Instantiated()
     {
         $this->expectException(new qCal_Exception('qCal cannot be instantiated. Use qCal::create()'));
         $calendar = new qCal();
     }
-    
     public function test_Create_qCal_Component_vcalendar()
     {
         $calendar = qCal::create();
@@ -44,12 +49,6 @@ class Test_Of_qCal_Component extends UnitTestCase
         $this->assertTrue($calendar instanceof qCal_Component);
         $this->assertTrue($calendar instanceof qCal_Attachable);
     }
-    
-    public function test_qCal_Get_Type()
-    {
-        $this->assertEqual(qCal::create()->getType(), 'VCALENDAR');
-    }
-    
     public function test_qCal_Cannot_Attach_Invalid_Attachable()
     {
         $this->expectException(new qCal_Exception('You have supplied an invalid object to qCal_Component::attach'));
@@ -58,7 +57,6 @@ class Test_Of_qCal_Component extends UnitTestCase
         $attachable->setReturnValue('canAttachTo', false);
         $calendar->attach($attachable);
     }
-    
     public function test_qCal_Can_Attach_Valid_Attachable()
     {
         $calendar = qCal::create();
@@ -70,4 +68,5 @@ class Test_Of_qCal_Component extends UnitTestCase
 
 $test = new GroupTest('Core qCal Tests');
 $test->addTestCase(new Test_Of_qCal_Component);
+$test->addTestCase(new Test_Of_qCal_Core_Component);
 $test->run(new HtmlReporter());
