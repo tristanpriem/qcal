@@ -1,8 +1,7 @@
 <?php
-class qCal_Attachable
+abstract class qCal_Attachable
 {
-    public function attach()
+    public function canAttachTo(qCal_Component $component)
     {
-        throw new qCal_Exception('qCal_Component::attach() can only accept an instance of qCal_Attachable');
     }
 }
