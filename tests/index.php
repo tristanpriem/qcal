@@ -45,6 +45,11 @@ class Test_Of_qCal_Component extends UnitTestCase
         $this->assertTrue($calendar instanceof qCal_Attachable);
     }
     
+    public function test_qCal_Get_Type()
+    {
+        $this->assertEqual(qCal::create()->getType(), 'VCALENDAR');
+    }
+    
     public function test_qCal_Cannot_Attach_Invalid_Attachable()
     {
         $this->expectException(new qCal_Exception('You have supplied an invalid object to qCal_Component::attach'));
@@ -52,11 +57,6 @@ class Test_Of_qCal_Component extends UnitTestCase
         $attachable = new Mock_qCal_Attachable(); // property or component
         $attachable->setReturnValue('canAttachTo', false);
         $calendar->attach($attachable);
-    }
-    
-    public function test_qCal_Get_Type()
-    {
-        $this->assertEqual(qCal::create()->getType(), 'VCALENDAR');
     }
 }
 
