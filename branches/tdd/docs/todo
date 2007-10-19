@@ -1,0 +1,3 @@
+
+- Change current qCal to be qCal_Component_icalendar
+- Keep qCal base object, but just make it a wrapper for things like the newlines constants and the rendering logic etc.

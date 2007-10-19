@@ -1,0 +1,35 @@
+Expected Release Date for v0.10
+
+ October 26th, 2007
+
+Features we'd like for the first release (v0.10)
+
+ * Create a fully rfc-compliant icalendar file from scratch
+ * output it to the screen (with right headers etc.)
+ * be able to save to a file on local drive
+
+Unit tests we need
+
+ * We need to test all property classes to see that they comply with the rfc (parameter names, values)
+ * We need to test that qCal only accepts the values permitted in the rfc
+
+Miscillaneous Notes:
+
+ * I'm wondering if we should include some type of log inside the core qCal class so that when errors
+   happen they are logged rather than shoved in the user's face
+   
+ * OK, I figured out the solution - a property object (if it allows multiple parameters) will extend
+   a qCal_Property_MultipleValue object that in turn extends qCal_Component - this multiple (abstract)
+   class will define $value as an array or something (instead of a standard value). Then when it serializes,
+   it will just do a implode(';', $this->value )
+   
+   - Actually ; is meant for parameters. Parameters are set on Properties... I haven't got to them yet
+     When I do, that's how it will be done... Properties are serialized with line endings instead of
+     semi-colons - Luke 10/9/07
+   
+ * Also, I may be adding a qCal_Component_icalendar component instead of making the base qCal object a 
+   component. I am not sure yet... I'll play around with it (still playing around with the idea - 10/09/2007
+   
+ * Josh - Didn't you mention something about doing $this->allowedParents instead of 
+   $this->allowedProperties and $this->allowedComponents? Well if you did, that's a great idea. I'm
+   going to play around with that for a while. :)
