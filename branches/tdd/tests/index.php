@@ -41,7 +41,18 @@ class Test_Of_qCal_Component extends UnitTestCase
      */
     public function test_qCal_Component_Serialize_rfc2445()
     {
+        $expected = "BEGIN:VCALENDAR\r\n";
+        $expected .= "BEGIN:TESTCOMPONENT\r\n";
+        $expected .= "END:TESTCOMPONENT\r\n";
+        $expected .= "END:VCALENDAR";
         
+        $cal = qCal::create();
+        $component = new Mock_qCal_Component;
+        $component->setReturnValue('canAttachTo', true);
+        $component->setReturnValue('getType', 'TESTCOMPONENT');
+        $component->setReturnValue('serialize', "BEGIN:TESTCOMPONENT\r\nEND:TESTCOMPONENT");
+        $cal->attach($component);
+        $this->assertEqual($cal->serialize(), $expected);
     }
     /**
      * An attempt to attach an invalid attachable should result in an exception being thrown
@@ -115,6 +126,13 @@ class Test_Of_qCal_Core_Component extends UnitTestCase
         $this->assertTrue($calendar instanceof qCal_Component);
         $this->assertTrue($calendar instanceof qCal_Attachable);
     }
+    /**
+     * 
+    public function test_qCal_Uses_Correct_Line_Endings()
+    {
+        $this->assertEqual(qCal::LINE_ENDING, "\r\n");
+    }
+     */
 }
 
 $test = new GroupTest('Core qCal Tests');
