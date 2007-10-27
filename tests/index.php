@@ -67,6 +67,20 @@ class Test_Of_qCal_Component extends UnitTestCase
         $this->assertTrue($calendar->attach($attachable));
         $this->assertEqual($calendar->get('ACTUAL'), $attachable);
     }
+    /**
+     * Detach method should return true if it successfully removes, false if
+     * the object it is trying to remove does't exist
+     */
+    public function test_qCal_Detach()
+    {
+        $cal = qCal::create();
+        $attachable = new Mock_qCal_Attachable(); // property or component or param
+        $attachable->setReturnValue('canAttachTo', true);
+        $attachable->setReturnValue('getType', 'TESTTYPE');
+        $cal->attach($attachable);
+        $this->assertTrue($cal->detach('TESTTYPE'));
+        $this->assertFalse($cal->detach('NONEXISTANT'));
+    }
 }
 
 /**
