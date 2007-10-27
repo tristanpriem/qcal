@@ -29,6 +29,9 @@ class Mock_qCal_Component_ValidParents extends qCal_Component
 {
     protected $validParents = array('VCALENDAR');
 }
+class qCal_Property_Generic extends qCal_Property
+{
+}
 
 /**
  * Test components generically (none specifically)
@@ -169,6 +172,14 @@ class Test_Of_qCal_Property extends UnitTestCase
     {
         $property = new Mock_qCal_Property;
         $this->assertTrue($property instanceof qCal_Attachable);
+    }
+    /**
+     * Test that you can get the value of a property
+     */
+    public function test_qCal_getValue_Returns_Value()
+    {
+        $property = new qCal_Property_Generic('value'); // just a generic testing object
+        $this->assertEqual($property->getValue(), 'value');
     }
 }
 

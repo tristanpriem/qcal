@@ -11,6 +11,7 @@ class qCal_Renderer_Default extends qCal_Renderer
     const END = 'END:';
     /**
      * Return component in icalendar format
+     * @todo: add this to qCal_Renderer and move as much logic as possible in there
      */
     public function render(qCal_Component $component)
     {
@@ -34,7 +35,10 @@ class qCal_Renderer_Default extends qCal_Renderer
         
         return implode(qCal::LINE_ENDING, $lines);
     }
-    
+    /**
+     * Renders a qCal_Property
+     * @todo: add qCal_Renderer::renderProperty (as an abstract)
+     */
     protected function renderProperty(qCal_Property $property)
     {
         return $child->getType() . ':' . $child->getValue();
