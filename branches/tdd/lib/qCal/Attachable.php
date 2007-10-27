@@ -50,4 +50,19 @@ abstract class qCal_Attachable
     {
         return array_key_exists($type, $this->children) ? $this->children[$type] : false;
     }
+    /**
+     * Detaches an attachable from this object
+     *
+     * @var string - the "type" of attachable you would like to detach
+     * @returns boolean - if detach was successful, returns true, otherwise false
+     */
+    public function detach($type)
+    {
+        if (array_key_exists($type, $this->children))
+        {
+            unset($this->children[$type]);
+            return true;
+        }
+        return false;
+    }
 }
