@@ -127,12 +127,12 @@ class Test_Of_qCal_Core_Component extends UnitTestCase
         $this->assertTrue($calendar instanceof qCal_Attachable);
     }
     /**
-     * 
+     * Test that qCal object uses rfc-compliant line endings
+     */
     public function test_qCal_Uses_Correct_Line_Endings()
     {
         $this->assertEqual(qCal::LINE_ENDING, "\r\n");
     }
-     */
 }
 
 $test = new GroupTest('Core qCal Tests');
