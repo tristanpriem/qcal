@@ -16,10 +16,12 @@ require_once 'simpletest/mock_objects.php';
 
 require_once 'qCal.php';
 require_once 'qCal/Component.php';
+require_once 'qCal/Renderer.php';
 require_once 'qCal/Exception.php';
 
 Mock::generate('qCal_Component', 'Mock_qCal_Component');
 Mock::generate('qCal_Attachable', 'Mock_qCal_Attachable');
+Mock::generate('qCal_Renderer', 'Mock_qCal_Renderer');
 
 /**
  * Test components generically (none specifically)
@@ -135,7 +137,34 @@ class Test_Of_qCal_Core_Component extends UnitTestCase
     }
 }
 
+require_once 'qCal/Renderer/Default.php';
+
+/**
+ * Test calendar renderer
+ */
+class Test_Of_qCal_Renderer extends UnitTestCase
+{
+    public function test_Default_Renderer()
+    {
+        $cal = qCal::create();
+        $component = new Mock_qCal_Component;
+        $component->setReturnValue('canAttachTo', true);
+        $component->setReturnValue('getType', 'TESTCOMPONENT');
+        $component->setReturnValue('serialize', "BEGIN:TESTCOMPONENT\r\nEND:TESTCOMPONENT");
+        $cal->attach($component);
+        
+        $expected = "BEGIN:VCALENDAR\r\n";
+        $expected .= "BEGIN:TESTCOMPONENT\r\n";
+        $expected .= "END:TESTCOMPONENT\r\n";
+        $expected .= "END:VCALENDAR";
+        
+        $renderer = new qCal_Renderer_Default();
+        $this->assertEqual($expected, $renderer->render($cal));
+    }
+}
+
 $test = new GroupTest('Core qCal Tests');
 $test->addTestCase(new Test_Of_qCal_Component);
 $test->addTestCase(new Test_Of_qCal_Core_Component);
+$test->addTestCase(new Test_Of_qCal_Renderer);
 $test->run(new HtmlReporter());
