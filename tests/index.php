@@ -179,6 +179,9 @@ class Test_Of_qCal_Renderer extends UnitTestCase
         
         $renderer = new qCal_Renderer_Default();
         $this->assertEqual($expected, $cal->render($renderer));
+        
+        // if you don't pass in a renderer, it uses the default one
+        $this->assertEqual($expected, $cal->render());
     }
 }
 

@@ -34,15 +34,9 @@ class qCal_Renderer_Default extends qCal_Renderer
         
         return implode(qCal::LINE_ENDING, $lines);
     }
+    
     protected function renderProperty(qCal_Property $property)
     {
         return $child->getType() . ':' . $child->getValue();
     }
 }
-
-/**
-strtoupper(self::BEGIN . $child->getType());
-
-
-        
-        **/
