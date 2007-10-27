@@ -16,9 +16,11 @@ require_once 'simpletest/mock_objects.php';
 
 require_once 'qCal.php';
 require_once 'qCal/Component.php';
+require_once 'qCal/Property.php';
 require_once 'qCal/Renderer.php';
 require_once 'qCal/Exception.php';
 
+Mock::generate('qCal_Property', 'Mock_qCal_Property');
 Mock::generate('qCal_Component', 'Mock_qCal_Component');
 Mock::generate('qCal_Attachable', 'Mock_qCal_Attachable');
 Mock::generate('qCal_Renderer', 'Mock_qCal_Renderer');
@@ -110,7 +112,6 @@ class Test_Of_qCal_Component extends UnitTestCase
         $event = new Mock_qCal_Component_ValidParents;
         
         $this->assertTrue($cal->attach($event));
-        // $this->assertFalse($event->attach($event));
     }
 }
 
@@ -155,6 +156,22 @@ class Test_Of_qCal_Core_Component extends UnitTestCase
     }
 }
 
+/**
+ * Test calendar renderer
+ */
+class Test_Of_qCal_Property extends UnitTestCase
+{
+    /**
+     * Test that a property is "attachable" (extendes qCal_Attachable)
+     * to another component
+     */
+    public function test_qCal_Property_Is_Attachable()
+    {
+        $property = new Mock_qCal_Property;
+        $this->assertTrue($property instanceof qCal_Attachable);
+    }
+}
+
 require_once 'qCal/Renderer/Default.php';
 
 /**
@@ -186,6 +203,7 @@ class Test_Of_qCal_Renderer extends UnitTestCase
 }
 
 $test = new GroupTest('Core qCal Tests');
+$test->addTestCase(new Test_Of_qCal_Property);
 $test->addTestCase(new Test_Of_qCal_Component);
 $test->addTestCase(new Test_Of_qCal_Core_Component);
 $test->addTestCase(new Test_Of_qCal_Renderer);
