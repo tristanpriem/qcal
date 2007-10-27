@@ -16,6 +16,10 @@ abstract class qCal_Attachable
      */
     protected $children;
     /**
+     * @var array of types this attachable can attach to
+     */
+    protected $validParents = array();
+    /**
      * Public accessor for private $type
      */
     public function getType()
@@ -29,6 +33,7 @@ abstract class qCal_Attachable
      */
     public function canAttachTo(qCal_Component $component)
     {
+        return (in_array($component->getType(), $this->validParents));
     }
     public function attach(qCal_Attachable $attachable)
     {

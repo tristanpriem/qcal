@@ -1,5 +1,5 @@
 <?php
-
+// @todo: change qCal_Component_vcalendar to qCal_Component_Core or qCal_Component_Calendar
 set_include_path(
     //'\\\\Mc2-server\\Software Downloads\\PHP Libs' . PATH_SEPARATOR .
     //'\\\\Mc2-server\\Projects\\MC2 Design\\002967_qCal_ Library_and_App\\Web_Build\\lib' . PATH_SEPARATOR .
@@ -22,6 +22,12 @@ require_once 'qCal/Exception.php';
 Mock::generate('qCal_Component', 'Mock_qCal_Component');
 Mock::generate('qCal_Attachable', 'Mock_qCal_Attachable');
 Mock::generate('qCal_Renderer', 'Mock_qCal_Renderer');
+
+class Mock_qCal_Component_Event extends qCal_Component
+{
+    protected $type = 'VEVENT';
+    protected $validParents = array('VCALENDAR');
+}
 
 /**
  * Test components generically (none specifically)
@@ -93,6 +99,18 @@ class Test_Of_qCal_Component extends UnitTestCase
         $cal->attach($attachable);
         $this->assertTrue($cal->detach('TESTTYPE'));
         $this->assertFalse($cal->detach('NONEXISTANT'));
+    }
+    
+    /**
+     * Test that components are only allowed to be attached to a "valid" parent
+     */
+    public function test_qCal_Component_Cannot_Attach_If_Not_In_Valid_Parents()
+    {
+        $cal = qCal::create();
+        
+        $event = new Mock_qCal_Component_Event;
+        
+        $this->assertTrue($cal->attach($event));
     }
 }
 
