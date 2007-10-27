@@ -36,19 +36,12 @@ class Test_Of_qCal_Component extends UnitTestCase
         $this->assertTrue($calendar instanceof qCal_Attachable);
     }
     /**
-     * Test that components give you the correct type (this may need to
-     * be moved into more specific since it uses a specific component
-     */
-    public function test_qCal_Get_Type()
-    {
-        $this->assertEqual(qCal::create()->getType(), 'VCALENDAR');
-    }
-    /**
      * Test that when you serialize the data, it is valid according to 
      * RFC 2445
      */
     public function test_qCal_Component_Serialize_rfc2445()
     {
+        
     }
 }
 
@@ -57,6 +50,14 @@ class Test_Of_qCal_Component extends UnitTestCase
  */
 class Test_Of_qCal_Core_Component extends UnitTestCase
 {
+    /**
+     * Test that components give you the correct type (this may need to
+     * be moved into more specific since it uses a specific component
+     */
+    public function test_qCal_Get_Type()
+    {
+        $this->assertEqual(qCal::create()->getType(), 'VCALENDAR');
+    }
     /**
      * The qCal class cannot be instantiated because it is just a factory
      * for creating qCal_Component_vcalendar objects
