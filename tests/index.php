@@ -23,9 +23,8 @@ Mock::generate('qCal_Component', 'Mock_qCal_Component');
 Mock::generate('qCal_Attachable', 'Mock_qCal_Attachable');
 Mock::generate('qCal_Renderer', 'Mock_qCal_Renderer');
 
-class Mock_qCal_Component_Event extends qCal_Component
+class Mock_qCal_Component_ValidParents extends qCal_Component
 {
-    protected $type = 'VEVENT';
     protected $validParents = array('VCALENDAR');
 }
 
@@ -47,7 +46,7 @@ class Test_Of_qCal_Component extends UnitTestCase
      * Test that when you serialize the data, it is valid according to 
      * RFC 2445
      */
-    public function test_qCal_Component_Serialize_rfc2445()
+    public function test_qCal_Component_Default_Renders_To_RFC2445()
     {
         $expected = "BEGIN:VCALENDAR\r\n";
         $expected .= "BEGIN:TESTCOMPONENT\r\n";
@@ -58,9 +57,10 @@ class Test_Of_qCal_Component extends UnitTestCase
         $component = new Mock_qCal_Component;
         $component->setReturnValue('canAttachTo', true);
         $component->setReturnValue('getType', 'TESTCOMPONENT');
-        $component->setReturnValue('serialize', "BEGIN:TESTCOMPONENT\r\nEND:TESTCOMPONENT");
+        $component->setReturnValue('render', "BEGIN:TESTCOMPONENT\r\nEND:TESTCOMPONENT");
+        $component->setReturnValue('getChildren', array());
         $cal->attach($component);
-        $this->assertEqual($cal->serialize(), $expected);
+        $this->assertEqual($cal->render(), $expected);
     }
     /**
      * An attempt to attach an invalid attachable should result in an exception being thrown
@@ -107,10 +107,10 @@ class Test_Of_qCal_Component extends UnitTestCase
     public function test_qCal_Component_Cannot_Attach_If_Not_In_Valid_Parents()
     {
         $cal = qCal::create();
-        
-        $event = new Mock_qCal_Component_Event;
+        $event = new Mock_qCal_Component_ValidParents;
         
         $this->assertTrue($cal->attach($event));
+        // $this->assertFalse($event->attach($event));
     }
 }
 
@@ -168,7 +168,8 @@ class Test_Of_qCal_Renderer extends UnitTestCase
         $component = new Mock_qCal_Component;
         $component->setReturnValue('canAttachTo', true);
         $component->setReturnValue('getType', 'TESTCOMPONENT');
-        $component->setReturnValue('serialize', "BEGIN:TESTCOMPONENT\r\nEND:TESTCOMPONENT");
+        $component->setReturnValue('getChildren', array());
+        $component->setReturnValue('render', "BEGIN:TESTCOMPONENT\r\nEND:TESTCOMPONENT");
         $cal->attach($component);
         
         $expected = "BEGIN:VCALENDAR\r\n";
@@ -177,7 +178,7 @@ class Test_Of_qCal_Renderer extends UnitTestCase
         $expected .= "END:VCALENDAR";
         
         $renderer = new qCal_Renderer_Default();
-        $this->assertEqual($expected, $renderer->render($cal));
+        $this->assertEqual($expected, $cal->render($renderer));
     }
 }
 

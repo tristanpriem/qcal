@@ -70,8 +70,12 @@ abstract class qCal_Attachable
         }
         return false;
     }
+    public function getChildren()
+    {
+        return (array) $this->children;
+    }
     /**
      * Serializes data to valid rfc 2445 format
-     */
     abstract public function serialize();
+     */
 }
