@@ -43,6 +43,30 @@ class Test_Of_qCal_Component extends UnitTestCase
     {
         
     }
+    /**
+     * An attempt to attach an invalid attachable should result in an exception being thrown
+     */
+    public function test_qCal_Cannot_Attach_Invalid_Attachable()
+    {
+        $this->expectException(new qCal_Exception('You have supplied an invalid object to qCal_Component::attach'));
+        $calendar = qCal::create();
+        $attachable = new Mock_qCal_Attachable(); // property or component
+        $attachable->setReturnValue('canAttachTo', false);
+        $calendar->attach($attachable);
+    }
+    /**
+     * Attaching a valid "attachable" results in a return value of true
+     * also it should become available via said component's get() method
+     */
+    public function test_qCal_Can_Attach_Valid_Attachable()
+    {
+        $calendar = qCal::create();
+        $attachable = new Mock_qCal_Attachable(); // property or component
+        $attachable->setReturnValue('canAttachTo', true);
+        $attachable->setReturnValue('getType', 'ACTUAL');
+        $this->assertTrue($calendar->attach($attachable));
+        $this->assertEqual($calendar->get('ACTUAL'), $attachable);
+    }
 }
 
 /**
@@ -76,30 +100,6 @@ class Test_Of_qCal_Core_Component extends UnitTestCase
         $this->assertTrue($calendar instanceof qCal_Component_vcalendar);
         $this->assertTrue($calendar instanceof qCal_Component);
         $this->assertTrue($calendar instanceof qCal_Attachable);
-    }
-    /**
-     * An attempt to attach an invalid attachable should result in an exception being thrown
-     */
-    public function test_qCal_Cannot_Attach_Invalid_Attachable()
-    {
-        $this->expectException(new qCal_Exception('You have supplied an invalid object to qCal_Component::attach'));
-        $calendar = qCal::create();
-        $attachable = new Mock_qCal_Attachable(); // property or component
-        $attachable->setReturnValue('canAttachTo', false);
-        $calendar->attach($attachable);
-    }
-    /**
-     * Attaching a valid "attachable" results in a return value of true
-     * also it should become available via said component's get() method
-     */
-    public function test_qCal_Can_Attach_Valid_Attachable()
-    {
-        $calendar = qCal::create();
-        $attachable = new Mock_qCal_Attachable(); // property or component
-        $attachable->setReturnValue('canAttachTo', true);
-        $attachable->setReturnValue('getType', 'ACTUAL');
-        $this->assertTrue($calendar->attach($attachable));
-        $this->assertEqual($calendar->get('ACTUAL'), $attachable);
     }
 }
 
