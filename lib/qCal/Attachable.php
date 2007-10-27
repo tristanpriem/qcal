@@ -65,4 +65,8 @@ abstract class qCal_Attachable
         }
         return false;
     }
+    /**
+     * Serializes data to valid rfc 2445 format
+     */
+    abstract public function serialize();
 }
