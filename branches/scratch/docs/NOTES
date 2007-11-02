@@ -1,0 +1,51 @@
+Compontents
+
+A component is the highest up the tree of what can be added to an icalendar
+file. In fact, vcalendar is just a component made of components. Components can
+have children components. They can also have properties. 
+
+Properties
+
+A property must be attached to a component. Properties are kind of like attrib-
+utes in html. A tag would be the component, and a property would be the attrib-
+ute. Properties can have parameters.
+
+Property parameters
+
+A property parameter tells a little more about that property. There is not any
+good comparison in (x)html for property parameters. In xCal, they are represen-
+ted like so:
+
+  <component>
+    <property param="blibla" param="blebla">
+    </property>
+    <property>Content 2</property>
+  </component>
+
+Renderer
+
+A renderer simply takes a qCal object and represents it. It does not save to a
+file or a database or anything like that. That is for exporters. A renderer 
+simply represents the data (generally in some text format)
+
+Filter
+
+Pass a filter to any component, and it will give you back child components that
+match your filter. For instance, you could write a vevent filter that filters
+by date. You could write a todo filter that filters by status (done/not done).
+
+Date
+
+Since this library is so heavily date-based, I think it is a good idea to
+provide our own date format class. Basically any time you need to represent a 
+date within qCal, use qCal_Date.
+
+Import
+
+Importers simply import data from some outside source into a qCal object
+
+Export
+
+Exporters simply export data from qCal object some other format... you will
+need to render the data before you can export it usually (except in cases where     
+the data will be represented in a database or something of that nature.
