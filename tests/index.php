@@ -1,27 +1,22 @@
 <?php
-
+// require convenience functions
+require_once 'convenience.php';
+// define path to simpletest here
+define('SIMPLETEST_PATH', realpath('./simpletest'));
+define('QCAL_PATH', realpath('../qCal'));
+// establish include path
 set_include_path(
-    //'\\\\Mc2-server\\Software Downloads\\PHP Libs' . PATH_SEPARATOR .
-    //'\\\\Mc2-server\\Projects\\MC2 Design\\002967_qCal_ Library_and_App\\Web_Build\\lib' . PATH_SEPARATOR .
-    'C:\\htdocs\\qCal\\lib' . PATH_SEPARATOR .
-    'C:\\phplib' . PATH_SEPARATOR .
-    'C:\\htdocs\\library' . PATH_SEPARATOR .
-    // add simpletest directory here
+    SIMPLETEST_PATH . PATH_SEPARATOR .
+    QCAL_PATH . PATH_SEPARATOR .
     get_include_path()
 );
-
-require_once 'simpletest/unit_tester.php';
-require_once 'simpletest/reporter.php';
-require_once 'simpletest/mock_objects.php';
-
-require_once 'qCal.php';
-require_once 'qCal/Component.php';
-//require_once 'qCal/Property/MultipleValue.php';
-
-require_once 'UnitTestCases/TestOfqCalCore.php';
-require_once 'UnitTestCases/TestOfqCalProperties.php';
-
+// require necessary simpletest files
+require_once 'unit_tester.php';
+require_once 'reporter.php';
+require_once 'mock_objects.php';
+// require test cases
+require_once 'UnitTestCases/TestParser.php';
+// add tests cases to group and run the tests
 $test = new GroupTest('Core qCal Tests');
-$test->addTestCase(new TestOfqCalCore);
-// $test->addTestCase(new TestOfqCalProperties);
+$test->addTestCase(new TestParser);
 $test->run(new HtmlReporter());
