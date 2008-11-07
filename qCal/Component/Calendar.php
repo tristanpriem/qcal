@@ -7,6 +7,7 @@
  */
 class qCal_Component_Calendar {
 
+	protected $name = "VCALENDAR";
+	protected $allowedParents = array();
 	
-
 }
