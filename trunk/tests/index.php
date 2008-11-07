@@ -3,7 +3,7 @@
 require_once 'convenience.php';
 // define path to simpletest here
 define('SIMPLETEST_PATH', realpath('./simpletest'));
-define('QCAL_PATH', realpath('../qCal'));
+define('QCAL_PATH', realpath('../'));
 // establish include path
 set_include_path(
     SIMPLETEST_PATH . PATH_SEPARATOR .

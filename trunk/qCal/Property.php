@@ -4,7 +4,7 @@
  * There are several properties defined in the icalendar specification.
  * All of those properties should extend this class
  */
-class qCal_Property {
+abstract class qCal_Property {
 
 	/**
 	 * @param string Property name (dtstart, rrule, etc)
@@ -15,9 +15,9 @@ class qCal_Property {
 	 */
 	protected $value;
 	/**
-	 * @param array Contains a list of components this property applies to
+	 * @param array Contains a list of components this property can apply to
 	 */
-	protected $appliesTo = array();
+	protected $canApplyTo = array();
 	/**
 	 * Class constructor
 	 */
