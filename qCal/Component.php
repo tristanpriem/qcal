@@ -5,7 +5,7 @@
  * All of those components should extend this class (including the 
  * iCalendar object)
  */
-class qCal_Component {
+abstract class qCal_Component {
 
 	/**
 	 * The name of this component
