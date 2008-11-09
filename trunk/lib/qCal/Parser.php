@@ -1,4 +1,8 @@
 <?php
+/**
+ * I don't even know if this is what I'll call this class. I may end up changing the interface completely.
+ * It very much depends on how the other classes flush out. We'll see!
+ */
 class qCal_Parser {
 
     

@@ -1,6 +1,15 @@
 <?php
 /**
- * RFC2445 STATES:
+ * Base property data type class. Every property value has a specific data
+ * type. Some of them are very simple, such as boolean. Others can be
+ * rather complex, such as rrule (specifies a date pattern for recurring
+ * events and other components).
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
+ * RFC 2445 Definition
  * 
  * The properties in an iCalendar object are strongly typed. The
  * definition of each property restricts the value to be one of the
