@@ -52,6 +52,24 @@ class TestParser extends UnitTestCase {
     
     }
     
+    public function testDateRecurrence() {
+	
+		$pattern = new DatePattern();
+		$pattern->until(1995);
+		// count() and until() cannot both be used
+		// $pattern->count(50); // repeat pattern 50 times
+		$pattern->frequency('yearly');
+		$pattern->byMonth(4);
+		$pattern->byMonthWeek(3);
+		$pattern->byDay('tuesday');
+		
+		// accepts either a date (11/5/2001), a date range (1992-1993) or another DatePattern object
+		// may not be possible to allow include() to include a pattern... not sure... find out.
+		$pattern->except($except);
+		$pattern->include($include);
+	
+    }
+    
     public function testFilterCalendar() {
     
     	$calendar = qCal::import('calendar.ics'); // imports calendar information from calendar file
