@@ -1,6 +1,13 @@
 <?php
 /**
- * Property
+ * Base component property class. version, attach, rrule are all examples
+ * of component properties.
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
+ * RFC 2445 Definition
  * 
  * A property is the definition of an individual attribute describing a
  * calendar or a calendar component. A property takes the form defined
@@ -17,10 +24,6 @@
  * case insensitive. For example, the property name "DUE" is the same as
  * "due" and "Due", DTSTART;TZID=US-Eastern:19980714T120000 is the same
  * as DtStart;TzID=US-Eastern:19980714T120000.
- * 
- * qCal_Property
- * There are several properties defined in the icalendar specification.
- * All of those properties should extend this class
  */
 abstract class qCal_Property {
 
