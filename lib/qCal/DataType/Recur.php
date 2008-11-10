@@ -1,5 +1,14 @@
 <?php
 /**
+ * Recur Data Type
+ * Specifies a pattern of dates, often for recurring events. This is an
+ * extremely versitile data type. It can represent a very wide range of
+ * recurring dates, as well as include and exclude dates.
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
  * Value Name: RECUR
  * 
  * Purpose: This value type is used to identify properties that contain

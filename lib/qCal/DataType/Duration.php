@@ -1,5 +1,13 @@
 <?php
 /**
+ * Duration (of time) Data Type
+ * This data type differs from "period" in that it does not specify start
+ * and end time, just the duration (5 weeks, 1 day, etc)
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
  * Value Name: DURATION
  * 
  * Purpose: This value type is used to identify properties that contain
