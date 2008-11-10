@@ -29,6 +29,7 @@ abstract class qCal_Property {
 
 	/**
 	 * Property name (dtstart, rrule, etc)
+	 * This can be auto-generated from the class name
 	 * @var string
 	 */
 	protected $name;
@@ -38,10 +39,15 @@ abstract class qCal_Property {
 	 */
 	protected $value;
 	/**
-	 * Property type
+	 * Property Data Type (this name gets converted to class name)
 	 * @var string
 	 */
 	protected $type;
+	/**
+	 * Property parameters
+	 * @var array
+	 */
+	protected $params = array();
 	/**
 	 * Contains a list of components this property is allowed to be specified
 	 * for
@@ -53,7 +59,7 @@ abstract class qCal_Property {
 	 */
 	public  function __construct() {
 	
-		// nothing here yet
+		$this->type = 
 	
 	}
 	/**
