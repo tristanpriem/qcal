@@ -54,7 +54,7 @@
  *   LOCATION;ALTREP="http://xyzcorp.com/conf-rooms/f123.vcf":
  *    Conference Room - F123, Bldg. 002
  */
-class qCal_Property_Geo extends qCal_Property {
+class qCal_Property_Location extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT', 'VTODO');
