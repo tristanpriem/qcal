@@ -39,7 +39,6 @@
  * property parameter type (e.g., all values of a particular "FBTYPE"
  * listed together in a single property).
  * 
- * 
  * Format Definition: The property is defined by the following notation:
  * 
  *   freebusy   = "FREEBUSY" fbparam ":" fbvalue
