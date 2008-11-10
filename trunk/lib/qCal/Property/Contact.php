@@ -75,6 +75,6 @@
 class qCal_Property_Contact extends qCal_Property {
 
 	protected $type = 'TEXT';
-	protected $allowedComponents = array('VTIMEZONE');
+	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL','VFREEBUSY');
 
 }
