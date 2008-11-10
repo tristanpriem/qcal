@@ -1,5 +1,13 @@
 <?php
 /**
+ * TimeZone Offset Data Type
+ * Some properties require a timezone offset. This specifies what that
+ * offset is
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
  * Value Name: UTC-OFFSET
  * 
  * Purpose: This value type is used to identify properties that contain

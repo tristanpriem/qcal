@@ -1,5 +1,12 @@
 <?php
 /**
+ * Float Data Type
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * @todo Should integer/float/boolean be related somehow? Inheritance?
+ * 
  * Value Name: FLOAT
  * 
  * Purpose: This value type is used to identify properties that contain

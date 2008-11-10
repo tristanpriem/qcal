@@ -1,5 +1,11 @@
 <?php
 /**
+ * URI Data Type
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
  * Value Name: URI
  * 
  * Purpose: This value type is used to identify values that contain a

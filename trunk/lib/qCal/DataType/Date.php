@@ -1,5 +1,11 @@
 <?php
 /**
+ * Date Data Type
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
  * Value Name: DATE
  * 
  * Purpose: This value type is used to identify values that contain a
@@ -9,7 +15,6 @@
  * notation:
  * 
  *  date               = date-value
- * 
  *  date-value         = date-fullyear date-month date-mday
  *  date-fullyear      = 4DIGIT
  *  date-month         = 2DIGIT        ;01-12

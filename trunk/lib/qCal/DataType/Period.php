@@ -1,5 +1,14 @@
 <?php
 /**
+ * Period (of time) Data Type
+ * This data type differs from the "duration" data type in that it
+ * specifies the exact start and end time, whereas duration only specifies
+ * the amount of time.
+ * @package qCal
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ * 
  * Value Name: PERIOD
  * 
  * Purpose: This value type is used to identify values that contain a
