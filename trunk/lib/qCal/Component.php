@@ -83,11 +83,9 @@ abstract class qCal_Component {
 	 */
 	protected $properties;
 	/**
-	 * Contains a list of allowed parent components. If an attempt
-	 * to nest this component into another that is not in this list is
-	 * made, a qCal_Exception_CannotNestComponent will be thrown.
+	 * Contains a list of allowed parent components.
 	 */
-	protected $allowedParents = array();
+	protected $allowedComponents = array();
 	/**
 	 * Class constructor
 	 */
