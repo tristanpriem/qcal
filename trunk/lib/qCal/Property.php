@@ -36,13 +36,21 @@ abstract class qCal_Property {
 	 */
 	protected $value;
 	/**
+	 * @param mixed Data type of this property
+	 */
+	protected $type;
+	/**
 	 * @param array Contains a list of components this property can apply to
 	 */
 	protected $allowedComponents = array();
 	/**
 	 * Class constructor
 	 */
-	public  function __construct() {}
+	public  function __construct() {
+	
+		
+	
+	}
 	/**
 	 * Returns the property name
 	 */
@@ -57,6 +65,14 @@ abstract class qCal_Property {
 	public function getValue() {
 	
 		return $this->value;
+	
+	}
+	/**
+	 * Returns the property type object
+	 */
+	public function getType() {
+	
+		return $this->type;
 	
 	}
 
