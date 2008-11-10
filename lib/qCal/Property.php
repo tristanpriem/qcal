@@ -38,7 +38,7 @@ abstract class qCal_Property {
 	/**
 	 * @param array Contains a list of components this property can apply to
 	 */
-	protected $canApplyTo = array();
+	protected $allowedComponents = array();
 	/**
 	 * Class constructor
 	 */
