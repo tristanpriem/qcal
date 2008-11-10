@@ -27,13 +27,11 @@
 abstract class qCal_DataType {
 
 	/**
-	 * Class Constructor
-	 *
-	 * @return void
-	 **/
+	 * Class constructor
+	 */
 	public function __construct() {
 	
-		// do nothing
+		// do nothing yet
 	
 	}
 

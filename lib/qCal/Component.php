@@ -69,29 +69,32 @@ abstract class qCal_Component {
 
 	/**
 	 * The name of this component
+	 * @var string
 	 */
 	protected $name;
 	/**
-	 * All components (other than calendars) are children of
-	 * another component. Most components are nested within the calendar
-	 * component, but alarms can be children of events, etc.
+	 * Contains a list of allowed parent components.
+	 * @var array
+	 */
+	protected $allowedComponents = array();
+	/**
+	 * Contains an array of this component's child components (if any)
+	 * @var array
 	 */
 	protected $children;
 	/**
-	 * Components are made up of properties. Properties define how a component
-	 * is supposed to behave.
+	 * Contains an array of this component's properties. Properties provide
+	 * information about their respective components.
+	 * @var array
 	 */
 	protected $properties;
-	/**
-	 * Contains a list of allowed parent components.
-	 */
-	protected $allowedComponents = array();
 	/**
 	 * Class constructor
 	 */
 	public  function __construct() {}
 	/**
-	 * Returns the property name
+	 * Returns the component name
+	 * @return string
 	 */
 	public function getName() {
 	
