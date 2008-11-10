@@ -64,15 +64,18 @@
 class qCal_Parameter {
 
 	/**
-	 * @param string The parameter's name
+	 * The parameter's name
+	 * @var string 
 	 */
 	protected $name;
 	/**
-	 * @param string The parameter's value
+	 * The parameter's value
+	 * @var string 
 	 */
 	protected $value;
 	/**
-	 * @param array A list of properties this parameter is allowed to be specified for
+	 * A list of properties this parameter is allowed to be specified for
+	 * @var array
 	 */
 	protected $allowedProperties = array();
 

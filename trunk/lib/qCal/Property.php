@@ -28,19 +28,24 @@
 abstract class qCal_Property {
 
 	/**
-	 * @param string Property name (dtstart, rrule, etc)
+	 * Property name (dtstart, rrule, etc)
+	 * @var string
 	 */
 	protected $name;
 	/**
-	 * @param mixed The value of this property
+	 * Property value
+	 * @var string
 	 */
 	protected $value;
 	/**
-	 * @param mixed Data type of this property
+	 * Property type
+	 * @var string
 	 */
 	protected $type;
 	/**
-	 * @param array Contains a list of components this property can apply to
+	 * Contains a list of components this property is allowed to be specified
+	 * for
+	 * @var array
 	 */
 	protected $allowedComponents = array();
 	/**
@@ -48,11 +53,12 @@ abstract class qCal_Property {
 	 */
 	public  function __construct() {
 	
-		
+		// nothing here yet
 	
 	}
 	/**
 	 * Returns the property name
+	 * @return string
 	 */
 	public function getName() {
 	
@@ -61,6 +67,7 @@ abstract class qCal_Property {
 	}
 	/**
 	 * Returns the property value
+	 * @return string
 	 */
 	public function getValue() {
 	
@@ -68,7 +75,8 @@ abstract class qCal_Property {
 	
 	}
 	/**
-	 * Returns the property type object
+	 * Returns the property type
+	 * @return string
 	 */
 	public function getType() {
 	
