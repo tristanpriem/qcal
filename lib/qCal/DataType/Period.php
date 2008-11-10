@@ -1,30 +1,51 @@
 <?php
 /**
- * Value Name:INTEGER
+ * Value Name: PERIOD
  * 
- * Purpose: This value type is used to identify properties that contain
- * a signed integer value.
+ * Purpose: This value type is used to identify values that contain a
+ * precise period of time.
  * 
- * Formal Definition: The value type is defined by the following
+ * Formal Definition: The data type is defined by the following
  * notation:
  * 
- *  integer    = (["+"] / "-") 1*DIGIT
+ *   period     = period-explicit / period-start
  * 
- * Description: If the property permits, multiple "integer" values are
+ *   period-explicit = date-time "/" date-time
+ *   ; [ISO 8601] complete representation basic format for a period of
+ *   ; time consisting of a start and end. The start MUST be before the
+ *   ; end.
+ * 
+ *   period-start = date-time "/" dur-value
+ *   ; [ISO 8601] complete representation basic format for a period of
+ *   ; time consisting of a start and positive duration of time.
+ * 
+ * Description: If the property permits, multiple "period" values are
  * specified by a COMMA character (US-ASCII decimal 44) separated list
- * of values. The valid range for "integer" is -2147483648 to
- * 2147483647. If the sign is not specified, then the value is assumed
- * to be positive.
+ * of values. There are two forms of a period of time. First, a period
+ * of time is identified by its start and its end. This format is
+ * expressed as the [ISO 8601] complete representation, basic format for
+ * "DATE-TIME" start of the period, followed by a SOLIDUS character
+ * (US-ASCII decimal 47), followed by the "DATE-TIME" of the end of the
+ * period. The start of the period MUST be before the end of the period.
+ * Second, a period of time can also be defined by a start and a
+ * positive duration of time. The format is expressed as the [ISO 8601]
+ * complete representation, basic format for the "DATE-TIME" start of
+ * 
+ * the period, followed by a SOLIDUS character (US-ASCII decimal 47),
+ * followed by the [ISO 8601] basic format for "DURATION" of the period.
+ * 
+ * Example: The period starting at 18:00:00 UTC, on January 1, 1997 and
+ * ending at 07:00:00 UTC on January 2, 1997 would be:
+ * 
+ *   19970101T180000Z/19970102T070000Z
+ * 
+ * The period start at 18:00:00 on January 1, 1997 and lasting 5 hours
+ * and 30 minutes would be:
+ * 
+ *   19970101T180000Z/PT5H30M
  * 
  * No additional content value encoding (i.e., BACKSLASH character
  * encoding) is defined for this value type.
- * 
- * Example:
- * 
- *  1234567890
- *  -1234567890
- *  +1234567890
- *  432109876
  */
 class qCal_DataType_Period extends qCal_DataType {
 
