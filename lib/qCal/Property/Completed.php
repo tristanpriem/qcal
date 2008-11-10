@@ -36,7 +36,7 @@
  */
 class qCal_Property_Completed extends qCal_Property {
 
-	protected $type = 'TEXT';
+	protected $type = 'DATE-TIME';
 	protected $allowedComponents = array('VTODO');
 
 }
