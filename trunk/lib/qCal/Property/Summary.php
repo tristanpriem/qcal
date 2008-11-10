@@ -28,7 +28,6 @@
  * This property is used in the "VALARM" calendar component to capture
  * the subject of an EMAIL category of alarm.
  * 
- * 
  * Format Definition: The property is defined by the following notation:
  * 
  *   summary    = "SUMMARY" summparam ":" text CRLF
