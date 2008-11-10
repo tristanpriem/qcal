@@ -26,6 +26,13 @@ class TestParser extends UnitTestCase {
     	$calendar->attach(new qCal_Component_Event); // add an event
     	$calendar->attach(new qCal_Component_Journal); // add a journal
     	$todo = new qCal_Component_Todo(); // create a todo
+    	// this is a facade
+    	// what it does is call:
+    	/**
+	    	$summary = new qCal_Property_Summary('I eat peas');
+	    	$todo->addProperty($summary);
+	    	// we may also need a 
+	    	**/
     	$todo->summary('I eat peas'); // summarize todo
     	$calendar->attach($todo); // add a todo to calendar
     	$calendar->prodId('//this is cool//'); // give the calendar a product id
