@@ -131,6 +131,12 @@
 class qCal_Property_Attendee extends qCal_Property {
 
 	protected $type = 'CAL-ADDRESS';
-	protected $allowedComponents = array('VTIMEZONE');
+	// I'm not sure if this is correct, the way the RFC reads, it appears
+	// maybe attendee can appear in a VCALENDAR component, but I don't think
+	// that's correct. I read something about some icalendar files being
+	// used simply to relay attendee status information (about a calendar's
+	// events) to organizerss. I think I need to know more about this to
+	// really understand what the RFC is saying
+	protected $allowedComponents = array('VEVENT');
 
 }
