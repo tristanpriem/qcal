@@ -62,6 +62,6 @@
 class qCal_Property_Dtend extends qCal_Property {
 
 	protected $type = 'DATE-TIME';
-	protected $allowedComponents = array('VTODO');
+	protected $allowedComponents = array('VEVENT','VFREEBUSY');
 
 }
