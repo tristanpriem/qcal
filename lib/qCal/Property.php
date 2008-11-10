@@ -59,7 +59,9 @@ abstract class qCal_Property {
 	 */
 	public  function __construct() {
 	
-		$this->type = 
+		/**
+		 * set $this->name by finding camel-case spots and entering - in their place, then capitalize
+		 */
 	
 	}
 	/**
