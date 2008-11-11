@@ -1,6 +1,6 @@
 <?php
 /**
- * Url Property
+ * Uniform Resource Locator Property
  * @package qCal
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
