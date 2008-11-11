@@ -432,6 +432,6 @@
 class qCal_Property_Rrule extends qCal_Property {
 
 	protected $type = 'RECUR';
-	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL');
+	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL','VTIMEZONE');
 
 }
