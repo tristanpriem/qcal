@@ -5,7 +5,6 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
- * @todo Make sure allowedCompoents is correct. The RFC isn't dead clear
  * 
  * RFC 2445 Definition
  * 
