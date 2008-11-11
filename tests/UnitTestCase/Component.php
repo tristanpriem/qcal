@@ -14,5 +14,18 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->assertTrue($component instanceof qCal_Component);
 	
 	}
+	/**
+	 * Test that you cannot set an invalid property on a component. Many
+	 * properties are specific to certain components.
+	 */
+	public function testClassTypes() {
+	
+		$component = new Mock_qCal_Component;
+		/*
+        $this->expectException(new qCal_Exception_Conformance('PRODID property cannot be specefied for component: "' . $component->getName() . '"'));
+		$component->prodId('PRODUCT ID');
+        */
+	
+	}
 
 }

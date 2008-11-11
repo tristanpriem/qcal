@@ -5,6 +5,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Determine if this class or family of classes is really necessary
  * 
  * RFC 2445 Definition
  * 
