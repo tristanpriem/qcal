@@ -6,6 +6,8 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * 
+ * RFC 2445 Definition
+ * 
  * Property Name: LAST-MODIFIED
  * 
  * Purpose: The property specifies the date and time that the
