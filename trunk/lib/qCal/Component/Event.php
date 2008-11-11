@@ -124,7 +124,7 @@
  *   RRULE:FREQ=YEARLY
  *   END:VEVENT
  */
-class qCal_Component_Event {
+class qCal_Component_Event extends qCal_Component {
 
 	protected $name = "VEVENT";
 	protected $allowedComponents = array('VCALENDAR');
