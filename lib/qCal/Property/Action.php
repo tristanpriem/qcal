@@ -46,6 +46,6 @@
 class qCal_Property_Action extends qCal_Property {
 
 	protected $type = 'TEXT';
-	protected $allowedComponents = array('ALARM');
+	protected $allowedComponents = array('VALARM');
 
 }

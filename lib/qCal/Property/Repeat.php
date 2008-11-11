@@ -40,6 +40,6 @@
 class qCal_Property_Repeat extends qCal_Property {
 
 	protected $type = 'INTEGER';
-	protected $allowedComponents = array('ALARM');
+	protected $allowedComponents = array('VALARM');
 
 }

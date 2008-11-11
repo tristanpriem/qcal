@@ -112,6 +112,6 @@
 class qCal_Property_Trigger extends qCal_Property {
 
 	protected $type = 'DURATION';
-	protected $allowedComponents = array('ALARM');
+	protected $allowedComponents = array('VALARM');
 
 }
