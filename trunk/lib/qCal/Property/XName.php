@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo I am not sure exactly how I plan on dealing with non-standard
+ *       properties, but for now, I'm representing them with this class
  * 
  * RFC 2445 Definition
  * 
