@@ -43,8 +43,6 @@
  * 
  *             )
  * 
- * 
- * 
  *  dispprop   = 3*(
  * 
  *             ; the following are all REQUIRED,
@@ -64,8 +62,6 @@
  *             *x-prop
  * 
  *             )
- * 
- * 
  * 
  *  emailprop  = 5*(
  * 
@@ -91,8 +87,6 @@
  *             attach / x-prop
  * 
  *             )
- * 
- * 
  * 
  *  procprop   = 3*(
  * 
