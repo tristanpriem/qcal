@@ -5,6 +5,10 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that allowedComponents is correct. I am still a little
+ *       confused about how this property works. It is apparent that it is
+ *       used differently based on compoenent. I think the correct place
+ *       to put logic like that is in the component itself.
  * 
  * RFC 2445 Definition
  * 
@@ -131,12 +135,9 @@
 class qCal_Property_Attendee extends qCal_Property {
 
 	protected $type = 'CAL-ADDRESS';
-	// I'm not sure if this is correct, the way the RFC reads, it appears
-	// maybe attendee can appear in a VCALENDAR component, but I don't think
-	// that's correct. I read something about some icalendar files being
-	// used simply to relay attendee status information (about a calendar's
-	// events) to organizerss. I think I need to know more about this to
-	// really understand what the RFC is saying
-	protected $allowedComponents = array('VEVENT');
+	// If I'm reading the RFC correctly above, this property can be specified
+	// on the following components, but I'm still a bit confused about it. I 
+	// need to read up on it more to really understand
+	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL','VALARM');
 
 }
