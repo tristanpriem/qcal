@@ -78,7 +78,7 @@
  *     Is looking into a loaner car. 654-2323 (tel).
  *   END:VJOURNAL
  */
-class qCal_Component_Journal {
+class qCal_Component_Journal extends qCal_Component {
 
 	protected $name = "VJOURNAL";
 	protected $allowedComponents = array('VCALENDAR');

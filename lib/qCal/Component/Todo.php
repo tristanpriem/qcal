@@ -73,7 +73,7 @@
  *   STATUS:NEEDS-ACTION
  *   END:VTODO
  */
-class qCal_Component_Todo {
+class qCal_Component_Todo extends qCal_Component {
 
 	protected $name = "VTODO";
 	protected $allowedComponents = array('VCALENDAR');
