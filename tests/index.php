@@ -15,10 +15,10 @@ require_once 'unit_tester.php';
 require_once 'reporter.php';
 require_once 'mock_objects.php';
 // require test cases
-// require_once 'UnitTestCases/TestParser.php';
-require_once 'UnitTestCases/TestComponents.php';
+// require_once 'UnitTestCase/Parser.php';
+require_once 'UnitTestCase/Component.php';
 // add tests cases to group and run the tests
 $test = new GroupTest('Core qCal Tests');
-// $test->addTestCase(new TestParser);
-$test->addTestCase(new TestComponents);
+// $test->addTestCase(new UnitTestCase_Parser);
+$test->addTestCase(new UnitTestCase_Component);
 $test->run(new HtmlReporter());
