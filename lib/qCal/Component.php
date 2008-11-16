@@ -78,13 +78,16 @@ abstract class qCal_Component {
 	 */
 	protected $allowedComponents = array();
 	/**
-	 * Contains an array of this component's child components (if any)
+	 * Contains an array of this component's child components (if any). It uses
 	 * @var array
 	 */
 	protected $children;
 	/**
 	 * Contains an array of this component's properties. Properties provide
-	 * information about their respective components.
+	 * information about their respective components. This array is associative.
+	 * It uses property name as key and property object as value (or array of them
+	 * if said property can be set multiple times). This is so that I can quickly
+	 * look up any certain property.
 	 * @var array
 	 */
 	protected $properties;
@@ -100,6 +103,82 @@ abstract class qCal_Component {
 	
 		return $this->name;
 	
+	}
+	/**
+	 * Attach a component to this component (alarm inside event for example)
+	 */
+	public function attach($component) {
+	
+		$this->children[$component->getName()][] = $component;
+	
+	}
+	/**
+	 * @todo come up with a better way to include 
+	 */
+	static public function factory($name, $properties = array()) {
+	
+		// remove V
+		$component = trim(ucfirst(strtolower(substr($name, 1))));
+		// capitalize
+		$className = "qCal_Component_" . $component;
+		// generate property objects
+		$propertyObjects = array();
+		foreach ($properties as $property => $info) {
+			$propertyObjects[] = qCal_Property::factory($property, $info['value'], $info['params']);
+		}
+		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
+		require_once $fileName;
+		eval ("\$class = new " . "\$className(" . implode(', ', $propertyObjects) . ');');
+		return $class;
+	
+	}
+
+	/**
+	 * I'm not sure how this should work. Not sure if it should be setProperty,
+	 * addProperty, both? Because properties on some components can be set multiple
+	 * times, while some properties have multiple values. :( I am trying to consider
+	 * a case where somebody needs to open a calendar, change a few properties on a
+	 * component (change event time for instance). I think the way I'll handle properties
+	 * that can be set multiple times is I'll create a method do delete properties based
+	 * on values, parameters, etc. since they don't really have IDs. So I tihnk I'll go
+	 * with addProperty :) 
+	 */
+	public function addProperty(qCal_Property $property) {
+	
+		if (!$property->of($this)) {
+			throw new qCal_Exception_Conformance($property->getName() . ' property cannot be specified for component "' . $this->getName() . '"');
+		}
+		$this->properties[$property->getName()] = $property;
+	
+	}
+	/**
+	 * Returns property of this component by name
+	 *
+	 * @return qCal_Property
+	 **/
+	public function getProperty($name) {
+	
+		$name = strtoupper($name);
+		if (array_key_exists($name, $this->properties)) return $this->properties[$name];
+		return false;
+	
+	}
+	
+	/**
+	 * Allows for components to set property values by calling
+	 * qCal_Component::propertyName($val) where propertyName is the property name
+	 * to be set and $val is the value.
+	 * @throws qCal_Exception_Conformance If $method is a property that isn't
+	 *         allowed for this component.
+	 * @return string
+	 * @todo Finish this at another time, it is not important right now. I think
+	 *       this is more of a convenience than a necessity.
+	 */
+	public function __call($method, $params) {
+	/*
+		$property = qCal_Property::factory($method, $params);
+		$this->addProperty($property);
+	*/
 	}
 
 }

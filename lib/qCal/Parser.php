@@ -16,13 +16,74 @@ class qCal_Parser {
     /**
      * Parse icalendar formatted data into an iterable object of icalendar components
      * such as events, todos, journals, etc
+     * 
+     * The way I'd like this to work is this. The parser loops through the file line by line. In the loop,
+	 * it is determined what kind of line we're working with. If it's a BEGIN:VCOMPONENT then we need to wait until
+	 * there is an END:VCOMPONENT to do anything really. So I guess what I'd have to do is loop through the inner lines
+	 * creating property objects along the way. When finally the end of the component is found, all of the properties
+	 * will be used to create the component. If there is a folded line, similar logic is to be used. Basically the 
+	 * property wouldn't be created until the end of the long (folded) line is reached. This way the property can be
+	 * created with all necessary information.
      */
     public function parse() {
     
-        $this->lines = file($this->filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        // return a qCal_Iterable object... come up with a better name though
+        $lines = file($this->filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $calendar = $this->doParse($lines);
     
     }
+    /**
+     * This is temporary, but I'm using this method to develop the parser for now
+     */
+    protected function doParse($lines) {
+    
+    	// recursion depth
+    	$depth = 0;
+    	$components = array();
+        foreach ($lines as $key => $line) {
+        	// break apart the line at the first colon. We can be sure that there won't be a colon in the 
+        	// property portion because property names can't contain a colon (even non-standard ones)
+        	list($property, $value) = explode(":", $line, 2);
+        	// get param name/value pairs
+        	$params = explode(";", $property);
+        	// property is the first value in the array
+        	$property = $params[0];
+        	// params are the rest of the values in the array
+        	$paramsPairs = array_slice($params, 1);
+        	// reset params value to blank array
+        	$params = array();
+        	// put params in an array
+        	foreach ($paramsPairs as $param) {
+        		// separate param name/value
+        		list($paramname, $paramvalue) = explode("=", $param);
+        		// add to params array
+        		$params[$paramname] = $paramvalue;
+        	}
+        	switch ($property) {
+        		case "BEGIN":
+        			/**
+        			 * The more I play with this parser, the more I am feeling there is a need for some kind
+	        		 * of recursion. I need to use $lines somehow to do this. Basically, I need to eat the file
+		        	 * line by line, and when I encounter a BEGIN, I simply call $this->createComponent($remaininglines)
+        			 */
+        			$depth++;
+        			$componentName = $value;
+        			$component = qCal_Component::factory($componentName);
+        			echo "====================<br>starting $value, depth $depth<BR>";
+        			break;
+        		case "END":
+        			$depth--;
+        			echo "ending $value<BR>====================<br>";
+        			break;
+        		default:
+        			$component->setProperty($property, $value);
+        			echo "property $property: $value<BR>";
+        	}
+        }
+    
+    }
+    /**
+     * THE STUFF BELOW IS JUST IDEAS - ANY CODE ABOVE IS STUFF I ACTUALLY INTEND ON KEEPING
+     */
     /**
      * Loop through every line, and generate components, properties, and params for this icalendar
      * This should actually delegate to a qCal_Parser_iCalendar class. There will also be qCal_Parser_xCalendar
@@ -47,16 +108,19 @@ class qCal_Parser {
                 // switch the upper case version for consistency
                 switch(strtoupper($param)) {
                     case 'BEGIN':
-                        // if name is "begin" then we're starting a component, create it, and set it as the component variable
-                        $component = $value;
-                        $this->beginComponent($value);
+                        // if name is "begin" then we're starting a component. We can't create the component until we
+                        // have all of its properties, so for now we just save the name of the component for later
+                        $currentComponent = $value;
+                        $this->reportBeginComponent($value); // this just reports that we have started a component while testing
                         // line has now been processed
                         $lineprocessed = true;
                         break;
                     case 'END':
                         // if name is "end" then we're ending a component, so set to false now
-                        $component = false;
-                        $this->endComponent($value);
+                        $currentComponent = false;
+                        $this->reportEndComponent($value);
+                        // now we have all of the properties necessary to create the component, so let's do it
+                        // $component = qCal_Component::factory($currentComponent, $properties, $innerComponents);
                         // line has now been processed
                         $lineprocessed = true;
                         break;
@@ -64,27 +128,32 @@ class qCal_Parser {
             } elseif (strpos($line, " ") === 0) {
                 // if we're not on a line that starts with a begin, end, or property name, assume its
                 // a continuation of the previous line
-                $this->parseLine($param, substr($line, 1), $component);
+                echo "CONTINUATION\n";
+                $this->reportLine($param, substr($line, 1), $component);
                 // line is now processed
                 $lineprocessed = true;
             }
-            // if parser has reached this line, we're inside a component or we're on a 
-            // property
-            if (!$lineprocessed) $this->parseLine($param, $value, $component);
+            // if parser has reached this line, we're on a property, so create it
+            // 
+            if (!$lineprocessed) {
+            	$this->reportLine($param, $value, $component);
+            	// $params = $this->parseProperty($line);// @todo when reading a property with long value, this may need to be prepared to grab and add the next line as well
+            	// $property = qCal_Property::factory($currentProperty, $params);
+        	}
         
         }
     
     }
     
-    public function beginComponent($name) {
+    public function reportBeginComponent($name) {
         echo "Beginning Component: $name<br>";
     }
     
-    public function endComponent($name) {
+    public function reportEndComponent($name) {
         echo "Ending Component: $name<br>-----------------------------------------------<br>";
     }
     
-    public function parseLine($param, $value, $component = null) {
+    public function reportLine($param, $value, $component = null) {
         echo "Adding param \"$param\" of value \"$value\" to $component component<br>";
     }
 

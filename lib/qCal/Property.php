@@ -56,12 +56,29 @@ abstract class qCal_Property {
 	protected $allowedComponents = array();
 	/**
 	 * Class constructor
+	 * 
+	 * @todo Cast $value to whatever data type this is ($this->type)
 	 */
-	public  function __construct() {
+	public  function __construct($value, $params = array()) {
 	
-		/**
-		 * set $this->name by finding camel-case spots and entering - in their place, then capitalize
-		 */
+		$this->value = $value;
+		$this->name = $this->getPropertyNameFromClassName(get_class($this));
+		$this->params = $params;
+	
+	}
+	/**
+	 * Generates a qCal_Property class based on property name, params, and value
+	 * which can come directly from an icalendar file.
+	 * 
+	 * @todo come up with a better way to include 
+	 */
+	static public function factory($name, $value, $params = array()) {
+	
+		$className = self::getClassNameFromPropertyName($name);
+		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
+		require_once $fileName;
+		$class = new $className($value);
+		return $class;
 	
 	}
 	/**
@@ -91,5 +108,62 @@ abstract class qCal_Property {
 		return $this->type;
 	
 	}
-
+	/**
+	 * Check if this is a property of a certain component. Some properties
+	 * can only be set on certain Components. This method looks inside this
+	 * property's $allowedComponents and returns true if $component is allowed
+	 *
+	 * @return boolean True if this is a property of $component, false otherwise
+	 * @param qCal_Component The component we're evaluating
+	 **/
+	public function of(qCal_Component $component) {
+	
+		return in_array($component->getName(), $this->allowedComponents);
+	
+	}
+	/**
+	 * Determine's this property's name from the class name by adding a dash after 
+	 * every capital letter and upper-casing
+	 *
+	 * @return string The RFC property name
+	 **/
+	protected function getPropertyNameFromClassName($classname) {
+	
+		// determine the property name by class name
+		$parts = explode("_", $classname);
+		end($parts);
+		// find where capital letters are and insert dash
+		$chars = str_split(current($parts));
+		// make a copy
+		$newchars = $chars;
+		foreach ($chars as $pos => $char) {
+			// don't add a dash for the first letter
+			if (!$pos) continue;
+			$num = ord($char);
+			// if character is a capital letter
+			if ($num >= 65 && $num <= 90) {
+				// insert dash
+				array_splice($newchars, $pos, 0, '-');
+			}
+		}
+		return strtoupper(implode("", $newchars));
+	
+	}
+	/**
+	 * Determine's this property's class name from the property name
+	 *
+	 * @return string The property class name
+	 **/
+	protected function getClassNameFromPropertyName($name) {
+	
+		// remove dashes, capitalize properly
+		$parts = explode("-", $name);
+		$property = "";
+		foreach ($parts as $part) $property .= trim(ucfirst(strtolower($part)));
+		// get the class, and instantiate
+		$className = "qCal_Property_" . $property;
+		return $className;
+	
+	}
+	
 }

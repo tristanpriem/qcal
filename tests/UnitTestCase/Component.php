@@ -18,13 +18,46 @@ class UnitTestCase_Component extends UnitTestCase {
 	 * Test that you cannot set an invalid property on a component. Many
 	 * properties are specific to certain components.
 	 */
-	public function testClassTypes() {
+	public function testConformanceExceptionThrownIfInvalidProperty() {
 	
-		$component = new Mock_qCal_Component;
-		/*
-        $this->expectException(new qCal_Exception_Conformance('PRODID property cannot be specefied for component: "' . $component->getName() . '"'));
-		$component->prodId('PRODUCT ID');
-        */
+		
+	
+	}
+	/**
+	 * Test that each component gets initialized in accordance with the RFC
+	 * conformance rules
+	 */
+	/**
+	 * Calendar Component
+	 */
+	public function testCalendarInitializeConformance() {
+	
+		// test that prodid is required to initialize a calendar
+		$this->expectException(new qCal_Exception_Conformance('PRODID property must be specified for component "VCALENDAR"'));
+		$component = new qCal_Component_Calendar();
+	
+	}
+	/**
+	 * Tests that defaults get set correctly when instantiating	
+	 **/
+	public function testCalendarInitializeDefaults() {
+	
+		$component = new qCal_Component_Calendar('//My Product Id//EN');
+		pr($component);
+		// test calendar defaults. eventually there will be convenience methods
+		// that will allow you to do $component->prodid() to get and set
+		$this->assertEqual($component->getProperty('version')->getValue(), '2.0');
+        //$this->expectException(new qCal_Exception_Conformance('PRODID property cannot be specified for component "' . $component->getName() . '"'));
+		//$component->prodid('PRODUCT ID');
+	
+	}
+	
+	/**
+	 * Test that non-standard properties can be set on a component.
+	 */
+	public function testNonStandardProperties() {
+	
+		
 	
 	}
 
