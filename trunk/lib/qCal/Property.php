@@ -114,6 +114,7 @@ abstract class qCal_Property {
 		// the property can't be created, so throw a conformance exception
 		if (is_null($value)) {
 			if ($this->default === false) {
+				// this is caught by factory and reported as a conformance error
 				$exception = new qCal_Exception_Property('{PROPERTY} property does not have a default value');
 				$exception->setProperty($this);
 				throw $exception;
