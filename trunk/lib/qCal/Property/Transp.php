@@ -5,6 +5,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Should this default to OPAQUE?
  * 
  * RFC 2445 Definition
  * 
