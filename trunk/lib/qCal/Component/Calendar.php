@@ -39,5 +39,20 @@ class qCal_Component_Calendar extends qCal_Component {
 
 	protected $name = "VCALENDAR";
 	protected $allowedComponents = array();
+	/**
+	 * In order to initialize a calendar, you must specify a product id.
+	 * You may also specify a version, but if you don't it will default to 2.0
+	 * Properties must always have defaults. Just throw a conformance error if 
+	 * a required property is not supplied.
+	 */
+	public function __construct($prodid = null, $version = '2.0') {
+	
+		if (is_null($prodid)) throw new qCal_Exception_Conformance('PRODID property must be specified for component "' . $this->getName() . '"');
+		$prodidproperty = qCal_Property::factory('prodid', $prodid);
+		$this->addProperty($prodidproperty);
+		$versionproperty = qCal_Property::factory('version', $version);
+		$this->addProperty($versionproperty);
+	
+	}
 	
 }
