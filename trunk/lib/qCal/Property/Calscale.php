@@ -43,5 +43,6 @@ class qCal_Property_Calscale extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VCALENDAR');
+	protected $default = "GREGORIAN";
 
 }
