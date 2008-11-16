@@ -82,5 +82,6 @@ class qCal_Property_Priority extends qCal_Property {
 
 	protected $type = 'INTEGER';
 	protected $allowedComponents = array('VEVENT','VTODO');
+	protected $default = 0;
 
 }
