@@ -49,5 +49,6 @@ class qCal_Property_Version extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VCALENDAR');
+	protected $default = "2.0";
 
 }

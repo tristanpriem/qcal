@@ -45,13 +45,18 @@ class qCal_Component_Calendar extends qCal_Component {
 	 * Properties must always have defaults. Just throw a conformance error if 
 	 * a required property is not supplied.
 	 */
-	public function __construct($prodid = null, $version = '2.0') {
+	public function __construct($prodid = null, $version = null) {
 	
-		if (is_null($prodid)) throw new qCal_Exception_Conformance('PRODID property must be specified for component "' . $this->getName() . '"');
-		$prodidproperty = qCal_Property::factory('prodid', $prodid);
-		$this->addProperty($prodidproperty);
-		$versionproperty = qCal_Property::factory('version', $version);
-		$this->addProperty($versionproperty);
+		try {
+			$prodidproperty = qCal_Property::factory('prodid', $prodid);
+			$this->addProperty($prodidproperty);
+			$versionproperty = qCal_Property::factory('version', $version);
+			$this->addProperty($versionproperty);
+		} catch (qCal_Exception_Property $e) {
+			// this means that one of the properties could not be initiated due to invalid
+			// data being passed in. Determine which property it was, and report it
+			throw new qCal_Exception_Conformance($e->getProperty()->getName() . ' property must be specified for component "' . $this->getName() . '"');
+		}
 	
 	}
 	
