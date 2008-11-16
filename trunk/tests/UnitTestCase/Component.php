@@ -33,8 +33,10 @@ class UnitTestCase_Component extends UnitTestCase {
 	public function testCalendarInitializeConformance() {
 	
 		// test that prodid is required to initialize a calendar
+		/* No longer necessary because prodid defaults to qcal
 		$this->expectException(new qCal_Exception_Conformance('PRODID property must be specified for component "VCALENDAR"'));
 		$component = new qCal_Component_Calendar();
+		*/
 	
 	}
 	/**
@@ -42,10 +44,11 @@ class UnitTestCase_Component extends UnitTestCase {
 	 **/
 	public function testCalendarInitializeDefaults() {
 	
-		$component = new qCal_Component_Calendar('//My Product Id//EN');
+		$component = new qCal_Component_Calendar();
 		// pr($component);
 		// test calendar defaults. eventually there will be convenience methods
 		// that will allow you to do $component->prodid() to get and set
+		$this->assertEqual($component->getProperty('prodid')->getValue(), '-//Luke Visinoni//qCal v0.1//EN');
 		$this->assertEqual($component->getProperty('version')->getValue(), '2.0');
         //$this->expectException(new qCal_Exception_Conformance('PRODID property cannot be specified for component "' . $component->getName() . '"'));
 		//$component->prodid('PRODUCT ID');
