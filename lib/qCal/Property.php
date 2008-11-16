@@ -39,6 +39,11 @@ abstract class qCal_Property {
 	 */
 	protected $value;
 	/**
+	 * Default value - if set to false, there is no default value
+	 * @var mixed
+	 */
+	protected $default = false;
+	/**
 	 * Property Data Type (this name gets converted to class name)
 	 * @var string
 	 */
@@ -61,9 +66,9 @@ abstract class qCal_Property {
 	 */
 	public  function __construct($value, $params = array()) {
 	
-		$this->value = $value;
 		$this->name = $this->getPropertyNameFromClassName(get_class($this));
 		$this->params = $params;
+		$this->setValue($value);
 	
 	}
 	/**
@@ -97,6 +102,26 @@ abstract class qCal_Property {
 	public function getValue() {
 	
 		return $this->value;
+	
+	}
+	/**
+	 * Sets the property value
+	 * @param mixed
+	 */
+	public function setValue($value) {
+	
+		// if value sent is null and this property doesn't have a default value,
+		// the property can't be created, so throw a conformance exception
+		if (is_null($value)) {
+			if ($this->default === false) {
+				$exception = new qCal_Exception_Property('{PROPERTY} property does not have a default value');
+				$exception->setProperty($this);
+				throw $exception;
+			} else {
+				$value = $this->default;
+			}
+		}
+		$this->value = $value;
 	
 	}
 	/**

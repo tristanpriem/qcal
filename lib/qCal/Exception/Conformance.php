@@ -9,10 +9,18 @@
  * exception, but for now the library will simply catch the exception
  * and log the violation in the internal logger (most likely something
  * like qCal_Log, but I'm not sure yet).
+ * 
+ * After using this a little bit, I'm discovering that I probably can't
+ * use it how I had intended, so I'm going to rethink the exception scheme
+ * a bit.
+ * 
  * @package qCal
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
 class qCal_Exception_Conformance extends qCal_Exception {
+
+	
+
 }

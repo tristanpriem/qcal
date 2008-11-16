@@ -43,7 +43,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	public function testCalendarInitializeDefaults() {
 	
 		$component = new qCal_Component_Calendar('//My Product Id//EN');
-		pr($component);
+		// pr($component);
 		// test calendar defaults. eventually there will be convenience methods
 		// that will allow you to do $component->prodid() to get and set
 		$this->assertEqual($component->getProperty('version')->getValue(), '2.0');
@@ -55,7 +55,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	/**
 	 * Test that non-standard properties can be set on a component.
 	 */
-	public function testNonStandardProperties() {
+	public function NOSHOWtestNonStandardProperties() {
 	
 		
 	
