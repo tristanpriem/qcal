@@ -54,5 +54,6 @@ class qCal_Property_Class extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT', 'VTODO','VJOURNAL');
+	protected $default = "PUBLIC";
 
 }
