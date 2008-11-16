@@ -52,7 +52,7 @@
  * 
  *   X-ABC-MMSUBJ;X-ABC-MMSUBJTYPE=wave:http://load.noise.org/mysubj.wav
  */
-class qCal_Property_Sequence extends qCal_Property {
+class qCal_Property_XName extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL',
