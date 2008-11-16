@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo The default value of this could be generated (so that unless
+ 	     otherwise specified, the uid would be generated)
  * 
  * RFC 2445 Definition
  * 
