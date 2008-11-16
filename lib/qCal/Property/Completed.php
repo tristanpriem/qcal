@@ -27,7 +27,6 @@
  * 
  *   completed  = "COMPLETED" compparam ":" date-time CRLF
  * 
- * 
  *   compparam  = *(";" xparam)
  * 
  * Example: The following is an example of this property:
