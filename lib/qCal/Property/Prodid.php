@@ -49,5 +49,6 @@ class qCal_Property_Prodid extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VCALENDAR');
+	protected $default = "-//Luke Visinoni//qCal v0.1//EN";
 
 }
