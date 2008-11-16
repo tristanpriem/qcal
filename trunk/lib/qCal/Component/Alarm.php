@@ -284,5 +284,22 @@ class qCal_Component_Alarm extends qCal_Component {
 
 	protected $name = "VALARM";
 	protected $allowedComponents = array('VEVENT','VTODO');
+	/**
+	 * In order to initialize an alarm, you must specify a trigger and an action
+	 */
+	public function __construct($action = null, $trigger = null) {
+	
+		try {
+			$actionproperty = qCal_Property::factory('action', $action);
+			$this->addProperty($actionproperty);
+			$triggerproperty = qCal_Property::factory('trigger', $trigger);
+			$this->addProperty($triggerproperty);
+		} catch (qCal_Exception_Property $e) {
+			// this means that one of the properties could not be initiated due to invalid
+			// data being passed in. Determine which property it was, and report it
+			throw new qCal_Exception_Conformance($e->getProperty()->getName() . ' property must be specified for component "' . $this->getName() . '"');
+		}
+	
+	}
 
 }

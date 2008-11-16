@@ -8,6 +8,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Implement a method of NOT allowing more than one of properties
+ *       such as METHOD to be set.
  * 
  * RFC 2445 Definition
  *
