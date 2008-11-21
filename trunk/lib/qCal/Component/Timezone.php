@@ -369,14 +369,10 @@ class qCal_Component_Timezone extends qCal_Component {
 	
 	public function __construct($tzid = null) {
 	
-		try {
-			$tzidproperty = qCal_Property::factory('tzid', $tzid);
-			$this->addProperty($tzidproperty);
-		} catch (qCal_Exception_Property $e) {
-			// this means that one of the properties could not be initiated due to invalid
-			// data being passed in. Determine which property it was, and report it
-			throw new qCal_Exception_Conformance($e->getProperty()->getName() . ' property must be specified for component "' . $this->getName() . '"');
+		if (is_null($tzid)) {
+			throw new qCal_Exception_MissingProperty($this->getName() . " component requires TZID property");
 		}
+		$this->addProperty(qCal_Property::factory('tzid', $tzid));
 	
 	}
 
