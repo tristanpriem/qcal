@@ -7,4 +7,5 @@
  * @license GNU Lesser General Public License
  */
 class qCal_Exception extends Exception {
+
 }

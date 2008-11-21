@@ -40,6 +40,17 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * Make sure only valid components may be set on calendar
+     */
+	public function testCalendarPropertyConformance() {
+	
+		$this->expectException(new qCal_Exception_InvalidProperty("VCALENDAR component does not allow PERCENT-COMPLETE property"));
+		$component = new qCal_Component_Calendar();
+		$percentComplete = new qCal_Property_PercentComplete(35);
+		$component->addProperty($percentComplete);
+	
+	}
+	/**
 	 * Tests that defaults get set correctly when instantiating	
 	 **/
 	public function testCalendarInitializeDefaults() {
@@ -66,10 +77,10 @@ class UnitTestCase_Component extends UnitTestCase {
 	public function testAlarmInitializeConformance() {
 	
 		// test that action is required to initialize an alarm
-		$this->expectException(new qCal_Exception_Conformance('ACTION property must be specified for component "VALARM"'));
+		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires ACTION property'));
 		$component = new qCal_Component_Alarm();
 		// test that trigger is required to initialize an alarm
-		$this->expectException(new qCal_Exception_Conformance('TRIGGER property must be specified for component "VALARM"'));
+		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires TRIGGER property'));
 		$component = new qCal_Component_Alarm('AUDIO');
 	
 	}
@@ -83,7 +94,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	public function testTimeZoneInitializeConformance() {
 	
 		// test that action is required to initialize an alarm
-		$this->expectException(new qCal_Exception_Conformance('TZID property must be specified for component "VTIMEZONE"'));
+		$this->expectException(new qCal_Exception_MissingProperty('VTIMEZONE component requires TZID property'));
 		$component = new qCal_Component_Timezone();
 	
 	}

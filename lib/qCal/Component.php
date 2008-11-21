@@ -146,9 +146,7 @@ abstract class qCal_Component {
 	public function addProperty(qCal_Property $property) {
 	
 		if (!$property->of($this)) {
-			$exception = new qCal_Exception_Property($property->getName() . ' property cannot be specified for component "{COMPONENT}"');
-			$exception->setComponent($component);
-			throw $exception;
+			throw new qCal_Exception_InvalidProperty($this->getName() . " component does not allow " . $property->getName() . " property");
 		}
 		$this->properties[$property->getName()] = $property;
 	

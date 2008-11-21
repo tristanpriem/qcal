@@ -49,16 +49,8 @@ class qCal_Component_Calendar extends qCal_Component {
 	 */
 	public function __construct($prodid = null, $version = null) {
 	
-		try {
-			$prodidproperty = qCal_Property::factory('prodid', $prodid);
-			$this->addProperty($prodidproperty);
-			$versionproperty = qCal_Property::factory('version', $version);
-			$this->addProperty($versionproperty);
-		} catch (qCal_Exception_Property $e) {
-			// this means that one of the properties could not be initiated due to invalid
-			// data being passed in. Determine which property it was, and report it
-			throw new qCal_Exception_Conformance($e->getProperty()->getName() . ' property must be specified for component "' . $this->getName() . '"');
-		}
+		$this->addProperty(qCal_Property::factory('prodid', $prodid));
+		$this->addProperty(qCal_Property::factory('version', $version));
 	
 	}
 	

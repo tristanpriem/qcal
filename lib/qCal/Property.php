@@ -64,10 +64,12 @@ abstract class qCal_Property {
 	 * 
 	 * @todo Cast $value to whatever data type this is ($this->type)
 	 */
-	public  function __construct($value, $params = array()) {
+	public  function __construct($value = null, $params = array()) {
 	
 		$this->name = $this->getPropertyNameFromClassName(get_class($this));
 		$this->params = $params;
+		// if the value is null, and the property has a default value, assign the default
+		if (is_null($value) && $this->default !== false) $value = $this->default;
 		$this->setValue($value);
 	
 	}
@@ -82,7 +84,7 @@ abstract class qCal_Property {
 		$className = self::getClassNameFromPropertyName($name);
 		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
 		require_once $fileName;
-		$class = new $className($value);
+		$class = new $className($value, $params);
 		return $class;
 	
 	}
@@ -111,13 +113,11 @@ abstract class qCal_Property {
 	public function setValue($value) {
 	
 		// if value sent is null and this property doesn't have a default value,
-		// the property can't be created, so throw a conformance exception
+		// the property can't be created, so throw an invalidpropertyvalue exception
 		if (is_null($value)) {
 			if ($this->default === false) {
 				// this is caught by factory and reported as a conformance error
-				$exception = new qCal_Exception_Property('{PROPERTY} property does not have a default value');
-				$exception->setProperty($this);
-				throw $exception;
+				throw new qCal_Exception_InvalidPropertyValue($this->getName() . ' property must have a value');
 			} else {
 				$value = $this->default;
 			}

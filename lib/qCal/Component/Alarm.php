@@ -289,16 +289,12 @@ class qCal_Component_Alarm extends qCal_Component {
 	 */
 	public function __construct($action = null, $trigger = null) {
 	
-		try {
-			$actionproperty = qCal_Property::factory('action', $action);
-			$this->addProperty($actionproperty);
-			$triggerproperty = qCal_Property::factory('trigger', $trigger);
-			$this->addProperty($triggerproperty);
-		} catch (qCal_Exception_Property $e) {
-			// this means that one of the properties could not be initiated due to invalid
-			// data being passed in. Determine which property it was, and report it
-			throw new qCal_Exception_Conformance($e->getProperty()->getName() . ' property must be specified for component "' . $this->getName() . '"');
+		// if we're missing any required parameters, report them
+		if (is_null($action)) {
+			throw new qCal_Exception_MissingProperty($this->getName() . " component requires ACTION property");
 		}
+		$this->addProperty(qCal_Property::factory('action', $action));
+		$this->addProperty(qCal_Property::factory('trigger', $trigger));
 	
 	}
 
