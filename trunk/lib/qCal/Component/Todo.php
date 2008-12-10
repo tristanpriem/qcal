@@ -77,5 +77,20 @@ class qCal_Component_Todo extends qCal_Component {
 
 	protected $name = "VTODO";
 	protected $allowedComponents = array('VCALENDAR');
+	/**
+	 * Todo Constructor
+	 *
+	 * @return void
+	 **/
+	public function __construct() {
+	/*
+		// if we're missing any required parameters, report them
+		if (is_null($action)) {
+			throw new qCal_Exception_MissingProperty($this->getName() . " component requires ACTION property");
+		}
+		$this->addProperty(qCal_Property::factory('action', $action));
+		$this->addProperty(qCal_Property::factory('trigger', $trigger));
+	*/
+	}
 
 }

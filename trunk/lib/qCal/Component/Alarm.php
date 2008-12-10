@@ -293,8 +293,8 @@ class qCal_Component_Alarm extends qCal_Component {
 		if (is_null($action)) {
 			throw new qCal_Exception_MissingProperty($this->getName() . " component requires ACTION property");
 		}
-		$this->addProperty(qCal_Property::factory('action', $action));
-		$this->addProperty(qCal_Property::factory('trigger', $trigger));
+		$this->addProperty(new qCal_Property_Action($action));
+		$this->addProperty(new qCal_Property_Trigger($trigger));
 	
 	}
 
