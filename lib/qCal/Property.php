@@ -122,6 +122,7 @@ abstract class qCal_Property {
 				$value = $this->default;
 			}
 		}
+		// @todo Convert to this property type by doing something like $value = $this->cast($value);
 		$this->value = $value;
 	
 	}
