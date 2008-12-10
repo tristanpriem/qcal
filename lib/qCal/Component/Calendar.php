@@ -49,8 +49,8 @@ class qCal_Component_Calendar extends qCal_Component {
 	 */
 	public function __construct($prodid = null, $version = null) {
 	
-		$this->addProperty(qCal_Property::factory('prodid', $prodid));
-		$this->addProperty(qCal_Property::factory('version', $version));
+		$this->addProperty(new qCal_Property_Prodid($prodid));
+		$this->addProperty(new qCal_Property_Version($version));
 	
 	}
 	

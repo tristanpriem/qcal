@@ -372,7 +372,7 @@ class qCal_Component_Timezone extends qCal_Component {
 		if (is_null($tzid)) {
 			throw new qCal_Exception_MissingProperty($this->getName() . " component requires TZID property");
 		}
-		$this->addProperty(qCal_Property::factory('tzid', $tzid));
+		$this->addProperty(new qCal_Property_Tzid($tzid));
 	
 	}
 
