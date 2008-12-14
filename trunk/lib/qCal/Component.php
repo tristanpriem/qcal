@@ -225,6 +225,31 @@ abstract class qCal_Component {
 	
 	}
 	
+	public function getProperties() {
+	
+		return $this->properties;
+	
+	}
+	
+	public function getChildren() {
+	
+		return $this->children;
+	
+	}
+	
+	/**
+	 * Renders the calendar, by default in icalendar format. If you pass
+	 * in a renderer, it will use that instead
+	 *
+	 * @return mixed Depends on the renderer
+	 */
+	public function render(qCal_Renderer $renderer = null) {
+	
+		if (is_null($renderer)) $renderer = new qCal_Renderer_iCalendar();
+		return $renderer->render($this);
+	
+	}
+	
 	/**
 	 * Allows for components to get and set property values by calling
 	 * qCal_Component::getPropertyName() and qCal_Component::setPropertyName('2.0') where propertyName is the property name
@@ -240,13 +265,17 @@ abstract class qCal_Component {
 			if ($this->hasProperty($name))
 				return $this->getProperty($name)->getValue();
 		} elseif ($firstthree == "set") {
-			$property = qCal_Property::factory($name, $params[0]);
+			$value = isset($params[0]) ? $params[0] : null;
+			$params = isset($params[1]) ? $params[1] : array();
+			$property = qCal_Property::factory($name, $value, $params);
 			$this->addProperty($property);
 		//} elseif ($firstthree == "add") {
 			// add property type
 		//	$property = qCal_Property::factory($name, $params);
 		//	$this->addProperty($property);
 		}
+		// throw exception here?
+		// throw new qCal_Exception();
 	
 	}
 
