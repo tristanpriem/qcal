@@ -15,15 +15,6 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
-	 * Test that you cannot set an invalid property on a component. Many
-	 * properties are specific to certain components.
-	 */
-	public function testConformanceExceptionThrownIfInvalidProperty() {
-	
-		
-	
-	}
-	/**
 	 * Test that each component gets initialized in accordance with the RFC
 	 * conformance rules
 	 */
@@ -66,6 +57,42 @@ class UnitTestCase_Component extends UnitTestCase {
 		//$component = qCal_Component::factory('VCALENDAR');
 		//$this->assertEqual($component->getProperty('prodid')->getValue(), '-//Luke Visinoni//qCal v0.1//EN');
 		//$this->assertEqual($component->getProperty('version')->getValue(), '2.0');
+	
+	}
+	/**
+	 * Test that you can pass in name/value paris, property objects, or a combination, and that
+	 * the name portion is case insensitive
+	 */
+	public function testCalendarInitializeAcceptsMixedArray() {
+	
+		// name/value pairs
+		$properties = array(
+			'prodid' => '// Test //',
+			'version' => '3.1'
+		);
+		$calendar = new qCal_Component_Calendar($properties);
+		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
+		$this->assertEqual($calendar->getProperty('version')->getValue(), '3.1');
+		
+		// property objects
+		$properties = array(
+			new qCal_Property_Version('4.0'),
+			new qCal_Property_Prodid('// Test //')
+		);
+		$calendar = new qCal_Component_Calendar($properties);
+		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
+		$this->assertEqual($calendar->getProperty('version')->getValue(), '4.0');
+		
+		// combination of property objects and name/value
+		$properties = array(
+			new qCal_Property_Version('4.0'),
+			'prodid' => '// Test //',
+		);
+		$calendar = new qCal_Component_Calendar($properties);
+		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
+		$this->assertEqual($calendar->getProperty('version')->getValue(), '4.0');
+		
+		// @todo what happens if the same property is passed in multiple times, and that isn't allowed?
 	
 	}
 	/**
