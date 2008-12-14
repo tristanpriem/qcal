@@ -24,7 +24,26 @@ class UnitTestCase_Renderer extends UnitTestCase {
     	$todo_w_alarm->attach($alarm);
     	$calendar->attach($todo_w_alarm);
         $ical = $calendar->render(); // can pass it a renderer, otherwise it uses ical format
-        pre($ical);
+        //pre($ical);
+    
+    }
+    
+    public function testLongLinesFolded() {
+    
+    	$cal = new qCal;
+    	$todo = new qCal_Component_Todo(array(
+	    	'description' => 'This is a really long line that will of course need to be folded. I mean, we can\'t just have long lines laying around in an icalendar file. That would be like not ok. So, let\'s find out if this folded properly!',
+			'summary' => 'This is a short summary, which I think is like a title',
+			'dtstart' => '2008-04-23 1:00am',
+    	));
+    	$cal->attach($todo);
+    	pre($cal->render());
+    
+    }
+    
+    public function testBinaryData() {
+    
+    	
     
     }
 
