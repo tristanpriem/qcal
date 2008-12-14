@@ -294,14 +294,13 @@ class qCal_Component_Alarm extends qCal_Component {
 		parent::__construct($properties);
 		switch(strtoupper($this->getAction())) {
 			case "AUDIO":
-				// action, trigger
+				// action, trigger (already covered by parent constructor)
 				break;
 			case "DISPLAY":
 				// action, trigger, description 
 				if (!$this->hasProperty('DESCRIPTION')) {
 					throw new qCal_Exception_MissingProperty("DISPLAY VALARM component requires DESCRIPTION property");
 				}
-				
 				break;
 			case "EMAIL":
 				// action, description, trigger, summary
@@ -318,8 +317,6 @@ class qCal_Component_Alarm extends qCal_Component {
 					throw new qCal_Exception_MissingProperty("PROCEDURE VALARM component requires ATTACH property");
 				}
 				break;
-			default:
-				pre($this);
 		}
 	
 	}
