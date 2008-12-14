@@ -39,11 +39,11 @@
 class qCal_DataType_Date extends qCal_DataType {
 
 	/**
-	 * @todo: implement this
+	 * This converts to a timestamp
 	 */
 	protected function doCast($value) {
 	
-		return $value;
+		return strtotime($value);
 	
 	}
 
