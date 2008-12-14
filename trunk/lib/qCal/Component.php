@@ -81,7 +81,7 @@ abstract class qCal_Component {
 	 * Contains an array of this component's child components (if any). It uses
 	 * @var array
 	 */
-	protected $children;
+	protected $children = array();
 	/**
 	 * Contains an array of this component's properties. Properties provide
 	 * information about their respective components. This array is associative.
@@ -90,11 +90,48 @@ abstract class qCal_Component {
 	 * look up any certain property.
 	 * @var array
 	 */
-	protected $properties;
+	protected $properties = array();
+	/**
+	 * Contains an array of this component's required properties
+	 */
+	protected $requiredProperties = array();
 	/**
 	 * Class constructor
+	 * Accepts an array of properties, which can be simple values or actual property objects
+	 * You cannot pass in child components in the constructor, you must use the "attach" method
+	 * Pass in a null value to use a property's default value (some dont have defaults, so beware)
+	 * Example:
+	 * $cal = new qCal_Component_Calendar(array(
+           'prodid' => '-// Some Property Id//',
+           'someotherproperty' => null,
+           qCal_Property_Version(2.0),
+	   ));
 	 */
-	public  function __construct() {}
+	public  function __construct($properties = array()) {
+	
+		$addedprops = array();
+		foreach ($properties as $name => $value) {
+			// if value isn't a property object, generate one
+			if (!($value instanceof qCal_Property)) {
+				$value = qCal_Property::factory($name, $value);
+			}
+			$addedprops[] = $value->getName(); // getName() returns a formatted name
+			$this->addProperty($value);
+		}
+		// if we're missing any required properties and they have no default, throw an exception
+		$missing = array_diff($this->requiredProperties, $addedprops);
+		foreach ($missing as $propertyname) {
+			// the property factory will throw an exception if it's passed a null value for a property with no default
+			try {
+				$property = qCal_Property::factory($propertyname, null);
+				$this->addProperty($property);
+			} catch (qCal_Exception_InvalidPropertyValue $e) {
+				// if that's the case, catch the exception and throw a missing property exception
+				throw new qCal_Exception_MissingProperty($this->getName . " component requires " . $propertyname . " property");
+			}
+		}
+	
+	}
 	/**
 	 * Returns the component name
 	 * @return string
@@ -114,7 +151,6 @@ abstract class qCal_Component {
 	}
 	/**
 	 * @todo come up with a better way to include 
-	 */
 	static public function factory($name, $properties = array()) {
 	
 		// remove V
@@ -132,6 +168,7 @@ abstract class qCal_Component {
 		return $class;
 	
 	}
+	 */
 
 	/**
 	 * I'm not sure how this should work. Not sure if it should be setProperty,

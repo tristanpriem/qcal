@@ -89,7 +89,7 @@ abstract class qCal_Property {
 	
 	}
 	/**
-	 * Returns the property name
+	 * Returns the property name (formatted and exactly to spec)
 	 * @return string
 	 */
 	public function getName() {
