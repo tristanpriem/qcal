@@ -202,20 +202,26 @@ abstract class qCal_Component {
 	}
 	
 	/**
-	 * Allows for components to set property values by calling
-	 * qCal_Component::propertyName($val) where propertyName is the property name
-	 * to be set and $val is the value.
-	 * @throws qCal_Exception_Conformance If $method is a property that isn't
-	 *         allowed for this component.
-	 * @return string
-	 * @todo Finish this at another time, it is not important right now. I think
-	 *       this is more of a convenience than a necessity.
+	 * Allows for components to get and set property values by calling
+	 * qCal_Component::getPropertyName() and qCal_Component::setPropertyName('2.0') where propertyName is the property name
+	 * to be set and $val is the property value.
+	 * This is just a convenience facade, it isn't going to be used within the library as much as by end-users
 	 */
 	public function __call($method, $params) {
-	/*
-		$property = qCal_Property::factory($method, $params);
-		$this->addProperty($property);
-	*/
+	
+		$firstthree = substr($method, 0, 3);
+		$name = substr($method, 3);
+		if ($firstthree == "get") {
+			// return property value
+			return $this->getProperty($name)->getValue();
+		} elseif ($firstthree == "set") {
+			$this->addProperty(qCal_Property::factory($name, $params[0]));
+		//} elseif ($firstthree == "add") {
+			// add property type
+		//	$property = qCal_Property::factory($name, $params);
+		//	$this->addProperty($property);
+		}
+	
 	}
 
 }

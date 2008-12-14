@@ -96,6 +96,16 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * Test facade methods
+	 */
+	public function testFacadeMethods() {
+	
+		$calendar = new qCal_Component_Calendar();
+		$calendar->setProdId('// Test //');
+		$this->assertEqual($calendar->getProdid(), '// Test //');
+	
+	}
+	/**
 	 * Alarm Component
 	 */
 	/**
