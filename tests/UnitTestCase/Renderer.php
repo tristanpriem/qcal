@@ -41,14 +41,14 @@ class UnitTestCase_Renderer extends UnitTestCase {
 	    	'description' => 'This is a really long line that will of course need to be folded. I mean, we can\'t just have long lines laying around in an icalendar file. That would be like not ok. So, let\'s find out if this folded properly!',
 			'summary' => 'This is a short summary, which I think is like a title',
 			'dtstamp' => '2008-04-23 1:00am',
-			new qCal_Property_Attach("Some data that will be attached as binary", array(
+			new qCal_Property_Attach(file_get_contents('./files/me.jpg'), array(
 				'encoding' => 'base64',
 				'fmtype' => 'image/basic',
 				'value' => 'binary',
 			)),
     	));
     	$cal->attach($journal);
-    	//pre($cal->render());
+    	pre($cal->render());
     
     }
     
