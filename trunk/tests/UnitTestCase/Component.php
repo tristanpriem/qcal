@@ -42,7 +42,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	/**
 	 * Make sure only valid components may be set on calendar
      */
-	public function NOSHOWtestCalendarPropertyConformance() {
+	public function testCalendarPropertyConformance() {
 	
 		$this->expectException(new qCal_Exception_InvalidProperty("VCALENDAR component does not allow PERCENT-COMPLETE property"));
 		$component = new qCal_Component_Calendar();
