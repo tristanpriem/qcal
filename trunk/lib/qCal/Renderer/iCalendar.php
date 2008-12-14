@@ -62,11 +62,9 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 				// @todo: I don't know what to do here yet
 			    break;
 			case "DATE":
-				$value = date(qCal_DataType_Date::FORMATSTRING, $value);
 				// @todo: I don't know what to do here yet
 				break;
 			case "DATE-TIME":
-				$value = date(qCal_DataType_DateTime::FORMATSTRING, $value);
 				// @todo: I don't know what to do here yet
 				break;
 			case "DURATION":
@@ -84,7 +82,6 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 				// @todo: I don't know what to do here yet
 				break;
 			case "TIME":
-				$value = date(qCal_DataType_Time::FORMATSTRING, $value);
 				// @todo: I don't know what to do here yet
 				break;
 			case "URI":
