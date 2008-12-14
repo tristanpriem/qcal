@@ -107,12 +107,14 @@
  */
 class qCal_DataType_Time extends qCal_DataType {
 
+	// used to render date with php's date() function
+	const FORMATSTRING = "\Z";
 	/**
-	 * @todo: implement this
+	 * This converts to a timestamp
 	 */
 	protected function doCast($value) {
 	
-		return $value;
+		return strtotime($value);
 	
 	}
 
