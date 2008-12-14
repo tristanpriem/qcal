@@ -13,7 +13,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
     
     }
     
-    public function testRenderer() {
+    public function NOSHOWtestRenderer() {
     
     	$calendar = new qCal;
     	$calendar->attach(new qCal_Component_Todo());
@@ -28,7 +28,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
     
     }
     
-    public function testLongLinesFolded() {
+    public function NOSHOWtestLongLinesFolded() {
     
     	$cal = new qCal;
     	$todo = new qCal_Component_Todo(array(
@@ -48,7 +48,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
 			)),
     	));
     	$cal->attach($journal);
-    	pre($cal->render());
+    	//pre($cal->render());
     
     }
     
