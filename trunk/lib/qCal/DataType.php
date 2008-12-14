@@ -27,6 +27,22 @@
 abstract class qCal_DataType {
 
 	/**
+	 * A factory for data type objects. Pass in a type and a value, and it will return the value
+	 * casted to the proper type
+	 */
+	public static function factory($type, $value) {
+
+		// remove dashes, capitalize properly
+		$parts = explode("-", $type);
+		$type = "";
+		foreach ($parts as $part) $type .= trim(ucfirst(strtolower($part)));
+		// get the class, and instantiate
+		$className = "qCal_DataType_" . $type;
+		$class = new $className;
+		return $class->cast($value);
+	
+	}
+	/**
 	 * Casts $value to this data type (usually from a string)
 	 */
 	public function cast($value) {
