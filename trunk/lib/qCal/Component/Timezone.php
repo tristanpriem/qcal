@@ -366,14 +366,6 @@ class qCal_Component_Timezone extends qCal_Component {
 
 	protected $name = "VTIMEZONE";
 	protected $allowedComponents = array('VCALENDAR');
-	
-	public function __construct($tzid = null) {
-	
-		if (is_null($tzid)) {
-			throw new qCal_Exception_MissingProperty($this->getName() . " component requires TZID property");
-		}
-		$this->addProperty(new qCal_Property_Tzid($tzid));
-	
-	}
+	protected $requiredProperties = array('TZID');
 
 }
