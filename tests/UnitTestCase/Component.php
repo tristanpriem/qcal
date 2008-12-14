@@ -6,7 +6,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	/**
 	 * A nice simple test to start things off...
 	 */
-	public function NOSHOWtestClassTypes() {
+	public function testClassTypes() {
 	
 		$property = new Mock_qCal_Property;
 		$component = new Mock_qCal_Component;
