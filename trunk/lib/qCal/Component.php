@@ -142,10 +142,22 @@ abstract class qCal_Component {
 	
 	}
 	/**
+	 * Returns true if this component can be attached to $component
+	 * I'm sure there's a better way to do this, but this works for now
+	 */
+	public function canAttachTo(qCal_Component $component) {
+	
+		if (in_array($component->getName(), $this->allowedComponents)) return true;
+	
+	}
+	/**
 	 * Attach a component to this component (alarm inside event for example)
 	 */
-	public function attach($component) {
+	public function attach(qCal_Component $component) {
 	
+		if (!$component->canAttachTo($this)) {
+			throw new qCal_Exception_InvalidComponent($component->getName() . ' cannot be attached to ' . $this->getName());
+		}
 		$this->children[$component->getName()][] = $component;
 	
 	}

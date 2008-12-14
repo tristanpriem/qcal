@@ -173,5 +173,21 @@ class UnitTestCase_Component extends UnitTestCase {
 		
 	
 	}
+	/**
+	 * ATTACHING COMPONENTS
+	 */
+	/**
+	 * only certain components can be attached to eachother
+	 */
+	public function testInvalidAttaching() {
+	
+		$this->expectException(new qCal_Exception_InvalidComponent('VCALENDAR cannot be attached to VEVENT'));
+		// calendars cannot be attached to anything (except perhaps other calendars)
+		$cal = new qCal;
+		$event = new qCal_Component_Event();
+		$event->attach($cal);
+	
+	}
+	
 
 }
