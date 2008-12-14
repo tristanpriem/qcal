@@ -127,7 +127,7 @@ abstract class qCal_Component {
 				$this->addProperty($property);
 			} catch (qCal_Exception_InvalidPropertyValue $e) {
 				// if that's the case, catch the exception and throw a missing property exception
-				throw new qCal_Exception_MissingProperty($this->getName . " component requires " . $propertyname . " property");
+				throw new qCal_Exception_MissingProperty($this->getName() . " component requires " . $propertyname . " property");
 			}
 		}
 	
