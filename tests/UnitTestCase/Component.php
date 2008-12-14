@@ -106,6 +106,34 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * These are examples from other icalendar libraries I've found in various other languages
+	 */
+	public function testExamplesFromOtherLibraries() {
+	
+		$cal = new qCal;
+		$cal->setProdid('-//My calendar product//mxm.dk//');
+		$cal->setVersion('2.0');
+		$this->assertEqual($cal->getProdid(), '-//My calendar product//mxm.dk//');
+		$this->assertEqual($cal->getVersion(), '2.0');
+		
+		// events - eventually this will be much more complex, but for now, it works like any other component
+		$event = new qCal_Component_Event(array(
+			'summary' => 'Python meeting about calendaring',
+			'dtstart' => '2009-01-19 6:00',
+			'dtend' => '2009-01-19 9:00',
+			'dtstamp' => '2009-01-19 9:00',
+			'uid' => '20050115T101010/27346262376@mxm.dk'
+		));
+		$event->setPriority(5);
+		$this->assertEqual($event->getSummary(), 'Python meeting about calendaring');
+		$this->assertEqual($event->getDtstart(), '2009-01-19 6:00');
+		$this->assertEqual($event->getDtend(), '2009-01-19 9:00');
+		$this->assertEqual($event->getDtstamp(), '2009-01-19 9:00');
+		$this->assertEqual($event->getUid(), '20050115T101010/27346262376@mxm.dk');
+		$this->assertEqual($event->getPriority(), 5);
+		
+	}
+	/**
 	 * Alarm Component
 	 */
 	/**
