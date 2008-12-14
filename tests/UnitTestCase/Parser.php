@@ -29,10 +29,10 @@ class UnitTestCase_Parser extends UnitTestCase {
     	// this is a facade
     	// what it does is call:
     	/**
-	    	$summary = new qCal_Property_Summary('I eat peas');
-	    	$todo->addProperty($summary);
-	    	// we may also need a 
-	    	**/
+	     * $summary = new qCal_Property_Summary('I eat peas');
+	     * $todo->addProperty($summary);
+	     * // we may also need a
+	     */
     	$todo->summary('I eat peas'); // summarize todo
     	$calendar->attach($todo); // add a todo to calendar
     	$calendar->prodId('//this is cool//'); // give the calendar a product id
