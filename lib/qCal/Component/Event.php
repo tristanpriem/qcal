@@ -128,5 +128,6 @@ class qCal_Component_Event extends qCal_Component {
 
 	protected $name = "VEVENT";
 	protected $allowedComponents = array('VCALENDAR');
+	//protected $requiredProperties = array();
 
 }
