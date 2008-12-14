@@ -202,6 +202,18 @@ abstract class qCal_Component {
 	}
 	
 	/**
+	 * Returns true if this component contains a property of $name
+	 *
+	 * @return boolean
+	 **/
+	public function hasProperty($name) {
+	
+		$name = strtoupper($name);
+		return array_key_exists($name, $this->properties);
+	
+	}
+	
+	/**
 	 * Allows for components to get and set property values by calling
 	 * qCal_Component::getPropertyName() and qCal_Component::setPropertyName('2.0') where propertyName is the property name
 	 * to be set and $val is the property value.
@@ -213,9 +225,11 @@ abstract class qCal_Component {
 		$name = substr($method, 3);
 		if ($firstthree == "get") {
 			// return property value
-			return $this->getProperty($name)->getValue();
+			if ($this->hasProperty($name))
+				return $this->getProperty($name)->getValue();
 		} elseif ($firstthree == "set") {
-			$this->addProperty(qCal_Property::factory($name, $params[0]));
+			$property = qCal_Property::factory($name, $params[0]);
+			$this->addProperty($property);
 		//} elseif ($firstthree == "add") {
 			// add property type
 		//	$property = qCal_Property::factory($name, $params);
