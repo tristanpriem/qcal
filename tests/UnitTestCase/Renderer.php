@@ -37,6 +37,17 @@ class UnitTestCase_Renderer extends UnitTestCase {
 			'dtstart' => '2008-04-23 1:00am',
     	));
     	$cal->attach($todo);
+    	$journal = new qCal_Component_Journal(array(
+	    	'description' => 'This is a really long line that will of course need to be folded. I mean, we can\'t just have long lines laying around in an icalendar file. That would be like not ok. So, let\'s find out if this folded properly!',
+			'summary' => 'This is a short summary, which I think is like a title',
+			'dtstamp' => '2008-04-23 1:00am',
+			new qCal_Property_Attach("Some data that will be attached as binary", array(
+				'encoding' => 'base64',
+				'fmtype' => 'image/basic',
+				'value' => 'binary',
+			)),
+    	));
+    	$cal->attach($journal);
     	pre($cal->render());
     
     }

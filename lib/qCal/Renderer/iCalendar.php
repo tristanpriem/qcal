@@ -39,7 +39,9 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		foreach ($params as $paramname => $paramval) {
 			$paramreturn .= ";" . $paramname . "=" . $paramval;
 		}
-		return $property->getName() . $paramreturn . ":" . $this->renderValue($propval, $property->getType()) . self::LINE_ENDING;
+		// if property has a "value" param, then use it as the type instead
+		$proptype = isset($params['VALUE']) ? $params['VALUE'] : $property->getType();
+		return $property->getName() . $paramreturn . ":" . $this->renderValue($propval, $proptype) . self::LINE_ENDING;
 	
 	}
 	/**
@@ -50,9 +52,50 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	protected function renderValue($value, $type) {
 	
 		switch (strtoupper($type)) {
+			case "BINARY":
+				$value = base64_encode($value);
+				break;
+			case "BOOLEAN":
+				$value = ($value) ? "TRUE" : "FALSE";
+				break;
+			case "CAL-ADDRESS":
+				// @todo: I don't know what to do here yet
+			    break;
+			case "DATE":
+				// @todo: I don't know what to do here yet
+				break;
+			case "DATE-TIME":
+				// @todo: I don't know what to do here yet
+				break;
+			case "DURATION":
+				// @todo: I don't know what to do here yet
+				break;
+			case "FLOAT":
+			case "INTEGER":
+				// returns "2.1" for 2.1 etc.
+				$value = (string) $value;
+				break;
+			case "PERIOD":
+				// @todo: I don't know what to do here yet
+				break;
+			case "RECUR":
+				// @todo: I don't know what to do here yet
+				break;
+			case "TIME":
+				// @todo: I don't know what to do here yet
+				break;
+			case "URI":
+				// @todo: I don't know what to do here yet
+				break;
+			case "UTC-OFFSET":
+				// @todo: I don't know what to do here yet
+				break;
+			case "TEXT":
 			default:
-				return $this->fold($value);
+			    break;
 		}
+		// @todo: I'm not sure how this should work. Should this be folding everything?
+		return $this->fold($value);
 	
 	}
 	

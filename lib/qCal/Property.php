@@ -125,7 +125,7 @@ abstract class qCal_Property {
 			}
 		}
 		// @todo Convert to this property type by doing something like $value = $this->cast($value);
-		$this->value = $value;
+		$this->value = qCal_DataType::factory($this->getType(), $value);
 	
 	}
 	/**
