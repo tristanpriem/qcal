@@ -37,11 +37,33 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		$params = $property->getParams();
 		$paramreturn = "";
 		foreach ($params as $paramname => $paramval) {
-			$paramreturn .= ";" . $paramname . "=" . $paramval;
+			$paramreturn .= $this->renderParam($paramname, $paramval);
 		}
 		// if property has a "value" param, then use it as the type instead
 		$proptype = isset($params['VALUE']) ? $params['VALUE'] : $property->getType();
-		return $property->getName() . $paramreturn . ":" . $this->renderValue($propval, $proptype) . self::LINE_ENDING;
+		$content = $property->getName() . $paramreturn . ":" . $this->renderValue($propval, $proptype) . self::LINE_ENDING;
+		// @todo: I'm fairly sure that this is supposed to fold EVERYTHING, but not positive
+		return $this->fold($content);
+	
+	}
+	/**
+	 * Renders a parameter
+	 * RFC 2445 says if paramval contains COLON (US-ASCII decimal
+	 * 58), SEMICOLON (US-ASCII decimal 59) or COMMA (US-ASCII decimal 44)
+	 * character separators MUST be specified as quoted-string text values
+	 */
+	protected function renderParam($name, $value) {
+	
+		$invchars = array(chr(58),chr(59),chr(44));
+		$quote = false;
+		foreach ($invchars as $char) {
+			if (strstr($value, $char)) {
+				$quote = true;
+				break;
+			}
+		}
+		if ($quote) $value = '"' . $value . '"';
+		return ";" . $name . "=" . $value;
 	
 	}
 	/**
@@ -94,13 +116,15 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 			default:
 			    break;
 		}
-		// @todo: I'm not sure how this should work. Should this be folding everything?
-		return $this->fold($value);
+		return $value;
 	
 	}
 	
 	/**
 	 * Text cannot exceed 72 octets. This method will "fold" long lines in accordance with RFC 2445
+	 * @todo This won't work because it doesn't take the property name into account. The property name
+	 * goes on the same line as the content, so you have to include it in order for the first line not
+	 * to go over 72 octets
 	 */
 	protected function fold($data) {
 	
