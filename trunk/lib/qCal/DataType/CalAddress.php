@@ -29,6 +29,13 @@
  */
 class qCal_DataType_CalAddress extends qCal_DataType_Uri {
 
+	/**
+	 * @todo: implement this
+	 */
+	protected function doCast($value) {
 	
+		return $value;
+	
+	}
 
 }

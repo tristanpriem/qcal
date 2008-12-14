@@ -35,6 +35,13 @@
  */
 class qCal_DataType_Integer extends qCal_DataType {
 
+	/**
+	 * Casts $value to integer and returns it
+	 */
+	protected function doCast($value) {
 	
+		return (integer) $value;
+	
+	}
 
 }

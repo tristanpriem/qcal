@@ -32,6 +32,13 @@
  */
 class qCal_DataType_Float extends qCal_DataType {
 
+	/**
+	 * Casts $value to float and returns it
+	 */
+	protected function doCast($value) {
 	
+		return (float) $value;
+	
+	}
 
 }
