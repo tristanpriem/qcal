@@ -38,6 +38,13 @@
  */
 class qCal_DataType_UtcOffset extends qCal_DataType {
 
+	/**
+	 * @todo: implement this
+	 */
+	protected function doCast($value) {
 	
+		return $value;
+	
+	}
 
 }

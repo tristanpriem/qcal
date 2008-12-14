@@ -107,6 +107,13 @@
  */
 class qCal_DataType_Time extends qCal_DataType {
 
+	/**
+	 * @todo: implement this
+	 */
+	protected function doCast($value) {
 	
+		return $value;
+	
+	}
 
 }

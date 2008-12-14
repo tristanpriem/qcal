@@ -29,6 +29,13 @@
  */
 class qCal_DataType_Boolean extends qCal_DataType {
 
+	/**
+	 * Returns boolean of whatever you pass in (by PHP's rules)
+	 */
+	protected function doCast($value) {
 	
+		return (boolean) $value;
+	
+	}
 
 }

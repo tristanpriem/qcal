@@ -266,6 +266,13 @@
  */
 class qCal_DataType_Recur extends qCal_DataType {
 
+	/**
+	 * @todo: implement this - this one's gonna be a doozy
+	 */
+	protected function doCast($value) {
 	
+		return $value;
+	
+	}
 
 }

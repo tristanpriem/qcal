@@ -24,4 +24,5 @@ require_once 'mock_objects.php';
 $test = new GroupTest('Core qCal Tests');
 $test->addTestCase(new UnitTestCase_Parser);
 $test->addTestCase(new UnitTestCase_Component);
+$test->addTestCase(new UnitTestCase_Property);
 $test->run(new HtmlReporter());

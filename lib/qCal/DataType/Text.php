@@ -68,6 +68,13 @@
  */
 class qCal_DataType_Text extends qCal_DataType {
 
+	/**
+	 * @todo: implement this
+	 */
+	protected function doCast($value) {
 	
+		return $value;
+	
+	}
 
 }

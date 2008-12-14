@@ -47,6 +47,15 @@
  */
 class qCal_DataType_Binary extends qCal_DataType {
 
+	/**
+	 * @todo: implement this
+	 * I wonder... would just doing a base64 encode do the trick here?
+	 * look at swiftmailer to see how chris does it
+	 */
+	protected function doCast($value) {
 	
+		return $value;
+	
+	}
 
 }

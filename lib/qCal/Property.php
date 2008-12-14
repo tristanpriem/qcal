@@ -67,7 +67,9 @@ abstract class qCal_Property {
 	public  function __construct($value = null, $params = array()) {
 	
 		$this->name = $this->getPropertyNameFromClassName(get_class($this));
-		$this->params = $params;
+		foreach ($params as $pname => $pval) {
+			$this->params[strtoupper($pname)] = $pval;
+		}
 		// if the value is null, and the property has a default value, assign the default
 		if (is_null($value) && $this->default !== false) $value = $this->default;
 		$this->setValue($value);
@@ -190,6 +192,26 @@ abstract class qCal_Property {
 		// get the class, and instantiate
 		$className = "qCal_Property_" . $property;
 		return $className;
+	
+	}
+	/**
+	 * Retreive the value of a parameter
+	 *
+	 * @return mixed parameter value
+	 */
+	public function getParam($name) {
+	
+		if (isset($this->params[strtoupper($name)])) {
+			return $this->params[strtoupper($name)];
+		}
+	
+	}
+	/**
+	 * Set the value of a parameter
+	 */
+	public function setParam($name, $value) {
+	
+		$this->params[strtoupper($name)] = $value;
 	
 	}
 	

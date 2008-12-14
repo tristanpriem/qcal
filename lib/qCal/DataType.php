@@ -27,12 +27,17 @@
 abstract class qCal_DataType {
 
 	/**
-	 * Class constructor
+	 * Casts $value to this data type (usually from a string)
 	 */
-	public function __construct() {
+	public function cast($value) {
 	
-		// do nothing yet
+		return $this->doCast($value);
 	
 	}
+	/**
+	 * This is left to be implemented by children classes, basically they 
+	 * implement this method to cast any input into their data type
+	 */
+	abstract protected function doCast($value);
 
 }
