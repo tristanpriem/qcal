@@ -75,7 +75,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	 * Test that each component gets initialized in accordance with the RFC
 	 * conformance rules
 	 */
-	public function NOSHOWtestAlarmInitializeConformance() {
+	public function testAlarmInitializeConformance() {
 	
 		// test that action is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires ACTION property'));
