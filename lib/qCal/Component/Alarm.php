@@ -285,5 +285,43 @@ class qCal_Component_Alarm extends qCal_Component {
 	protected $name = "VALARM";
 	protected $allowedComponents = array('VEVENT','VTODO');
 	protected $requiredProperties = array('ACTION', 'TRIGGER');
+	/**
+	 * This component's requirements vary depending on the "action" property, so it 
+	 * warrants its own constructor
+	 */
+	public function __construct($properties = array()) {
+	
+		parent::__construct($properties);
+		switch(strtoupper($this->getAction())) {
+			case "AUDIO":
+				// action, trigger
+				break;
+			case "DISPLAY":
+				// action, trigger, description 
+				if (!$this->hasProperty('DESCRIPTION')) {
+					throw new qCal_Exception_MissingProperty("DISPLAY VALARM component requires DESCRIPTION property");
+				}
+				
+				break;
+			case "EMAIL":
+				// action, description, trigger, summary
+				if (!$this->hasProperty('DESCRIPTION')) {
+					throw new qCal_Exception_MissingProperty("EMAIL VALARM component requires DESCRIPTION property");
+				}
+				if (!$this->hasProperty('SUMMARY')) {
+					throw new qCal_Exception_MissingProperty("EMAIL VALARM component requires SUMMARY property");
+				}
+				break;
+			case "PROCEDURE":
+				// action, attach, trigger
+				if (!$this->hasProperty('ATTACH')) {
+					throw new qCal_Exception_MissingProperty("PROCEDURE VALARM component requires ATTACH property");
+				}
+				break;
+			default:
+				pre($this);
+		}
+	
+	}
 
 }
