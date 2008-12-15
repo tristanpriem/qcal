@@ -54,6 +54,14 @@ abstract class qCal_Value {
 	
 	}
 	/**
+	 * Returns raw value (as it is stored)
+	 */
+	public function getValue() {
+	
+		return $this->value;
+	
+	}
+	/**
 	 * Casts $value to this data type
 	 */
 	public function cast($value) {
