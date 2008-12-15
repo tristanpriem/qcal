@@ -232,7 +232,7 @@ abstract class qCal_Property {
 	
 		$name = strtoupper($name);
 		// if value param has been passed in, change the type of this property to its value
-		if ($name == "VALUE") $this->type = $value;
+		if ($name == "VALUE") $this->type = strtoupper($value);
 		$this->params[$name] = $value;
 	
 	}

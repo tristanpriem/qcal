@@ -11,4 +11,19 @@ class UnitTestCase_Property extends UnitTestCase {
 	
 	}
 
+	/**
+	 * Test that passing in the VALUE parameter effectively changes the type
+	 */
+	public function testValueParamChangesPropertyType() {
+	
+		$property = new qCal_Property_Attach("SOME DATA");
+		$this->assertEqual($property->getType(), "URI");
+		$property->setParam("value", "binary");
+		$this->assertEqual($property->getType(), "BINARY");
+		
+		$property = new qCal_Property_Attach("SOME DATA", array('value' => 'binary'));
+		$this->assertEqual($property->getType(), "BINARY");
+	
+	}
+
 }
