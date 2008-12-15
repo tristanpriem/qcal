@@ -39,6 +39,11 @@
  */
 class qCal_Value_Uri extends qCal_Value {
 
+	public function __toString() {
+	
+		return (string) $this->value;
+	
+	}
 	/**
 	 * @todo: implement this
 	 */
