@@ -24,5 +24,23 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertEqual($value->getValue(), $binary);
 	
 	}
+	/**
+	 * Test that boolean data is handled right
+	 */
+	public function testBooleanToString() {
+	
+		$value = new qCal_Value_Boolean(true);
+		$this->assertEqual($value->__toString(), "TRUE");
+	
+	}
+	/**
+	 * Test that boolean data is handled right
+	 */
+	public function testRawBoolean() {
+	
+		$value = new qCal_Value_Boolean(false);
+		$this->assertEqual($value->getValue(), false);
+	
+	}
 
 }
