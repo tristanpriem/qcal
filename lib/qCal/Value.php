@@ -1,6 +1,6 @@
 <?php
 /**
- * Base property data type class. Every property value has a specific data
+ * Base property value class. Every property value has a specific data
  * type. Some of them are very simple, such as boolean. Others can be
  * rather complex, such as rrule (specifies a date pattern for recurring
  * events and other components).
@@ -19,13 +19,14 @@
  * parameter. If the value type of a property is one of the alternate
  * valid types, then it MUST be explicitly specified with the "VALUE"
  * parameter.
- * 
- * qCal_DateType Class
- * Calendar properties can be any of several property types. All property
- * types extend this abstract class. 
  */
-abstract class qCal_DataType {
+abstract class qCal_Value {
 
+	public function __construct($value) {
+	
+		$this->setValue($value);
+	
+	}
 	/**
 	 * A factory for data type objects. Pass in a type and a value, and it will return the value
 	 * casted to the proper type
@@ -37,17 +38,33 @@ abstract class qCal_DataType {
 		$type = "";
 		foreach ($parts as $part) $type .= trim(ucfirst(strtolower($part)));
 		// get the class, and instantiate
-		$className = "qCal_DataType_" . $type;
-		$class = new $className;
-		return $class->cast($value);
+		$className = "qCal_Value_" . $type;
+		$class = new $className($value);
+		return $class;
 	
 	}
 	/**
-	 * Casts $value to this data type (usually from a string)
+	 * Sets the value of this object
+	 */
+	public function setValue($value) {
+	
+		$this->value = $this->doCast($value);
+	
+	}
+	/**
+	 * Casts $value to this data type
 	 */
 	public function cast($value) {
 	
 		return $this->doCast($value);
+	
+	}
+	/**
+	 * Returns the value as a string
+	 */
+	public function __toString() {
+	
+		return (string) $this->value;
 	
 	}
 	/**
