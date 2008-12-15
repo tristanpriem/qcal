@@ -96,5 +96,23 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertEqual($value->getValue(), 1240470000);
 	
 	}
+	/**
+	 * Test that date-time data is handled right
+	 */
+	public function NOSHOWtestDateTimeToString() {
+	
+		$value = new qCal_Value_DateTime('2009-04-23 6:00');
+		$this->assertEqual($value->__toString(), "20090423T");
+	
+	}
+	/**
+	 * Test that date-time data is handled right
+	 */
+	public function NOSHOWtestRawDateTime() {
+	
+		$value = new qCal_Value_DateTime('2009-04-23 6:00');
+		$this->assertEqual($value->getValue(), 1240491600);
+	
+	}
 
 }

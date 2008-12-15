@@ -107,6 +107,7 @@
  */
 class qCal_Value_Time extends qCal_Value {
 
+	// @todo: figure out how to handle dates/times
 	/**
 	 * This converts to a timestamp
 	 */

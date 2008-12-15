@@ -50,7 +50,8 @@ class qCal_Value_Duration extends qCal_Value {
 	 */
 	protected function doCast($value) {
 	
-		return $value;
+		// convert value to duration in seconds
+		
 	
 	}
 
