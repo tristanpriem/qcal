@@ -48,9 +48,15 @@
 class qCal_Value_Binary extends qCal_Value {
 
 	/**
-	 * @todo: implement this
-	 * I wonder... would just doing a base64 encode do the trick here?
-	 * look at swiftmailer to see how chris does it
+	 * When the value of a binary property is requested, it will be returned as a base64 encoded string
+	 */
+	public function __toString() {
+	
+		return base64_encode($this->value);
+	
+	}
+	/**
+	 * Binary can be store as-is I believe, so don't change it
 	 */
 	protected function doCast($value) {
 	

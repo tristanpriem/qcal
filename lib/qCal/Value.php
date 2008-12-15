@@ -44,7 +44,9 @@ abstract class qCal_Value {
 	
 	}
 	/**
-	 * Sets the value of this object
+	 * Sets the value of this object. The beauty of using inheritence here is that I can store
+	 * the value however I want for any value type, and then on __toString() I can return it how
+	 * iCalendar specifies :) 
 	 */
 	public function setValue($value) {
 	

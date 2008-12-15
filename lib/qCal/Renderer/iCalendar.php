@@ -41,7 +41,7 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		}
 		// if property has a "value" param, then use it as the type instead
 		$proptype = isset($params['VALUE']) ? $params['VALUE'] : $property->getType();
-		$content = $property->getName() . $paramreturn . ":" . $this->renderValue($propval, $proptype) . self::LINE_ENDING;
+		$content = $property->getName() . $paramreturn . ":" . $property->getValue() . self::LINE_ENDING;
 		// @todo: I'm fairly sure that this is supposed to fold EVERYTHING, but not positive
 		return $this->fold($content);
 	
@@ -69,10 +69,11 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	/**
 	 * Render $value as $type - this function uses the datatype to know how to render a value
 	 * @return mixed
-	 * @todo implement this
+	 * @todo I don't think we need this any more
 	 */
 	protected function renderValue($value, $type) {
 	
+		/*
 		switch (strtoupper($type)) {
 			case "BINARY":
 				$value = base64_encode($value);
@@ -117,6 +118,7 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 			    break;
 		}
 		return $value;
+	    */
 	
 	}
 	

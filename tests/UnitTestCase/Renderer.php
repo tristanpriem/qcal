@@ -24,11 +24,11 @@ class UnitTestCase_Renderer extends UnitTestCase {
     	$todo_w_alarm->attach($alarm);
     	$calendar->attach($todo_w_alarm);
         $ical = $calendar->render(); // can pass it a renderer, otherwise it uses ical format
-        //pre($ical);
+        pre($ical);
     
     }
     
-    public function NOSHOWtestLongLinesFolded() {
+    public function testLongLinesFolded() {
     
     	$cal = new qCal;
     	$todo = new qCal_Component_Todo(array(
