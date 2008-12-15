@@ -48,7 +48,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
 			)),
     	));
     	$cal->attach($journal);
-    	//pre($cal->render());
+    	pre($cal->render());
     
     }
     

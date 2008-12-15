@@ -35,7 +35,7 @@ abstract class qCal_Property {
 	protected $name;
 	/**
 	 * Property value
-	 * @var string
+	 * @var qCal_Value object
 	 */
 	protected $value;
 	/**
@@ -70,8 +70,6 @@ abstract class qCal_Property {
 		foreach ($params as $pname => $pval) {
 			$this->setParam($pname, $pval);
 		}
-		// if the value is null, and the property has a default value, assign the default
-		if (is_null($value) && $this->default !== false) $value = $this->default;
 		$this->setValue($value);
 	
 	}
@@ -100,10 +98,20 @@ abstract class qCal_Property {
 	
 	}
 	/**
-	 * Returns the property value
+	 * Returns the property value (as a string)
+	 * If you want the actual object, use getValueObject()
 	 * @return string
 	 */
 	public function getValue() {
+	
+		return $this->value->__toString();
+	
+	}
+	/**
+	 * Returns raw value object
+	 * @return string
+	 */
+	public function getValueObject() {
 	
 		return $this->value;
 	
@@ -125,7 +133,7 @@ abstract class qCal_Property {
 			}
 		}
 		// @todo Convert to this property type by doing something like $value = $this->cast($value);
-		$this->value = qCal_DataType::factory($this->getType(), $value);
+		$this->value = qCal_Value::factory($this->getType(), $value);
 	
 	}
 	/**
