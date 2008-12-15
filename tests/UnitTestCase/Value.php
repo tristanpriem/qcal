@@ -42,5 +42,41 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertEqual($value->getValue(), false);
 	
 	}
+	/**
+	 * Test that cal-address data is handled right
+	 */
+	public function testCalAddressToString() {
+	
+		$value = new qCal_Value_CalAddress('http://www.example.com/webcal');
+		$this->assertEqual($value->__toString(), "http://www.example.com/webcal");
+	
+	}
+	/**
+	 * Test that cal-address data is handled right
+	 */
+	public function testRawCalAddress() {
+	
+		$value = new qCal_Value_CalAddress('http://www.example.com/webcal');
+		$this->assertEqual($value->getValue(), 'http://www.example.com/webcal');
+	
+	}
+	/**
+	 * Test that cal-address data is handled right
+	 */
+	public function testUriToString() {
+	
+		$value = new qCal_Value_Uri('http://www.example.com/webcal');
+		$this->assertEqual($value->__toString(), "http://www.example.com/webcal");
+	
+	}
+	/**
+	 * Test that cal-address data is handled right
+	 */
+	public function testRawUri() {
+	
+		$value = new qCal_Value_Uri('http://www.example.com/webcal');
+		$this->assertEqual($value->getValue(), 'http://www.example.com/webcal');
+	
+	}
 
 }
