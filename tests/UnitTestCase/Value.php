@@ -61,7 +61,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	
 	}
 	/**
-	 * Test that cal-address data is handled right
+	 * Test that uri data is handled right
 	 */
 	public function testUriToString() {
 	
@@ -70,12 +70,30 @@ class UnitTestCase_Value extends UnitTestCase {
 	
 	}
 	/**
-	 * Test that cal-address data is handled right
+	 * Test that uri data is handled right
 	 */
 	public function testRawUri() {
 	
 		$value = new qCal_Value_Uri('http://www.example.com/webcal');
 		$this->assertEqual($value->getValue(), 'http://www.example.com/webcal');
+	
+	}
+	/**
+	 * Test that date data is handled right
+	 */
+	public function testDateToString() {
+	
+		$value = new qCal_Value_Date('2009-04-23');
+		$this->assertEqual($value->__toString(), "20090423");
+	
+	}
+	/**
+	 * Test that date data is handled right
+	 */
+	public function testRawDate() {
+	
+		$value = new qCal_Value_Date('2009-04-23');
+		$this->assertEqual($value->getValue(), 1240470000);
 	
 	}
 

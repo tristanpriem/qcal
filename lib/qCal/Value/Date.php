@@ -38,6 +38,11 @@
  */
 class qCal_Value_Date extends qCal_Value {
 
+	public function __toString() {
+	
+		return date('Ymd', $this->value);
+	
+	}
 	/**
 	 * This converts to a timestamp
 	 */
