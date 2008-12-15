@@ -70,6 +70,7 @@ abstract class qCal_Property {
 		foreach ($params as $pname => $pval) {
 			$this->setParam($pname, $pval);
 		}
+		// this must be set after parameters because the VALUE parameter can affect it
 		$this->setValue($value);
 	
 	}
@@ -100,6 +101,8 @@ abstract class qCal_Property {
 	/**
 	 * Returns the property value (as a string)
 	 * If you want the actual object, use getValueObject()
+	 * I wish I could just pass the object back and have php do some overloading magicness, but
+	 * it doesn't know how :(
 	 * @return string
 	 */
 	public function getValue() {
@@ -227,7 +230,10 @@ abstract class qCal_Property {
 	 */
 	public function setParam($name, $value) {
 	
-		$this->params[strtoupper($name)] = $value;
+		$name = strtoupper($name);
+		// if value param has been passed in, change the type of this property to its value
+		if ($name == "VALUE") $this->type = $value;
+		$this->params[$name] = $value;
 	
 	}
 	
