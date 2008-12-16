@@ -114,5 +114,32 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertEqual($value->getValue(), 1240491600);
 	
 	}
+	/**
+	 * Test that duration data is handled right
+	 */
+	public function testDurationToString() {
+	
+		$value = new qCal_Value_Duration('P2WT2H45M');
+		$this->assertEqual($value->__toString(), 'P2WT2H45M');
+	
+	}
+	/**
+	 * Test that duration passed in in an "unnormalized"? format gets corrected
+	 */
+	public function testDurationToStringNormalizes() {
+	
+		$value = new qCal_Value_Duration('P18D');
+		$this->assertEqual($value->__toString(), 'P2W4D'); // 18 days == 2 weeks and 4 days
+	
+	}
+	/**
+	 * Test that duration data is handled right
+	 */
+	public function testRawDuration() {
+	
+		$value = new qCal_Value_Duration('P1W3DT2H3M45S');
+		$this->assertEqual($value->getValue(), 871425); // this is how many seconds are in the duration
+	
+	}
 
 }

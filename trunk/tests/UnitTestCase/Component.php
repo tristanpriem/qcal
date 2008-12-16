@@ -173,7 +173,7 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->expectException(new qCal_Exception_MissingProperty('DISPLAY VALARM component requires DESCRIPTION property'));
 		$alarm = new qCal_Component_Alarm(array(
 			'action' => 'display',
-			'trigger' => '15m',
+			'trigger' => 'P1W3DT2H3M45S',
 			//'description' => 'Feed your fish'
 		));
 		
@@ -187,7 +187,7 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->expectException(new qCal_Exception_MissingProperty('EMAIL VALARM component requires DESCRIPTION property'));
 		$alarm = new qCal_Component_Alarm(array(
 			'action' => 'email',
-			'trigger' => '15m',
+			'trigger' => 'P1W3DT2H3M45S',
 			'summary' => 'Feed your fish!',
 			//'description' => 'Don\'t forget to feed your poor fishy, Pedro V'
 		));
@@ -202,7 +202,7 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->expectException(new qCal_Exception_MissingProperty('PROCEDURE VALARM component requires ATTACH property'));
 		$alarm = new qCal_Component_Alarm(array(
 			'action' => 'procedure',
-			'trigger' => '15m',
+			'trigger' => 'P1W3DT2H3M45S',
 			//'attach' => 'http://www.somewebsite.com/387592/alarm/5/',
 		));
 	
