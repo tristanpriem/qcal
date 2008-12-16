@@ -81,7 +81,7 @@ class qCal_Value_Duration extends qCal_Value {
 	protected function doCast($value) {
 	
 		// convert value to duration in seconds
-		preg_match('/^[+-]?P([0-9]{1,2}[W])?([0-9]{1,2}[D])?T?([0-9]{1,2}[H])?([0-9]{1,2}[M])?([0-9]{1,2}[S])?$/i', $value, $matches);
+		preg_match('/^[+-]?P([0-9]+[W])?([0-9]+[D])?T?([0-9]+[H])?([0-9]+[M])?([0-9]+[S])?$/i', $value, $matches);
 		// remove first element (which is just entire the matched string)
 		array_shift($matches);
 		$seconds = 0;
