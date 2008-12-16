@@ -124,9 +124,6 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	
 	/**
 	 * Text cannot exceed 72 octets. This method will "fold" long lines in accordance with RFC 2445
-	 * @todo This won't work because it doesn't take the property name into account. The property name
-	 * goes on the same line as the content, so you have to include it in order for the first line not
-	 * to go over 72 octets
 	 */
 	protected function fold($data) {
 	
