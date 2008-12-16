@@ -127,9 +127,9 @@ class UnitTestCase_Component extends UnitTestCase {
 		$event->setPriority(5);
 		$this->assertEqual($event->getSummary(), 'Python meeting about calendaring');
 		// returns a timestamp
-		$this->assertEqual($event->getDtstart(), 1232373600);
-		$this->assertEqual($event->getDtend(), 1232384400);
-		$this->assertEqual($event->getDtstamp(), 1232384400);
+		$this->assertEqual($event->getDtstart(), '20090119T060000');
+		$this->assertEqual($event->getDtend(), '20090119T090000');
+		$this->assertEqual($event->getDtstamp(), '20090119T090000');
 		$this->assertEqual($event->getUid(), '20050115T101010/27346262376@mxm.dk');
 		$this->assertEqual($event->getPriority(), 5);
 		
