@@ -107,6 +107,12 @@
  */
 class qCal_Value_Time extends qCal_Value {
 
+	public function __toString() {
+	
+		// @todo: this doesn't take time-zones into account
+		return date('His', $this->value);
+	
+	}
 	// @todo: figure out how to handle dates/times
 	/**
 	 * This converts to a timestamp

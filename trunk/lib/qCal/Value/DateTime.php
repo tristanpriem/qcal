@@ -104,13 +104,13 @@
  *  COMPLETED:19970630T235960Z
  */
 class qCal_Value_Datetime extends qCal_Value {
-/*
+
 	public function __toString() {
 	
-		// @todo: this needs to be figured out.. I don't know how to handle dates and times yet
-
+		// @todo: this doesn't take time-zones into account
+		return date('Ymd\THis', $this->value);
+	
 	}
-*/
 	/**
 	 * This converts to a timestamp
 	 */
