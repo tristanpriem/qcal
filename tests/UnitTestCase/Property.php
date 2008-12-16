@@ -6,7 +6,7 @@ class UnitTestCase_Property extends UnitTestCase {
 	 */
 	public function testPropertyParametersWork() {
 	
-		$property = new qCal_Property_Trigger('5m', array('related' => 'end'));
+		$property = new qCal_Property_Trigger('P1W3DT2H3M45S', array('related' => 'end'));
 		$this->assertEqual($property->getParam('related'), 'end');
 	
 	}
