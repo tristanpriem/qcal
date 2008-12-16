@@ -148,5 +148,41 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertEqual($value->getValue(), 871425); // this is how many seconds are in the duration
 	
 	}
+	/**
+	 * Test that float data is handled right
+	 */
+	public function testFloatToString() {
+	
+		$value = new qCal_Value_Float(5.667);
+		$this->assertIdentical($value->__toString(), '5.667');
+	
+	}
+	/**
+	 * Test that float data is handled right
+	 */
+	public function testRawFloat() {
+	
+		$value = new qCal_Value_Float(5.667);
+		$this->assertIdentical($value->getValue(), 5.667); // this is how many seconds are in the duration
+	
+	}
+	/**
+	 * Test that integer data is handled right
+	 */
+	public function testIntegerToString() {
+	
+		$value = new qCal_Value_Integer(5667);
+		$this->assertIdentical($value->__toString(), '5667');
+	
+	}
+	/**
+	 * Test that integer data is handled right
+	 */
+	public function testRawInteger() {
+	
+		$value = new qCal_Value_Integer(5667);
+		$this->assertIdentical($value->getValue(), 5667); // this is how many seconds are in the duration
+	
+	}
 
 }
