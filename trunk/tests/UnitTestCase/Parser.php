@@ -13,6 +13,10 @@ class UnitTestCase_Parser extends UnitTestCase {
     
     }
     
+    public function testDefault() {
+    	
+    }
+    
     public function NOSHOWtestParser() {
     
         $parser = new qCal_Parser('./files/simple.ics');
