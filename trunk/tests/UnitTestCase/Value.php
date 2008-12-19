@@ -99,19 +99,28 @@ class UnitTestCase_Value extends UnitTestCase {
 	/**
 	 * Test that date-time data is handled right
 	 */
-	public function NOSHOWtestDateTimeToString() {
+	public function testDateTimeToString() {
 	
 		$value = new qCal_Value_DateTime('2009-04-23 6:00');
-		$this->assertEqual($value->__toString(), "20090423T");
+		$this->assertEqual($value->__toString(), "20090423T060000");
 	
 	}
 	/**
 	 * Test that date-time data is handled right
 	 */
-	public function NOSHOWtestRawDateTime() {
+	public function testRawDateTime() {
 	
 		$value = new qCal_Value_DateTime('2009-04-23 6:00');
-		$this->assertEqual($value->getValue(), 1240491600);
+		$result = array(
+			'year' => 2009,
+			'month' => 4,
+			'day' => 23,
+			'hour' => 6,
+			'minute' => 0,
+			'second' => 0,
+			'timezone' => null
+		);
+		$this->assertEqual($value->getValue(), $result);
 	
 	}
 	/**
@@ -202,5 +211,14 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertIdentical($value->getValue(), 'text'); // this is how many seconds are in the duration
 	
 	}
+	/**
+	 * Date/Time testing
+	public function testPearDate() {
+	
+		$date = new Date();
+		pre($date);
+	
+	}
+	 */
 
 }
