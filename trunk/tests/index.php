@@ -27,4 +27,5 @@ $test->addTestCase(new UnitTestCase_Component);
 $test->addTestCase(new UnitTestCase_Property);
 $test->addTestCase(new UnitTestCase_Value);
 $test->addTestCase(new UnitTestCase_Renderer);
+$test->addTestCase(new UnitTestCase_DateTime);
 $test->run(new HtmlReporter());
