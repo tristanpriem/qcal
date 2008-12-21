@@ -36,7 +36,7 @@
  * 
  *  19970714
  */
-class qCal_Value_Date extends qCal_Value {
+class qCal_Value_Date extends qCal_Value_DateTime {
 
 	public function __toString() {
 	

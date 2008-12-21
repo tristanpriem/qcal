@@ -105,7 +105,7 @@
  * 
  *  X-TIMEOFDAY;TZID=US-Eastern:083000
  */
-class qCal_Value_Time extends qCal_Value {
+class qCal_Value_Time extends qCal_Value_DateTime {
 
 	public function __toString() {
 	
