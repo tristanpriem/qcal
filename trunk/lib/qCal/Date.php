@@ -39,19 +39,25 @@ class qCal_Date {
 	 */
 	public function __construct($date = null) {
 	
-		$this->setValue($date);
+		$this->setDate($date);
 	
 	}
 	/**
 	 * Set date/time. This method will accept any date/time format that can be parsed
 	 * with the strtotime function. Defaults to now.
 	 */
-	public function setValue($date = null) {
+	public function setDate($date = null) {
 	
 		if (is_null($date)) {
 			$date = "now";
 		}
-		if (!ctype_digit($date)) $date = strtotime($date);
+		// if date isn't a unix timestamp, make it one
+		if (!ctype_digit($date)) {
+			if (!$date = strtotime($date)) {
+				// if unix timestamp can't be created throw an exception
+				throw new qCal_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
+			}
+		}
 		$datetime = getdate($date);
 		$this->year = $datetime['year'];
 		$this->month = $datetime['mon'];
