@@ -74,6 +74,17 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 	}
 	/**
+	 * If there isn't a timezone specified when creating a date, use the system default
+	 */
+	public function testServerTimezoneUsedIfNotSpecified() {
+	
+		$systemtz = date_default_timezone_get();
+		$timezone = new qCal_Date_Timezone(); // should default to system time zone
+		$this->assertEqual($timezone->__toString(), $systemtz);
+	
+	}
+	
+	/**
 	 * Test really old date
 	 * @todo eventually id like to make this support old dates like below, but for now, I'm fine with being bound by PHP's date limitations
 	 */

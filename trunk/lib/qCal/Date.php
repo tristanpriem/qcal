@@ -1,4 +1,19 @@
 <?php
+/**
+ * Date object - this is a very rudimentary date/time class. Eventually I would like to 
+ * rewrite it to be much more useful. I want it to eventually support a much wider date range
+ * as well as "floating" dates... dates with no time associated with them. Basically I'd like to
+ * not have to rely on unix timestamps
+ * 
+ * qCal_Value_Date, qCal_Value_DateTime, qCal_Value_Time and any other datatypes that represent
+ * date/time information will use this object to store that information.
+ * 
+ * @package qCal
+ * @subpackage qCal_Date
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ */
 class qCal_Date {
 
 	/**
@@ -66,6 +81,8 @@ class qCal_Date {
 		$this->minute = $datetime['minutes'];
 		$this->second = $datetime['seconds'];
 		$this->timezone = null;
+		// for fluidity
+		return $this;
 	
 	}
 	/**
