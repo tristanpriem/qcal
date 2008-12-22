@@ -10,7 +10,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$before = time();
 		$date = new qCal_DateTime();
 		$after = time();
-		$this->assertTrue(($before <= $date->toUnixTimestamp() && $after >= $date->toUnixTimeStamp()));
+		$this->assertTrue(($before <= $date->time() && $after >= $date->time()));
 	
 	}
 	/**
@@ -20,7 +20,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$date = strtotime("04/23/1988 1:00pm");
 		$obj = new qCal_DateTime($date);
-		$this->assertEqual($date, $obj->toUnixTimestamp());
+		$this->assertEqual($date, $obj->time());
 	
 	}
 	/**
@@ -30,7 +30,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$date = "2003-09-23 12:34:03";
 		$obj = new qCal_DateTime($date);
-		$this->assertEqual($obj->toUnixTimestamp(), strtotime($date));
+		$this->assertEqual($obj->time(), strtotime($date));
 	
 	}
 
