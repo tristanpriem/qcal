@@ -20,6 +20,7 @@ class qCal_DateTime {
 		if (is_null($date)) {
 			$date = time();
 		}
+		if (!ctype_digit($date)) $date = strtotime($date);
 		$datetime = getdate($date);
 		$this->value = array(
 			'year' => $datetime['year'],

@@ -23,5 +23,15 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$this->assertEqual($date, $obj->toUnixTimestamp());
 	
 	}
+	/**
+	 * Make sure the object accepts any format accepted by strtotime
+	 */
+	public function testAcceptsAnythingThatCanBeParsedWithStrToTime() {
+	
+		$date = "2003-09-23 12:34:03";
+		$obj = new qCal_DateTime($date);
+		$this->assertEqual($obj->toUnixTimestamp(), strtotime($date));
+	
+	}
 
 }
