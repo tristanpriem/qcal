@@ -26,6 +26,7 @@ class qCal_Date_Timezone {
 			$timezone = date_default_timezone_get();
 		}
 		$this->timezone = $timezone;
+		return $this;
 	
 	}
 	public function __toString() {
