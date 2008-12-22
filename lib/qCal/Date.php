@@ -1,5 +1,5 @@
 <?php
-class qCal_DateTime {
+class qCal_Date {
 
 	/**
 	 * Contains 4-digit year
@@ -33,7 +33,6 @@ class qCal_DateTime {
 	 * used in the time() method.. instead of regenerating a timestamp every time, it's stored in this var
 	 */
 	protected $timestamp = null;
-	
 	/**
 	 * Class constructor. This method will accept any date/time format that can be parsed
 	 * with the strtotime function.
@@ -79,6 +78,14 @@ class qCal_DateTime {
 			);
 		}
 		return $this->timestamp;
+	
+	}
+	/**
+	 * Formats the date using php's date() function
+	 */
+	public function format($str) {
+	
+		return date($str, $this->time());
 	
 	}
 
