@@ -68,6 +68,9 @@ class qCal_Date {
 		}
 		// if date isn't a unix timestamp, make it one
 		if (!ctype_digit($date)) {
+			// @todo 
+			// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
+			// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
 			if (!$date = strtotime($date)) {
 				// if unix timestamp can't be created throw an exception
 				throw new qCal_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
