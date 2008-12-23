@@ -16,18 +16,13 @@ class qCal_Date_Period {
 	 */
 	protected $start, $end;
 	/**
-	 * Difference (in seconds) between start and end
-	 */
-	protected $difference;
-	/**
 	 * Constructor
 	 */
 	public function __construct($start, $end) {
 	
 		$this->start = new qCal_Date($start);
 		$this->end = new qCal_Date($end);
-		$this->difference = $this->end->time() - $this->start->time();
-		if ($this->difference < 0) {
+		if ($this->seconds() < 0) {
 			throw new qCal_Date_Exception_InvalidPeriod("The start date must come before the end date.");
 		}
 	
@@ -39,7 +34,23 @@ class qCal_Date_Period {
 	 */
 	public function seconds() {
 	
-		return $this->difference;
+		return $this->end->time() - $this->start->time();
+	
+	}
+	/**
+	 * Returns start date
+	 */
+	public function start() {
+	
+		return $this->start;
+	
+	}
+	/**
+	 * Returns end date
+	 */
+	public function end() {
+	
+		return $this->end;
 	
 	}
 

@@ -59,10 +59,7 @@
  */
 class qCal_Value_Period extends qCal_Value {
 
-	protected $value = array(
-		'start' => null, // a date
-		'end' => null // either a date or a duration
-	);
+	protected $value;
 	/**
 	 * @todo: implement this
 	 */
@@ -82,12 +79,19 @@ class qCal_Value_Period extends qCal_Value {
 			// within the qCal_Date subcomponent
 			// also, there is a difference in a period and a duration in that if you say start on feb 26 and end on march 2
 			// that will be a different "duration" depending on the year. that goes for months with alternate amounts of days too
-			$end = new qCal_Date_Duration($parts[1]);
+			$duration = new qCal_Date_Duration($parts[1]);
+			$end = new qCal_Date($start->time() + $duration->seconds());
 		}
-		return array(
-			'start' => $start,
-			'end' => $end
-		);
+		return new qCal_Date_Period($start, $end);
+	
+	}
+	/**
+	 * Convert to string - this converts to string into the UTC/UTC format
+	 */
+	public function __toString() {
+	
+		return $this->value->start()->format(qCal_Date::UTC) . "/"
+				 . $this->value->end()->format(qCal_Date::UTC);
 	
 	}
 

@@ -26,6 +26,15 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that qCal_Date can accept a UTC
+	 */
+	public function testUTCDate() {
+	
+		$date = new qCal_Date('19970101T180000Z');
+		//pre($date->format(qCal_Date::UTC));
+	
+	}
+	/**
 	 * The object should allow a unix timestamp in the constructor
 	 */
 	public function testAcceptsUnixTimestamp() {
@@ -148,17 +157,10 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$duration = new qCal_Date_Duration('P14D');
 		$this->assertEqual($duration->__toString(), 'P2W');
+		// it accepts an amount of seconds
 		$duration = new qCal_Date_Duration(474350);
 		$this->assertEqual($duration->__toString(), 'P5DT11H45M50S');
 		$this->assertEqual($duration->seconds(), 474350);
-	
-	}
-	/**
-	 * A date period should be different than a date duration when on the end of months with variable amount of days
-	 */
-	public function testDateDurationOnEdgeOfMonth() {
-	
-		
 	
 	}
 
