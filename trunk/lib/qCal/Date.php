@@ -17,35 +17,11 @@
 class qCal_Date {
 
 	/**
-	 * Contains 4-digit year
-	 */
-	protected $year = null;
-	/**
-	 * 2-digit month
-	 */
-	protected $month = null;
-	/**
-	 * 2-digit day
-	 */
-	protected $day = null;
-	/**
-	 * 2-digit hour
-	 */
-	protected $hour = null;
-	/**
-	 * 2-digit minute
-	 */
-	protected $minute = null;
-	/**
-	 * 2-digit second
-	 */
-	protected $second = null;
-	/**
 	 * timezone
 	 */
 	protected $timezone = null;
 	/**
-	 * used in the time() method.. instead of regenerating a timestamp every time, it's stored in this var
+	 * for now, we will use timestamps
 	 */
 	protected $timestamp = null;
 	/**
@@ -63,26 +39,23 @@ class qCal_Date {
 	 */
 	public function setDate($date = null) {
 	
-		if (is_null($date)) {
-			$date = "now";
-		}
-		// if date isn't a unix timestamp, make it one
-		if (!ctype_digit($date)) {
-			// @todo 
-			// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
-			// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
-			if (!$date = strtotime($date)) {
+		if (ctype_digit($date)) {
+			// if numerical, then its probably a unix timestamp, treat it as such
+			$this->timestamp = $date;
+		} else {
+			// otherwise, attempt to convert with strtotime
+			if (is_null($date)) {
+				// if no date was passed in, use now
+				$date = "now";
+			}
+			if (!$this->timestamp = strtotime($date)) {
+				// @todo 
+				// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
+				// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
 				// if unix timestamp can't be created throw an exception
 				throw new qCal_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
 			}
 		}
-		$datetime = getdate($date);
-		$this->year = $datetime['year'];
-		$this->month = $datetime['mon'];
-		$this->day = $datetime['mday'];
-		$this->hour = $datetime['hours'];
-		$this->minute = $datetime['minutes'];
-		$this->second = $datetime['seconds'];
 		$this->timezone = null;
 		// for fluidity
 		return $this;
@@ -93,16 +66,6 @@ class qCal_Date {
 	 */
 	public function time() {
 	
-		if (is_null($this->timestamp)) {
-			$this->timestamp = mktime(
-				$this->hour,
-				$this->minute,
-				$this->second,
-				$this->month,
-				$this->day,
-				$this->year
-			);
-		}
 		return $this->timestamp;
 	
 	}
