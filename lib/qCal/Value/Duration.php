@@ -7,6 +7,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo I'm wondering if maybe I should make a qCal_Date_Span class
  * 
  * Value Name: DURATION
  * 

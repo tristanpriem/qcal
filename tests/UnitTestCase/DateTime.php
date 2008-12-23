@@ -104,5 +104,25 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$old = new qCal_Date('1810-01-14T05:34:51');
 	
 	}
+	/**
+	 * Test that a date can be passed in as a constructor to a new date
+	 */
+	public function testDateCopy() {
+	
+		$date1 = new qCal_Date('now');
+		$date2 = new qCal_Date($date1);
+		$this->assertTrue($date1->format('Ymdhis'), $date2->format('Ymdhis'));
+	
+	}
+	/**
+	 * I need to be able to subtract one date from another so I can do time periods in qCal
+	 */
+	public function testDateDiff() {
+	
+		$date1 = new qCal_Date('2009-01-01');
+		$date2 = new qCal_Date('2008-01-11'); // ten days
+		//$this->assertTrue();
+	
+	}
 
 }
