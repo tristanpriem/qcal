@@ -39,7 +39,10 @@ class qCal_Date {
 	 */
 	public function setDate($date = null) {
 	
-		if (ctype_digit($date)) {
+		if ($date instanceof qCal_Date) {
+			// if date object was passed in, copy it
+			$this->copy($date);
+		} elseif (ctype_digit($date)) {
 			// if numerical, then its probably a unix timestamp, treat it as such
 			$this->timestamp = $date;
 		} else {
@@ -75,6 +78,14 @@ class qCal_Date {
 	public function format($str) {
 	
 		return date($str, $this->time());
+	
+	}
+	/**
+	 * Copy a qCal_Date object into this object
+	 */
+	public function copy(qCal_Date $date) {
+	
+		$this->setDate($date->time());
 	
 	}
 
