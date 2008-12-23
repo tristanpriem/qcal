@@ -40,7 +40,7 @@ class qCal_Value_Date extends qCal_Value_DateTime {
 
 	public function __toString() {
 	
-		return date('Ymd', $this->value);
+		return $this->value->format('Ymd');
 	
 	}
 	/**
@@ -48,7 +48,7 @@ class qCal_Value_Date extends qCal_Value_DateTime {
 	 */
 	protected function doCast($value) {
 	
-		return strtotime($value);
+		return new qCal_Date($value);
 	
 	}
 
