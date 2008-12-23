@@ -166,7 +166,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawDuration() {
 	
 		$value = new qCal_Value_Duration('P1W3DT2H3M45S');
-		$this->assertEqual($value->getValue(), 871425); // this is how many seconds are in the duration
+		$this->assertEqual($value->getValue(), new qCal_Date_Duration('P1W3DT2H3M45S')); // this is how many seconds are in the duration
 	
 	}
 	/**

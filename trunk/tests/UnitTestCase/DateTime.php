@@ -140,5 +140,22 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$span = new qCal_Date_Period($date1, $date2);
 	
 	}
+	/**
+	 * A date duration is a lot like a date period, only not tied to any specific period of time. It represents the amount of time, 
+	 * rather than the time itself
+	 */
+	public function testDateDuration() {
+	
+		$duration = new qCal_Date_Duration('5w');
+	
+	}
+	/**
+	 * A date period should be different than a date duration when on the end of months with variable amount of days
+	 */
+	public function testDateDurationOnEdgeOfMonth() {
+	
+		
+	
+	}
 
 }
