@@ -52,7 +52,7 @@ class qCal_Value_Duration extends qCal_Value {
 	 */
 	public function __toString() {
 	
-		return $this->value->__toString();
+		return $this->value->toICal();
 	
 	}
 	/**
