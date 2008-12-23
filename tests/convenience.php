@@ -7,6 +7,8 @@ function pr($var) {
 
     ob_start();
     echo "<pre>";
+    echo "Size: " . strlen($var) . "\n";
+    echo "Value: \n";
     var_dump($var);
     echo "</pre>";
     echo ob_get_clean();
