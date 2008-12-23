@@ -146,7 +146,11 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	 */
 	public function testDateDuration() {
 	
-		$duration = new qCal_Date_Duration('5w');
+		$duration = new qCal_Date_Duration('P14D');
+		$this->assertEqual($duration->__toString(), 'P2W');
+		$duration = new qCal_Date_Duration(474350);
+		$this->assertEqual($duration->__toString(), 'P5DT11H45M50S');
+		$this->assertEqual($duration->seconds(), 474350);
 	
 	}
 	/**
