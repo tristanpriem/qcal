@@ -79,6 +79,27 @@ class UnitTestCase_Value extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that period data is handled right
+
+	public function testPeriodToString() {
+	
+		$value = new qCal_Value_Period('19970101T180000Z/PT5H30M');
+		//$value = new qCal_Value_Period('19970101T180000Z/19970102T070000Z');
+		$this->assertEqual($value->__toString(), "19970101T180000Z/19970102T070000Z");
+	
+	}
+	 */
+	/**
+	 * Test that period data is handled right
+
+	public function testRawPeriod() {
+	
+		//$value = new qCal_Value_Period('');
+		//$this->assertEqual($value->getValue(), '');
+	
+	}
+	 */
+	/**
 	 * Test that date data is handled right
 	 */
 	public function testDateToString() {

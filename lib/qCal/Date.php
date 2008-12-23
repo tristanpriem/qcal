@@ -56,7 +56,7 @@ class qCal_Date {
 				// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
 				// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
 				// if unix timestamp can't be created throw an exception
-				throw new qCal_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
+				throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
 			}
 		}
 		$this->timezone = null;

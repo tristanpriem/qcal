@@ -1,6 +1,6 @@
 <?php
 /**
- * Date span object - rather than a point in time, this object represents a PERIOD of time. So, 
+ * Date period object - rather than a point in time, this object represents a PERIOD of time. So, 
  * it consists of a start and end point in time
  * 
  * @package qCal
@@ -9,7 +9,7 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
-class qCal_Date_Span {
+class qCal_Date_Period {
 
 	/**
 	 * Start and end date/times
@@ -28,7 +28,7 @@ class qCal_Date_Span {
 		$this->end = new qCal_Date($end);
 		$this->difference = $this->end->time() - $this->start->time();
 		if ($this->difference < 0) {
-			throw new qCal_Exception_InvalidDateSpan("The start date must come before the end date.");
+			throw new qCal_Date_Exception_InvalidPeriod("The start date must come before the end date.");
 		}
 	
 	}

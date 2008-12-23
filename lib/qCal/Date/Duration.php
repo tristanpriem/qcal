@@ -1,11 +1,15 @@
 <?php
 /**
- * Invalid Date Exception - thrown when an invalid or ambiguous date string is passed to qCal_Date::setDate()
+ * Date duration
+ * 
  * @package qCal
+ * @subpackage qCal_Date
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
-class qCal_Exception_InvalidDate extends qCal_Exception {
+class qCal_Date_Duration {
+
+	
 
 }

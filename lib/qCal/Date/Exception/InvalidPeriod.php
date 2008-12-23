@@ -6,6 +6,6 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
-class qCal_Exception_InvalidDateSpan extends qCal_Exception {
+class qCal_Date_Exception_InvalidPeriod extends qCal_Date_Exception {
 
 }

@@ -59,12 +59,35 @@
  */
 class qCal_Value_Period extends qCal_Value {
 
+	protected $value = array(
+		'start' => null, // a date
+		'end' => null // either a date or a duration
+	);
 	/**
 	 * @todo: implement this
 	 */
 	protected function doCast($value) {
 	
-		return $value;
+		$parts = explode("/", $value);
+		if (count($parts) !== 2) {
+			throw new qCal_Date_Exception_InvalidPeriod("A period must contain a start date and either an end date, or a duration of time.");
+		}
+		$start = new qCal_Date($parts[0]);
+		try {
+			$end = new qCal_Date($parts[1]);
+		} catch (qCal_Date_Exception_InvalidDate $e) {
+			// invalid date, so try duration
+			// @todo: I might want to create a qCal_Date object to represent a duration (not tied to any points in time)
+			// using a qCal_Value object here is sort of inconsistent. Plus, I can see value in having that functionality
+			// within the qCal_Date subcomponent
+			// also, there is a difference in a period and a duration in that if you say start on feb 26 and end on march 2
+			// that will be a different "duration" depending on the year. that goes for months with alternate amounts of days too
+			$end = new qCal_Date_Duration($parts[1]);
+		}
+		return array(
+			'start' => $start,
+			'end' => $end
+		);
 	
 	}
 

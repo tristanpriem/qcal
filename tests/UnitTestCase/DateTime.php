@@ -69,7 +69,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	 */
 	public function testExceptionThrownOnFailedInit() {
 	
-		$this->expectException(new qCal_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()"));
+		$this->expectException(new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()"));
 		$am = new qCal_Date($this->formats['America']); // this format is ambiguous and will not work
 	
 	}
@@ -123,7 +123,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$date1 = new qCal_Date('2009-01-01');
 		$date2 = new qCal_Date('2009-01-11'); // ten days
-		$span = new qCal_Date_Span($date1, $date2);
+		$span = new qCal_Date_Period($date1, $date2);
 		$this->assertEqual($span->seconds(), 864000);
 	
 	}
@@ -136,8 +136,8 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$date1 = new qCal_Date('2009-01-11');
 		$date2 = new qCal_Date('2009-01-01'); // -ten days
-		$this->expectException(new qCal_Exception_InvalidDateSpan("The start date must come before the end date."));
-		$span = new qCal_Date_Span($date1, $date2);
+		$this->expectException(new qCal_Date_Exception_InvalidPeriod("The start date must come before the end date."));
+		$span = new qCal_Date_Period($date1, $date2);
 	
 	}
 
