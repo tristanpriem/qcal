@@ -116,12 +116,28 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	}
 	/**
 	 * I need to be able to subtract one date from another so I can do time periods in qCal
+	 * 
+	 * If PHP had real overloading, this could be so bitchin'
 	 */
 	public function testDateDiff() {
 	
 		$date1 = new qCal_Date('2009-01-01');
-		$date2 = new qCal_Date('2008-01-11'); // ten days
-		//$this->assertTrue();
+		$date2 = new qCal_Date('2009-01-11'); // ten days
+		$span = new qCal_Date_Span($date1, $date2);
+		$this->assertEqual($span->seconds(), 864000);
+	
+	}
+	/**
+	 * I need to be able to subtract one date from another so I can do time periods in qCal
+	 * 
+	 * If PHP had real overloading, this could be so bitchin'
+	 */
+	public function testInvalidDateDiff() {
+	
+		$date1 = new qCal_Date('2009-01-11');
+		$date2 = new qCal_Date('2009-01-01'); // -ten days
+		$this->expectException(new qCal_Exception_InvalidDateSpan("The start date must come before the end date."));
+		$span = new qCal_Date_Span($date1, $date2);
 	
 	}
 
