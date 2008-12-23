@@ -17,18 +17,23 @@
 class qCal_Date {
 
 	/**
+	 * UTC format string
+	 */
+	const UTC = "Ymd\THis\Z";
+	/**
 	 * timezone
 	 */
 	protected $timezone = null;
 	/**
 	 * for now, we will use timestamps
+	 * this timestamp is saved as GMT and then adjusted based on timestamp
 	 */
 	protected $timestamp = null;
 	/**
 	 * Class constructor. This method will accept any date/time format that can be parsed
 	 * with the strtotime function.
 	 */
-	public function __construct($date = null) {
+	public function __construct($date = null, $timezone = null) {
 	
 		$this->setDate($date);
 	
