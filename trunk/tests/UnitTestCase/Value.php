@@ -111,16 +111,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawDateTime() {
 	
 		$value = new qCal_Value_DateTime('2009-04-23 6:00');
-		$result = array(
-			'year' => 2009,
-			'month' => 4,
-			'day' => 23,
-			'hour' => 6,
-			'minute' => 0,
-			'second' => 0,
-			'timezone' => null
-		);
-		$this->assertEqual($value->getValue(), $result);
+		$this->assertEqual($value->getValue(), new qCal_Date('2009-04-23 6:00'));
 	
 	}
 	/**
