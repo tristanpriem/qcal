@@ -83,6 +83,17 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$this->assertEqual($timezone->__toString(), $systemtz);
 	
 	}
+	/**
+	 * Date should be able to be changed in the date object
+	 */
+	public function testDateCanBeChangedAfterInitialization() {
+	
+		$date = new qCal_Date('2008-12-22');
+		$this->assertEqual($date->format('Y-m-d'), '2008-12-22');
+		$date->setDate('2009-01-10');
+		$this->assertEqual($date->format('Y-m-d'), '2009-01-10');
+	
+	}
 	
 	/**
 	 * Test really old date
