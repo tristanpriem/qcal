@@ -106,51 +106,24 @@
 class qCal_Value_Datetime extends qCal_Value {
 
 	/**
-	 * Contains array with 4-digit year, 2-digit month, 2-digit day, 2-digit hour
-	 * 2-digit minute, and 2-digit second
+	 * qCal_Date object
 	 */
-	protected $value = array(
-		'year' => null,
-		'month' => null,
-		'day' => null,
-		'hour' => null,
-		'minute' => null,
-		'second' => null,
-		'timezone' => null
-	);
+	protected $value;
 	/**
 	 * Convert the internal date storage to a string
 	 */
 	public function __toString() {
 	
 		// @todo: this doesn't take time-zones into account
-		return date('Ymd\THis', $this->mkTime($this->value));
+		return $this->value->format('Ymd\THis');
 	
 	}
 	/**
-	 * This converts to an array of date / time information as in $this->value
+	 * This converts to a timestamp
 	 */
 	protected function doCast($value) {
 	
-		$time = strtotime($value);
-		$datetime = getdate($time);
-		return array(
-			'year' => $datetime['year'],
-			'month' => $datetime['mon'],
-			'day' => $datetime['mday'],
-			'hour' => $datetime['hours'],
-			'minute' => $datetime['minutes'],
-			'second' => $datetime['seconds'],
-			'timezone' => null
-		);
-	
-	}
-	/**
-	 * Creates a timestamp from an array 
-	 */
-	protected function mkTime($value) {
-	
-		return mktime($this->value['hour'], $this->value['minute'], $this->value['second'], $this->value['month'], $this->value['day'], $this->value['year']);
+		return new qCal_Date($value);
 	
 	}
 

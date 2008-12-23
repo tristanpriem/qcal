@@ -43,13 +43,5 @@ class qCal_Value_Date extends qCal_Value_DateTime {
 		return $this->value->format('Ymd');
 	
 	}
-	/**
-	 * This converts to a timestamp
-	 */
-	protected function doCast($value) {
-	
-		return new qCal_Date($value);
-	
-	}
 
 }
