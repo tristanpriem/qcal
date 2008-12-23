@@ -59,7 +59,7 @@ class qCal_Date_Duration {
 	/**
 	 * Converts a timestamp to an icalendar-formatted duration string
 	 */
-	public function __toString() {
+	public function toICal() {
 	
 		$total = $this->duration;
 		$return = "P";
@@ -80,6 +80,22 @@ class qCal_Date_Duration {
 			$total = $remainder;
 		}
 		return $return;
+	
+	}
+	/**
+	 * @todo Should this be the string representation? I dont really know.
+	 */
+	public function __toString() {
+	
+		return $this->toICal();
+	
+	}
+	/**
+	 * Get duration in seconds
+	 */
+	public function seconds() {
+	
+		return $this->duration;
 	
 	}
 
