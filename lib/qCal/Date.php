@@ -37,11 +37,6 @@ class qCal_Date extends DateTime {
 	 */
 	protected $timezone = null;
 	/**
-	 * for now, we will use timestamps
-	 * this timestamp is saved as GMT and then adjusted based on timestamp
-	 */
-	protected $timestamp = null;
-	/**
 	 * Class constructor. This method will accept any date/time format that can be parsed
 	 * with the strtotime function.
 	 */
@@ -57,6 +52,7 @@ class qCal_Date extends DateTime {
 		} elseif (is_null($date)) {
 			$date = "now";
 		}
+		// in order to not throw a warning for an invalid date format, I have to check that strtotime works properly here
 		if (!$timestamp = strtotime($date)) {
 			// @todo 
 			// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
