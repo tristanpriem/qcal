@@ -1,12 +1,6 @@
 <?php
 /**
- * Date object - this is a very rudimentary date/time class. Eventually I would like to 
- * rewrite it to be much more useful. I want it to eventually support a much wider date range
- * as well as "floating" dates... dates with no time associated with them. Basically I'd like to
- * not have to rely on unix timestamps
- * 
- * qCal_Value_Date, qCal_Value_DateTime, qCal_Value_Time and any other datatypes that represent
- * date/time information will use this object to store that information.
+ * Date object
  * 
  * @package qCal
  * @subpackage qCal_Date
@@ -32,10 +26,6 @@ class qCal_Date extends DateTime {
 	 * Used in cases where I need a nice formatted time for strtotime
 	 */
 	const TIME = "H:i:s";
-	/**
-	 * timezone
-	 */
-	protected $timezone = null;
 	/**
 	 * Class constructor. This method will accept any date/time format that can be parsed
 	 * with the strtotime function.
@@ -85,6 +75,15 @@ class qCal_Date extends DateTime {
 		$date = strtotime($str);
 		$this->setDate(date('Y', $date), date('m', $date), date('d', $date));
 		$this->setTime(date('H', $date), date('i', $date), date('s', $date));
+	
+	}
+	/**
+	 * Surprising there is no __toString built-in
+	 * @todo Test this
+	 */
+	public function __toString() {
+	
+		return $this->format(self::UTC);
 	
 	}
 
