@@ -83,7 +83,15 @@ class qCal_Date extends DateTime {
 	 */
 	public function __toString() {
 	
-		return $this->format(self::UTC);
+		return $this->getUtc();
+	
+	}
+	/**
+	 * Returns time formatted in UTC
+	 */
+	public function getUtc() {
+	
+		return gmdate(self::UTC, $this->time());
 	
 	}
 
