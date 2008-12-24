@@ -87,9 +87,8 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	 */
 	public function testServerTimezoneUsedIfNotSpecified() {
 	
-		$systemtz = date_default_timezone_get();
-		$timezone = new qCal_Date_Timezone(); // should default to system time zone
-		$this->assertEqual($timezone->__toString(), $systemtz);
+		$date = new qCal_Date('June 15 2009');
+		$this->assertEqual($date->getTimeZone()->getName(), date_default_timezone_get());
 	
 	}
 	/**
