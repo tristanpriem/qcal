@@ -18,6 +18,10 @@ class qCal_Date_Duration {
 	 */
 	protected $duration;
 	/**
+	 * If this is negative, this will be negative
+	 */
+	protected $sign;
+	/**
 	 * Constructor
 	 */
 	public function __construct($duration = null) {
@@ -30,11 +34,18 @@ class qCal_Date_Duration {
 	 */
 	public function setDuration($duration) {
 	
+		// if plus or minus precedes number, remove it set in class
+		if (preg_match("/^[+-]/", (string) $duration, $matches)) {
+			if ($matches[0] == "-") $this->sign = "-";
+			$duration = str_split($duration);
+			array_shift($duration);
+			$duration = implode("", $duration);
+		}
 		if (ctype_digit($duration)) {
 			$this->duration = $duration;
 		} else {
 			// convert value to duration in seconds
-			preg_match('/^[+-]?P([0-9]+[W])?([0-9]+[D])?T?([0-9]+[H])?([0-9]+[M])?([0-9]+[S])?$/i', $duration, $matches);
+			preg_match('/^P([0-9]+[W])?([0-9]+[D])?T?([0-9]+[H])?([0-9]+[M])?([0-9]+[S])?$/i', $duration, $matches);
 			// remove first element (which is just entire the matched string)
 			array_shift($matches);
 			$seconds = 0;
@@ -79,7 +90,7 @@ class qCal_Date_Duration {
 			}
 			$total = $remainder;
 		}
-		return $return;
+		return $this->sign . $return;
 	
 	}
 	/**
@@ -95,7 +106,7 @@ class qCal_Date_Duration {
 	 */
 	public function seconds() {
 	
-		return $this->duration;
+		return (integer) $this->sign . $this->duration;
 	
 	}
 
