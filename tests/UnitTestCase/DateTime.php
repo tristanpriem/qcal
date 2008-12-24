@@ -13,6 +13,19 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		'YYYY-MM-DDThh:mmTZD' => '1986-04-23T12:00+01:00',
 		'YYYY-MM-DDThh:mm:ssTZD' => '1986-04-23T12:00:00+01:00',
 	);
+	protected $defaulttimezone;
+	public function setUp() {
+	
+		// save default timezone
+		$this->defaulttimezone = date_default_timezone_get();
+	
+	}
+	public function tearDown() {
+	
+		// return to default timezone after test (why? I dont know)
+		date_default_timezone_set($this->defaulttimezone);
+	
+	}
 	/**
 	 * The object should default to the current time
 	 */
@@ -89,6 +102,10 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$date = new qCal_Date('June 15 2009');
 		$this->assertEqual($date->getTimeZone()->getName(), date_default_timezone_get());
+		date_default_timezone_set('Europe/London');
+		// and after we've set it to something else...
+		$date2 = new qCal_Date('June 15 2009');
+		$this->assertEqual($date2->getTimeZone()->getName(), 'Europe/London');
 	
 	}
 	/**
