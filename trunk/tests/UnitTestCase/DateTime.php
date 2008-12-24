@@ -31,7 +31,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	public function testUTCDate() {
 	
 		$date = new qCal_Date('19970101T180000Z');
-		//pre($date->format(qCal_Date::UTC));
+		$this->assertEqual($date->format(qCal_Date::UTC), '19970101T180000Z');
 	
 	}
 	/**
