@@ -54,9 +54,6 @@ class qCal_Date extends DateTime {
 		}
 		// in order to not throw a warning for an invalid date format, I have to check that strtotime works properly here
 		if (!$timestamp = strtotime($date)) {
-			// @todo 
-			// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
-			// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
 			// if unix timestamp can't be created throw an exception
 			throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
 		}
