@@ -99,7 +99,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 		$date = new qCal_Date('2008-12-22');
 		$this->assertEqual($date->format('Y-m-d'), '2008-12-22');
-		$date->setDate('2009-01-10');
+		$date->setByString('2009-01-10');
 		$this->assertEqual($date->format('Y-m-d'), '2009-01-10');
 	
 	}

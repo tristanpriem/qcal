@@ -14,12 +14,24 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
-class qCal_Date {
+class qCal_Date extends DateTime {
 
 	/**
 	 * UTC format string
 	 */
 	const UTC = "Ymd\THis\Z";
+	/**
+	 * Used in cases where I need a nice formatted date/time for strtotime
+	 */
+	const DATETIME = "Y-m-d H:i:s";
+	/**
+	 * Used in cases where I need a nice formatted date for strtotime
+	 */
+	const DATE = "Y-m-d";
+	/**
+	 * Used in cases where I need a nice formatted time for strtotime
+	 */
+	const TIME = "H:i:s";
 	/**
 	 * timezone
 	 */
@@ -35,38 +47,25 @@ class qCal_Date {
 	 */
 	public function __construct($date = null, $timezone = null) {
 	
-		$this->setDate($date);
-	
-	}
-	/**
-	 * Set date/time. This method will accept any date/time format that can be parsed
-	 * with the strtotime function. Defaults to now.
-	 */
-	public function setDate($date = null) {
-	
 		if ($date instanceof qCal_Date) {
 			// if date object was passed in, copy it
-			$this->copy($date);
+			$date = date(self::DATETIME, $date->time());
 		} elseif (ctype_digit($date)) {
 			// if numerical, then its probably a unix timestamp, treat it as such
-			$this->timestamp = $date;
-		} else {
-			// otherwise, attempt to convert with strtotime
-			if (is_null($date)) {
-				// if no date was passed in, use now
-				$date = "now";
-			}
-			if (!$this->timestamp = strtotime($date)) {
-				// @todo 
-				// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
-				// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
-				// if unix timestamp can't be created throw an exception
-				throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
-			}
+			$timestamp = $date;
+			$date = date(self::DATETIME, $timestamp);
+		} elseif (is_null($date)) {
+			$date = "now";
 		}
-		$this->timezone = null;
-		// for fluidity
-		return $this;
+		if (!$timestamp = strtotime($date)) {
+			// @todo 
+			// strtotime and other php date/time functions rely on the timezone set via date_default_timezone_set()
+			// in their date/time calculations, so we need to set the default timezone to GMT and adjust manually
+			// if unix timestamp can't be created throw an exception
+			throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
+		}
+		if (is_null($timezone)) $timezone = new DateTimeZone(date_default_timezone_get());
+		parent::__construct($date, $timezone);
 	
 	}
 	/**
@@ -74,15 +73,7 @@ class qCal_Date {
 	 */
 	public function time() {
 	
-		return $this->timestamp;
-	
-	}
-	/**
-	 * Formats the date using php's date() function
-	 */
-	public function format($str) {
-	
-		return date($str, $this->time());
+		return $this->format('U');
 	
 	}
 	/**
@@ -90,7 +81,17 @@ class qCal_Date {
 	 */
 	public function copy(qCal_Date $date) {
 	
-		$this->setDate($date->time());
+		$this->setByString($date->format(self::DATETIME));
+	
+	}
+	/**
+	 * Set the date/time with a string (using strtotime)
+	 */
+	public function setByString($str) {
+	
+		$date = strtotime($str);
+		$this->setDate(date('Y', $date), date('m', $date), date('d', $date));
+		$this->setTime(date('H', $date), date('i', $date), date('s', $date));
 	
 	}
 
