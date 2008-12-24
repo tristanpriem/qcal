@@ -80,20 +80,18 @@ class UnitTestCase_Value extends UnitTestCase {
 	}
 	/**
 	 * Test that period data is handled right
+	 */
 	public function testPeriodToString() {
 	
-		// start date - end date
 		$value = new qCal_Value_Period('19970101T180000Z/19970102T070000Z');
-		pr($value->getValue()->start()->format(qCal_Date::UTC));
-		pre($value->getValue()->start()->format("Y-m-d g:i:s"));
-		//pre($value->getValue()->end()->format("Y-m-d g:i:s"));
 		$this->assertEqual($value->__toString(), '19970101T180000Z/19970102T070000Z');
 		// start date + duration
-		$value2 = new qCal_Value_Period('19970101T180000Z/PT5H30M');
-		$this->assertEqual($value2->__toString(), '19970101T180000Z/19970102T070000Z');
+		// 01-01-1997 at 12 am until plus two weeks five hours thirty minutes
+		// should be 01-15-1997 at 5:30 am  but is 1997-01-14 21-30-00
+		$value2 = new qCal_Value_Period('19970101T010000Z/PT5H');
+		$this->assertEqual($value2->__toString(), '19970101T010000Z/19970101T060000Z');
 	
 	}
-	 */
 	/**
 	 * Test that period data is handled right
 	 */

@@ -90,8 +90,8 @@ class qCal_Value_Period extends qCal_Value {
 	 */
 	public function __toString() {
 	
-		return $this->value->start()->format(qCal_Date::UTC) . "/"
-				 . $this->value->end()->format(qCal_Date::UTC);
+		return $this->value->start()->getUtc() . "/"
+				 . $this->value->end()->getUtc();
 	
 	}
 
