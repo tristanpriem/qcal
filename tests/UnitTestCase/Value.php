@@ -162,7 +162,7 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertEqual($value->__toString(), '-PT13H40M'); 
 		
 		$value = new qCal_Value_Duration('-P180D18938S'); // 180 days + 18938 seconds 
-		$this->assertEqual($value->__toString(), '-P25W5DT5H15M38S'); // converts to 25 weeks, 5 days, 5 hours, 15 minutes, and 38 seconds
+		$this->assertEqual($value->__toString(), '-P25W5DT5H15M38S'); // converts to - 25 weeks, 5 days, 5 hours, 15 minutes, and 38 seconds
 	
 	}
 	/**
@@ -228,5 +228,19 @@ class UnitTestCase_Value extends UnitTestCase {
 		$this->assertIdentical($value->getValue(), 'text'); 
 	
 	}
+	/*
+	public function testPlayingAroundWithqCal() {
+	
+		$cal = new qCal();
+		$journal = new qCal_Component_Journal(array(
+			'uid' => '19970901T130000Z-123405@host.com',
+			'dtstamp' => '19970901T1300Z',
+			'dtstart' => new qCal_Property_Dtstart('19970317', array('value' => 'date')),
+		));
+		$cal->attach($journal);
+		pre($cal->render());
+	
+	}
+	*/
 
 }
