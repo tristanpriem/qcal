@@ -189,7 +189,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawFloat() {
 	
 		$value = new qCal_Value_Float(5.667);
-		$this->assertIdentical($value->getValue(), 5.667); // this is how many seconds are in the duration
+		$this->assertIdentical($value->getValue(), 5.667); 
 	
 	}
 	/**
@@ -207,7 +207,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawInteger() {
 	
 		$value = new qCal_Value_Integer(5667);
-		$this->assertIdentical($value->getValue(), 5667); // this is how many seconds are in the duration
+		$this->assertIdentical($value->getValue(), 5667); 
 	
 	}
 	/**
@@ -225,7 +225,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawText() {
 	
 		$value = new qCal_Value_Text('text');
-		$this->assertIdentical($value->getValue(), 'text'); // this is how many seconds are in the duration
+		$this->assertIdentical($value->getValue(), 'text'); 
 	
 	}
 
