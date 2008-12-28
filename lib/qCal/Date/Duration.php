@@ -18,7 +18,7 @@ class qCal_Date_Duration {
 	 */
 	protected $duration;
 	/**
-	 * If this is negative, this will be negative
+	 * If this is negative, this will be a minus symbol. Positive doesn't need a sign, so it is just null
 	 */
 	protected $sign;
 	/**
