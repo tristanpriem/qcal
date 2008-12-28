@@ -175,6 +175,15 @@ class UnitTestCase_Value extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that duration passed in in an "unnormalized"? format gets corrected
+	 */
+	public function testDurationIsCaseInsensitive() {
+	
+		$duration = new qCal_Value_Duration('p2w6d30s');
+		$this->assertEqual($duration->__toString(), 'P2W6DT30S');
+	
+	}
+	/**
 	 * Test that float data is handled right
 	 */
 	public function testFloatToString() {
