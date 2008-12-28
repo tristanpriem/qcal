@@ -13,13 +13,20 @@ class UnitTestCase_Parser extends UnitTestCase {
     
     }
     
-    public function testDefault() {
-    	
+    public function NOSHOWtestParseRawData() {
+    
+    	$fn = './files/simple.ics';
+    	$fh = fopen($fn, 'r');
+    	$data = fread($fh, filesize($fn));
+    	$parser = new qCal_Parser_iCalendar();
+    	$ical = $parser->parse($data);
+    	$this->assertIsA($ical, 'qCal_Component');
+    
     }
     
     public function NOSHOWtestParser() {
     
-        $parser = new qCal_Parser('./files/simple.ics');
+        $parser = new qCal_Parser_iCalendar('./files/simple.ics');
         $calendar = $parser->parse(); // now we have an iterable collection of event, todo, etc objects in $calendar
     
     }

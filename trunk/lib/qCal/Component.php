@@ -162,7 +162,9 @@ abstract class qCal_Component {
 	
 	}
 	/**
+	 * The only thing I need this for so far is the parser, but it may come in handy for the facade as well
 	 * @todo come up with a better way to include 
+	 */
 	static public function factory($name, $properties = array()) {
 	
 		// remove V
@@ -172,15 +174,14 @@ abstract class qCal_Component {
 		// generate property objects
 		$propertyObjects = array();
 		foreach ($properties as $property => $info) {
-			$propertyObjects[] = qCal_Property::factory($property, $info['value'], $info['params']);
+			$propertyObjects[$property] = qCal_Property::factory($property, $info['value'], $info['params']);
 		}
 		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
 		require_once $fileName;
-		eval ("\$class = new " . "\$className(" . implode(', ', $propertyObjects) . ');');
+		$class = new $className($properties);
 		return $class;
 	
 	}
-	 */
 
 	/**
 	 * I'm not sure how this should work. Not sure if it should be setProperty,
