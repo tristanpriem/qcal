@@ -13,7 +13,7 @@ class UnitTestCase_Parser extends UnitTestCase {
     
     }
     
-    public function NOSHOWtestParseRawData() {
+    public function testParseRawData() {
     
     	$fn = './files/simple.ics';
     	$fh = fopen($fn, 'r');

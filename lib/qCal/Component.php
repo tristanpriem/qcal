@@ -167,15 +167,15 @@ abstract class qCal_Component {
 	 */
 	static public function factory($name, $properties = array()) {
 	
-		// remove V
-		$component = trim(ucfirst(strtolower(substr($name, 1))));
-		// capitalize
-		$className = "qCal_Component_" . $component;
-		// generate property objects
-		$propertyObjects = array();
-		foreach ($properties as $property => $info) {
-			$propertyObjects[$property] = qCal_Property::factory($property, $info['value'], $info['params']);
+		// remove V, if there is one
+		$namearray = str_split($name);
+		$first = array_shift($namearray);
+		if ($first == "V") { // this will fudge things if there is ever a component that starts with V
+			$name = implode("", $namearray);
 		}
+		// capitalize
+		$component = ucfirst(strtolower($name));
+		$className = "qCal_Component_" . $component;
 		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
 		require_once $fileName;
 		$class = new $className($properties);

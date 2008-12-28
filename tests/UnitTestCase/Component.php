@@ -77,6 +77,18 @@ class UnitTestCase_Component extends UnitTestCase {
 		$event->attach($cal);
 	
 	}
+	/**
+	 * The factory method is used in the parser. It may eventually be used in the facade methods as well
+	 * The factory should accept the name of the component as the first param and the properties as the second
+	 * It should also be completely case-insensitive
+	 * It will also accept VCALENDAR or just CALENDAR
+	 */
+	public function NOSHOWtestFactoryMethod() {
+	
+		$component = qCal_Component::factory('VALARM', array());
+		//$component = qCal_Component::factory('ALARM', array('action' => 'audio', 'TriggER' => 'P1w3Dt2H3M45S'));
+	
+	}
 	
 
 }
