@@ -34,6 +34,7 @@ class qCal_Date_Duration {
 	 */
 	public function setDuration($duration) {
 	
+		$duration = strtoupper($duration);
 		// if plus or minus precedes number, remove it set in class
 		if (preg_match("/^[+-]/", (string) $duration, $matches)) {
 			if ($matches[0] == "-") $this->sign = "-";
