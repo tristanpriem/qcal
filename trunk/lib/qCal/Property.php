@@ -161,6 +161,37 @@ abstract class qCal_Property {
 	
 	}
 	/**
+	 * Retreive the value of a parameter
+	 *
+	 * @return mixed parameter value
+	 */
+	public function getParam($name) {
+	
+		if (isset($this->params[strtoupper($name)])) {
+			return $this->params[strtoupper($name)];
+		}
+	
+	}
+	/**
+	 * Returns an array of all params
+	 */
+	public function getParams() {
+	
+		return $this->params;
+	
+	}
+	/**
+	 * Set the value of a parameter
+	 */
+	public function setParam($name, $value) {
+	
+		$name = strtoupper($name);
+		// if value param has been passed in, change the type of this property to its value
+		if ($name == "VALUE") $this->type = strtoupper($value);
+		$this->params[$name] = $value;
+	
+	}
+	/**
 	 * Determine's this property's name from the class name by adding a dash after 
 	 * every capital letter and upper-casing
 	 *
@@ -202,37 +233,6 @@ abstract class qCal_Property {
 		// get the class, and instantiate
 		$className = "qCal_Property_" . $property;
 		return $className;
-	
-	}
-	/**
-	 * Retreive the value of a parameter
-	 *
-	 * @return mixed parameter value
-	 */
-	public function getParam($name) {
-	
-		if (isset($this->params[strtoupper($name)])) {
-			return $this->params[strtoupper($name)];
-		}
-	
-	}
-	/**
-	 * Returns an array of all params
-	 */
-	public function getParams() {
-	
-		return $this->params;
-	
-	}
-	/**
-	 * Set the value of a parameter
-	 */
-	public function setParam($name, $value) {
-	
-		$name = strtoupper($name);
-		// if value param has been passed in, change the type of this property to its value
-		if ($name == "VALUE") $this->type = strtoupper($value);
-		$this->params[$name] = $value;
 	
 	}
 	
