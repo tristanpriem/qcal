@@ -20,7 +20,6 @@ class UnitTestCase_Parser extends UnitTestCase {
     	$data = fread($fh, filesize($fn));
     	$parser = new qCal_Parser_iCalendar();
     	$ical = $parser->parse($data);
-    	pre($ical->render());
     	$this->assertIsA($ical, 'qCal_Component');
     
     }
