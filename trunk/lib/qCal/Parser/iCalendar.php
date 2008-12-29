@@ -8,6 +8,14 @@
  */ 
 class qCal_Parser_iCalendar extends qCal_Parser {
 
+	/**
+	 * Array of components
+	 */
+	protected $cmpArray = array();
+	/**
+	 * Array of components
+	 */
+	protected $refQueue = array();
     /**
      * This method will parse raw icalendar data. Eventually I might want to add a parseFromFile() method or something
      */
@@ -38,6 +46,8 @@ class qCal_Parser_iCalendar extends qCal_Parser {
 	    		$this->continueProperty($matches[1]);
 	    	}
     	}
+    	// this isn't perfect yet, cmpArray gets filled up with every component, so we just grab the first one
+    	return $this->processComponent($this->cmpArray[0]);
     
     }
     /**
@@ -45,7 +55,13 @@ class qCal_Parser_iCalendar extends qCal_Parser {
      */
     protected function beginComponent($name) {
     
-    	
+    	$this->cmpArray[] = array(
+    		'name' => $name,
+    		'properties' => array(),
+    		'children' => array(),
+		);
+		// add a reference to this component to the top of the queue
+    	$this->refQueue[] =& $this->cmpArray[count($this->cmpArray)-1];
     
     }
     /**
@@ -53,7 +69,10 @@ class qCal_Parser_iCalendar extends qCal_Parser {
      */
     protected function endComponent($name) {
     
-    	
+    	// pop current component off ref queue
+    	$component = array_pop($this->refQueue);
+    	// now add child component to new current component
+    	$this->refQueue[count($this->refQueue)-1]['children'][] = $component;
     
     }
     /**
@@ -61,7 +80,7 @@ class qCal_Parser_iCalendar extends qCal_Parser {
      */
     protected function addProperty($name, $value, $params) {
     
-    	
+    	$this->refQueue[count($this->refQueue)-1]['properties'][] = qCal_Property::factory($name, $value, $params);
     
     }
     /**
@@ -69,7 +88,22 @@ class qCal_Parser_iCalendar extends qCal_Parser {
      */
     protected function continueProperty($add) {
     
-    	
+    	$key = count($this->refQueue[count($this->refQueue)-1]['properties'])-1;
+    	$property =& $this->refQueue[count($this->refQueue)-1]['properties'][$key];
+    	$property->setValue($property->getValue() . $add);
+    
+    }
+    /**
+     * Convert array from parser into a qCal component
+     */
+    protected function processComponent($componentArray) {
+    
+    	$component = qCal_Component::factory($componentArray['name'], $componentArray['properties']);
+    	foreach ($componentArray['children'] as $childArray) {
+    		$child = $this->processComponent($childArray);
+    		$component->attach($child);
+    	}
+    	return $component;
     
     }
 
