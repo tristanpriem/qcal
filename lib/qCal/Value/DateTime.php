@@ -114,7 +114,7 @@ class qCal_Value_Datetime extends qCal_Value {
 	 */
 	public function __toString() {
 	
-		// @todo: this doesn't timezones into account
+		// @todo: for now, maybe this should just use UTC
 		return $this->value->format('Ymd\THis');
 	
 	}
