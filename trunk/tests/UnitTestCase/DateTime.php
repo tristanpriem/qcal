@@ -4,7 +4,7 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	protected $formats = array(
 		'ISO' => '1986-04-23 12:00:00',
 		'timestamp' => '514670400',
-		'UTC' => '1986-04-23T12:00Z',
+		'UTC' => '19860423T120000Z',
 		'America' => '04-23-1986',
 		'Elsewhere' => '23-04-1986',
 		'YYYY' => '1986',
@@ -177,6 +177,15 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$duration = new qCal_Date_Duration(474350);
 		$this->assertEqual($duration->__toString(), 'P5DT11H45M50S');
 		$this->assertEqual($duration->seconds(), 474350);
+	
+	}
+	/**
+	 * Test that date can be converted to gmt, utc, and other formats
+	 */
+	public function testVariousDateFormats() {
+	
+		$date = new qCal_Date($this->formats['UTC']);
+		$this->assertEqual($date->getUtc(), '19860423T120000Z');
 	
 	}
 
