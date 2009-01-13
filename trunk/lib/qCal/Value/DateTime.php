@@ -119,7 +119,7 @@ class qCal_Value_Datetime extends qCal_Value {
 	
 	}
 	/**
-	 * This converts to a timestamp
+	 * This converts to a qCal_Date for internal storage
 	 */
 	protected function doCast($value) {
 	
