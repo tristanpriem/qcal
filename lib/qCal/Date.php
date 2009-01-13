@@ -1,7 +1,8 @@
 <?php
 /**
- * Date object
- * 
+ * qCal_Date
+ * This class is used throughout qCal to represent dates and times. It was written
+ * to adhere to ISO 8601 standards.
  * @package qCal
  * @subpackage qCal_Date
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
