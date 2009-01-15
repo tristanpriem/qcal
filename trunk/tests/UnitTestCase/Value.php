@@ -251,5 +251,29 @@ class UnitTestCase_Value extends UnitTestCase {
 	
 	}
 	*/
+	/**
+	 * FROM RFC 2445
+	 */
+	/**
+	 * value type for a property will either be specified implicitly as the
+	 * default value type 
+	 */
+	public function testPropertySpecifiedImplicitlyAsDefault() {
+	
+		//$mockValue = 
+		//$value = new qCal_Value;
+	
+	}
+	/**
+	 * or will be explicitly specified with the "VALUE"
+	 * parameter. If the value type of a property is one of the alternate
+	 * valid types, then it MUST be explicitly specified with the "VALUE"
+	 * parameter.
+	 */
+	public function testPropertySpecifiedExplicitlyAsValue() {
+	
+		
+	
+	}
 
 }
