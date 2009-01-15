@@ -2,7 +2,7 @@
 /**
  * Base property value class. Every property value has a specific data
  * type. Some of them are very simple, such as boolean. Others can be
- * rather complex, such as rrule (specifies a date pattern for recurring
+ * rather complex, such as recur (specifies a date pattern for recurring
  * events and other components).
  * @package qCal
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
