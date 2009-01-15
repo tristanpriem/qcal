@@ -117,4 +117,16 @@ class UnitTestCase_Parser extends UnitTestCase {
     
     }
 
+	/**
+	 * Property names, parameter names and enumerated parameter values are
+	 * case insensitive. For example, the property name "DUE" is the same as
+	 * "due" and "Due", DTSTART;TZID=US-Eastern:19980714T120000 is the same
+	 * as DtStart;TzID=US-Eastern:19980714T120000.
+	 */
+	public function testPropertyNamesAndParamValuesAreCaseInsensitive() {
+	
+		
+	
+	}
+
 }
