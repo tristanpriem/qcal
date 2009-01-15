@@ -260,8 +260,9 @@ class UnitTestCase_Value extends UnitTestCase {
 	 */
 	public function testPropertySpecifiedImplicitlyAsDefault() {
 	
-		//$mockValue = 
-		//$value = new qCal_Value;
+		// I need to learn how to do this iwthout being so specific... with mocks or something...
+		$property = new qCal_Property_Dtstart('2008-12-31 5:00:00');
+		$this->assertEqual($property->getType(), 'DATE-TIME');
 	
 	}
 	/**
@@ -272,7 +273,9 @@ class UnitTestCase_Value extends UnitTestCase {
 	 */
 	public function testPropertySpecifiedExplicitlyAsValue() {
 	
-		
+		$property = new qCal_Property_Dtstart('2008-12-31 5:00:00');
+		$property->setParam('value', 'date');
+		$this->assertEqual($property->getType(), 'DATE');
 	
 	}
 
