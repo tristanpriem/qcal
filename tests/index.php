@@ -29,6 +29,7 @@ $test->addTestCase(new UnitTestCase_Component_Calendar);
 $test->addTestCase(new UnitTestCase_Component_Timezone);
 $test->addTestCase(new UnitTestCase_Property);
 $test->addTestCase(new UnitTestCase_Value);
+$test->addTestCase(new UnitTestCase_Value_Date);
 $test->addTestCase(new UnitTestCase_Value_Recur);
 $test->addTestCase(new UnitTestCase_Renderer);
 $test->addTestCase(new UnitTestCase_DateTime);
