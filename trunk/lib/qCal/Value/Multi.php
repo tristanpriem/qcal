@@ -34,6 +34,7 @@ abstract class qCal_Value_Multi extends qCal_Value {
         } else {
 			$this->addValue($values);
 		}
+		return $this;
 	
 	}
 	/**
