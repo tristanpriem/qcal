@@ -30,7 +30,7 @@
  *  1.333
  *  -3.14
  */
-class qCal_Value_Float extends qCal_Value {
+class qCal_Value_Float extends qCal_Value_Multi {
 
 	/**
 	 * Casts $value to float and returns it

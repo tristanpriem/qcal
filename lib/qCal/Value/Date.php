@@ -38,9 +38,9 @@
  */
 class qCal_Value_Date extends qCal_Value_DateTime {
 
-	public function __toString() {
+	protected function toString($value) {
 	
-		return $this->value->format('Ymd');
+		return $value->format('Ymd');
 	
 	}
 

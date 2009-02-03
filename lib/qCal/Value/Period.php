@@ -57,7 +57,7 @@
  * No additional content value encoding (i.e., BACKSLASH character
  * encoding) is defined for this value type.
  */
-class qCal_Value_Period extends qCal_Value {
+class qCal_Value_Period extends qCal_Value_Multi {
 
 	protected $value;
 	/**
@@ -88,10 +88,10 @@ class qCal_Value_Period extends qCal_Value {
 	/**
 	 * Convert to string - this converts to string into the UTC/UTC format
 	 */
-	public function __toString() {
+	protected function toString($value) {
 	
-		return $this->value->start()->getUtc() . "/"
-				 . $this->value->end()->getUtc();
+		return $value->start()->getUtc() . "/"
+				 . $value->end()->getUtc();
 	
 	}
 

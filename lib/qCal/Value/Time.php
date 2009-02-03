@@ -107,10 +107,10 @@
  */
 class qCal_Value_Time extends qCal_Value_DateTime {
 
-	public function __toString() {
+	protected function toString($value) {
 	
 		// @todo: this doesn't take time-zones into account
-		return $this->value->format('His');
+		return $value->format('His');
 	
 	}
 

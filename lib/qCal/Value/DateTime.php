@@ -103,7 +103,7 @@
  * 
  *  COMPLETED:19970630T235960Z
  */
-class qCal_Value_Datetime extends qCal_Value {
+class qCal_Value_Datetime extends qCal_Value_Multi {
 
 	/**
 	 * qCal_Date object
@@ -112,10 +112,9 @@ class qCal_Value_Datetime extends qCal_Value {
 	/**
 	 * Convert the internal date storage to a string
 	 */
-	public function __toString() {
+	protected function toString($value) {
 	
-		// @todo: for now, maybe this should just use UTC
-		return $this->value->format('Ymd\THis');
+		return $value->format('Ymd\THis');
 	
 	}
 	/**

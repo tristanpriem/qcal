@@ -44,15 +44,15 @@
  * 
  *  P7W
  */
-class qCal_Value_Duration extends qCal_Value {
+class qCal_Value_Duration extends qCal_Value_Multi {
 
 	/**
 	 * Convert seconds to duration 
 	 * @todo Some type of caching? This probably doesn't need to be "calculated" every time if it hasnt changed
 	 */
-	public function __toString() {
+	protected function toString($value) {
 	
-		return $this->value->toICal();
+		return $value->toICal();
 	
 	}
 	/**

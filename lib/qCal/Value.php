@@ -22,6 +22,8 @@
  */
 abstract class qCal_Value {
 
+	protected $value;
+	
 	public function __construct($value) {
 	
 		$this->setValue($value);
@@ -74,12 +76,21 @@ abstract class qCal_Value {
 	 */
 	public function __toString() {
 	
-		return (string) $this->value;
+		return $this->toString($this->value);
+	
+	}
+	/**
+	 * Converts from native format to a string, __toString() calls this internally
+	 */
+	protected function toString($value) {
+	
+		return (string) $value;
 	
 	}
 	/**
 	 * This is left to be implemented by children classes, basically they 
-	 * implement this method to cast any input into their data type
+	 * implement this method to cast any input into their data type (from a string)
+	 * @todo Change the name of this to something more appropriate, maybe toNative or something
 	 */
 	abstract protected function doCast($value);
 

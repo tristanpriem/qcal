@@ -29,8 +29,7 @@ class qCal_Date_Period {
 	}
 	/**
 	 * Converts to how many seconds between the two. because this is the smallest increment
-	 * used in this class, seconds are used to determine other increments, and so we store the
-	 * amount of seconds instead of generating it every time
+	 * used in this class, seconds are used to determine other increments
 	 */
 	public function seconds() {
 	

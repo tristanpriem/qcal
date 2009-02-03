@@ -69,7 +69,7 @@ class qCal_Date_Duration {
 	
 	}
 	/**
-	 * Converts a timestamp to an icalendar-formatted duration string
+	 * Converts seconds to an icalendar-formatted duration string
 	 */
 	public function toICal() {
 	

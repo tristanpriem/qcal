@@ -50,9 +50,9 @@ class qCal_Value_Binary extends qCal_Value {
 	/**
 	 * When the value of a binary property is requested, it will be returned as a base64 encoded string
 	 */
-	public function __toString() {
+	protected function toString($value) {
 	
-		return base64_encode($this->value);
+		return base64_encode($value);
 	
 	}
 	/**
