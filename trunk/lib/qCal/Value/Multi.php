@@ -42,6 +42,7 @@ abstract class qCal_Value_Multi extends qCal_Value {
     public function addValue($value) {
     
 		$this->value[] = $this->doCast($value);
+		return $this;
     
     }
 	/**
