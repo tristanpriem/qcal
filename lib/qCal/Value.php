@@ -53,6 +53,7 @@ abstract class qCal_Value {
 	public function setValue($value) {
 	
 		$this->value = $this->doCast($value);
+		return $this;
 	
 	}
 	/**
