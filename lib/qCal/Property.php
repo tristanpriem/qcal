@@ -136,6 +136,7 @@ abstract class qCal_Property {
 			}
 		}
 		$this->value = qCal_Value::factory($this->getType(), $value);
+		return $this;
 	
 	}
 	/**
@@ -189,6 +190,7 @@ abstract class qCal_Property {
 		// if value param has been passed in, change the type of this property to its value
 		if ($name == "VALUE") $this->type = strtoupper($value);
 		$this->params[$name] = $value;
+		return $this;
 	
 	}
 	/**
