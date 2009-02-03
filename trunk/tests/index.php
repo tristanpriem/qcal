@@ -22,7 +22,7 @@ require_once 'mock_objects.php';
 //Mock::generate('qCal_Property');
 //Mock::generate('qCal_Renderer');
 //Mock::generate('qCal_Parser');
-//Mock::generate('qCal_Value');
+//Mock::generate('qCal_Value_Multi');
 // require test cases
 // require_once 'UnitTestCase/Parser.php';
 // require_once 'UnitTestCase/Component.php';

@@ -95,13 +95,5 @@ class qCal_Date extends DateTime {
 		return gmdate(self::UTC, $this->time());
 	
 	}
-	/**
-	 * 
-	public function getUtc() {
-	
-		return gmdate(self::UTC, $this->time());
-	
-	}
-	 */
 
 }

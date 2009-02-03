@@ -30,9 +30,9 @@
  */
 class qCal_Value_Boolean extends qCal_Value {
 
-	public function __toString() {
+	protected function toString($value) {
 	
-		return ($this->value) ? "TRUE" : "FALSE";
+		return ($value) ? "TRUE" : "FALSE";
 	
 	}
 	/**
