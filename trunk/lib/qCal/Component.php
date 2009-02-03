@@ -274,6 +274,7 @@ abstract class qCal_Component {
 			// add property type
 		//	$property = qCal_Property::factory($name, $params);
 		//	$this->addProperty($property);
+			return $this;
 		}
 		// throw exception here?
 		// throw new qCal_Exception();
