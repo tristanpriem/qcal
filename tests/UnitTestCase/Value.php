@@ -286,6 +286,11 @@ class UnitTestCase_Value extends UnitTestCase {
 		$value = new qCal_Value_DateTime('2008-12-30 5:00:00');
 		$value->addValue('2008-12-31 5:00:00');
 		$this->assertEqual($value->__toString(), "20081230T050000,20081231T050000");
+		
+		$value = new qCal_Value_Date('2008-04-23');
+		$value->addValue('2008-04-24')
+		      ->addValue('2008-04-25');
+		$this->assertEqual('20080423,20080424,20080425', $value->__toString());
 	
 	}
 
