@@ -66,6 +66,7 @@ class qCal_Date extends DateTime {
 	public function copy(qCal_Date $date) {
 	
 		$this->setByString($date->format(self::DATETIME));
+		return $this;
 	
 	}
 	/**
@@ -76,6 +77,7 @@ class qCal_Date extends DateTime {
 		$date = strtotime($str);
 		$this->setDate(date('Y', $date), date('m', $date), date('d', $date));
 		$this->setTime(date('H', $date), date('i', $date), date('s', $date));
+		return $this;
 	
 	}
 	/**

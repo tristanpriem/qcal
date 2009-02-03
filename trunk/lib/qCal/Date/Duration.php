@@ -56,6 +56,7 @@ class qCal_Date_Duration {
 			}
 			$this->duration = $seconds;
 		}
+		return $this;
 	
 	}
 	/**
