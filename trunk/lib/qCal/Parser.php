@@ -1,8 +1,17 @@
 <?php
 /**
- * I don't even know if this is what I'll call this class. I may end up changing the interface completely.
- * It very much depends on how the other classes flush out. We'll see!
- */
+ * qCal_Parser
+ * The parser accepts an array of qCal_Parser_Token objects and converts them
+ * to actual formatted icalendar data (in one of many formats). The default is
+ * qCal_Parser_iCal which is complient with RFC 2445, but there are others as well,
+ * such as qCal_Parser_xCal (xml) or qCal_Parser_hCal (microformats).
+ * 
+ * @package qCal
+ * @subpackage qCal_Parser
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ */ 
 abstract class qCal_Parser {
 
     /**
@@ -10,10 +19,7 @@ abstract class qCal_Parser {
      */
     protected $options;
     /**
-     * The constructor accepts either raw icalendar data or a file resource, so if you want to read a file, do this
-     * $ical = new qCal_Parser(fopen('filename.ics', 'r'))
-     * @todo This probably will not scale well, but it works for now. I may want to just provide a file handle and
-     * read the file line by line instead of all at once like this.
+     * 
      */
     public function __construct($options = array()) {
     

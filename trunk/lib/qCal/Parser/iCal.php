@@ -6,19 +6,23 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */ 
-class qCal_Parser_iCalendar extends qCal_Parser {
+class qCal_Parser_iCal extends qCal_Parser {
+
+	
+
+}
 
 	/**
 	 * Array of components
-	 */
+	 * /
 	protected $cmpArray = array();
 	/**
 	 * Array of components
-	 */
+	 * /
 	protected $refQueue = array();
     /**
      * This method will parse raw icalendar data. Eventually I might want to add a parseFromFile() method or something
-     */
+     * /
     public function parse($data) {
     
     	$lines = explode("\r\n", $data);
@@ -52,7 +56,7 @@ class qCal_Parser_iCalendar extends qCal_Parser {
     }
     /**
      * Open a component (start it)
-     */
+     * /
     protected function beginComponent($name) {
     
     	$this->cmpArray[] = array(
@@ -66,7 +70,7 @@ class qCal_Parser_iCalendar extends qCal_Parser {
     }
     /**
      * End currently open component
-     */
+     * /
     protected function endComponent($name) {
     
     	// pop current component off ref queue
@@ -77,7 +81,7 @@ class qCal_Parser_iCalendar extends qCal_Parser {
     }
     /**
      * Add a property to the currently open component
-     */
+     * /
     protected function addProperty($name, $value, $params) {
     
     	$this->refQueue[count($this->refQueue)-1]['properties'][] = qCal_Property::factory($name, $value, $params);
@@ -85,7 +89,7 @@ class qCal_Parser_iCalendar extends qCal_Parser {
     }
     /**
      * Accepts a string to append to the previous property's value
-     */
+     * /
     protected function continueProperty($add) {
     
     	$key = count($this->refQueue[count($this->refQueue)-1]['properties'])-1;
@@ -95,7 +99,7 @@ class qCal_Parser_iCalendar extends qCal_Parser {
     }
     /**
      * Convert array from parser into a qCal component
-     */
+     * /
     protected function processComponent($componentArray) {
     
     	$component = qCal_Component::factory($componentArray['name'], $componentArray['properties']);
@@ -106,5 +110,4 @@ class qCal_Parser_iCalendar extends qCal_Parser {
     	return $component;
     
     }
-
-}
+	*/
