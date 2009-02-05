@@ -16,6 +16,39 @@ class UnitTestCase_Parser extends UnitTestCase {
     
     }
     
+	public function testInitParser() {
+	
+		$parser = new qCal_Parser_iCal(array(
+			// pass options in here
+		));
+		$parser->parse('../files/simple.ics');
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public function hideOldCode() {
 	
 		// I hid the old test code for now, I'll add it back later

@@ -11,7 +11,7 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */ 
-class qCal_Parser_Lexer extends qCal_Parser {
+class qCal_Parser_Lexer { // might make this abstract
 
     /**
      * @var string input text
