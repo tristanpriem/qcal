@@ -28,7 +28,7 @@ require_once 'mock_objects.php';
 // require_once 'UnitTestCase/Component.php';
 // add tests cases to group and run the tests
 $test = new GroupTest('Core qCal Tests');
-$test->addTestCase(new UnitTestCase_Parser);
+//$test->addTestCase(new UnitTestCase_Parser);
 $test->addTestCase(new UnitTestCase_Component);
 $test->addTestCase(new UnitTestCase_Component_Alarm);
 $test->addTestCase(new UnitTestCase_Component_Calendar);
@@ -37,6 +37,7 @@ $test->addTestCase(new UnitTestCase_Property);
 $test->addTestCase(new UnitTestCase_Value);
 $test->addTestCase(new UnitTestCase_Value_Date);
 $test->addTestCase(new UnitTestCase_Value_Recur);
+$test->addTestCase(new UnitTestCase_Value_Multi);
 $test->addTestCase(new UnitTestCase_Renderer);
 $test->addTestCase(new UnitTestCase_DateTime);
 $test->run(new HtmlReporter());
