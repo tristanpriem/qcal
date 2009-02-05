@@ -15,30 +15,22 @@
 class qCal_Parser_Token {
 
     /**
-     * @var string token value
+     * @var string token content
      */
-    protected $value;
+    protected $content;
     /**
      * @var string token type
      */
     protected $type;
     /**
      * Constructor
-     * @param string containing the text value
+     * @param string containing the token content
      * @param string of token type (property, component, param, text/contentline)
      */
-    public function __construct($value, $type) {
+    public function __construct($content, $type) {
     
         $this->value = $value;
         $this->type = $type;
-    
-    }
-    /**
-     * Return the token's value
-     */
-    public function getValue() {
-    
-        
     
     }
 

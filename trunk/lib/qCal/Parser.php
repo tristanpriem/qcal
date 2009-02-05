@@ -19,16 +19,35 @@ abstract class qCal_Parser {
      */
     protected $options;
     /**
-     * 
+     * Constructor
+     * Pass in an array of options
+     * @todo Come up with list of available options
+     * @param array parser options
      */
     public function __construct($options = array()) {
     
         $this->options = $options;
+        /**
+         * Ideas for options
+         *
+         * searchpath - a path string to search for files in "C:\calendars;C:\Program Files\Outlook\calendars"
+         */
     
     }
     /**
-     * Extend this method to parse raw icalendar data
+     * @todo What should this accept? filename? actual string content? either?
+     * @todo Maybe even create a parse() for raw string and a parseFile() for a file name?
      */
-    abstract public function parse($data);
+    public function parse($filename) {
+    
+        $content = file_get_contents(realpath($filename));
+        $this->lexer = new qCal_Parser_Lexer($content); // maybe allow a different one in options?
+        return $this->doParse($this->lexer->tokenize());
+    
+    }
+    /**
+     * Left up to children to actually do the parsing
+     */
+    abstract protected function doParse($tokens);
 
 }

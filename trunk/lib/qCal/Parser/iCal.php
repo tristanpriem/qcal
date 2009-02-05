@@ -8,7 +8,11 @@
  */ 
 class qCal_Parser_iCal extends qCal_Parser {
 
+	public function doParse($tokens) {
 	
+		// implementation is neat
+	
+	}
 
 }
 
