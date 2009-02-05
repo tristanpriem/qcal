@@ -28,7 +28,7 @@ require_once 'mock_objects.php';
 // require_once 'UnitTestCase/Component.php';
 // add tests cases to group and run the tests
 $test = new GroupTest('Core qCal Tests');
-//$test->addTestCase(new UnitTestCase_Parser);
+$test->addTestCase(new UnitTestCase_Parser);
 $test->addTestCase(new UnitTestCase_Component);
 $test->addTestCase(new UnitTestCase_Component_Alarm);
 $test->addTestCase(new UnitTestCase_Component_Calendar);
