@@ -14,9 +14,9 @@ set_include_path(
 // require convenience functions
 require_once 'convenience.php';
 // require necessary simpletest files
-require_once 'unit_tester.php';
-require_once 'reporter.php';
-require_once 'mock_objects.php';
+require_once 'simpletest/unit_tester.php';
+require_once 'simpletest/reporter.php';
+require_once 'simpletest/mock_objects.php';
 // create mocks
 //Mock::generate('qCal_Component');
 //Mock::generate('qCal_Property');
