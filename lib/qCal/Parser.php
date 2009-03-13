@@ -40,7 +40,7 @@ abstract class qCal_Parser {
      */
     public function parse($filename) {
     
-        $content = file_get_contents(realpath($filename));
+        $content = file_get_contents($filename);
         $this->lexer = new qCal_Parser_Lexer($content); // maybe allow a different one in options?
         return $this->doParse($this->lexer->tokenize());
     
