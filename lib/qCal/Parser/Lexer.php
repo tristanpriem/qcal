@@ -18,11 +18,16 @@ class qCal_Parser_Lexer { // might make this abstract
      */
     protected $content;
     /**
+     * @var string character(s) used to terminate lines
+     */
+    protected $line_terminator;
+    /**
      * Constructor
      * @param string containing the text to be tokenized
      */
     public function __construct($content) {
     
+    	$this->line_terminator = chr(13) . chr(10);
         $this->content = $content;
     
     }
@@ -34,6 +39,24 @@ class qCal_Parser_Lexer { // might make this abstract
     
         // loop through chunks of input text by separating by properties and components
         // and create tokens for each one, creating a multi-dimensional array of tokens to return
+        $lines = explode($this->line_terminator, $this->content);
+        $stack = array();
+        foreach ($lines as $line) {
+        	// begin a component
+        	if (strpos($line, "BEGIN:") === 0) {
+        		// create a new array to hold info about this component
+        		$array = array();
+        		// make a reference to it on the top of the stack (not sure if the amp is necessary
+        		// does php pass make a reference automatically here or does it copy?
+        		$stack[] =& $array;
+        	// end a component
+        	} elseif (strpos($line, "END:") === 0) {
+        		$array = array_pop($stack);
+        	// not beginning or ending component
+        	} else {
+        		
+        	}
+        }
         return array();
     
     }
