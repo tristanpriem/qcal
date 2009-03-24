@@ -43,30 +43,31 @@ class qCal_Parser_Lexer { // might make this abstract
         $stack = array();
         foreach ($lines as $line) {
         	// begin a component
-        	if (strpos($line, "BEGIN:") === 0) {
-        		// create a new array to hold info about this component
-        		$array = array();
-        		// make a reference to it on the top of the stack (not sure if the amp is necessary
-        		// does php pass make a reference automatically here or does it copy?
+        	if (preg_match('#^BEGIN:([a-z]+)$#i', $line, $matches)) {
+        		// create new array representing the new component
+        		$array = array(
+        			'component' => $matches[1],
+        			'properties' => array(),
+        			'components' => array(),
+        		);
         		$stack[] =& $array;
-        	// end a component
         	} elseif (strpos($line, "END:") === 0) {
-        		$array = array_pop($stack);
-        	// not beginning or ending component
-        	} else {
+        		// end component, pop the stack
         		
+        	} else {
+        		// continue component
+        		if (preg_match('#^([a-z]+):([a-z]+)$#i', $line, $matches)) {
+        			// if line is a property line, start a new property
+        			$array['properties'][$matches[1]] = $matches[2];
+        		} elseif (preg_match('#^\w(.+)$#', $line, $matches)) {
+        			// if it is a continuation of a line, continue the last property
+        			$lastproperty = current($array['properties']);
+        			$lastproperty .= $matches[1];
+        		}
         	}
         }
+        pre($stack);
         return array();
-    
-    }
-    /**
-     * Creates a token from a string (chunk of content)
-     * @returns qCal_Parser_Token
-     */
-    public function createToken($string) {
-    
-        return new qCal_Parser_Token($string);
     
     }
 
