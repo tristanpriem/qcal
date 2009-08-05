@@ -23,9 +23,6 @@ require_once 'simpletest/mock_objects.php';
 //Mock::generate('qCal_Renderer');
 //Mock::generate('qCal_Parser');
 //Mock::generate('qCal_Value_Multi');
-// require test cases
-// require_once 'UnitTestCase/Parser.php';
-// require_once 'UnitTestCase/Component.php';
 // add tests cases to group and run the tests
 $test = new GroupTest('Core qCal Tests');
 $test->addTestCase(new UnitTestCase_Parser);

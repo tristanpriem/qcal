@@ -48,26 +48,35 @@ class qCal_Parser_Lexer { // might make this abstract
         		$array = array(
         			'component' => $matches[1],
         			'properties' => array(),
-        			'components' => array(),
+        			'children' => array(),
         		);
-        		$stack[] =& $array;
+        		$stack[] = $array;
         	} elseif (strpos($line, "END:") === 0) {
         		// end component, pop the stack
-        		
+        		$child = array_pop($stack);
+				if (empty($stack)) {
+					$tokens = $child;
+				} else {
+					$parent =& $stack[count($stack)-1];
+					array_push($parent['children'], $child);
+				}
         	} else {
         		// continue component
-        		if (preg_match('#^([a-z]+):([a-z]+)$#i', $line, $matches)) {
+        		if (preg_match('#^([a-z]+):([^\n]+)$#i', $line, $matches)) {
+					$component =& $stack[count($stack)-1];
         			// if line is a property line, start a new property
-        			$array['properties'][$matches[1]] = $matches[2];
+					$proparray = array(
+						'property' => $matches[1],
+						'value' => $matches[2],
+					);
+        			$component['properties'][] = $proparray;
         		} elseif (preg_match('#^\w(.+)$#', $line, $matches)) {
         			// if it is a continuation of a line, continue the last property
-        			$lastproperty = current($array['properties']);
-        			$lastproperty .= $matches[1];
+        			$proparray['value'] .= $matches[1];
         		}
         	}
         }
-        pre($stack);
-        return array();
+        return $tokens;
     
     }
 

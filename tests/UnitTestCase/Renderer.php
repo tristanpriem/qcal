@@ -24,7 +24,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
     	$todo_w_alarm->attach($alarm);
     	$calendar->attach($todo_w_alarm);
         $ical = $calendar->render(); // can pass it a renderer, otherwise it uses ical format
-        pre($ical);
+        // pre($ical);
     
     }
     
@@ -48,7 +48,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
 			)),
     	));
     	$cal->attach($journal);
-    	pre($cal->render());
+    	//pre($cal->render());
     
     }
     

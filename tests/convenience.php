@@ -5,9 +5,14 @@
  */
 function pr($var) {
 
+	if (is_string($var)) {
+		$length = strlen($var);
+	} else {
+		$length = count($var);
+	}
     ob_start();
     echo "<pre>";
-    echo "Size: " . strlen($var) . "\n";
+    echo "Size: " . $length . "\n";
     echo "Value: \n";
     var_dump($var);
     echo "</pre>";
