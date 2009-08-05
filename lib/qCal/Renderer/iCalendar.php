@@ -127,6 +127,7 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	 */
 	protected function fold($data) {
 	
+		if (strlen($data) == (72 + strlen(self::LINE_ENDING))) return $data;
 		$apart = str_split($data, 72);
 		return implode(self::LINE_ENDING . " ", $apart);
 	

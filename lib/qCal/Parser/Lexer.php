@@ -10,8 +10,10 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo I believe this should probably be abstract and it should rely
+ * on a child to do the actual parsing as this does.
  */ 
-class qCal_Parser_Lexer { // might make this abstract
+class qCal_Parser_Lexer {
 
     /**
      * @var string input text
@@ -62,17 +64,37 @@ class qCal_Parser_Lexer { // might make this abstract
 				}
         	} else {
         		// continue component
-        		if (preg_match('#^([a-z]+):([^\n]+)$#i', $line, $matches)) {
+        		if (preg_match('#^([a-z0-9;"=-]+):"?([^\n"]+)"?$#i', $line, $matches)) {
 					$component =& $stack[count($stack)-1];
-        			// if line is a property line, start a new property
+        			// if line is a property line, start a new property, but first determine if there are any params
+					$property = $matches[1];
+					$params = array();
+					$propparts = explode(";", $matches[1]);
+					if (count($propparts) > 1) {
+						foreach ($propparts as $key => $part) {
+							// the first one is the property name
+							if ($key == 0) {
+								$property = $part;
+							} else {
+								// the rest are params
+								// @todo Quoted param values need to be taken care of...
+								list($paramname, $paramvalue) = explode("=", $part, 2);
+								$params[] = array(
+									'param' => $paramname,
+									'value' => $paramvalue,
+								);
+							}
+						}
+					}
 					$proparray = array(
-						'property' => $matches[1],
+						'property' => $property,
 						'value' => $matches[2],
+						'params' => $params,
 					);
         			$component['properties'][] = $proparray;
-        		} elseif (preg_match('#^\w(.+)$#', $line, $matches)) {
+        		} elseif (preg_match('#^\s(.+)$#', $line, $matches)) {
         			// if it is a continuation of a line, continue the last property
-        			$proparray['value'] .= $matches[1];
+        			$stack[count($stack)-1]['properties'][count($component['properties'])-1]['value'] .= $matches[1];
         		}
         	}
         }

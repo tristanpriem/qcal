@@ -63,6 +63,7 @@ abstract class qCal_Property {
 	 * Class constructor
 	 * 
 	 * @todo Cast $value to whatever data type this is ($this->type)
+	 * @todo Determine if there can be multiple params of the same name 
 	 */
 	public  function __construct($value = null, $params = array()) {
 	
