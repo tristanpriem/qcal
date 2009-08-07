@@ -280,7 +280,7 @@
  *   procs/felizano.exe
  *  END:VALARM
  */
-class qCal_Component_Alarm extends qCal_Component {
+class qCal_Component_Valarm extends qCal_Component {
 
 	protected $name = "VALARM";
 	protected $allowedComponents = array('VEVENT','VTODO');

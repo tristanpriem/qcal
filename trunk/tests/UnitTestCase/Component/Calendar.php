@@ -30,7 +30,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 	public function testCalendarPropertyConformance() {
 	
 		$this->expectException(new qCal_Exception_InvalidProperty("VCALENDAR component does not allow PERCENT-COMPLETE property"));
-		$component = new qCal_Component_Calendar();
+		$component = new qCal_Component_Vcalendar();
 		$percentComplete = new qCal_Property_PercentComplete(35);
 		$component->addProperty($percentComplete);
 	
@@ -40,7 +40,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 	 **/
 	public function testCalendarInitializeDefaults() {
 	
-		$component = new qCal_Component_Calendar();
+		$component = new qCal_Component_Vcalendar();
 		// test calendar defaults. eventually there will be convenience methods
 		// that will allow you to do $component->prodid() to get and set
 		$this->assertEqual($component->getProperty('prodid')->getValue(), '-//Luke Visinoni//qCal v0.1//EN');
@@ -64,7 +64,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 			'prodid' => '// Test //',
 			'version' => '3.1'
 		);
-		$calendar = new qCal_Component_Calendar($properties);
+		$calendar = new qCal_Component_Vcalendar($properties);
 		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
 		$this->assertEqual($calendar->getProperty('version')->getValue(), '3.1');
 		
@@ -73,7 +73,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 			new qCal_Property_Version('4.0'),
 			new qCal_Property_Prodid('// Test //')
 		);
-		$calendar = new qCal_Component_Calendar($properties);
+		$calendar = new qCal_Component_Vcalendar($properties);
 		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
 		$this->assertEqual($calendar->getProperty('version')->getValue(), '4.0');
 		
@@ -82,7 +82,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 			new qCal_Property_Version('4.0'),
 			'prodid' => '// Test //',
 		);
-		$calendar = new qCal_Component_Calendar($properties);
+		$calendar = new qCal_Component_Vcalendar($properties);
 		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
 		$this->assertEqual($calendar->getProperty('version')->getValue(), '4.0');
 		

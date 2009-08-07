@@ -19,7 +19,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	 */
 	public function testFacadeMethods() {
 	
-		$calendar = new qCal_Component_Calendar();
+		$calendar = new qCal_Component_Vcalendar();
 		$calendar->setProdId('// Test //');
 		$this->assertEqual($calendar->getProdid(), '// Test //');
 	
@@ -36,7 +36,7 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->assertEqual($cal->getVersion(), '2.0');
 		
 		// events - eventually this will be much more complex, but for now, it works like any other component
-		$event = new qCal_Component_Event(array(
+		$event = new qCal_Component_Vevent(array(
 			'summary' => 'Python meeting about calendaring',
 			'dtstart' => '2009-01-19 6:00',
 			'dtend' => '2009-01-19 9:00',
@@ -73,7 +73,7 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->expectException(new qCal_Exception_InvalidComponent('VCALENDAR cannot be attached to VEVENT'));
 		// calendars cannot be attached to anything (except perhaps other calendars)
 		$cal = new qCal;
-		$event = new qCal_Component_Event();
+		$event = new qCal_Component_Vevent();
 		$event->attach($cal);
 	
 	}

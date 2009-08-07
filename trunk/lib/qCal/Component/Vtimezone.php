@@ -362,7 +362,7 @@
  *   END:DAYLIGHT
  *   END:VTIMEZONE
  */
-class qCal_Component_Timezone extends qCal_Component {
+class qCal_Component_Vtimezone extends qCal_Component {
 
 	protected $name = "VTIMEZONE";
 	protected $allowedComponents = array('VCALENDAR');

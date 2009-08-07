@@ -8,7 +8,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	
 		// test that action is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VTIMEZONE component requires TZID property'));
-		$component = new qCal_Component_Timezone();
+		$component = new qCal_Component_Vtimezone();
 	
 	}
 	
