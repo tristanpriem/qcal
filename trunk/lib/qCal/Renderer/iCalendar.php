@@ -9,6 +9,7 @@
 class qCal_Renderer_iCalendar extends qCal_Renderer {
 
 	const LINE_ENDING = "\r\n";
+	const FOLD_LENGTH = 75;
 	/**
 	 * Render any component
 	 */
@@ -123,12 +124,13 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	}
 	
 	/**
-	 * Text cannot exceed 72 octets. This method will "fold" long lines in accordance with RFC 2445
+	 * Text cannot exceed 75 octets. This method will "fold" long lines in accordance with RFC 2445
+	 * @todo Make sure this is multi-byte safe
 	 */
 	protected function fold($data) {
 	
-		if (strlen($data) == (72 + strlen(self::LINE_ENDING))) return $data;
-		$apart = str_split($data, 72);
+		if (strlen($data) == (self::FOLD_LENGTH + strlen(self::LINE_ENDING))) return $data;
+		$apart = str_split($data, self::FOLD_LENGTH);
 		return implode(self::LINE_ENDING . " ", $apart);
 	
 	}

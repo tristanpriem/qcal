@@ -167,7 +167,9 @@ abstract class qCal_Component {
 	 */
 	static public function factory($name, $properties = array()) {
 	
+		if (empty($name)) return false;
 		// remove V, if there is one
+		// @todo it's kind of odd how I did this.. :S
 		$namearray = str_split($name);
 		$first = array_shift($namearray);
 		if ($first == "V") { // this will fudge things if there is ever a component that starts with V
