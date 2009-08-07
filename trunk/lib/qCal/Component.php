@@ -168,11 +168,9 @@ abstract class qCal_Component {
 	
 		if (empty($name)) return false;
 		// remove V, if there is one
-		// @todo it's kind of odd how I did this.. :S
-		$namearray = str_split($name);
-		$first = array_shift($namearray);
+		$first = substr($name, 0, 1);
 		if ($first == "V") { // this will fudge things if there is ever a component that starts with V
-			$name = implode("", $namearray);
+			$name = substr($name, 1);
 		}
 		// capitalize
 		$component = ucfirst(strtolower($name));
