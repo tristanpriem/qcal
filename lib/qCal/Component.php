@@ -163,13 +163,16 @@ abstract class qCal_Component {
 	}
 	/**
 	 * The only thing I need this for so far is the parser, but it may come in handy for the facade as well
+	 * @todo this will fudge things if there is ever a component that starts with V. I think I should probably
+	 * just remove the V only if it is one of the "V" components (VEVENT, VALARM, etc.). Another option would
+	 * be to just name the component classes with the V instead of removing it. yea, that'd probably be the way to go.
 	 */
 	static public function factory($name, $properties = array()) {
 	
 		if (empty($name)) return false;
 		// remove V, if there is one
 		$first = substr($name, 0, 1);
-		if ($first == "V") { // this will fudge things if there is ever a component that starts with V
+		if ($first == "V") {
 			$name = substr($name, 1);
 		}
 		// capitalize
