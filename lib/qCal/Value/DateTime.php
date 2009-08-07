@@ -122,7 +122,8 @@ class qCal_Value_Datetime extends qCal_Value_Multi {
 	 */
 	protected function doCast($value) {
 	
-		return new qCal_Date($value);
+		$date = new qCal_Date($value);
+		return $date;
 	
 	}
 

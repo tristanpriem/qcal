@@ -47,6 +47,6 @@
 class qCal_Property_Tzoffsetfrom extends qCal_Property {
 
 	protected $type = 'UTC-OFFSET';
-	protected $allowedComponents = array('VTIMEZONE');
+	protected $allowedComponents = array('VTIMEZONE','DAYLIGHT','STANDARD');
 
 }

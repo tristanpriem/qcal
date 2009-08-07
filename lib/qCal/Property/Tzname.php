@@ -56,6 +56,6 @@
 class qCal_Property_Tzname extends qCal_Property {
 
 	protected $type = 'TEXT';
-	protected $allowedComponents = array('VTIMEZONE');
+	protected $allowedComponents = array('VTIMEZONE','DAYLIGHT','STANDARD');
 
 }
