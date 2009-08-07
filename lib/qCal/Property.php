@@ -78,14 +78,12 @@ abstract class qCal_Property {
 	/**
 	 * Generates a qCal_Property class based on property name, params, and value
 	 * which can come directly from an icalendar file.
-	 * 
-	 * @todo come up with a better way to include 
 	 */
 	static public function factory($name, $value, $params = array()) {
 	
 		$className = self::getClassNameFromPropertyName($name);
 		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
-		require_once $fileName;
+		qCal_Loader::loadFile($fileName);
 		$class = new $className($value, $params);
 		return $class;
 	

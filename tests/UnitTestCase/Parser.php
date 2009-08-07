@@ -21,7 +21,7 @@ class UnitTestCase_Parser extends UnitTestCase {
 		$parser = new qCal_Parser(array(
 			// pass options in here
 		));
-		$ical = $parser->parse(TESTFILE_PATH . '/simple.ics');
+		$ical = $parser->parse(TESTFILE_PATH . '/lvisinoni.ics');
 		pre($ical->render());
 	
 	}
