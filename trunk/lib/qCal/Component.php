@@ -163,7 +163,6 @@ abstract class qCal_Component {
 	}
 	/**
 	 * The only thing I need this for so far is the parser, but it may come in handy for the facade as well
-	 * @todo come up with a better way to include 
 	 */
 	static public function factory($name, $properties = array()) {
 	
@@ -179,7 +178,7 @@ abstract class qCal_Component {
 		$component = ucfirst(strtolower($name));
 		$className = "qCal_Component_" . $component;
 		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
-		require_once $fileName;
+		qCal_Loader::loadFile($fileName);
 		$class = new $className($properties);
 		return $class;
 	
