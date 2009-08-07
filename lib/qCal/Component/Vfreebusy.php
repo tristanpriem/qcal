@@ -129,7 +129,7 @@
  *   URL:http://www.host.com/calendar/busytime/jsmith.ifb
  *   END:VFREEBUSY
  */
-class qCal_Component_Freebusy extends qCal_Component {
+class qCal_Component_Vfreebusy extends qCal_Component {
 
 	protected $name = "VFREEBUSY";
 	protected $allowedComponents = array('VCALENDAR');

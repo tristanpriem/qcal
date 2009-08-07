@@ -37,10 +37,9 @@
  *   END:VEVENT
  *   END:VCALENDAR
  */
-class qCal_Component_Calendar extends qCal_Component {
+class qCal_Component_Vcalendar extends qCal_Component {
 
 	protected $name = "VCALENDAR";
-	// protected $allowedComponents = array();
 	protected $requiredProperties = array('PRODID','VERSION');
 	
 }

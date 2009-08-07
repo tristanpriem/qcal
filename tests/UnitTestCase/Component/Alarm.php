@@ -20,10 +20,10 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	
 		// test that action is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires ACTION property'));
-		$component = new qCal_Component_Alarm();
+		$component = new qCal_Component_Valarm();
 		// test that trigger is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires TRIGGER property'));
-		$component = new qCal_Component_Alarm('AUDIO');
+		$component = new qCal_Component_Valarm('AUDIO');
 	
 	}
 	/**
@@ -33,7 +33,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	
 		// audio alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires TRIGGER property'));
-		$alarm = new qCal_Component_Alarm(array(
+		$alarm = new qCal_Component_Valarm(array(
 			'action' => 'audio',
 			//'trigger' => '15m'
 		));
@@ -46,7 +46,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	
 		// display alarm
 		$this->expectException(new qCal_Exception_MissingProperty('DISPLAY VALARM component requires DESCRIPTION property'));
-		$alarm = new qCal_Component_Alarm(array(
+		$alarm = new qCal_Component_Valarm(array(
 			'action' => 'display',
 			'trigger' => 'P1W3DT2H3M45S',
 			//'description' => 'Feed your fish'
@@ -60,7 +60,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	
 		// email alarm
 		$this->expectException(new qCal_Exception_MissingProperty('EMAIL VALARM component requires DESCRIPTION property'));
-		$alarm = new qCal_Component_Alarm(array(
+		$alarm = new qCal_Component_Valarm(array(
 			'action' => 'email',
 			'trigger' => 'P1W3DT2H3M45S',
 			'summary' => 'Feed your fish!',
@@ -75,7 +75,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 
 		// email alarm
 		$this->expectException(new qCal_Exception_MissingProperty('PROCEDURE VALARM component requires ATTACH property'));
-		$alarm = new qCal_Component_Alarm(array(
+		$alarm = new qCal_Component_Valarm(array(
 			'action' => 'procedure',
 			'trigger' => 'P1W3DT2H3M45S',
 			//'attach' => 'http://www.somewebsite.com/387592/alarm/5/',
