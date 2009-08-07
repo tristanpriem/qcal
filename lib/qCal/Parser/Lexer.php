@@ -39,9 +39,9 @@ class qCal_Parser_Lexer {
      */
     public function tokenize() {
     
+		$lines = $this->unfold($this->content);
         // loop through chunks of input text by separating by properties and components
         // and create tokens for each one, creating a multi-dimensional array of tokens to return
-        $lines = explode($this->line_terminator, $this->content);
         $stack = array();
         foreach ($lines as $line) {
         	// begin a component
@@ -92,14 +92,31 @@ class qCal_Parser_Lexer {
 						'params' => $params,
 					);
         			$component['properties'][] = $proparray;
-        		} elseif (preg_match('#^\s(.+)$#', $line, $matches)) {
-        			// if it is a continuation of a line, continue the last property
-        			$stack[count($stack)-1]['properties'][count($component['properties'])-1]['value'] .= $matches[1];
         		}
         	}
         }
         return $tokens;
     
     }
+	/**
+	 * Unfold the file before trying to parse it
+	 */
+	protected function unfold($content) {
+	
+		$return = array();
+		$lines = explode($this->line_terminator, $content);
+		foreach ($lines as $line) {
+			$chr1 = substr($line, 0, 1);
+			$therest = substr($line, 1);
+			// if character 1 is a whitespace character... (tab or space)
+			if ($chr1 == chr(9) || $chr1 == chr(32)) {
+				$return[count($return)-1] .= $therest;
+			} else {
+				$return[] = $line;
+			}
+		}
+		return $return;
+	
+	}
 
 }
