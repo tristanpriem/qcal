@@ -67,7 +67,7 @@
 class qCal_Property_Dtstart extends qCal_Property {
 
 	protected $type = 'DATE-TIME';
-	protected $allowedComponents = array('VEVENT','VTODO','VFREEBUSY','VTIMEZONE','VJOURNAL');
+	protected $allowedComponents = array('VEVENT','VTODO','VFREEBUSY','VTIMEZONE','VJOURNAL','STANDARD','DAYLIGHT');
 	/**
 	 * Strange that in the notes for this, it says:
 	 *     Conformance: This property can be specified in the "VEVENT", "VTODO",

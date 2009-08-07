@@ -77,7 +77,10 @@ abstract class qCal_Property {
 	}
 	/**
 	 * Generates a qCal_Property class based on property name, params, and value
-	 * which can come directly from an icalendar file.
+	 * which can come directly from an icalendarinclude 'Property/PercentComplete.php';
+	  file.
+	 * @todo I need a way to detect INVALID properties as they are being parsed. This
+	 * way there can be an option to NOT stop on errors. To just log and then continue.
 	 */
 	static public function factory($name, $value, $params = array()) {
 	
@@ -93,7 +96,7 @@ abstract class qCal_Property {
 				$className = "qCal_Property_NonStandard";
 			} else {
 				// if it's not a non-standard property, rethrow
-				//throw $e;
+				throw $e;
 			}
 		}
 		$class = new $className($value, $params);
