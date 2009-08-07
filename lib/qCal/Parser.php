@@ -12,7 +12,7 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */ 
-abstract class qCal_Parser {
+class qCal_Parser {
 
     /**
      * @param array containing any options the particular parser accepts
@@ -38,16 +38,36 @@ abstract class qCal_Parser {
      * @todo What should this accept? filename? actual string content? either?
      * @todo Maybe even create a parse() for raw string and a parseFile() for a file name?
      */
-    public function parse($filename) {
+    public function parse($filename, $lexer = null) {
     
         $content = file_get_contents($filename);
-        $this->lexer = new qCal_Parser_Lexer($content); // maybe allow a different one in options or arguments?
+		if (is_null($lexer)) {
+			$lexer = new qCal_Parser_Lexer_iCalendar($content);
+		}
+        $this->lexer = $lexer;
         return $this->doParse($this->lexer->tokenize());
     
     }
     /**
-     * Left up to children to actually do the parsing
+     * Override doParse in a child class if necessary
      */
-    abstract protected function doParse($tokens);
+	protected function doParse($tokens) {
+	
+		$properties = array();
+		foreach ($tokens['properties'] as $propertytoken) {
+			$params = array();
+			foreach ($propertytoken['params'] as $paramtoken) {
+				$params[$paramtoken['param']] = $paramtoken['value'];
+			}
+			$properties[] = qCal_Property::factory($propertytoken['property'], $propertytoken['value'], $params);
+		}
+		$component = qCal_Component::factory($tokens['component'], $properties);
+		foreach ($tokens['children'] as $child) {
+			$childcmpnt = $this->doParse($child);
+			$component->attach($childcmpnt);
+		}
+		return $component;
+	
+	}
 
 }
