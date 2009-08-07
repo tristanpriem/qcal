@@ -15,6 +15,7 @@
  */ 
 class qCal_Parser_Lexer {
 
+	const FOLD_LENGTH = 75;
     /**
      * @var string input text
      */
@@ -30,7 +31,8 @@ class qCal_Parser_Lexer {
     public function __construct($content) {
     
     	$this->line_terminator = chr(13) . chr(10);
-        $this->content = $content;
+        $this->content = $this->unfold($content);
+		// pre($this->content);
     
     }
     /**
@@ -43,7 +45,7 @@ class qCal_Parser_Lexer {
         // loop through chunks of input text by separating by properties and components
         // and create tokens for each one, creating a multi-dimensional array of tokens to return
         $stack = array();
-        foreach ($lines as $line) {
+        foreach ($this->content as $line) {
         	// begin a component
         	if (preg_match('#^BEGIN:([a-z]+)$#i', $line, $matches)) {
         		// create new array representing the new component
