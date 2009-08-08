@@ -83,6 +83,9 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	
 	}
 	/**
+	 * @todo The following is actually only true for AUDIO alarm components.
+	 */
+	/**
 	 *             ; 'action' and 'trigger' are both REQUIRED,
 	 *             ; but MUST NOT occur more than once
 	 */
