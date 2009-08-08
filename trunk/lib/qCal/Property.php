@@ -65,7 +65,7 @@ abstract class qCal_Property {
 	 * @todo Cast $value to whatever data type this is ($this->type)
 	 * @todo Determine if there can be multiple params of the same name 
 	 */
-	public  function __construct($value = null, $params = array()) {
+	public function __construct($value = null, $params = array()) {
 	
 		$this->name = $this->getPropertyNameFromClassName(get_class($this));
 		foreach ($params as $pname => $pval) {
@@ -88,18 +88,18 @@ abstract class qCal_Property {
 		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
 		try {
 			qCal_Loader::loadFile($fileName);
+			$class = new $className($value, $params);
 		} catch (qCal_Exception_InvalidFile $e) {
 			// if there is no class available for this property, check if it is non-standard
 			$xname = strtolower(substr($name, 0, 2));
 			if ($xname == "x-") {
 				// non-standard property
-				$className = "qCal_Property_NonStandard";
+				$class = new qCal_Property_NonStandard($value, $params, $name);
 			} else {
 				// if it's not a non-standard property, rethrow
 				throw $e;
 			}
 		}
-		$class = new $className($value, $params);
 		return $class;
 	
 	}
