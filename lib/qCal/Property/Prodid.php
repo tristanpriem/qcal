@@ -5,6 +5,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Find a way to make sure that this is a globally unique id
  * 
  * RFC 2445 Definition
  * 

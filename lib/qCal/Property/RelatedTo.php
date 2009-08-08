@@ -77,5 +77,6 @@ class qCal_Property_RecurrenceId extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL');
+	protected $allowMultiple = true;
 
 }

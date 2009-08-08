@@ -51,7 +51,7 @@
  * 
  *   RESOURCES;LANGUAGE=fr:1 raton-laveur
  */
-class qCal_Property_Resources extends qCal_Property {
+class qCal_Property_Resources extends qCal_Property_MultiValue {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT','VTODO');

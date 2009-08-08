@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that if there is an DTEND property, its date is after
+ * this property's date.
  * 
  * RFC 2445 Definition
  * 

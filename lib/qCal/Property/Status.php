@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that if this doesn't allow arbitrary status values that
+ * the use can't specify arbitrary values.
  * 
  * RFC 2445 Definition
  * 

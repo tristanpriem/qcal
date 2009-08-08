@@ -5,6 +5,10 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo This allows some strange stuff in its value. Make sure that it won't
+ * break the parser.
+ * @todo This allows the specification of "components" within the text. I will
+ * need to figure out how to deal with these.
  * 
  * RFC 2445 Definition
  * 

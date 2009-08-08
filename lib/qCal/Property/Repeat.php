@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that if the alarm triggers more than once, that this 
+ * specifies a duration property.
  * 
  * RFC 2445 Definition
  * 

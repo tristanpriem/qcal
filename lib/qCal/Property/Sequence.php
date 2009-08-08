@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo A lot of the conformance below relates more to the application making
+ * use of this library, but make sure to conform however possible.
  * 
  * RFC 2445 Definition
  * 

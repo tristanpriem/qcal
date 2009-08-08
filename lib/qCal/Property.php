@@ -60,6 +60,11 @@ abstract class qCal_Property {
 	 */
 	protected $allowedComponents = array();
 	/**
+	 * Some properties can be specified multiple times in a component. This
+	 * determines whether or not that is allowed for this property.
+	 */
+	protected $allowMultiple = false;
+	/**
 	 * Class constructor
 	 * 
 	 * @todo Cast $value to whatever data type this is ($this->type)
@@ -77,8 +82,7 @@ abstract class qCal_Property {
 	}
 	/**
 	 * Generates a qCal_Property class based on property name, params, and value
-	 * which can come directly from an icalendarinclude 'Property/PercentComplete.php';
-	  file.
+	 * which can come directly from an icalendar file
 	 * @todo I need a way to detect INVALID properties as they are being parsed. This
 	 * way there can be an option to NOT stop on errors. To just log and then continue.
 	 */
@@ -125,7 +129,7 @@ abstract class qCal_Property {
 	
 	}
 	/**
-	 * Returns raw value object
+	 * Returns raw value object (or for multi-value, an array)
 	 * @return string
 	 */
 	public function getValueObject() {
@@ -249,6 +253,15 @@ abstract class qCal_Property {
 		// get the class, and instantiate
 		$className = "qCal_Property_" . $property;
 		return $className;
+	
+	}
+	/**
+	 * Is this property allowed to be specified multiple times in a component?
+	 * @return boolean 
+	 */
+	public function allowMultiple() {
+	
+		return (boolean) $this->allowMultiple;
 	
 	}
 	

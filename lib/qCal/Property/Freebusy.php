@@ -5,6 +5,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that values in the property are sorted as described below
  * 
  * RFC 2445 Definition
  * 
@@ -69,7 +70,7 @@
  *   FREEBUSY;FBTYPE=FREE:19970308T160000Z/PT3H,19970308T200000Z/PT1H,
  *    19970308T230000Z/19970309T000000Z
  */
-class qCal_Property_Freebusy extends qCal_Property {
+class qCal_Property_Freebusy extends qCal_Property_MultiValue {
 
 	protected $type = 'PERIOD';
 	protected $allowedComponents = array('VFREEBUSY');

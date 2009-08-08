@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that the date of this is equal to or after the DTSTART
+ * date, if specified.
  * 
  * RFC 2445 Definition
  * 

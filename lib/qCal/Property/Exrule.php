@@ -6,6 +6,7 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Make sure allowedCompoents is correct. The RFC isn't dead clear
+ * See the todo for EXDATE
  * 
  * RFC 2445 Definition
  * 
@@ -72,5 +73,6 @@ class qCal_Property_Exrule extends qCal_Property {
 
 	protected $type = 'RECUR';
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL');
+	protected $allowMultiple = true;
 
 }

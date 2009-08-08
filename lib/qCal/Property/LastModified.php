@@ -5,6 +5,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that the date is converted to UTC
  * 
  * RFC 2445 Definition
  * 

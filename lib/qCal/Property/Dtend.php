@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Find a way of making sure that if there is a DTSTART, that its date
+ * is earlier than that of this property.
  * 
  * RFC 2445 Definition
  * 

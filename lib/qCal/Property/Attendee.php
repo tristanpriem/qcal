@@ -139,5 +139,6 @@ class qCal_Property_Attendee extends qCal_Property {
 	// on the following components, but I'm still a bit confused about it. I 
 	// need to read up on it more to really understand
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL','VALARM');
+	protected $allowMultiple = true;
 
 }

@@ -5,7 +5,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
- * @todo Make sure allowedCompoents is correct. The RFC isn't dead clear.
+ * @todo Make sure allowedComponents is correct. The RFC isn't dead clear.
  *       Perhaps this means that it can be included in any component that
  *       includes an rdate or rrule property?
  * 
@@ -77,7 +77,7 @@
  * 
  *   EXDATE:19960402T010000Z,19960403T010000Z,19960404T010000Z
  */
-class qCal_Property_Exdate extends qCal_Property {
+class qCal_Property_Exdate extends qCal_Property_MultiValue {
 
 	protected $type = 'DATE-TIME';
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL','VTIMEZONE');

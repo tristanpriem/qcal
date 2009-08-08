@@ -43,8 +43,10 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 		$component = new qCal_Component_Vcalendar();
 		// test calendar defaults. eventually there will be convenience methods
 		// that will allow you to do $component->prodid() to get and set
-		$this->assertEqual($component->getProperty('prodid')->getValue(), '-//Luke Visinoni//qCal v0.1//EN');
-		$this->assertEqual($component->getProperty('version')->getValue(), '2.0');
+		$prodid = $component->getProperty('prodid');
+		$this->assertEqual($prodid[0]->getValue(), '-//Luke Visinoni//qCal v0.1//EN');
+		$version = $component->getProperty('version');
+		$this->assertEqual($version[0]->getValue(), '2.0');
 		
 		// I commented this out because as of right now I Don't need a component factory
 		// do it through factory too
@@ -65,8 +67,10 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 			'version' => '3.1'
 		);
 		$calendar = new qCal_Component_Vcalendar($properties);
-		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
-		$this->assertEqual($calendar->getProperty('version')->getValue(), '3.1');
+		$prodid = $calendar->getProperty('prodid');
+		$this->assertEqual($prodid[0]->getValue(), '// Test //');
+		$version = $calendar->getProperty('version');
+		$this->assertEqual($version[0]->getValue(), '3.1');
 		
 		// property objects
 		$properties = array(
@@ -74,8 +78,10 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 			new qCal_Property_Prodid('// Test //')
 		);
 		$calendar = new qCal_Component_Vcalendar($properties);
-		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
-		$this->assertEqual($calendar->getProperty('version')->getValue(), '4.0');
+		$prodid = $calendar->getProperty('prodid');
+		$this->assertEqual($prodid[0]->getValue(), '// Test //');
+		$version = $calendar->getProperty('version');
+		$this->assertEqual($version[0]->getValue(), '4.0');
 		
 		// combination of property objects and name/value
 		$properties = array(
@@ -83,8 +89,10 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 			'prodid' => '// Test //',
 		);
 		$calendar = new qCal_Component_Vcalendar($properties);
-		$this->assertEqual($calendar->getProperty('prodid')->getValue(), '// Test //');
-		$this->assertEqual($calendar->getProperty('version')->getValue(), '4.0');
+		$prodid = $calendar->getProperty('prodid');
+		$this->assertEqual($prodid[0]->getValue(), '// Test //');
+		$version = $calendar->getProperty('version');
+		$this->assertEqual($version[0]->getValue(), '4.0');
 		
 		// @todo what happens if the same property is passed in multiple times, and that isn't allowed?
 	
