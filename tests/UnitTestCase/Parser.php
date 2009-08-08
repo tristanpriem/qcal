@@ -22,7 +22,7 @@ class UnitTestCase_Parser extends UnitTestCase {
 			// pass options in here
 		));
 		$ical = $parser->parse(TESTFILE_PATH . '/lvisinoni.ics');
-		pre($ical->render());
+		//pre($ical->render());
 	
 	}
 	
