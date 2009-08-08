@@ -59,7 +59,13 @@ class qCal_Parser {
 			foreach ($propertytoken['params'] as $paramtoken) {
 				$params[$paramtoken['param']] = $paramtoken['value'];
 			}
-			$properties[] = qCal_Property::factory($propertytoken['property'], $propertytoken['value'], $params);
+			try {
+				$properties[] = qCal_Property::factory($propertytoken['property'], $propertytoken['value'], $params);
+			} catch (qCal_Exception $e) {
+				// @todo There should be a better way of determining what went wrong during parsing/lexing than this
+				// do nothing...
+				// pr($e);
+			}
 		}
 		$component = qCal_Component::factory($tokens['component'], $properties);
 		foreach ($tokens['children'] as $child) {

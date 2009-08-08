@@ -57,7 +57,8 @@ class qCal_Parser_Lexer_iCalendar extends qCal_Parser_Lexer {
 				}
         	} else {
         		// continue component
-        		if (preg_match('#^([a-z0-9;"=-]+):"?([^\n"]+)"?$#i', $line, $matches)) {
+        		if (preg_match('#^([a-z0-9;"=-]+):"?([^\n"]+)?"?$#i', $line, $matches)) {
+					// @todo What do I do with empty values?
 					$component =& $stack[count($stack)-1];
         			// if line is a property line, start a new property, but first determine if there are any params
 					$property = $matches[1];
@@ -85,7 +86,9 @@ class qCal_Parser_Lexer_iCalendar extends qCal_Parser_Lexer {
 						'params' => $params,
 					);
         			$component['properties'][] = $proparray;
-        		}
+        		} else {
+					pr($line);
+				}
         	}
         }
         return $tokens;

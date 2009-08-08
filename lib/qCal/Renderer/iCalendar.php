@@ -43,7 +43,6 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		// if property has a "value" param, then use it as the type instead
 		$proptype = isset($params['VALUE']) ? $params['VALUE'] : $property->getType();
 		$content = $property->getName() . $paramreturn . ":" . $property->getValue() . self::LINE_ENDING;
-		// @todo: I'm fairly sure that this is supposed to fold EVERYTHING, but not positive
 		return $this->fold($content);
 	
 	}
@@ -67,61 +66,6 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		return ";" . $name . "=" . $value;
 	
 	}
-	/**
-	 * Render $value as $type - this function uses the datatype to know how to render a value
-	 * @return mixed
-	 * @todo I don't think we need this any more
-	 */
-	protected function renderValue($value, $type) {
-	
-		/*
-		switch (strtoupper($type)) {
-			case "BINARY":
-				$value = base64_encode($value);
-				break;
-			case "BOOLEAN":
-				$value = ($value) ? "TRUE" : "FALSE";
-				break;
-			case "CAL-ADDRESS":
-				// @todo: I don't know what to do here yet
-			    break;
-			case "DATE":
-				// @todo: I don't know what to do here yet
-				break;
-			case "DATE-TIME":
-				// @todo: I don't know what to do here yet
-				break;
-			case "DURATION":
-				// @todo: I don't know what to do here yet
-				break;
-			case "FLOAT":
-			case "INTEGER":
-				// returns "2.1" for 2.1 etc.
-				$value = (string) $value;
-				break;
-			case "PERIOD":
-				// @todo: I don't know what to do here yet
-				break;
-			case "RECUR":
-				// @todo: I don't know what to do here yet
-				break;
-			case "TIME":
-				// @todo: I don't know what to do here yet
-				break;
-			case "URI":
-				// @todo: I don't know what to do here yet
-				break;
-			case "UTC-OFFSET":
-				// @todo: I don't know what to do here yet
-				break;
-			case "TEXT":
-			default:
-			    break;
-		}
-		return $value;
-	    */
-	
-	}
 	
 	/**
 	 * Text cannot exceed 75 octets. This method will "fold" long lines in accordance with RFC 2445
@@ -132,14 +76,6 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		if (strlen($data) == (self::FOLD_LENGTH + strlen(self::LINE_ENDING))) return $data;
 		$apart = str_split($data, self::FOLD_LENGTH);
 		return implode(self::LINE_ENDING . " ", $apart);
-	
-	}
-	/**
-	 * Unfold "folded" text
-	 */
-	protected function unfold($data) {
-	
-		
 	
 	}
 
