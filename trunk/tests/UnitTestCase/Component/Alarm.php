@@ -99,7 +99,27 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$alarm->addProperty('trigger', 'p30d');
 		$trigger = $alarm->getProperty('trigger');
 		$this->assertEqual(count($trigger), 1);
-		
+	
+	}
+	/**
+	 *             ; 'duration' and 'repeat' are both optional,
+	 *             ; and MUST NOT occur more than once each,
+	 *             ; but if one occurs, so MUST the other
+	 */
+	public function testIfDurationOccursSoMustRepeat() {
+	
+		$this->expectException(new qCal_Exception_MissingProperty('VALARM component with a DURATION property requires a REPEAT property'));
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'duration' => 'p30m',
+			'trigger' => 'p20d'
+		));
+		$this->expectException(new qCal_Exception_MissingProperty('VALARM component with a REPEAT property requires a DURATION property'));
+		$alarm2 = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'repeat' => 'p30m',
+			'trigger' => 'p20d'
+		));
 	
 	}
 

@@ -109,17 +109,33 @@ abstract class qCal_Component {
 	 */
 	public  function __construct($properties = array()) {
 	
-		$addedprops = array();
 		foreach ($properties as $name => $value) {
 			// if value isn't a property object, generate one
 			if (!($value instanceof qCal_Property)) {
 				$value = qCal_Property::factory($name, $value);
 			}
-			$addedprops[] = $value->getName(); // getName() returns a formatted name
 			$this->addProperty($value);
 		}
+		$this->validate();
+	
+	}
+	/**
+	 * Check that this is a valid component
+	 */
+	public function validate() {
+	
 		// if we're missing any required properties and they have no default, throw an exception
-		$missing = array_diff($this->requiredProperties, $addedprops);
+		$properties = array();
+		foreach ($this->getProperties() as $property) {
+			if (is_array($property)) {
+				foreach ($property as $prop) {
+					$properties[] = $prop->getName();
+				}
+			} else {
+				$properties[] = $property->getName();
+			}
+		}
+		$missing = array_diff($this->requiredProperties, array_unique($properties));
 		foreach ($missing as $propertyname) {
 			// the property factory will throw an exception if it's passed a null value for a property with no default
 			try {
@@ -130,6 +146,8 @@ abstract class qCal_Component {
 				throw new qCal_Exception_MissingProperty($this->getName() . " component requires " . $propertyname . " property");
 			}
 		}
+		// this allows per-component validation :)
+		$this->doValidation();
 	
 	}
 	/**
