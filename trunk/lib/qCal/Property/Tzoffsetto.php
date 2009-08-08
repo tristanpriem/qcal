@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that the various components that require this actually
+ * require it.
  * 
  * RFC 2445 Definition
  * 

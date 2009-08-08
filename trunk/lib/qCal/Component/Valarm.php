@@ -292,7 +292,8 @@ class qCal_Component_Valarm extends qCal_Component {
 	public function __construct($properties = array()) {
 	
 		parent::__construct($properties);
-		switch(strtoupper($this->getAction())) {
+		$action = $this->getAction();
+		switch(strtoupper($action->getValue())) {
 			case "AUDIO":
 				// action, trigger (already covered by parent constructor)
 				break;

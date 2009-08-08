@@ -10,6 +10,7 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo Make sure that multi-value properties are taken care of properly
  */
 class qCal_Parser_Lexer_iCalendar extends qCal_Parser_Lexer {
 	

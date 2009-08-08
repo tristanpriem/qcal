@@ -187,24 +187,33 @@ abstract class qCal_Component {
 	 * on values, parameters, etc. since they don't really have IDs. So I tihnk I'll go
 	 * with addProperty :) 
 	 */
-	public function addProperty(qCal_Property $property) {
+	public function addProperty($property, $value = null, $params = array()) {
 	
+		if (!($property instanceof qCal_Property)) {
+			$property = qCal_Property::factory($property, $value, $params);
+		}
 		if (!$property->of($this)) {
 			throw new qCal_Exception_InvalidProperty($this->getName() . " component does not allow " . $property->getName() . " property");
 		}
-		$this->properties[$property->getName()] = $property;
+		if (!$property->allowMultiple()) {
+			unset($this->properties[$property->getName()]);
+		}
+		$this->properties[$property->getName()][] = $property;
 	
 	}
 	/**
 	 * Returns property of this component by name
 	 *
-	 * @return qCal_Property
-	 **/
+	 * @todo Since the same property can appear in a component more than once, this method
+	 * doesn't make that much sense unless it returns all of the instances of the property
+	 * @return array of qCal_Property
+	 */
 	public function getProperty($name) {
 	
 		$name = strtoupper($name);
-		if (array_key_exists($name, $this->properties)) return $this->properties[$name];
-		return false;
+		if ($this->hasProperty($name)) {
+			return $this->properties[$name];
+		}
 	
 	}
 	
@@ -212,13 +221,27 @@ abstract class qCal_Component {
 	 * Returns true if this component contains a property of $name
 	 *
 	 * @return boolean
-	 **/
+	 */
 	public function hasProperty($name) {
 	
 		$name = strtoupper($name);
-		return array_key_exists($name, $this->properties);
+		return isset($this->properties[$name]);
 	
 	}
+	
+	/*
+	public function clearProperties() {
+	
+		$this->properties = array();
+	
+	}
+	
+	public function clearChildren() {
+	
+		$this->children = array();
+	
+	}
+	*/
 	
 	public function getProperties() {
 	
@@ -237,6 +260,8 @@ abstract class qCal_Component {
 	 * in a renderer, it will use that instead
 	 *
 	 * @return mixed Depends on the renderer
+	 * @todo I don't think components should have any idea how to render them-selves.
+	 * It would make more sense to pass components to a renderer than to do it this way.
 	 */
 	public function render(qCal_Renderer $renderer = null) {
 	
@@ -250,15 +275,23 @@ abstract class qCal_Component {
 	 * qCal_Component::getPropertyName() and qCal_Component::setPropertyName('2.0') where propertyName is the property name
 	 * to be set and $val is the property value.
 	 * This is just a convenience facade, it isn't going to be used within the library as much as by end-users
+	 * I decided to get rid of the facade methods at least for now since getAttendee 
+	 * can potentially return multiple values and that makes the interface inconsistent
 	 */
 	public function __call($method, $params) {
 	
 		$firstthree = substr($method, 0, 3);
 		$name = substr($method, 3);
 		if ($firstthree == "get") {
-			// return property value
-			if ($this->hasProperty($name))
-				return $this->getProperty($name)->getValue();
+			// if property is allowed multiple times, an array is returned, otherwise just the one component
+			if ($this->hasProperty($name)) {
+				$property = $this->getProperty($name);
+				if (!$property[0]->allowMultiple()) {
+					return $property[0];
+				} else {
+					return $property;
+				}
+			}
 		} elseif ($firstthree == "set") {
 			$value = isset($params[0]) ? $params[0] : null;
 			$params = isset($params[1]) ? $params[1] : array();

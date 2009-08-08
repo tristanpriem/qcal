@@ -10,8 +10,6 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
- * @todo I believe this should probably be abstract and it should rely
- * on a child to do the actual parsing as this does.
  */ 
 abstract class qCal_Parser_Lexer {
 

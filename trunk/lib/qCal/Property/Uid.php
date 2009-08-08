@@ -6,7 +6,10 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo The default value of this could be generated (so that unless
- 	     otherwise specified, the uid would be generated)
+ * 	     otherwise specified, the uid would be generated)
+ * @todo Look into the RFC 822 spec and implement it if possible.
+ * @todo Several properties make use of a domain. Maybe there should be a method
+ * of globally specifying a domain.
  * 
  * RFC 2445 Definition
  * 

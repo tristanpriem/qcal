@@ -7,6 +7,8 @@
  * @license GNU Lesser General Public License
  * @todo I am not sure exactly how I plan on dealing with non-standard
  *       properties, but for now, I'm representing them with this class
+ * @todo Should this be a MultiValue?
+ * @todo Should this allow multiple instances?
  * 
  * RFC 2445 Definition
  * 

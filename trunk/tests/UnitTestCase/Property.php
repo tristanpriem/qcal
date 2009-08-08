@@ -1,4 +1,9 @@
 <?php
+/**
+ * @todo I need to make sure that certain values in a property value and possibly other
+ * things are properly escaped. For instance, commas need to be escaped so as not to be
+ * confused as separate values.
+ */
 class UnitTestCase_Property extends UnitTestCase {
 
 	/**

@@ -5,6 +5,8 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo This has some pretty specific rules as to how it is to be used.
+ * Make sure that all of them are considered.
  * 
  * RFC 2445 Definition
  * 

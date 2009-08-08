@@ -6,6 +6,7 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Should this default to OPAQUE?
+ * @todo There needs to be a library-level method of finding "visible" free-busy time
  * 
  * RFC 2445 Definition
  * 

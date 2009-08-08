@@ -6,6 +6,8 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Make sure allowedCompoents is correct. The RFC isn't dead clear
+ * @todo There are a lot of rules for this guy. Make sure you take them all
+ * into consideration and conform to the shit below.
  * 
  * RFC 2445 Definition
  * 
@@ -433,5 +435,6 @@ class qCal_Property_Rrule extends qCal_Property {
 
 	protected $type = 'RECUR';
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL','VTIMEZONE','DAYLIGHT','STANDARD');
+	protected $allowMultiple = true;
 
 }

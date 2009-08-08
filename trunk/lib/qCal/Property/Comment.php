@@ -53,5 +53,6 @@ class qCal_Property_Comment extends qCal_Property {
 
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT', 'VTODO','VJOURNAL','VTIMEZONE','VFREEBUSY');
+	protected $allowMultiple = true;
 
 }
