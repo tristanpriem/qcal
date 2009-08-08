@@ -16,7 +16,15 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	public function render(qCal_Component $component) {
 	
 		$return = "BEGIN:" . $component->getName() . self::LINE_ENDING;
-		foreach ($component->getProperties() as $property) $return .= $this->renderProperty($property);
+		foreach ($component->getProperties() as $property) {
+			if (is_array($property)) {
+				foreach ($property as $prop) {
+					$return .= $this->renderProperty($prop);
+				}
+			} else {
+				$return .= $this->renderProperty($property);
+			}
+		}
 		foreach ($component->getChildren() as $children) {
 			if (is_array($children)) {
 				foreach ($children as $child) {

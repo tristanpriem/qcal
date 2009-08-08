@@ -82,5 +82,25 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		));
 	
 	}
+	/**
+	 *             ; 'action' and 'trigger' are both REQUIRED,
+	 *             ; but MUST NOT occur more than once
+	 */
+	public function testActionAndTriggerRequiredButCannotOccurMoreThanOnce() {
+	
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'p15m'
+		));
+		// @todo Should this throw an exception since display requires description?
+		$alarm->addProperty('action', 'display');
+		$action = $alarm->getProperty('action');
+		$this->assertEqual(count($action), 1);
+		$alarm->addProperty('trigger', 'p30d');
+		$trigger = $alarm->getProperty('trigger');
+		$this->assertEqual(count($trigger), 1);
+		
+	
+	}
 
 }

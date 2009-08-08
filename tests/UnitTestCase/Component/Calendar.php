@@ -56,7 +56,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 	
 	}
 	/**
-	 * Test that you can pass in name/value paris, property objects, or a combination, and that
+	 * Test that you can pass in name/value parts, property objects, or a combination, and that
 	 * the name portion is case insensitive
 	 */
 	public function testCalendarInitializeAcceptsMixedArray() {
