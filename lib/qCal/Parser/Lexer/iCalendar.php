@@ -87,9 +87,7 @@ class qCal_Parser_Lexer_iCalendar extends qCal_Parser_Lexer {
 						'params' => $params,
 					);
         			$component['properties'][] = $proparray;
-        		} else {
-					pr($line);
-				}
+        		}
         	}
         }
         return $tokens;
