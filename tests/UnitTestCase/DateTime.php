@@ -1,4 +1,7 @@
 <?php
+/**
+ * @todo Make sure that qCal_Date objects can be accepted anywhere that accepts a date value
+ */
 class UnitTestCase_DateTime extends UnitTestCase {
 
 	protected $formats = array(

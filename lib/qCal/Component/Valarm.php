@@ -285,13 +285,8 @@ class qCal_Component_Valarm extends qCal_Component {
 	protected $name = "VALARM";
 	protected $allowedComponents = array('VEVENT','VTODO');
 	protected $requiredProperties = array('ACTION', 'TRIGGER');
-	/**
-	 * This component's requirements vary depending on the "action" property, so it 
-	 * warrants its own constructor
-	 */
-	public function __construct($properties = array()) {
+	protected function doValidation() {
 	
-		parent::__construct($properties);
 		$action = $this->getAction();
 		switch(strtoupper($action->getValue())) {
 			case "AUDIO":
@@ -318,6 +313,16 @@ class qCal_Component_Valarm extends qCal_Component {
 					throw new qCal_Exception_MissingProperty("PROCEDURE VALARM component requires ATTACH property");
 				}
 				break;
+		}
+		if ($this->hasProperty('DURATION')) {
+			if (!$this->hasProperty('REPEAT')) {
+				throw new qCal_Exception_MissingProperty("VALARM component with a DURATION property requires a REPEAT property");
+			}
+		}
+		if ($this->hasProperty('REPEAT')) {
+			if (!$this->hasProperty('DURATION')) {
+				throw new qCal_Exception_MissingProperty("VALARM component with a REPEAT property requires a DURATION property");
+			}
 		}
 	
 	}
