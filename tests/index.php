@@ -30,6 +30,7 @@ $test->addTestCase(new UnitTestCase_Component);
 $test->addTestCase(new UnitTestCase_Component_Alarm);
 $test->addTestCase(new UnitTestCase_Component_Calendar);
 $test->addTestCase(new UnitTestCase_Component_Timezone);
+$test->addTestCase(new UnitTestCase_Component_Event);
 $test->addTestCase(new UnitTestCase_Property);
 $test->addTestCase(new UnitTestCase_Value);
 $test->addTestCase(new UnitTestCase_Value_Date);
