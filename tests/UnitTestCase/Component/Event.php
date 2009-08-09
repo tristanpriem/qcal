@@ -39,8 +39,9 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 			'dtend' => '19970903T190000Z',
 			'summary' => 'Annual Employee Review',
 			'class' => 'PRIVATE',
-			'categories' => array('BUSINESS','HUMAN RESOURCES'),
+			'categories' => array('BUSINESS','HUMAN RESOURCES', 'SOMETHING, COOL'),
 		));
+		pre($event->render());
 	
 	}
 
