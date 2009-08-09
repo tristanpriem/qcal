@@ -106,7 +106,6 @@ abstract class qCal_Component {
      *     'someotherproperty' => null,
      *     qCal_Property_Version(2.0),
 	 * ));
-	 * @todo the properties argument should accept qCal_Property objects as well
 	 */
 	public  function __construct($properties = array()) {
 	
