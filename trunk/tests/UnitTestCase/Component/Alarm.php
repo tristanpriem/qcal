@@ -126,7 +126,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	 *             ; the following are optional,
 	 *             ; and MAY occur more than once
 	 * 
-	 *        ff     attach / x-prop
+	 *             attach / x-prop
 	 * 
 	 *   The RFC specifies these as examples:
 	 *   ATTACH:CID:jsmith.part3.960817T083000.xyzMail@host1.com
@@ -167,6 +167,22 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$alarm2->addProperty($ns2);
 		$ns = $alarm2->getProperty('x-lv-email');
 		$this->assertEqual(count($ns), 2);
+	
+	}
+	/**
+	 *             ; 'description' is optional,
+	 *             ; and MUST NOT occur more than once
+	 */
+	public function testDescriptionIsOptionalAndCannotOccurMoreThanOnce() {
+	
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'procedure',
+			'trigger' => 'P15M',
+			'attach' => 'http://www.example.com/foo'
+		));
+		$alarm->addProperty(new qCal_Property_Description('This is a description'));
+		$alarm->addProperty(new qCal_Property_Description('This is another description'));
+		$this->assertEqual(count($alarm->getProperty('description')), 1);
 	
 	}
 
