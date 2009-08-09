@@ -45,9 +45,12 @@ class UnitTestCase_Component extends UnitTestCase {
 	/**
 	 * Test that non-standard properties can be set on a component.
 	 */
-	public function NOSHOWtestNonStandardProperties() {
+	public function testNonStandardProperties() {
 	
-		
+		$cal = new qCal(array('X-IS-FOO' => array('foo','bar')));
+		$xisfoos = $cal->getProperty('x-is-foo');
+		$this->assertEqual($xisfoos[0]->getValue(), 'foo');
+		$this->assertEqual($xisfoos[1]->getValue(), 'bar');
 	
 	}
 	/**
