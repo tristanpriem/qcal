@@ -126,7 +126,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	 *             ; the following are optional,
 	 *             ; and MAY occur more than once
 	 * 
-	 *             attach / x-prop
+	 *        ff     attach / x-prop
 	 * 
 	 *   The RFC specifies these as examples:
 	 *   ATTACH:CID:jsmith.part3.960817T083000.xyzMail@host1.com
@@ -151,6 +151,22 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$alarm->addProperty($attach2);
 		$attaches = $alarm->getProperty('attach');
 		$this->assertEqual(count($attaches), 2);
+		
+		// now try non-standard properties
+		$alarm2 = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P1M'
+		));
+		$ns1 = new qCal_Property_NonStandard('foobar', array(
+			'x-foo' => 'baz'
+		), 'x-lv-email');
+		$alarm2->addProperty($ns1);
+		$ns2 = new qCal_Property_NonStandard('luke.visinoni@gmail.com', array(
+			'altrep' => 'lvisinoni@foobar.com'
+		), 'x-lv-email');
+		$alarm2->addProperty($ns2);
+		$ns = $alarm2->getProperty('x-lv-email');
+		$this->assertEqual(count($ns), 2);
 	
 	}
 

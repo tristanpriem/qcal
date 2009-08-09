@@ -59,10 +59,11 @@ class qCal_Property_NonStandard extends qCal_Property {
 	protected $type = 'TEXT';
 	protected $allowedComponents = array('VEVENT','VTODO','VJOURNAL',
 		'VALARM','VTIMEZONE','VFREEBUSY','VCALENDAR');
+	protected $allowMultiple = true;
 	public function __construct($value, $params, $name) {
 	
 		parent::__construct($value, $params);
-		$this->name = $name;
+		$this->name = strtoupper($name);
 	
 	}
 
