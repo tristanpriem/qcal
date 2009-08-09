@@ -220,5 +220,50 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$alarm->validate();
 	
 	}
+	/**
+	 * The "VALARM" calendar component MUST only appear within either a
+	 * "VEVENT" or "VTODO" calendar component.
+	 */
+	public function testValarmCanOnlyAppearInVeventOrVtodo() {
+	
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P15M'
+		));
+		$alarm2 = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P25M'
+		));
+		$journal = new qCal_Component_Vjournal(array(
+			'summary' => 'Some silly entry',
+			'description' => 'Some silly description'
+		));
+		$this->expectException(new qCal_Exception_InvalidComponent('VALARM cannot be attached to VJOURNAL'));
+		$journal->attach($alarm);
+	
+	}
+	/**
+	 * "VALARM" calendar components
+	 * cannot be nested. Multiple mutually independent "VALARM" calendar
+	 * components can be specified for a single "VEVENT" or "VTODO" calendar
+	 * component.
+	 */
+	public function testValarmCannotBeNestedAndCanOccurMultipleTimes() {
+	
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P15M'
+		));
+		$alarm2 = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P25M'
+		));
+		$todo = new qCal_Component_Vtodo();
+		$this->expectException(new qCal_Exception_InvalidComponent('VALARM cannot be attached to VALARM'));
+		$alarm2->attach($alarm);
+		$todo->attach($alarm);
+		$todo->attach($alarm2);
+	
+	}
 
 }
