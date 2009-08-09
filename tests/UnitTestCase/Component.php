@@ -66,6 +66,19 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * Component constructor should accept an array of properties
+	 */
+	public function testConstructorAcceptsInitializingArray() {
+	
+		$cal = new qCal(array(
+			'version' => '2.0',
+			'prodid' => '-//foo/bar//NONFOO v1.0//EN'
+		));
+		$properties = array_keys($cal->getProperties());
+		$this->assertEqual($properties, array('VERSION','PRODID'));
+	
+	}
+	/**
 	 * The factory method is used in the parser. It may eventually be used in the facade methods as well
 	 * The factory should accept the name of the component as the first param and the properties as the second
 	 * It should also be completely case-insensitive
