@@ -39,6 +39,7 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	}
 	/**
 	 * Renders a property in accordance with rfc 2445
+	 * @todo $proptype is created below and never used... wtf?
 	 */
 	protected function renderProperty(qCal_Property $property) {
 	
@@ -50,8 +51,30 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 		}
 		// if property has a "value" param, then use it as the type instead
 		$proptype = isset($params['VALUE']) ? $params['VALUE'] : $property->getType();
-		$content = $property->getName() . $paramreturn . ":" . $property->getValue() . self::LINE_ENDING;
+		if ($property instanceof qCal_Property_MultiValue) {
+			$values = array();
+			foreach ($property->getValue() as $value) {
+				$values[] = $this->renderValue($property->getValue(), $proptype);
+			}
+			$value = implode(chr(44), $values);
+		} else {
+			$value = $this->renderValue($property->getValue(), $proptype);
+		}
+		$content = $property->getName() . $paramreturn . ":" . $value . self::LINE_ENDING;
 		return $this->fold($content);
+	
+	}
+	/**
+	 * Renders a value 
+	 */
+	protected function renderValue($value, $type) {
+	
+		switch(strtoupper($type)) {
+			case "TEXT":
+				$value = str_replace(",", "\,", $value);
+				break;
+		}
+		return $value;
 	
 	}
 	/**
