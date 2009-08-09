@@ -314,7 +314,11 @@ class qCal_Component_Valarm extends qCal_Component {
 				break;
 			case "PROCEDURE":
 				// action, attach, trigger
-				if (!$this->hasProperty('ATTACH')) {
+				$attach = $this->getProperty('ATTACH');
+				if (count($attach) > 1) {
+					throw new qCal_Exception_InvalidProperty('VALARM procedure component can contain one and only one ATTACH property');
+				}
+				if (count($attach) < 1) {
 					throw new qCal_Exception_MissingProperty("PROCEDURE VALARM component requires ATTACH property");
 				}
 				break;

@@ -203,5 +203,22 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$alarm->validate();
 	
 	}
+	/**
+	 * When the action is "PROCEDURE", the alarm MUST include one and only
+	 * one "ATTACH" property, which MUST point to a procedure resource,
+	 * which is invoked when the alarm is triggered.
+	 */
+	public function testProcedureAlarmCanIncludeOneAndOnlyOneAttachProperty() {
+	
+		$this->expectException(new qCal_Exception_InvalidProperty('VALARM procedure component can contain one and only one ATTACH property'));
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'procedure',
+			'trigger' => 'P45Y',
+			'attach' => 'http://www.example.com/foobar.mp3'
+		));
+		$alarm->addProperty('attach', 'http://www.example.com/boofar.mp3');
+		$alarm->validate();
+	
+	}
 
 }
