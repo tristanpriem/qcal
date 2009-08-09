@@ -25,7 +25,6 @@ class UnitTestCase_Property extends UnitTestCase {
 		$this->assertEqual($property->getType(), "URI");
 		$property->setParam("value", "binary");
 		$this->assertEqual($property->getType(), "BINARY");
-		
 		$property = new qCal_Property_Attach("SOME DATA", array('value' => 'binary'));
 		$this->assertEqual($property->getType(), "BINARY");
 	

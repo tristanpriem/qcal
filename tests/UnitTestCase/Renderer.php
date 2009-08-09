@@ -27,17 +27,19 @@ class UnitTestCase_Renderer extends UnitTestCase {
         // pre($ical);
     
     }
-    
-    public function NOSHOWtestLongLinesFolded() {
+    /**
+     * @todo Remove the binary attach stuff from here and put it in the test below.
+     */
+    public function testLongLinesFolded() {
     
     	$cal = new qCal;
-    	$todo = new qCal_Component_Todo(array(
+    	$todo = new qCal_Component_Vtodo(array(
 	    	'description' => 'This is a really long line that will of course need to be folded. I mean, we can\'t just have long lines laying around in an icalendar file. That would be like not ok. So, let\'s find out if this folded properly!',
 			'summary' => 'This is a short summary, which I think is like a title',
 			'dtstart' => '2008-04-23 1:00am',
     	));
     	$cal->attach($todo);
-    	$journal = new qCal_Component_Journal(array(
+    	$journal = new qCal_Component_Vjournal(array(
 	    	'description' => 'This is a really long line that will of course need to be folded. I mean, we can\'t just have long lines laying around in an icalendar file. That would be like not ok. So, let\'s find out if this folded properly!',
 			'summary' => 'This is a short summary, which I think is like a title',
 			'dtstamp' => '2008-04-23 1:00am',
@@ -48,14 +50,29 @@ class UnitTestCase_Renderer extends UnitTestCase {
 			)),
     	));
     	$cal->attach($journal);
-    	//pre($cal->render());
+		$lines = explode("\r\n", $cal->render());
+		$long = false;
+		foreach ($lines as $line) {
+			if (strlen($line) > 76) $long = true;
+		}
+		$this->assertFalse($long);
     
     }
-    
+    /**
+     * Test that binary data can be encoded as text and then decoded to be put back together.
+     */
     public function testBinaryData() {
     
     	
     
     }
+	/**
+	 * Test that all of the right characters are escaped when rendered
+	 */
+	public function testCharactersAreEscaped() {
+	
+		
+	
+	}
 
 }
