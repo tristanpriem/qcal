@@ -72,6 +72,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
     }
 	/**
 	 * Test that all of the right characters are escaped when rendered
+	 * @todo Need to make sure that when parsing the escape characters are removed.
 	 */
 	public function testCharactersAreEscaped() {
 	
