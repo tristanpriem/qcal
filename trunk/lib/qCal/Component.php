@@ -102,10 +102,11 @@ abstract class qCal_Component {
 	 * Pass in a null value to use a property's default value (some dont have defaults, so beware)
 	 * Example:
 	 * $cal = new qCal_Component_Calendar(array(
-           'prodid' => '-// Some Property Id//',
-           'someotherproperty' => null,
-           qCal_Property_Version(2.0),
-	   ));
+     *     'prodid' => '-// Some Property Id//',
+     *     'someotherproperty' => null,
+     *     qCal_Property_Version(2.0),
+	 * ));
+	 * @todo the properties argument should accept qCal_Property objects as well
 	 */
 	public  function __construct($properties = array()) {
 	
