@@ -26,5 +26,24 @@ class qCal_Property_MultiValue extends qCal_Property {
 		return implode(chr(44), $return);
 	
 	}
+	/**
+	 * @todo I'm not sure I like how this is done. Eventually I will come back to it.
+	 */
+	public function setValue($value) {
+	
+		if (!is_array($value)) {
+			$value = array($value);
+		}
+		// if value sent is null and this property doesn't have a default value,
+		// the property can't be created, so throw an invalidpropertyvalue exception
+		parent::setValue($value);
+		$values = array();
+		foreach ($value as $val) {
+			$values[] = qCal_Value::factory($this->getType(), $val);
+		}
+		$this->value = $values;
+		return $this;
+	
+	}
 
 }
