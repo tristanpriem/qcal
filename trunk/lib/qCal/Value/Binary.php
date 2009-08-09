@@ -49,6 +49,8 @@ class qCal_Value_Binary extends qCal_Value {
 
 	/**
 	 * When the value of a binary property is requested, it will be returned as a base64 encoded string
+	 * @todo Base64 is the only encoding supported by this standard, but the encoding=base64 parameter must be
+	 * provided regardless.
 	 */
 	protected function toString($value) {
 	
