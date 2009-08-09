@@ -185,5 +185,23 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$this->assertEqual(count($alarm->getProperty('description')), 1);
 	
 	}
+	/**
+	 * When the action is "AUDIO", the alarm can also include one and only
+	 * one "ATTACH" property, which MUST point to a sound resource, which is
+	 * rendered when the alarm is triggered.
+	 * @todo I'm still not really sure when validation should occur. I called it manually here.
+	 */
+	public function testAudioAlarmCanIncludeOneAndOnlyOneAttachProperty() {
+	
+		$this->expectException(new qCal_Exception_InvalidProperty('VALARM audio component can contain one and only one ATTACH property'));
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P45Y',
+			'attach' => 'http://www.example.com/foobar.mp3'
+		));
+		$alarm->addProperty('attach', 'http://www.example.com/boofar.mp3');
+		$alarm->validate();
+	
+	}
 
 }

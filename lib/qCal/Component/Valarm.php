@@ -291,6 +291,11 @@ class qCal_Component_Valarm extends qCal_Component {
 		switch(strtoupper($action->getValue())) {
 			case "AUDIO":
 				// action, trigger (already covered by parent constructor)
+				// attach can only occur once
+				$attach = $this->getProperty('ATTACH');
+				if (count($attach) > 1) {
+					throw new qCal_Exception_InvalidProperty('VALARM audio component can contain one and only one ATTACH property');
+				}
 				break;
 			case "DISPLAY":
 				// action, trigger, description 
