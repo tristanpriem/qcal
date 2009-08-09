@@ -54,6 +54,21 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that if there is a class for a non-standard property available, it will be used
+	 * instaead of the qCal_Property_NonStandard class
+	 * @todo This should probably be in the property unit test case
+	 * @todo I'm not sure I like how this turned out. What if somebody wants their non-standard
+	 * class to be named "Lv_Property_XLvFoo"? Should this be so constricting?
+	 */
+	public function testClassIsUsedInsteadOfNonStandardClassIfAvailable() {
+	
+		$calendar = new qCal_Component_Vtodo();
+		$calendar->addProperty('X-LV-FOO', 'bar');
+		$xlvfoo = $calendar->getProperty('X-LV-FOO');
+		$this->assertIsA($xlvfoo[0], 'qCal_Property_XLvFoo');
+	
+	}
+	/**
 	 * ATTACHING COMPONENTS
 	 */
 	/**
@@ -105,7 +120,7 @@ class UnitTestCase_Component extends UnitTestCase {
 	public function testFactoryMethod() {
 	
 		$component = qCal_Component::factory('VALARM', array('action' => 'audio', 'TriggER' => 'P1w3Dt2H3M45S'));
-		$this->assertTrue($component instanceof qCal_Component_Valarm);
+		$this->assertIsA($component, 'qCal_Component_Valarm');
 	
 	}
 	

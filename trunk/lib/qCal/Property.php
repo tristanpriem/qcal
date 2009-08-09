@@ -72,7 +72,7 @@ abstract class qCal_Property {
 	 */
 	public function __construct($value = null, $params = array()) {
 	
-		$this->name = $this->getPropertyNameFromClassName(get_class($this));
+		if (is_null($this->name)) $this->name = $this->getPropertyNameFromClassName(get_class($this));
 		foreach ($params as $pname => $pval) {
 			$this->setParam($pname, $pval);
 		}
@@ -95,9 +95,9 @@ abstract class qCal_Property {
 			$class = new $className($value, $params);
 		} catch (qCal_Exception_InvalidFile $e) {
 			// if there is no class available for this property, check if it is non-standard
-			$xname = strtolower(substr($name, 0, 2));
-			if ($xname == "x-") {
-				// non-standard property
+			$xname = strtoupper(substr($name, 0, 2));
+			// non-standard property
+			if ($xname == "X-") {
 				$class = new qCal_Property_NonStandard($value, $params, $name);
 			} else {
 				// if it's not a non-standard property, rethrow
@@ -216,6 +216,8 @@ abstract class qCal_Property {
 	 * every capital letter and upper-casing
 	 *
 	 * @return string The RFC property name
+	 * @todo This method is flawed. The class name XLvFoo gets converted to X-L-VFOO when
+	 * it should be X-LV-FOO
 	 **/
 	protected function getPropertyNameFromClassName($classname) {
 	
@@ -224,7 +226,7 @@ abstract class qCal_Property {
 		end($parts);
 		// find where capital letters are and insert dash
 		$chars = str_split(current($parts));
-		// make a copy
+		// make a copy @todo Why make a copy? 
 		$newchars = $chars;
 		foreach ($chars as $pos => $char) {
 			// don't add a dash for the first letter

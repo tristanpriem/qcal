@@ -4,11 +4,13 @@ define('SIMPLETEST_PATH', realpath('./simpletest'));
 define('QCAL_PATH', realpath('../lib'));
 define('TESTCASE_PATH', realpath('../tests'));
 define('TESTFILE_PATH', realpath('../tests/files'));
+define('TESTCLASS_PATH', realpath('../tests/testclasses'));
 // establish include path
 set_include_path(
     SIMPLETEST_PATH . PATH_SEPARATOR .
     QCAL_PATH . PATH_SEPARATOR .
     TESTCASE_PATH . PATH_SEPARATOR .
+	TESTCLASS_PATH . PATH_SEPARATOR . 
     get_include_path()
 );
 // require convenience functions
