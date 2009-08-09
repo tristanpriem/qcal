@@ -128,6 +128,14 @@ class qCal_Component_Vevent extends qCal_Component {
 
 	protected $name = "VEVENT";
 	protected $allowedComponents = array('VCALENDAR');
-	//protected $requiredProperties = array();
+	protected function doValidation() {
+	
+		$properties = $this->getProperties();
+		$propnames = array_keys($properties);
+		if (in_array('DTEND', $propnames) && in_array('DURATION', $propnames)) {
+			throw new qCal_Exception_InvalidProperty('DTEND and DURATION cannot both occur in the same VEVENT component');
+		}
+	
+	}
 
 }
