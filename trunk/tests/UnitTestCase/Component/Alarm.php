@@ -265,5 +265,72 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		$todo->attach($alarm2);
 	
 	}
+	/**
+	 * In an alarm set to trigger on the "START" of an event or to-do, the
+	 * "DTSTART" property MUST be present in the associated event or to-do.
+	 * In an alarm in a "VEVENT" calendar component set to trigger on the
+	 * "END" of the event, either the "DTEND" property MUST be present, or
+	 * the "DTSTART" and "DURATION" properties MUST both be present. In an
+	 * alarm in a "VTODO" calendar component set to trigger on the "END" of
+	 * the to-do, either the "DUE" property MUST be present, or the
+	 * "DTSTART" and "DURATION" properties MUST both be present.
+	 * 
+	 * @todo I don't know how this should work. Does the associated event or
+	 * todo have to be related with the relatedto property? I need to work out
+	 * how related components should work before I try to write a test for this.
+	 * After reading the "related-to" property, I realize that I'll need to have
+	 * some kind of framework for related components because when components are
+	 * related, certain properties should change their related components when
+	 * they are changed. For instance, if an alarm is related to an event, and the
+	 * event start date is updated, the alarm's trigger should be changed as well.
+	 * 
+	 * I just realized after typing all of the above that alarms are nested within
+	 * their parent components, so I can test it that way. The above is still true
+	 * for related components though.
+	 * 
+	 * @todo After typing what I just typed above, I realize again that I don't know
+	 * how to test this. How do I know whether or not an alarm is set to trigger on
+	 * the start of an event if the event doesn't have a dtstart?
+	 */
+	public function testAlarmTriggerWithParentComponent() {
+	/*
+		$todo = new qCal_Component_Vtodo(array(
+			
+		));
+		$alarm = new qCal_Component_Valarm(array(
+			
+		));
+		$this->expectException(new qCal_Exception_MissingProperty(''));
+	*/
+	}
+	/**
+	 * The alarm can be defined such that it triggers repeatedly. A
+	 * definition of an alarm with a repeating trigger MUST include both the
+	 * "DURATION" and "REPEAT" properties. The "DURATION" property specifies
+	 * the delay period, after which the alarm will repeat. The "REPEAT"
+	 * property specifies the number of additional repetitions that the
+	 * alarm will triggered. This repitition count is in addition to the
+	 * initial triggering of the alarm. Both of these properties MUST be
+	 * present in order to specify a repeating alarm. If one of these two
+	 * properties is absent, then the alarm will not repeat beyond the
+	 * initial trigger.
+	 * 
+	 * @todo I'm not sure how to test this.
+	 */
+	
+	/**
+	 * In an EMAIL alarm, the intended alarm effect is for an email message
+	 * to be composed and delivered to all the addresses specified by the
+	 * "ATTENDEE" properties in the "VALARM" calendar component. The
+	 * "DESCRIPTION" property of the "VALARM" calendar component MUST be
+	 * used as the body text of the message, and the "SUMMARY" property MUST
+	 * be used as the subject text. Any "ATTACH" properties in the "VALARM"
+	 * calendar component SHOULD be sent as attachments to the message.
+	 */
+	public function testEmailAlarmShouldBeCapableOfFindingAllAttendeesAndAttachments() {
+	
+		
+	
+	}
 
 }
