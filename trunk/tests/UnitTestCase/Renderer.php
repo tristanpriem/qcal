@@ -9,7 +9,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
     
     public function tearDown() {
     
-        
+        if (file_exists("./files/me2.jpg")) unlink("./files/me2.jpg");
     
     }
     
@@ -64,7 +64,10 @@ class UnitTestCase_Renderer extends UnitTestCase {
 			)),
     	));
     	$cal->attach($journal);
-		pre($cal->render());
+		$attach = $journal->getProperty('attach');
+		$jpg = base64_decode($attach[0]->getValue());
+		file_put_contents('./files/me2.jpg', $jpg);
+		$this->assertEqual(file_get_contents('./files/me2.jpg'), file_get_contents('./files/me.jpg'));
     
     }
 	/**
@@ -72,7 +75,12 @@ class UnitTestCase_Renderer extends UnitTestCase {
 	 */
 	public function testCharactersAreEscaped() {
 	
-		
+		$journal = new qCal_Component_Vjournal(array(
+			'summary' => 'The most interesting, but non-interesting journal entry ever.',
+			'description' => 'This is a sentence that ends with a semi-colon, which I\'m not sure needs to be escaped; I will read the RFC a bit and find out what, exactly, needs to escaped. I know commas do though, and this entry has plenty of those.',
+			'dtstart' => new qCal_Date('20090809T113500')
+		));
+		$this->assertEqual($journal->render(), "BEGIN:VJOURNAL\r\nSUMMARY:The most interesting\, but non-interesting journal entry ever.\r\nDESCRIPTION:This is a sentence that ends with a semi-colon\, which I'm not \r\n sure needs to be escaped; I will read the RFC a bit and find out what\, exa\r\n ctly\, needs to escaped. I know commas do though\, and this entry has plent\r\n y of those.\r\nDTSTART:20090809T113500\r\nEND:VJOURNAL\r\n");
 	
 	}
 
