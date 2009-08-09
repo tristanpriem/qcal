@@ -60,12 +60,6 @@ class qCal_Property_Attach extends qCal_Property {
 
 	protected $type = 'URI';
 	protected $allowedComponents = array('VALARM','VEVENT','VJOURNAL','VTODO');
-	/**
-	 * @todo According to the description above, this can only be specified
-	 * multiple times in an iCalendar object. I don't see why it shouldn't be
-	 * allowed to be specified multiple times in other components, but that's
-	 * how it reads. I will need to find a way of dealing with this.
-	 */
 	protected $allowMultiple = true;
 
 }

@@ -83,9 +83,6 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 	
 	}
 	/**
-	 * @todo The following is actually only true for AUDIO alarm components.
-	 */
-	/**
 	 *             ; 'action' and 'trigger' are both REQUIRED,
 	 *             ; but MUST NOT occur more than once
 	 */
@@ -123,6 +120,37 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 			'repeat' => 'p30m',
 			'trigger' => 'p20d'
 		));
+	
+	}
+	/**
+	 *             ; the following are optional,
+	 *             ; and MAY occur more than once
+	 * 
+	 *             attach / x-prop
+	 * 
+	 *   The RFC specifies these as examples:
+	 *   ATTACH:CID:jsmith.part3.960817T083000.xyzMail@host1.com
+	 * 
+	 *   ATTACH;FMTTYPE=application/postscript:ftp://xyzCorp.com/pub/
+	 *    reports/r-960812.ps
+	 * @todo I'm not sure how the first one is suppose to work... :(
+	 */
+	public function testAttachAndNonStandardCanOccurMultipleTimes() {
+	
+		$alarm = new qCal_Component_Valarm(array(
+			'action' => 'audio',
+			'trigger' => 'P1M'
+		));
+		$attach1 = new qCal_Property_Attach('ftp://xyzCorp.com/pub/reports/r-960812.ps', array(
+			'fmttype' => 'application/postscript'
+		));
+		$alarm->addProperty($attach1);
+		$attach2 = new qCal_Property_Attach('ftp://xyzCorp.com/pub/reports/r-960813.ps', array(
+			'fmttype' => 'application/postscript'
+		));
+		$alarm->addProperty($attach2);
+		$attaches = $alarm->getProperty('attach');
+		$this->assertEqual(count($attaches), 2);
 	
 	}
 
