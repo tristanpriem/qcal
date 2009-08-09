@@ -111,11 +111,22 @@ abstract class qCal_Component {
 	public  function __construct($properties = array()) {
 	
 		foreach ($properties as $name => $value) {
-			// if value isn't a property object, generate one
-			if (!($value instanceof qCal_Property)) {
-				$value = qCal_Property::factory($name, $value);
+			// if value is an array, then each value inside of it will be a property
+			if (is_array($value)) {
+				foreach ($value as $val) {
+					if ($val instanceof qCal_Property) {
+						$this->addProperty($val);
+					} else {
+						$this->addProperty($name, $val);
+					}
+				}
+			} else {
+				if ($value instanceof qCal_Property) {
+					$this->addProperty($value);
+				} else {
+					$this->addProperty($name, $value);
+				}
 			}
-			$this->addProperty($value);
 		}
 		$this->validate();
 	

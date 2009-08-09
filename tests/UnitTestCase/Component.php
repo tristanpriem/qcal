@@ -79,15 +79,30 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * Component constructor should accept an array of properties and
+	 * if it needs several instances of the same property it should be able to accept
+	 * an array inside of the array.
+	 */
+	public function testConstructorAcceptsInitializingArrayOfArrays() {
+	
+		$journal = new qCal_Component_Vjournal(array(
+			'attach' => array(
+				'http://www.example.com/foo/bar.mp3',
+				'http://www.example.com/foo/baz.mp3'
+			)
+		));
+		$this->assertEqual(count($journal->getProperty('attach')), 2);
+	
+	}
+	/**
 	 * The factory method is used in the parser. It may eventually be used in the facade methods as well
 	 * The factory should accept the name of the component as the first param and the properties as the second
 	 * It should also be completely case-insensitive
-	 * It will also accept VCALENDAR or just CALENDAR
 	 */
-	public function NOSHOWtestFactoryMethod() {
+	public function testFactoryMethod() {
 	
-		$component = qCal_Component::factory('VALARM', array());
-		//$component = qCal_Component::factory('ALARM', array('action' => 'audio', 'TriggER' => 'P1w3Dt2H3M45S'));
+		$component = qCal_Component::factory('VALARM', array('action' => 'audio', 'TriggER' => 'P1w3Dt2H3M45S'));
+		$this->assertTrue($component instanceof qCal_Component_Valarm);
 	
 	}
 	
