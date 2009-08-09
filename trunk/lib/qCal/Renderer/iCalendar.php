@@ -78,6 +78,8 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	/**
 	 * Text cannot exceed 75 octets. This method will "fold" long lines in accordance with RFC 2445
 	 * @todo Make sure this is multi-byte safe
+	 * @todo The file I downloaded from google used this same folding method (long lines went to 76)
+	 * so until I see any different, I'm going to keep it at 76.
 	 */
 	protected function fold($data) {
 	
