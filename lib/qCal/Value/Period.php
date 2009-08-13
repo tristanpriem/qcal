@@ -57,7 +57,7 @@
  * No additional content value encoding (i.e., BACKSLASH character
  * encoding) is defined for this value type.
  */
-class qCal_Value_Period extends qCal_Value_Multi {
+class qCal_Value_Period extends qCal_Value {
 
 	protected $value;
 	/**

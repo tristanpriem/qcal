@@ -44,6 +44,7 @@ class qCal_Date extends DateTime {
 			$date = "now";
 		}
 		// in order to not throw a warning for an invalid date format, I have to check that strtotime works properly here
+		// pr($date);
 		if (!$timestamp = strtotime($date)) {
 			// if unix timestamp can't be created throw an exception
 			throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");

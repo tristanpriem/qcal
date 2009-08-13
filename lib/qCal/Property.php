@@ -129,6 +129,14 @@ abstract class qCal_Property {
 	
 	}
 	/**
+	 * Just returns getValue()
+	 */
+	public function __toString() {
+	
+		return $this->getValue();
+	
+	}
+	/**
 	 * Returns raw value object (or for multi-value, an array)
 	 * @return string
 	 */
@@ -153,8 +161,16 @@ abstract class qCal_Property {
 				$value = $this->default;
 			}
 		}
-		$this->value = qCal_Value::factory($this->getType(), $value);
+		$this->value = $this->convertValue($value);
 		return $this;
+	
+	}
+	/**
+	 * Converts a value into whatever internal storage mechanism the property uses
+	 */
+	protected function convertValue($value) {
+	
+		return qCal_Value::factory($this->getType(), $value);
 	
 	}
 	/**

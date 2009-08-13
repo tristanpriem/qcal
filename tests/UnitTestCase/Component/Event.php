@@ -30,7 +30,7 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 	 *   CATEGORIES:BUSINESS,HUMAN RESOURCES
 	 *   END:VEVENT
 	 */
-	public function testMeetingThatWillBeOpaqueToSearchesForBusyTime() {
+	public function zzztestMeetingThatWillBeOpaqueToSearchesForBusyTime() {
 	
 		$event = new qCal_Component_Vevent(array(
 			'uid' => '19970901T130000Z-123401@host.com',
@@ -41,7 +41,9 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 			'class' => 'PRIVATE',
 			'categories' => array('BUSINESS','HUMAN RESOURCES', 'SOMETHING, COOL'),
 		));
-		pre($event->render());
+		$cal = new qCal();
+		$cal->attach($event);
+		pre($cal->render());
 	
 	}
 

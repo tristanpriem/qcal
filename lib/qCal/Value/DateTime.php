@@ -103,7 +103,7 @@
  * 
  *  COMPLETED:19970630T235960Z
  */
-class qCal_Value_Datetime extends qCal_Value_Multi {
+class qCal_Value_Datetime extends qCal_Value {
 
 	/**
 	 * qCal_Date object

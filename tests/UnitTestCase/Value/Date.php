@@ -7,18 +7,20 @@ class UnitTestCase_Value_Date extends UnitTestCase {
 	/**
 	 * If the property permits, multiple "date" values are
 	 * specified as a COMMA character (US-ASCII decimal 44) separated list
-	 * of values. 
+	 * of values. One such property is "EXDATE", which specifies dates to exclude
+	 * from a recurring rule.
+	 * @todo This should probably be moved into the property unit test case
 	 */
 	public function testMultipleDateValuesSeparatedByCommaChar() {
 	
-		$value = new qCal_Value_Date('2008-04-23');
-		$value->addValue('2008-04-24')
-		      ->addValue('2008-04-25');
-		$this->assertEqual('20080423,20080424,20080425', $value->__toString());
+		$property = new qCal_Property_Exdate('2008-04-23');
+		$property->addValue('2008-04-24')
+		         ->addValue('2008-04-25');
+		$this->assertEqual('20080423T000000,20080424T000000,20080425T000000', $property->__toString());
 		
-		$value = new qCal_Value_DateTime('2008-12-30 5:00:00');
-		$value->addValue('2008-12-31 5:00:00');
-		$this->assertEqual($value->__toString(), "20081230T050000,20081231T050000");
+		$property2 = new qCal_Property_Exdate('2008-12-30', array('value' => 'date'));
+		$property2->addValue('2008-12-31');
+		$this->assertEqual($property2->__toString(), "20081230,20081231");
 	
 	}
 	/**

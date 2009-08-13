@@ -33,7 +33,7 @@
  *  +1234567890
  *  432109876
  */
-class qCal_Value_Integer extends qCal_Value_Multi {
+class qCal_Value_Integer extends qCal_Value {
 
 	/**
 	 * Casts $value to integer and returns it
