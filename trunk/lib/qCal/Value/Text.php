@@ -66,7 +66,7 @@
  * 
  *  Project XYZ Final Review\nConference Room - 3B\nCome Prepared.
  */
-class qCal_Value_Text extends qCal_Value_Multi {
+class qCal_Value_Text extends qCal_Value {
 
 	/**
 	 * @todo: implement this

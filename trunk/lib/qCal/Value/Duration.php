@@ -44,7 +44,7 @@
  * 
  *  P7W
  */
-class qCal_Value_Duration extends qCal_Value_Multi {
+class qCal_Value_Duration extends qCal_Value {
 
 	/**
 	 * Convert seconds to duration 

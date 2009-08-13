@@ -27,6 +27,8 @@ class qCal_Property_MultiValue extends qCal_Property {
 	
 	}
 	/**
+	 * Sets the value of this property. Overwrites any previous values. Use addValue to 
+	 * add rather than overwrite.
 	 * @todo I'm not sure I like how this is done. Eventually I will come back to it.
 	 */
 	public function setValue($value) {
@@ -34,14 +36,20 @@ class qCal_Property_MultiValue extends qCal_Property {
 		if (!is_array($value)) {
 			$value = array($value);
 		}
-		// if value sent is null and this property doesn't have a default value,
-		// the property can't be created, so throw an invalidpropertyvalue exception
-		parent::setValue($value);
-		$values = array();
+		// parent::setValue($value);
+		$this->value = array();
 		foreach ($value as $val) {
-			$values[] = qCal_Value::factory($this->getType(), $val);
+			$this->value[] = $this->convertValue($val);
 		}
-		$this->value = $values;
+		return $this;
+	
+	}
+	/**
+	 * Add a value to the array of values (rather than overwrite)
+	 */
+	public function addValue($value) {
+	
+		$this->value[] = $this->convertValue($value);
 		return $this;
 	
 	}

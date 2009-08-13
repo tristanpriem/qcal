@@ -264,7 +264,7 @@
  * 
  * There are other examples specified in the "RRULE" specification.
  */
-class qCal_Value_Recur extends qCal_Value_Multi {
+class qCal_Value_Recur extends qCal_Value {
 
 	/**
 	 * @todo: implement this - this one's gonna be a doozy
