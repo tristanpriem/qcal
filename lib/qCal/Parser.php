@@ -49,8 +49,17 @@ class qCal_Parser {
     }
 	/**
 	 * Parse a file
+	 * @todo Throw an exception if file doesn't exist
+	 * @todo Allow a searchpath in options and use it here
 	 */
+	public function parseFile($filename) {
 	
+		if (file_exists($filename)) {
+			$content = file_get_contents($filename);
+		}
+		return $this->parse($content);
+	
+	}
     /**
      * Override doParse in a child class if necessary
      */
