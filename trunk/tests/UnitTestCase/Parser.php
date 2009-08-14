@@ -26,7 +26,18 @@ class UnitTestCase_Parser extends UnitTestCase {
 		$this->assertIsA($ical, 'qCal_Component_Vcalendar');
 	
 	}
+	/**
+	 * Parses a file
+	 */
+	public function testParserAcceptsFilename() {
 	
+		$parser = new qCal_Parser(array(
+			// options!
+		));
+		$ical = $parser->parseFile(TESTFILE_PATH . '/simple.ics');
+		$this->assertIsA($ical, 'qCal_Component_Vcalendar');
+	
+	}
 	public function testInitParser() {
 	
 		$parser = new qCal_Parser(array(
