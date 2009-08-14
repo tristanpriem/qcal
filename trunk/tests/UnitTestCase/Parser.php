@@ -16,6 +16,17 @@ class UnitTestCase_Parser extends UnitTestCase {
     
     }
     
+	public function testParserAcceptsRawData() {
+	
+		$data = file_get_contents(TESTFILE_PATH . '/simple.ics');
+		$parser = new qCal_Parser(array(
+			// options!
+		));
+		$ical = $parser->parse($data);
+		$this->assertIsA($ical, 'qCal_Component_Vcalendar');
+	
+	}
+	
 	public function testInitParser() {
 	
 		$parser = new qCal_Parser(array(
@@ -26,8 +37,41 @@ class UnitTestCase_Parser extends UnitTestCase {
 	
 	}
 	
+	/**
+	public function testParserNoValidationOption() {
 	
+		$parser = new qCal_Parser(array(
+			'validation' => 'off'
+		));
+		$calendarcontent = <<<CAL
+BEGIN:VCALENDAR
+PRODID:-//Nothing//Nobody//EN
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART:20090909T043000Z
+DTEND:20090909T063000Z
+CLASS:PRIVATE
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=Luke V
+ isinoni;X-NUM-GUESTS=0:mailto:luke.visinoni@gmail.com
+SUMMARY:Meeting to discuss nothing
+DESCRIPTION:This is a meeting where we will discuss absolutely nothing. Fun
+  for everybody involved!
+LOCATION:My House
+SEQUENCE:0
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER;VALUE=DURATION:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Event reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR
+CAL;
+		$ical = $parser->parse($calendarcontent);
 	
+	}
+	**/
 	
 	
 	

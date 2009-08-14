@@ -38,9 +38,8 @@ class qCal_Parser {
      * @todo What should this accept? filename? actual string content? either?
      * @todo Maybe even create a parse() for raw string and a parseFile() for a file name?
      */
-    public function parse($filename, $lexer = null) {
+    public function parse($content, $lexer = null) {
     
-        $content = file_get_contents($filename);
 		if (is_null($lexer)) {
 			$lexer = new qCal_Parser_Lexer_iCalendar($content);
 		}
@@ -48,6 +47,10 @@ class qCal_Parser {
         return $this->doParse($this->lexer->tokenize());
     
     }
+	/**
+	 * Parse a file
+	 */
+	
     /**
      * Override doParse in a child class if necessary
      */
