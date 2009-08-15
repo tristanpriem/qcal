@@ -96,9 +96,16 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 	 * "VEVENT" can span more than one date (i.e, "DTEND" property value is
 	 * set to a calendar date after the "DTSTART" property value).
 	 */
-	public function zzztestVeventDtstartDateWithDtendDate() {
+	public function testVeventDtstartDateWithDtendDate() {
 	
-		// test it!
+		$this->expectException(new qCal_Exception_InvalidProperty('If DTSTART property is specified as a DATE property, so must DTEND'));
+		$dtstart = new qCal_Property_Dtstart('09/09/2009', array('value' => 'date'));
+		$dtend = new qCal_Property_Dtend('09/19/2009');
+		$event = new qCal_Component_Vevent(array(
+			'uid' => '20090909T130000Z-123401@host.com',
+			'dtstart' => $dtstart,
+			'dtend' => $dtend
+		));
 	
 	}
 	/**
