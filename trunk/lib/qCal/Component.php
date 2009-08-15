@@ -96,6 +96,10 @@ abstract class qCal_Component {
 	 */
 	protected $requiredProperties = array();
 	/**
+	 * Parent component (all components but vcalendar should have one once attached)
+	 */
+	protected $parent;
+	/**
 	 * Class constructor
 	 * Accepts an array of properties, which can be simple values or actual property objects
 	 * Pass in a null value to use a property's default value (some dont have defaults, so beware)
@@ -204,8 +208,17 @@ abstract class qCal_Component {
 		if (!$component->canAttachTo($this)) {
 			throw new qCal_Exception_InvalidComponent($component->getName() . ' cannot be attached to ' . $this->getName());
 		}
-		// $component->setParent($this);
+		$component->setParent($this);
 		$this->children[$component->getName()][] = $component;
+	
+	}
+	/**
+	 * Set the parent of this component
+	 * @todo I'm not sure this will suffice. See the attach method for reasoning behind this.
+	 */
+	public function setParent(qCal_Component $component) {
+	
+		$this->parent = $component;
 	
 	}
 	/**
