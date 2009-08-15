@@ -172,7 +172,6 @@
  * period of time. The offset to apply at any given time is found by
  * locating the observance that has the last onset date and time before
  * the time in question, and using the offset value from that
- * 
  * observance.
  * 
  * The top-level properties in a "VTIMEZONE" calendar component are:
@@ -221,7 +220,6 @@
  * sub-component is defined by either the "RRULE" or "RDATE" property.
  * If neither is specified, only one sub-component can be specified in
  * the "VTIMEZONE" calendar component and it is assumed that the single
- * 
  * observance specified is always in effect.
  * 
  * The "RRULE" property defines the recurrence rule for the onset of the
@@ -270,7 +268,6 @@
  *   END:STANDARD
  *   BEGIN:DAYLIGHT
  *   DTSTART:19971026T020000
- * 
  *   RDATE:19970406T020000
  *   TZOFFSETFROM:-0500
  *   TZOFFSETTO:-0400
@@ -318,8 +315,6 @@
  *   TZOFFSETTO:-0500
  *   TZNAME:EST
  *   END:STANDARD
- * 
- * 
  *   BEGIN:DAYLIGHT
  *   DTSTART:19870405T020000
  *   RRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=4;UNTIL=19980404T070000Z

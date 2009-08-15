@@ -189,12 +189,22 @@ abstract class qCal_Component {
 	}
 	/**
 	 * Attach a component to this component (alarm inside event for example)
+	 * @todo Sub-components such as Vevent need to be able to access the main vcalendar object
+	 * for several reasons. 
+	 * 		 - If a vtodo has a tzid, it needs to be able to determine that the corresponding 
+	 * 		   vtimezone component is available.
+	 * 		 - If components need to relate to eachother, they can only find eachother through
+	 * 		   the main vcalendar object.
+	 * 		 - Freebusy time can only be determined by polling all components in the main vcalendar
+	 * 		   object.
+	 * 		 - More to come probably
 	 */
 	public function attach(qCal_Component $component) {
 	
 		if (!$component->canAttachTo($this)) {
 			throw new qCal_Exception_InvalidComponent($component->getName() . ' cannot be attached to ' . $this->getName());
 		}
+		// $component->setParent($this);
 		$this->children[$component->getName()][] = $component;
 	
 	}

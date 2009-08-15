@@ -1,4 +1,10 @@
 <?php
+/**
+ * Test cases for the main component (VCALENDAR).
+ * @todo It just occurred to me that properties need to be aware of their
+ * parent in order to retrieve info such as timezone data, free-busy time, etc.
+ * Figure out an elegant way of doing that.
+ */
 class UnitTestCase_Component_Calendar extends UnitTestCase {
 
 	public function setUp() {
