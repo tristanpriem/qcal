@@ -108,6 +108,15 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 		));
 	
 	}
+	public function testVeventDtstartMustComeBeforeDtend() {
+	
+		$this->expectException(new qCal_Exception_InvalidProperty('DTSTART property must come before DTEND'));
+		$event = new qCal_Component_Vevent(array(
+			'dtstart' => new qCal_Property_Dtstart('09/09/2009'),
+			'dtend' => new qCal_Property_Dtend('09/08/2009')
+		));
+	
+	}
 	/**
 	 * The "DTSTART" property for a "VEVENT" specifies the inclusive start
 	 * of the event. For recurring events, it also specifies the very first

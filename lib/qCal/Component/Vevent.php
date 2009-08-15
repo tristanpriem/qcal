@@ -138,16 +138,26 @@ class qCal_Component_Vevent extends qCal_Component {
 		if (in_array('DTSTART', $propnames)) {
 			$dtstart = $this->getProperty('dtstart');
 			$dtstart = $dtstart[0];
+			// check that if dtstart is a DATE that dtend is a DATE
 			if ($dtstart->getType() == 'DATE') {
 				if (in_array('DTEND', $propnames)) {
 					$dtend = $this->getProperty('dtend');
 					$dtend = $dtend[0];
-					if ($dtend->getType != 'DATE') {
+					if ($dtend->getType() != 'DATE') {
 						throw new qCal_Exception_InvalidProperty('If DTSTART property is specified as a DATE property, so must DTEND');
 					}
 				}
 			}
-			
+			// check that dtstart comes before dtend
+			if (in_array('DTEND', $propnames)) {
+				$dtend = $this->getProperty('dtend');
+				$dtend = $dtend[0];
+				$startdate = strtotime($dtstart->getValue());
+				$enddate = strtotime($dtend->getValue());
+				if ($startdate > $enddate) {
+					throw new qCal_Exception_InvalidProperty('DTSTART property must come before DTEND');
+				}
+			}
 		}
 	
 	}
