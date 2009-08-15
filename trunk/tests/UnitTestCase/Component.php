@@ -123,6 +123,25 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->assertIsA($component, 'qCal_Component_Valarm');
 	
 	}
+	/**
+	 * Test that children can access their parents
+	 */
+	public function testAccessToParent() {
 	
+		$vtodo = new qCal_Component_Vtodo(array(
+			'summary' => 'Foo',
+			'description' => 'Foobar'
+		));
+		$valarm = new qCal_Component_Valarm(array(
+			'trigger' => '-P15M',
+			'action' => 'display',
+			'summary' => 'Foo',
+			'description' => 'Foobar'
+		));
+		$this->assertNull($valarm->getParent());
+		$vtodo->attach($valarm);
+		$this->assertIdentical($valarm->getParent(), $vtodo);
+	
+	}
 
 }
