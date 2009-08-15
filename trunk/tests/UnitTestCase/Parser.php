@@ -4,18 +4,31 @@
  */
 class UnitTestCase_Parser extends UnitTestCase {
 
+	protected $testpath;
+	/**
+	 * Create some test files to play with
+	 */
     public function setUp() {
     
-        
+        $this->testpath = TESTFILE_PATH . '/testpath';
+		if (!file_exists($this->testpath)) mkdir($this->testpath, 0777);
+		$file = $this->testpath . DIRECTORY_SEPARATOR . 'foo.ics';
+		$content = file_get_contents(TESTFILE_PATH . '/simple.ics');
+		file_put_contents($file, $content);
     
     }
-    
+    /**
+     * Delete test files
+	 */
     public function tearDown() {
     
-        
+		$dir = dir($this->testpath);
+		while (false !== ($entry = $dir->read())) {
+		   if ($entry != "." && $entry != "..") unlink($this->testpath . DIRECTORY_SEPARATOR . $entry);
+		}
+        rmdir($this->testpath);
     
     }
-    
 	public function testParserAcceptsRawData() {
 	
 		$data = file_get_contents(TESTFILE_PATH . '/simple.ics');
@@ -27,7 +40,7 @@ class UnitTestCase_Parser extends UnitTestCase {
 	
 	}
 	/**
-	 * Parses a file
+	 * Parses a file 
 	 */
 	public function testParserAcceptsFilename() {
 	
@@ -36,6 +49,30 @@ class UnitTestCase_Parser extends UnitTestCase {
 		));
 		$ical = $parser->parseFile(TESTFILE_PATH . '/simple.ics');
 		$this->assertIsA($ical, 'qCal_Component_Vcalendar');
+	
+	}
+	/**
+	 * The parser accepts an array of options in its constructor. One option is "searchpath",
+	 * which, if provided, will be used to search for the file that is provided in parseFile()
+	 * If no searchpath is provided, it will use the include path. Paths should be separated by
+	 * PATH_SEPARATOR.
+	 */
+	public function testParserAcceptsSearchPath() {
+	
+		$paths = array($this->testpath);
+		$parser = new qCal_Parser(array(
+			'searchpath' => implode(PATH_SEPARATOR, $paths)
+		));
+		$ical = $parser->parseFile('foo.ics');
+		$this->assertIsA($ical, 'qCal_Component_Vcalendar');
+	
+	}
+	public function testFileNotFound() {
+	
+		$filename = "foobar.ics";
+		$this->expectException(new qCal_Exception_FileNotFound('File cannot be found: "' . $filename . '"'));
+		$parser = new qCal_Parser();
+		$parser->parseFile($filename);
 	
 	}
 	public function testInitParser() {

@@ -26,12 +26,11 @@ class qCal_Parser {
      */
     public function __construct($options = array()) {
     
-        $this->options = $options;
-        /**
-         * Ideas for options
-         *
-         * searchpath - a path string to search for files in "C:\calendars;C:\Program Files\Outlook\calendars"
-         */
+		// set defaults...
+		$this->options = array(
+			'searchpath' => get_include_path(),
+		);
+        $this->options = array_merge($this->options, $options);
     
     }
     /**
@@ -48,16 +47,30 @@ class qCal_Parser {
     
     }
 	/**
-	 * Parse a file
+	 * Parse a file. The searchpath defaults to the include path. Also, if the filename
+	 * provided is an absolute path, the searchpath is not used. This is determined by 
+	 * either the file starting with a forward slash, or a drive letter (for Windows)
 	 * @todo Throw an exception if file doesn't exist
-	 * @todo Allow a searchpath in options and use it here
+	 * @todo Test for path starting with a drive letter for windows (or find a better way to detect that)
 	 */
 	public function parseFile($filename) {
 	
-		if (file_exists($filename)) {
-			$content = file_get_contents($filename);
+		if (substr($filename, 0, 1) == '/') {
+			if (file_exists($filename)) {
+				$content = file_get_contents($filename);
+				return $this->parse($content);
+			}
+		} else {
+			$paths = explode(PATH_SEPARATOR, $this->options['searchpath']);
+			foreach ($paths as $path) {
+				$fname = $path . DIRECTORY_SEPARATOR . $filename;
+				if (file_exists($fname)) {
+					$content = file_get_contents($fname);
+					return $this->parse($content);
+				}
+			}
 		}
-		return $this->parse($content);
+		throw new qCal_Exception_FileNotFound('File cannot be found: "' . $filename . '"');
 	
 	}
     /**
