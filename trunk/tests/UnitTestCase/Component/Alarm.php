@@ -21,9 +21,11 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 		// test that action is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires ACTION property'));
 		$component = new qCal_Component_Valarm();
+		$component->validate();
 		// test that trigger is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires TRIGGER property'));
 		$component = new qCal_Component_Valarm('AUDIO');
+		$component->validate();
 	
 	}
 	/**
@@ -37,6 +39,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 			'action' => 'audio',
 			//'trigger' => '15m'
 		));
+		$alarm->validate();
 		
 	}
 	/**
@@ -51,6 +54,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 			'trigger' => 'P1W3DT2H3M45S',
 			//'description' => 'Feed your fish'
 		));
+		$alarm->validate();
 		
 	}
 	/**
@@ -66,6 +70,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 			'summary' => 'Feed your fish!',
 			//'description' => 'Don\'t forget to feed your poor fishy, Pedro V'
 		));
+		$alarm->validate();
 		
 	}
 	/**
@@ -80,6 +85,7 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 			'trigger' => 'P1W3DT2H3M45S',
 			//'attach' => 'http://www.somewebsite.com/387592/alarm/5/',
 		));
+		$alarm->validate();
 	
 	}
 	/**
@@ -114,12 +120,14 @@ class UnitTestCase_Component_Alarm extends UnitTestCase {
 			'duration' => 'p30m',
 			'trigger' => 'p20d'
 		));
+		$alarm->validate();
 		$this->expectException(new qCal_Exception_MissingProperty('VALARM component with a REPEAT property requires a DURATION property'));
 		$alarm2 = new qCal_Component_Valarm(array(
 			'action' => 'audio',
 			'repeat' => 'p30m',
 			'trigger' => 'p20d'
 		));
+		$alarm2->validate();
 	
 	}
 	/**

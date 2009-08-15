@@ -47,6 +47,7 @@ class UnitTestCase_Component_Calendar extends UnitTestCase {
 	public function testCalendarInitializeDefaults() {
 	
 		$component = new qCal_Component_Vcalendar();
+		$component->validate();
 		// test calendar defaults. eventually there will be convenience methods
 		// that will allow you to do $component->prodid() to get and set
 		$prodid = $component->getProperty('prodid');
