@@ -1,6 +1,36 @@
 <?php
 Mock::generate('qCal_Component', 'Mock_qCal_Component');
 Mock::generate('qCal_Property', 'Mock_qCal_Property');
+/**
+ * @todo Instead of returning an array of properties from getProperty(), it would be
+ * nicer to return like a qCal_Property_Collection() object. It would look something like this:
+ * 
+ * $event = new qCal_Component_Vevent(array(
+ *     'dtstart' => 'foo',
+ *     'dtend' => 'bar',
+ *     'location' => 'foobar',
+ *     // etc...
+ * ));
+ * $event->addProperty(new qCal_Property_Attendee('john.stamos@gmail.com', array(
+ *     'CUTYPE' => 'INDIVIDUAL',
+ *     'ROLE' => 'REQ-PARTICIPANT',
+ *     'PARTSTAT' => 'ACCEPTED',
+ *     'CN' => 'John Stamos'
+ * )));
+ * $event->addProperty(new qCal_Property_Attendee('rebecca.stamos@gmail.com', array(
+ *     'CUTYPE' => 'INDIVIDUAL',
+ *     'ROLE' => 'REQ-PARTICIPANT',
+ *     'PARTSTAT' => 'ACCEPTED',
+ *     'CN' => 'Rebecca Stamos'
+ * )));
+ * $attendees = $event->getProperty('attendee');
+ * $john = $attendees->current();
+ * $rebecca = $attendees->next();
+ * $dtstart = $event->getProperty('dtstart');
+ * $dtstart = $dtstart->current()->getValue();
+ * // there's also this
+ * $dtstart = $dtstart->getDtstart(); // facade methods
+ */
 class UnitTestCase_Component extends UnitTestCase {
 
 	/**
