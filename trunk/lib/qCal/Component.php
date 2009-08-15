@@ -98,17 +98,25 @@ abstract class qCal_Component {
 	/**
 	 * Class constructor
 	 * Accepts an array of properties, which can be simple values or actual property objects
-	 * You cannot pass in child components in the constructor, you must use the "attach" method
 	 * Pass in a null value to use a property's default value (some dont have defaults, so beware)
 	 * Example:
 	 * $cal = new qCal_Component_Calendar(array(
      *     'prodid' => '-// Some Property Id//',
      *     'someotherproperty' => null,
      *     qCal_Property_Version(2.0),
+	 * ), array(
+	 * 	   qCal_Component_Daylight(),
 	 * ));
 	 */
-	public  function __construct($properties = array()) {
+	public  function __construct($properties = array(), $components = array()) {
 	
+		foreach ($components as $component) {
+			// if value is an array, then each value inside of it will be a component
+			if ($component instanceof qCal_Component) {
+				$this->attach($component);
+			}
+			else throw new qCal_Exception_InvalidComponent('The second argument is optional, but if provided, must be an array of components');
+		} 
 		foreach ($properties as $name => $value) {
 			// if value is an array, then each value inside of it will be a property
 			if (is_array($value)) {

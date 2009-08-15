@@ -76,7 +76,6 @@
  * from UTC for the time zone, often referred to as the Standard Time
  * offset. Many locations adjust their Standard Time forward or backward
  * by one hour, in order to accommodate seasonal changes in number of
- * 
  * daylight hours, often referred to as Daylight  Saving Time. Some
  * locations adjust their time by a fraction of an hour. Standard Time
  * is also known as Winter Time. Daylight Saving Time is also known as
@@ -125,7 +124,6 @@
  * calendar component cannot be nested within other calendar components.
  * Multiple "VTIMEZONE" calendar components can exist in an iCalendar
  * object. In this situation, each "VTIMEZONE" MUST represent a unique
- * 
  * time zone definition. This is necessary for some classes of events,
  * such as airline flights, that start in one time zone and end in
  * another.
@@ -372,10 +370,10 @@ class qCal_Component_Vtimezone extends qCal_Component {
 	 */
 	protected function doValidation() {
 	
-		/*$children = $this->getChildren();
-		if (!array_key_exists('DAYLIGHT') && !array_key_exists('STANDARD')) {
+		$children = $this->getChildren();
+		if (!array_key_exists('DAYLIGHT', $children) && !array_key_exists('STANDARD', $children)) {
 			throw new qCal_Exception_MissingComponent('Either a STANDARD or DAYLIGHT component is required within a VTIMEZONE component');
-		}*/
+		}
 	
 	}
 
