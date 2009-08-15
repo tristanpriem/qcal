@@ -36,9 +36,17 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$tz = new qCal_Component_Vtimezone(array(
 			'tzid' => 'California-Los_Angeles',
 			'last-modified' => new qCal_Date(time()),
-			'tzurl' => 'http://www.example.com',
+			'tzurl' => 'http://www.example.com/tz1',
 		));
-		//$tz->addProperty();
+		$newtime = time();
+		$tz->addProperty('last-modified', $newtime);
+		$tz->addProperty(new qCal_Property_Tzurl('http://www.example.com/tz2'));
+		$tzlm = $tz->getProperty('last-modified');
+		$tzurl = $tz->getProperty('tzurl');
+		$this->assertEqual(count($tzlm), 1);
+		$this->assertEqual(count($tzurl), 1);
+		$this->assertEqual($tzlm[0]->getValue(), date('Ymd\THis', $newtime));
+		$this->assertEqual($tzurl[0]->getValue(), 'http://www.example.com/tz2');
 	
 	}
 	
