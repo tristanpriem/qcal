@@ -51,6 +51,7 @@ class qCal_Parser {
 	 * provided is an absolute path, the searchpath is not used. This is determined by 
 	 * either the file starting with a forward slash, or a drive letter (for Windows)
 	 * @todo Throw an exception if file doesn't exist
+	 * @todo I'm not really sure that it should default to the include path. That's not really what the include path is for, is it?
 	 * @todo Test for path starting with a drive letter for windows (or find a better way to detect that)
 	 */
 	public function parseFile($filename) {

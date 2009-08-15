@@ -75,10 +75,45 @@ class UnitTestCase_Parser extends UnitTestCase {
 		$parser->parseFile($filename);
 	
 	}
+	/**
+	 * Tell the parser to ignore validation errors (things like valarm missing its action property)
+	 * @todo I will implement this if there is a need for it.
+	public function testIgnoreValidationErrors() {
+	
+		$invalidcal = <<<CAL
+BEGIN:VCALENDAR
+PRODID://foo//bar
+CALSCALE:GREGORIAN
+BEGIN:VTODO
+SUMMARY:Some todo item I don't care about
+DESCRIPTION:The description is silly
+BEGIN:VALARM
+END:VALARM
+END:VTODO
+END:VCALENDAR
+
+CAL;
+		// with validation off, this should not throw any exceptions
+		$parser = new qCal_Parser(array(
+			'validation' => 'off'
+		));
+		$ical = $parser->parse($invalidcal);
+	
+	}
+	 */
+	/**
+	 * Test that it is possible to not use property defaults. For instance, CALSCALE defaults to "GREGORIAN", but if 
+	 * defaults are turned off, it shouldn't default to anything.
+	 * @todo I will implement this if there is a need for it
+
+	public function testNoDefaults() {
+		
+	}
+	 */
 	public function testInitParser() {
 	
 		$parser = new qCal_Parser(array(
-			// pass options in here
+			
 		));
 		// $ical = $parser->parse(TESTFILE_PATH . '/lvisinoni.ics');
 		// pre($ical->render());
