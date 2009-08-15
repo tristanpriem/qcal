@@ -135,6 +135,20 @@ class qCal_Component_Vevent extends qCal_Component {
 		if (in_array('DTEND', $propnames) && in_array('DURATION', $propnames)) {
 			throw new qCal_Exception_InvalidProperty('DTEND and DURATION cannot both occur in the same VEVENT component');
 		}
+		if (in_array('DTSTART', $propnames)) {
+			$dtstart = $this->getProperty('dtstart');
+			$dtstart = $dtstart[0];
+			if ($dtstart->getType() == 'DATE') {
+				if (in_array('DTEND', $propnames)) {
+					$dtend = $this->getProperty('dtend');
+					$dtend = $dtend[0];
+					if ($dtend->getType != 'DATE') {
+						throw new qCal_Exception_InvalidProperty('If DTSTART property is specified as a DATE property, so must DTEND');
+					}
+				}
+			}
+			
+		}
 	
 	}
 
