@@ -367,5 +367,16 @@ class qCal_Component_Vtimezone extends qCal_Component {
 	protected $name = "VTIMEZONE";
 	protected $allowedComponents = array('VCALENDAR');
 	protected $requiredProperties = array('TZID');
+	/**
+	 * Make sure that all of the rules specified above are followed
+	 */
+	protected function doValidation() {
+	
+		/*$children = $this->getChildren();
+		if (!array_key_exists('DAYLIGHT') && !array_key_exists('STANDARD')) {
+			throw new qCal_Exception_MissingComponent('Either a STANDARD or DAYLIGHT component is required within a VTIMEZONE component');
+		}*/
+	
+	}
 
 }

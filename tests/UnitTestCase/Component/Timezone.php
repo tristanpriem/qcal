@@ -49,6 +49,23 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$this->assertEqual($tzurl[0]->getValue(), 'http://www.example.com/tz2');
 	
 	}
+	/**
+	 *                ; one of 'standardc' or 'daylightc' MUST occur
+	 *              ..; and each MAY occur more than once.
+	 * @todo I'm not really sure how to do this because as of now, there is no way to pass 
+	 * components in via the constructor. I didn't know there were components that required
+	 * other components. Maybe I can provide a default DAYLIGHT or STANDARD component?
+
+	public function testOneOfStandardOrDaylightMustOccurAndMayOccurMoreThanOnce() {
+	
+		$this->expectException(new qCal_Exception_MissingComponent('Either a STANDARD or DAYLIGHT component is required within a VTIMEZONE component'));
+		$tz = new qCal_Component_Vtimezone(array(
+			'tzid' => 'US-Eastern',
+		));
+		// stuff
+	
+	}
+	 */
 	
 }
 ?>
