@@ -139,6 +139,9 @@ abstract class qCal_Component {
 				}
 			}
 		}
+		// I think it would make more sense to do validation at render time. That way you don't have
+		// to have all of the required components and properties when you instantiate. Also, that way
+		// components don't need to be aware of eachother until render time. @todo
 		$this->validate();
 	
 	}
