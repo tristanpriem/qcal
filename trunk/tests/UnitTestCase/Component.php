@@ -125,6 +125,8 @@ class UnitTestCase_Component extends UnitTestCase {
 	}
 	/**
 	 * Test that children can access their parents
+	 * @todo I'm not sure that this is even necessary. See comments for qCal_Component::attach() for reasoning
+	 * behind this.
 	 */
 	public function testAccessToParent() {
 	
