@@ -6,6 +6,8 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Find a way to make sure that this is a globally unique id
+ * @todo I don't want my name in the default for this. Actually, I'm not even
+ * sure I want this property to have a default.
  * 
  * RFC 2445 Definition
  * 
