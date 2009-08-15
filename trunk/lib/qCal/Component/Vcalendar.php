@@ -41,6 +41,11 @@ class qCal_Component_Vcalendar extends qCal_Component {
 
 	protected $name = "VCALENDAR";
 	protected $requiredProperties = array('PRODID','VERSION');
+	public function doValidation() {
+	
+		// @todo make sure that all tzids that are specified have a corresponding vtimezone
+	
+	} 
 	/**
 	 * getFreeBusyTime
 	 * Looks through all of the data in the calendar and returns a qCal_Component_Vfreebusy object

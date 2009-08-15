@@ -90,6 +90,30 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$this->assertEqual(count($children), 2);
 	
 	}
+	/**
+	 * An individual "VTIMEZONE" calendar component MUST be specified for
+	 * each unique "TZID" parameter value specified in the iCalendar object.
+	 * @todo Finish this when you are more sure how timezones will work
+	 */
+	public function zzztestEachTzidParameterMustHaveCorrespondingVTimezone() {
+	
+		$cal = new qCal;
+		$todo1 = new qCal_Component_Vtodo(array(
+			'summary' => 'Make the monkey wash the cat',
+			'description' => 'Make the monkey wash the cat with a cloth. Make sure to also video-tape it.',
+			new qCal_Property_Dtstart('20090815T050000', array('tzid' => 'US-Eastern')),
+		));
+		$todo2 = new qCal_Component_Vtodo(array(
+			'summary' => 'Make the cat wash the monkey',
+			'description' => 'Make the cat wash the monkey with a sponge. Make sure to audio-tape it.',
+			new qCal_Property_Dtstart('20090816T050000', array('tzid' => 'US-Pacific')),
+		));
+		$this->expectException(new qCal_Exception_MissingComponent('TZID "US-Eastern" not defined'));
+		$this->expectException(new qCal_Exception_MissingComponent('TZID "US-Pacific" not defined'));
+		$cal->attach($todo1);
+		$cal->attach($todo2);
+	
+	}
 	
 }
 ?>

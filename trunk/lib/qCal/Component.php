@@ -266,6 +266,29 @@ abstract class qCal_Component {
 	
 	}
 	
+	/**
+	 * Returns true if this component contains a property of $name
+	 *
+	 * @return boolean
+	 */
+	public function hasComponent($name) {
+	
+		$name = strtoupper($name);
+		return isset($this->children[$name]);
+	
+	}
+	/**
+	 * Returns the child component requested
+	 */
+	public function getComponent($name) {
+	
+		$name = strtoupper($name);
+		if ($this->hasComponent($name)) {
+			return $this->children[$name];
+		}
+	
+	}
+	
 	/*
 	public function clearProperties() {
 	
