@@ -360,6 +360,7 @@ abstract class qCal_Component {
 	 */
 	public function render(qCal_Renderer $renderer = null) {
 	
+		$this->validate();
 		if (is_null($renderer)) $renderer = new qCal_Renderer_iCalendar();
 		return $renderer->render($this);
 	
