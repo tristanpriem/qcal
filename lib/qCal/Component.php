@@ -222,6 +222,14 @@ abstract class qCal_Component {
 	
 	}
 	/**
+	 * Get the parent of this component (if there is one)
+	 */
+	public function getParent() {
+	
+		return $this->parent;
+	
+	}
+	/**
 	 * The only thing I need this for so far is the parser, but it may come in handy for the facade as well
 	 */
 	static public function factory($name, $properties = array()) {
