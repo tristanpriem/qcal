@@ -41,5 +41,23 @@ class qCal_Component_Vcalendar extends qCal_Component {
 
 	protected $name = "VCALENDAR";
 	protected $requiredProperties = array('PRODID','VERSION');
+	/**
+	 * getFreeBusyTime
+	 * Looks through all of the data in the calendar and returns a qCal_Component_Vfreebusy object
+	 * with free/busy time from $startdate to $enddate. The component will contain all components, but some
+	 * may have their transparency set to "transparent".
+	 * @todo This cannot be finished until recurring events are finished, since free/busy does not allow
+	 * recurrence rules, each instance of a recurrence would need to be calculated out and passed into the free/busy
+	 * component, so that the component would contain concrete instances of each event recurrence.
+	 */
+	public function getFreeBusyTime() {
+	
+		foreach ($this->children as $children) {
+			foreach($children as $child) {
+				// now get the object's free/busy time
+			}
+		}
+	
+	}
 	
 }
