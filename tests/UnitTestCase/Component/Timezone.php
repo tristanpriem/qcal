@@ -18,9 +18,14 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	 */
 	public function testTzidIsRequiredButMustNotOccurMoreThanOnce() {
 	
+		$standard = new qCal_Component_Standard(array(
+			'tzoffsetto' => '-0500',
+			'tzoffsetfrom' => '-0400',
+			'dtstart' => '19971026T020000'
+		));
 		$tz = new qCal_Component_Vtimezone(array(
 			'tzid' => 'California-Los_Angeles',
-		));
+		), array($standard));
 		$tz->addProperty(new qCal_Property_Tzid('New_York-New_York'));
 		$tzid = $tz->getProperty('tzid');
 		$this->assertEqual(count($tzid), 1);
@@ -33,11 +38,16 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	 */
 	public function testLastModAndTzurlMustNotOccurMoreThanOnce() {
 	
+		$standard = new qCal_Component_Standard(array(
+			'tzoffsetto' => '-0500',
+			'tzoffsetfrom' => '-0400',
+			'dtstart' => '19971026T020000'
+		));
 		$tz = new qCal_Component_Vtimezone(array(
 			'tzid' => 'California-Los_Angeles',
 			'last-modified' => new qCal_Date(time()),
 			'tzurl' => 'http://www.example.com/tz1',
-		));
+		), array($standard));
 		$newtime = time();
 		$tz->addProperty('last-modified', $newtime);
 		$tz->addProperty(new qCal_Property_Tzurl('http://www.example.com/tz2'));
@@ -50,22 +60,36 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	
 	}
 	/**
-	 *                ; one of 'standardc' or 'daylightc' MUST occur
-	 *              ..; and each MAY occur more than once.
-	 * @todo I'm not really sure how to do this because as of now, there is no way to pass 
-	 * components in via the constructor. I didn't know there were components that required
-	 * other components. Maybe I can provide a default DAYLIGHT or STANDARD component?
-
+	 * The "VTIMEZONE" calendar component MUST include the "TZID" property
+	 * and at least one definition of a standard or daylight component. The
+	 * standard or daylight component MUST include the "DTSTART",
+	 * "TZOFFSETFROM" and "TZOFFSETTO" properties.
+	 */
 	public function testOneOfStandardOrDaylightMustOccurAndMayOccurMoreThanOnce() {
 	
 		$this->expectException(new qCal_Exception_MissingComponent('Either a STANDARD or DAYLIGHT component is required within a VTIMEZONE component'));
 		$tz = new qCal_Component_Vtimezone(array(
 			'tzid' => 'US-Eastern',
+		), array(
+			// $standard
 		));
-		// stuff
+		$standard = new qCal_Component_Standard(array(
+			'tzoffsetto' => '-0500',
+			'tzoffsetfrom' => '-0400',
+			'dtstart' => '19971026T020000'
+		));
+		$standard2 = new qCal_Component_Standard(array(
+			'tzoffsetto' => '-0600',
+			'tzoffsetfrom' => '-0500',
+			'dtstart' => '19981026T020000'
+		));
+		$tz->attach($standard);
+		$tz->attach($standard2);
+		$tz->validate(); // shouldn't throw an exception now that standard was attached
+		$chidren = $tz->getChildren();
+		$this->assertEqual(count($children), 2);
 	
 	}
-	 */
 	
 }
 ?>
