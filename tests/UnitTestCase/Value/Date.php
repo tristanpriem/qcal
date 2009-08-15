@@ -21,6 +21,8 @@ class UnitTestCase_Value_Date extends UnitTestCase {
 		$property2 = new qCal_Property_Exdate('2008-12-30', array('value' => 'date'));
 		$property2->addValue('2008-12-31');
 		$this->assertEqual($property2->__toString(), "20081230,20081231");
+		
+		//$value = new qCal_Value_Date('')
 	
 	}
 	/**
