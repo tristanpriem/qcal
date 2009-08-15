@@ -15,6 +15,17 @@ class UnitTestCase_Component extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that validation happens at render time
+	 */
+	public function testValidationHappensAtRenderTime() {
+	
+		$valarm = new qCal_Component_Valarm(array(
+		));
+		$this->expectException(new qCal_Exception_MissingProperty('VALARM component requires ACTION property'));
+		$valarm->render();
+	
+	}
+	/**
 	 * Test facade methods
 	 * I decided to get rid of the facade methods at least for now since getAttendee 
 	 * can potentially return multiple values and that makes the interface inconsistent
