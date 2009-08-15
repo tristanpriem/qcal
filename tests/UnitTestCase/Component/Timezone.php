@@ -10,6 +10,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		// test that action is required to initialize an alarm
 		$this->expectException(new qCal_Exception_MissingProperty('VTIMEZONE component requires TZID property'));
 		$component = new qCal_Component_Vtimezone();
+		$component->validate();
 	
 	}
 	/**
@@ -73,16 +74,19 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		), array(
 			// $standard
 		));
+		$tz->validate();
 		$standard = new qCal_Component_Standard(array(
 			'tzoffsetto' => '-0500',
 			'tzoffsetfrom' => '-0400',
 			'dtstart' => '19971026T020000'
 		));
+		$standard->validate();
 		$standard2 = new qCal_Component_Standard(array(
 			'tzoffsetto' => '-0600',
 			'tzoffsetfrom' => '-0500',
 			'dtstart' => '19981026T020000'
 		));
+		$standard2->validate();
 		$tz->attach($standard);
 		$tz->attach($standard2);
 		$tz->validate(); // shouldn't throw an exception now that standard was attached

@@ -13,6 +13,7 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 			'dtend' => '20090101T040000Z',
 			'duration' => 'P1D'
 		));
+		$event->validate();
 	
 	}
 	/**
@@ -106,6 +107,7 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 			'dtstart' => $dtstart,
 			'dtend' => $dtend
 		));
+		$event->validate();
 	
 	}
 	public function testVeventDtstartMustComeBeforeDtend() {
@@ -115,6 +117,7 @@ class UnitTestCase_Component_Event extends UnitTestCase {
 			'dtstart' => new qCal_Property_Dtstart('09/09/2009'),
 			'dtend' => new qCal_Property_Dtend('09/08/2009')
 		));
+		$event->validate();
 	
 	}
 	/**
