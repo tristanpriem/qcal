@@ -355,8 +355,8 @@ abstract class qCal_Component {
 	 * in a renderer, it will use that instead
 	 *
 	 * @return mixed Depends on the renderer
-	 * @todo I don't think components should have any idea how to render them-selves.
-	 * It would make more sense to pass components to a renderer than to do it this way.
+	 * @todo Would it make more sense to pass the component to the renderer, or the renderer
+	 * to the component? I'm not sure components should know about rendering.
 	 */
 	public function render(qCal_Renderer $renderer = null) {
 	
@@ -371,7 +371,7 @@ abstract class qCal_Component {
 	 * qCal_Component::getPropertyName() and qCal_Component::setPropertyName('2.0') where propertyName is the property name
 	 * to be set and $val is the property value.
 	 * This is just a convenience facade, it isn't going to be used within the library as much as by end-users
-	 * I decided to get rid of the facade methods at least for now since getAttendee 
+	 * @todo I can't decided whether to maybe get rid of the facade methods at least for now since some properties
 	 * can potentially return multiple values and that makes the interface inconsistent
 	 */
 	public function __call($method, $params) {
@@ -393,10 +393,10 @@ abstract class qCal_Component {
 			$params = isset($params[1]) ? $params[1] : array();
 			$property = qCal_Property::factory($name, $value, $params);
 			$this->addProperty($property);
-		//} elseif ($firstthree == "add") {
+		} elseif ($firstthree == "add") {
 			// add property type
-		//	$property = qCal_Property::factory($name, $params);
-		//	$this->addProperty($property);
+			$property = qCal_Property::factory($name, $params);
+			$this->addProperty($property);
 			return $this;
 		}
 		// throw exception here?
