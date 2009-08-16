@@ -59,15 +59,20 @@ class UnitTestCase_Component extends UnitTestCase {
 	 * Test facade methods
 	 * I decided to get rid of the facade methods at least for now since getAttendee 
 	 * can potentially return multiple values and that makes the interface inconsistent
-
+	 */
 	public function testFacadeMethods() {
 	
 		$calendar = new qCal_Component_Vcalendar();
 		$calendar->setProdId('// Test //');
 		$this->assertEqual($calendar->getProdid(), '// Test //');
+		// try something that has multiple instances
+		$event = new qCal_Component_Vevent();
+		$event->addAttendee('luke.visinoni@gmail.com');
+		$event->addAttendee('john.stamos@gmail.com');
+		$attendees = $event->getAttendee();
+		$this->assertEqual(count($attendees), 2);
 	
 	}
-	 */
 	/**
 	 * These are examples from other icalendar libraries I've found in various other languages
 	 */
