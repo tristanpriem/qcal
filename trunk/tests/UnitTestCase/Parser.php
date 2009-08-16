@@ -23,10 +23,12 @@ class UnitTestCase_Parser extends UnitTestCase {
     public function tearDown() {
     
 		$dir = dir($this->testpath);
-		while (false !== ($entry = $dir->read())) {
-		   if ($entry != "." && $entry != "..") unlink($this->testpath . DIRECTORY_SEPARATOR . $entry);
+		if (is_resource($dir->handle)) {
+			while (false !== ($entry = $dir->read())) {
+			   if ($entry != "." && $entry != "..") unlink($this->testpath . DIRECTORY_SEPARATOR . $entry);
+			}
+	        rmdir($this->testpath);	
 		}
-        rmdir($this->testpath);
     
     }
 	public function testParserAcceptsRawData() {
