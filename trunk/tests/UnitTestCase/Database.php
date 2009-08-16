@@ -4,6 +4,9 @@
  * the library. That way queries and stuff would be much faster and easier. I am
  * on the fence about having that requirement though. I figured I would at least
  * play around with it though.
+ * 
+ * I ran this test on my ubuntu server and it says "Fatal error: Class 'SQLiteDatabase'
+ * not found in /home/luke/htdocs/qcal/tests/UnitTestCase/Database.php on line 23"
  */
 class UnitTestCase_Database extends UnitTestCase {
 
