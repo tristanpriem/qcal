@@ -116,6 +116,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$this->expectException(new qCal_Exception_MissingComponent('TZID "US-Pacific" not defined'));
 		$cal->attach($todo1);
 		$cal->attach($todo2);
+		$cal->validate();
 	
 	}
 	/**
