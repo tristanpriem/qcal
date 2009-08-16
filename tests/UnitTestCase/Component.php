@@ -57,8 +57,6 @@ class UnitTestCase_Component extends UnitTestCase {
 	}
 	/**
 	 * Test facade methods
-	 * I decided to get rid of the facade methods at least for now since getAttendee 
-	 * can potentially return multiple values and that makes the interface inconsistent
 	 */
 	public function testFacadeMethods() {
 	
