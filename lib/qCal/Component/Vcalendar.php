@@ -44,6 +44,21 @@ class qCal_Component_Vcalendar extends qCal_Component {
 	public function doValidation() {
 	
 		// @todo make sure that all tzids that are specified have a corresponding vtimezone
+		// look for tzids and make sure there are corresponding vtimezone components for each tzid
+		// In order to be sure I find all tzids, I need to search through the entire tree, so either
+		// I need a recursive getProperties() or I need to use a stack to find all of them.
+		foreach ($this->getProperties() as $name => $properties) {
+			foreach ($properties as $property) {
+				$params = $property->getParams();
+				foreach ($params as $name => $param) {
+					$name = strtoupper($name);
+					if ($name == "TZID") {
+						// make sure there is a vtimezone component with this tzid
+						// pr($property);
+					}
+				}
+			}
+		}
 	
 	} 
 	/**
