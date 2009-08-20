@@ -94,6 +94,35 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$this->assertEqual(count($children), 2);
 	
 	}
+	public function testGetTimeZonesFromCalendar() {
+	
+		$cal = new qCal_Component_Vcalendar;
+		$useastern = new qCal_Component_Vtimezone(array(
+			'tzid' => 'US-Eastern',
+		));
+		// fake us eastern timezone
+		$useastern->attach(new qCal_Component_Standard(array(
+			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'offsetto' => new qCal_Property_Tzoffsetto('0200'),
+			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
+		)));
+		$uswestern = new qCal_Component_Vtimezone(array(
+			'tzid' => 'US-Eastern',
+		));
+		// fake us western timezone
+		$uswestern->attach(new qCal_Component_Standard(array(
+			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'offsetto' => new qCal_Property_Tzoffsetto('0200'),
+			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
+		)));
+		$cal->attach($useastern);
+		$cal->attach($uswestern);
+		$timezones = $cal->getTimeZones();
+		$this->assertEqual(count($timezones), 2);
+		$this->assertIdentical($timezones[0], $useastern);
+		$this->assertIdentical($timezones[1], $uswestern);
+	
+	}
 	/**
 	 * An individual "VTIMEZONE" calendar component MUST be specified for
 	 * each unique "TZID" parameter value specified in the iCalendar object.

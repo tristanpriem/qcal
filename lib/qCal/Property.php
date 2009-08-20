@@ -226,10 +226,6 @@ abstract class qCal_Property {
 			$value = strtoupper($value);
 			$this->type = $value;
 		}
-		if ($name == "TZID") {
-			// Maybe this should add the tzid to some kind of central object so that it is easier
-			// to find all the tzid params (to match them up with their vtimezone)
-		}
 		$this->params[$name] = $value;
 		return $this;
 	
