@@ -73,10 +73,27 @@ class qCal_Component_Vcalendar extends qCal_Component {
 	public function getFreeBusyTime() {
 	
 		foreach ($this->children as $children) {
-			foreach($children as $child) {
+			foreach ($children as $child) {
 				// now get the object's free/busy time
 			}
 		}
+	
+	}
+	/**
+	 * getTimeZones
+	 */
+	public function getTimeZones() {
+	
+		$tzs = array();
+		foreach ($this->children as $children) {
+			foreach ($children as $child) {
+				// if the child is a vtimezone, add it to the results
+				if ($child instanceof qCal_Component_Vtimezone) {
+					$tzs[] = $child;
+				}
+			}
+		}
+		return $tzs;
 	
 	}
 	
