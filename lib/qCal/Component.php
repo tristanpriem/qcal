@@ -215,7 +215,7 @@ abstract class qCal_Component {
 		if (!$component->canAttachTo($this)) {
 			throw new qCal_Exception_InvalidComponent($component->getName() . ' cannot be attached to ' . $this->getName());
 		}
-		// $component->setParent($this);
+		$component->setParent($this);
 		$this->children[$component->getName()][] = $component;
 	
 	}
@@ -350,6 +350,20 @@ abstract class qCal_Component {
 	public function getChildren() {
 	
 		return $this->children;
+	
+	}
+	
+	/**
+	 * Gets the parent-most component in the tree. I would really like to come up
+	 * with a cleaner way to access other components from within a component, but oh well.
+	 */
+	public function getRootComponent() {
+	
+		$parent = $this;
+		while (!($parent instanceof qCal_Component_Vcalendar)) {
+			$parent = $parent->getParent();
+		}
+		return $parent;
 	
 	}
 	
