@@ -206,13 +206,16 @@ abstract class qCal_Component {
 	 * 		 - Freebusy time can only be determined by polling all components in the main vcalendar
 	 * 		   object.
 	 * 		 - More to come probably
+	 * Temporary Solution:
+	 * 		 - Use a registry and store pointers to every object in the tree (a hack)
+	 * 		 - I dunno
 	 */
 	public function attach(qCal_Component $component) {
 	
 		if (!$component->canAttachTo($this)) {
 			throw new qCal_Exception_InvalidComponent($component->getName() . ' cannot be attached to ' . $this->getName());
 		}
-		$component->setParent($this);
+		// $component->setParent($this);
 		$this->children[$component->getName()][] = $component;
 	
 	}
