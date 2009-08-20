@@ -189,5 +189,18 @@ class UnitTestCase_Component extends UnitTestCase {
 		$this->assertIdentical($valarm->getParent(), $vtodo);
 	
 	}
+	/**
+	 * Test that all components have access to their root component
+	 */
+	public function testComponentsHaveAccessToRootComponent() {
+	
+		$cal = new qCal_Component_Vcalendar();
+		$todo = new qCal_Component_Vtodo();
+		$alarm = new qCal_Component_Valarm();
+		$todo->attach($alarm);
+		$cal->attach($todo);
+		$this->assertIdentical($alarm->getRootComponent(), $cal);
+	
+	}
 
 }
