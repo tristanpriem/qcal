@@ -94,6 +94,9 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$this->assertEqual(count($children), 2);
 	
 	}
+	/**
+	 * The vcalendar component should be capable of retrieving all of the available time zones
+	 */
 	public function testGetTimeZonesFromCalendar() {
 	
 		$cal = new qCal_Component_Vcalendar;
@@ -107,20 +110,49 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
 		)));
 		$uswestern = new qCal_Component_Vtimezone(array(
-			'tzid' => 'US-Eastern',
+			'tzid' => 'US-Western',
 		));
 		// fake us western timezone
 		$uswestern->attach(new qCal_Component_Standard(array(
 			'dtstart' => new qCal_Date('20090913T000000Z'),
-			'offsetto' => new qCal_Property_Tzoffsetto('0200'),
-			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
+			'offsetto' => new qCal_Property_Tzoffsetto('0100'),
+			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0300'),
 		)));
 		$cal->attach($useastern);
 		$cal->attach($uswestern);
 		$timezones = $cal->getTimeZones();
 		$this->assertEqual(count($timezones), 2);
-		$this->assertIdentical($timezones[0], $useastern);
-		$this->assertIdentical($timezones[1], $uswestern);
+		$this->assertIdentical($timezones['US-EASTERN'], $useastern);
+		$this->assertIdentical($timezones['US-WESTERN'], $uswestern);
+	
+	}
+	/**
+	 * Timezones should be accessible individually by getTimezone()
+	 */
+	public function testGetTimezone() {
+	
+		$cal = new qCal_Component_Vcalendar;
+		$useastern = new qCal_Component_Vtimezone(array(
+			'tzid' => 'US-Eastern',
+		));
+		// fake us eastern timezone
+		$useastern->attach(new qCal_Component_Standard(array(
+			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'offsetto' => new qCal_Property_Tzoffsetto('0200'),
+			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
+		)));
+		$uswestern = new qCal_Component_Vtimezone(array(
+			'tzid' => 'US-Western',
+		));
+		// fake us western timezone
+		$uswestern->attach(new qCal_Component_Standard(array(
+			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'offsetto' => new qCal_Property_Tzoffsetto('0100'),
+			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0300'),
+		)));
+		$cal->attach($useastern);
+		$cal->attach($uswestern);
+		$this->assertIdentical($cal->getTimezone('us-eastern'), $useastern);
 	
 	}
 	/**
@@ -130,7 +162,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	 */
 	public function zzztestEachTzidParameterMustHaveCorrespondingVTimezone() {
 	
-		$cal = new qCal;
+		$cal = new qCal_Component_Vcalendar();
 		$todo1 = new qCal_Component_Vtodo(array(
 			'summary' => 'Make the monkey wash the cat',
 			'description' => 'Make the monkey wash the cat with a cloth. Make sure to also video-tape it.',
