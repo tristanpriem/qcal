@@ -218,6 +218,37 @@ abstract class qCal_Component {
 			throw new qCal_Exception_InvalidComponent($component->getName() . ' cannot be attached to ' . $this->getName());
 		}
 		$component->setParent($this);
+		// make sure if a timezone is requested that it is available...
+		$timezones = $this->getTimezones(); 
+		$tzids = array_keys($timezones);
+		// we only need to check if tzid exists if we are attaching something other than a timezone...
+		if (!($component instanceof qCal_Component_Vtimezone)) {
+			foreach ($component->getProperties() as $pname => $properties) {
+				$pname = strtoupper($pname); // probably redundant...
+				foreach ($properties as $property) {
+					switch ($pname) {
+						case "TZID":
+							$tzid = $property->getValue();
+							if (!array_key_exists($tzid, $tzids)) {
+								throw new qCal_Exception_MissingComponent('TZID "' . $tzid . '" not defined');
+							}
+							break;
+					}
+					$params = $property->getParams();
+					foreach ($params as $param => $val) {
+						$param = strtoupper($param); // probably redundant...
+						switch ($param) {
+							case "TZID":
+								$tzid = $val;
+								if (!array_key_exists($tzid, $tzids)) {
+									throw new qCal_Exception_MissingComponent('TZID "' . $tzid . '" not defined');
+								}
+								break;
+						}
+					}
+				}
+			}
+		}
 		$this->children[$component->getName()][] = $component;
 	
 	}
@@ -363,6 +394,7 @@ abstract class qCal_Component {
 	
 		$parent = $this;
 		while (!($parent instanceof qCal_Component_Vcalendar)) {
+			if (!$parent->getParent()) break;
 			$parent = $parent->getParent();
 		}
 		return $parent;
@@ -384,7 +416,61 @@ abstract class qCal_Component {
 		return $renderer->render($this);
 	
 	}
+	/**
+	 * getFreeBusyTime
+	 * Looks through all of the data in the calendar and returns a qCal_Component_Vfreebusy object
+	 * with free/busy time from $startdate to $enddate. The component will contain all components, but some
+	 * may have their transparency set to "transparent".
+	 * @todo This cannot be finished until recurring events are finished, since free/busy does not allow
+	 * recurrence rules, each instance of a recurrence would need to be calculated out and passed into the free/busy
+	 * component, so that the component would contain concrete instances of each event recurrence.
+	 */
+	public function getFreeBusyTime() {
 	
+		$root = $this->getRootComponent();
+		foreach ($root->getChildren() as $children) {
+			foreach ($children as $child) {
+				// now get the object's free/busy time
+			}
+		}
+	
+	}
+	/**
+	 * getTimeZones
+	 */
+	public function getTimezones() {
+	
+		$tzs = array();
+		$root = $this->getRootComponent();
+		foreach ($root->getChildren() as $children) {
+			foreach ($children as $child) {
+				// if the child is a vtimezone, add it to the results
+				// @todo make sure that tzid is available, throw exception otherwise
+				if ($child instanceof qCal_Component_Vtimezone) {
+					$tzid = $child->getTzid();
+					$tzid = strtoupper($tzid);
+					$tzs[$tzid] = $child;
+				}
+			}
+		}
+		return $tzs;
+	
+	}
+	/**
+	 * Get a specific timezone by tzid
+	 * @param string The timezone identifier
+	 */
+	public function getTimezone($tzid) {
+	
+		$tzid = strtoupper($tzid);
+		$root = $this->getRootComponent();
+		$timezones = $root->getTimezones();
+		if (array_key_exists($tzid, $timezones)) {
+			return $timezones[$tzid];
+		}
+		return false;
+	
+	}
 	/**
 	 * Allows for components to get and set property values by calling
 	 * qCal_Component::getPropertyName() and qCal_Component::setPropertyName('2.0') where propertyName is the property name
