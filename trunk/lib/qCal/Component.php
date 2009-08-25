@@ -199,6 +199,10 @@ abstract class qCal_Component {
 	}
 	/**
 	 * Attach a component to this component (alarm inside event for example)
+	 * @todo There may be an issue with the way this is done. When parsing a file, if a component
+	 * or property with a tzid comes before its corresponding vtimezone component, an exception
+	 * will be thrown. I'm don't think the RFC specifies that requirement (that timezone components
+	 * must come before their corresponding tzids)
 	 * @todo Sub-components such as Vevent need to be able to access the main vcalendar object
 	 * for several reasons. 
 	 * 		 - If a vtodo has a tzid, it needs to be able to determine that the corresponding 
@@ -208,9 +212,6 @@ abstract class qCal_Component {
 	 * 		 - Freebusy time can only be determined by polling all components in the main vcalendar
 	 * 		   object.
 	 * 		 - More to come probably
-	 * Temporary Solution:
-	 * 		 - Use a registry and store pointers to every object in the tree (a hack)
-	 * 		 - I dunno
 	 */
 	public function attach(qCal_Component $component) {
 	
