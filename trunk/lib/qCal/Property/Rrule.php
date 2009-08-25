@@ -8,6 +8,8 @@
  * @todo Make sure allowedCompoents is correct. The RFC isn't dead clear
  * @todo There are a lot of rules for this guy. Make sure you take them all
  * into consideration and conform to the shit below.
+ * @todo This property doesn't require a value. Make sure it is possible to
+ * render the property without the colon that comes between name, params and value
  * 
  * RFC 2445 Definition
  * 
