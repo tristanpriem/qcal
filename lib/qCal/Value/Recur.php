@@ -271,6 +271,7 @@ class qCal_Value_Recur extends qCal_Value {
 	 */
 	protected function doCast($value) {
 	
+		// return new qCal_Date_Recur();
 		return $value;
 	
 	}
