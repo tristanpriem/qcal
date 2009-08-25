@@ -211,9 +211,40 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	 * the time in question, and using the offset value from that
 	 * observance.
 	 */
-	public function testAllTheStuffAbove() {
+	public function zzztestAllTheStuffAbove() {
 	
-		
+		// this cannot be tested until the recurrence property is unit tested and working...
+		$tz = new qCal_Component_Vtimezone(array(
+			'tzid' => 'America/Los_Angeles'
+		), array(
+			new qCal_Component_Standard(array(
+				'dtstart' => '19701101T020000',
+				'tzoffsetfrom' => '-0800',
+				'tzoffsetto' => '-0700',
+				'tzname' => 'PST',
+				new qCal_Property_Rrule('', array(
+					'freq' => 'yearly',
+					'bymonth' => '3',
+					'byday' => '2su'
+				)),
+				new qCal_Property_Rrule('', array(
+					'freq' => 'monthly',
+					'bymonth' => '3',
+					'byday' => '1su'
+				))
+			)),
+			new qCal_Component_Daylight(array(
+				'dtstart' => '19701101T020000',
+				'tzoffsetfrom' => '-0800',
+				'tzoffsetto' => '-0700',
+				'tzname' => 'PDT',
+				new qCal_Property_Rrule('', array(
+					'freq' => 'yearly',
+					'bymonth' => '11',
+					'byday' => '1su'
+				))
+			)),
+		));
 	
 	}
 	/**
@@ -222,6 +253,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	 * accessible by anyone who might need to interpret the object. This
 	 * SHOULD NOT normally be a file: URL or other URL that is not widely-
 	 * accessible.
+	 * @todo WTF does "should not normally be a file" mean??
 	 */
 	public function zzztestTzurlPropertyIsUrl() {
 	
