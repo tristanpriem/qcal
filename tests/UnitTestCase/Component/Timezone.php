@@ -211,9 +211,9 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 	 * the time in question, and using the offset value from that
 	 * observance.
 	 */
-	public function zzztestAllTheStuffAbove() {
+	public function testAllTheStuffAbove() {
 	
-		// @todo Finish this
+		
 	
 	}
 	/**
