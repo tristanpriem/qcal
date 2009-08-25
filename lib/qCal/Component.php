@@ -147,7 +147,9 @@ abstract class qCal_Component {
 	
 	}
 	/**
-	 * Check that this is a valid component
+	 * @todo (lazy load functionality) Check that this is a valid component. This method is sort of lazy-loaded. It only gets called
+	 * if the user has requested data that requires validation and the component has not been validated already.
+	 * @todo Shouldn't this loop over children and validate them too? Maybe optionally?
 	 */
 	public function validate() {
 	

@@ -41,24 +41,18 @@ class qCal_Component_Vcalendar extends qCal_Component {
 
 	protected $name = "VCALENDAR";
 	protected $requiredProperties = array('PRODID','VERSION');
+	/**
+	 * vcalendar objects have a number of requirements defined in the RFC just as most other
+	 * components do. Each has a global set of validation rules as well as their own set. This
+	 * is the set of rules defined by the vcalendar object. 
+	 */
 	public function doValidation() {
 	
 		// @todo make sure that all tzids that are specified have a corresponding vtimezone
 		// look for tzids and make sure there are corresponding vtimezone components for each tzid
 		// In order to be sure I find all tzids, I need to search through the entire tree, so either
 		// I need a recursive getProperties() or I need to use a stack to find all of them.
-		foreach ($this->getProperties() as $name => $properties) {
-			foreach ($properties as $property) {
-				$params = $property->getParams();
-				foreach ($params as $name => $param) {
-					$name = strtoupper($name);
-					if ($name == "TZID") {
-						// make sure there is a vtimezone component with this tzid
-						// pr($property);
-					}
-				}
-			}
-		}
+		$timezones = $this->getTimeZones();
 	
 	} 
 	/**
@@ -82,19 +76,36 @@ class qCal_Component_Vcalendar extends qCal_Component {
 	/**
 	 * getTimeZones
 	 */
-	public function getTimeZones() {
+	public function getTimezones() {
 	
 		$tzs = array();
 		foreach ($this->children as $children) {
 			foreach ($children as $child) {
 				// if the child is a vtimezone, add it to the results
+				// @todo make sure that tzid is available, throw exception otherwise
 				if ($child instanceof qCal_Component_Vtimezone) {
-					$tzs[] = $child;
+					$tzid = $child->getTzid();
+					$tzid = strtoupper($tzid);
+					$tzs[$tzid] = $child;
 				}
 			}
 		}
 		return $tzs;
 	
 	}
+	/**
+	 * Get a specific timezone by tzid
+	 * @param string The timezone identifier
+	 */
+	public function getTimezone($tzid) {
 	
+		$tzid = strtoupper($tzid);
+		$timezones = $this->getTimezones();
+		if (array_key_exists($tzid, $timezones)) {
+			return $timezones[$tzid];
+		}
+		return false;
+	
+	}
+
 }
