@@ -6,6 +6,17 @@
 class UnitTestCase_Value_Recur extends UnitTestCase {
 
 	/**
+	 * 
+	 */
+	// public function testRecurAcceptsRecurValueType() {
+	// 	
+	// 		$recur = new qCal_Date_Recur('2009-08-24', 'yearly'); // create a yearly recurrence
+	// 		$recur->until('20120101T000000Z') // that occurs until 01/01/2012
+	// 			->interval(1) // happens every 1 years
+	// 			->byMonth("2,4"); // in february and april
+	// 	
+	// 	}
+	/**
 	 * If the property permits, multiple "recur" values are
 	 * specified by a COMMA character (US-ASCII decimal 44) separated list
 	 * of values. The value type is a structured value consisting of a list
@@ -35,7 +46,7 @@ class UnitTestCase_Value_Recur extends UnitTestCase {
 	 */
 	public function testFreqPartIdentifiesTypeOfRecurrenceRule() {
 	
-		
+		//$recur = new qCal_Value_Recur('');
 	
 	}
 	/**
