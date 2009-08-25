@@ -52,59 +52,7 @@ class qCal_Component_Vcalendar extends qCal_Component {
 		// look for tzids and make sure there are corresponding vtimezone components for each tzid
 		// In order to be sure I find all tzids, I need to search through the entire tree, so either
 		// I need a recursive getProperties() or I need to use a stack to find all of them.
-		$timezones = $this->getTimeZones();
-	
-	} 
-	/**
-	 * getFreeBusyTime
-	 * Looks through all of the data in the calendar and returns a qCal_Component_Vfreebusy object
-	 * with free/busy time from $startdate to $enddate. The component will contain all components, but some
-	 * may have their transparency set to "transparent".
-	 * @todo This cannot be finished until recurring events are finished, since free/busy does not allow
-	 * recurrence rules, each instance of a recurrence would need to be calculated out and passed into the free/busy
-	 * component, so that the component would contain concrete instances of each event recurrence.
-	 */
-	public function getFreeBusyTime() {
-	
-		foreach ($this->children as $children) {
-			foreach ($children as $child) {
-				// now get the object's free/busy time
-			}
-		}
-	
-	}
-	/**
-	 * getTimeZones
-	 */
-	public function getTimezones() {
-	
-		$tzs = array();
-		foreach ($this->children as $children) {
-			foreach ($children as $child) {
-				// if the child is a vtimezone, add it to the results
-				// @todo make sure that tzid is available, throw exception otherwise
-				if ($child instanceof qCal_Component_Vtimezone) {
-					$tzid = $child->getTzid();
-					$tzid = strtoupper($tzid);
-					$tzs[$tzid] = $child;
-				}
-			}
-		}
-		return $tzs;
-	
-	}
-	/**
-	 * Get a specific timezone by tzid
-	 * @param string The timezone identifier
-	 */
-	public function getTimezone($tzid) {
-	
-		$tzid = strtoupper($tzid);
-		$timezones = $this->getTimezones();
-		if (array_key_exists($tzid, $timezones)) {
-			return $timezones[$tzid];
-		}
-		return false;
+		
 	
 	}
 
