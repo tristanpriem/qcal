@@ -10,10 +10,13 @@ class UnitTestCase_Parser extends UnitTestCase {
 	 */
     public function setUp() {
     
-        $this->testpath = TESTFILE_PATH . '/testpath';
+        $this->testpath = TESTFILE_PATH . DIRECTORY_SEPARATOR . 'testpath';
 		if (!file_exists($this->testpath)) mkdir($this->testpath, 0777);
+		else {
+			@chmod($this->testpath, 0777);
+		}
 		$file = $this->testpath . DIRECTORY_SEPARATOR . 'foo.ics';
-		$content = file_get_contents(TESTFILE_PATH . '/simple.ics');
+		$content = file_get_contents(TESTFILE_PATH . DIRECTORY_SEPARATOR . 'simple.ics');
 		file_put_contents($file, $content);
     
     }
@@ -25,15 +28,18 @@ class UnitTestCase_Parser extends UnitTestCase {
 		$dir = dir($this->testpath);
 		if (is_resource($dir->handle)) {
 			while (false !== ($entry = $dir->read())) {
-			   if ($entry != "." && $entry != "..") unlink($this->testpath . DIRECTORY_SEPARATOR . $entry);
+				if ($entry != "." && $entry != "..") {
+					@chmod($this->testpath . DIRECTORY_SEPARATOR . $entry, 0777);
+					@unlink($this->testpath . DIRECTORY_SEPARATOR . $entry);
+				}
 			}
-	        rmdir($this->testpath);	
+	        @rmdir($this->testpath);	
 		}
     
     }
 	public function testParserAcceptsRawData() {
 	
-		$data = file_get_contents(TESTFILE_PATH . '/simple.ics');
+		$data = file_get_contents(TESTFILE_PATH . DIRECTORY_SEPARATOR . 'simple.ics');
 		$parser = new qCal_Parser(array(
 			// options!
 		));
@@ -49,7 +55,7 @@ class UnitTestCase_Parser extends UnitTestCase {
 		$parser = new qCal_Parser(array(
 			// options!
 		));
-		$ical = $parser->parseFile(TESTFILE_PATH . '/simple.ics');
+		$ical = $parser->parseFile(TESTFILE_PATH . DIRECTORY_SEPARATOR . 'simple.ics');
 		$this->assertIsA($ical, 'qCal_Component_Vcalendar');
 	
 	}

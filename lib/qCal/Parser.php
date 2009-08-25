@@ -56,7 +56,8 @@ class qCal_Parser {
 	 */
 	public function parseFile($filename) {
 	
-		if (substr($filename, 0, 1) == '/') {
+		// @todo This is hacky... but it works
+		if (substr($filename, 0, 1) == '/' || substr($filename, 0, 3) == 'C:\\') {
 			if (file_exists($filename)) {
 				$content = file_get_contents($filename);
 				return $this->parse($content);
