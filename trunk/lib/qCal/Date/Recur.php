@@ -28,7 +28,7 @@ class qCal_Date_Recur {
 		'TH' => 'Thursday',
 		'FR' => 'Friday',
 		'SA' => 'Saturday',
-		'SU' => 'Sunday'
+		'SU' => 'Sunday',
 	);
 	/**
 	 * @var qCal_Date The start date/time of the recurrence
@@ -93,7 +93,7 @@ class qCal_Date_Recur {
 	 */
 	protected $bysetpos;
 	/**
-	 * @var string Must be one of the weekdays specified below (2 char). Specifies the day on which the work week
+	 * @var string Must be one of the weekdays specified above (2 char). Specifies the day on which the work week
 	 * starts. This is significant when a weekly rule has an interval greater than 1 and a byday rule part is specified.
 	 * This is also significant when in a yearly rule when a byweekno rule part is specified. Defaults to "MO"
 	 */
@@ -154,6 +154,7 @@ class qCal_Date_Recur {
 		$abbrs = array_keys($this->weekdays);
 		if (!in_array($wkst, $abbrs)) throw new qCal_Date_Exception_InvalidRecur('"' . $wkst . '" is not a valid week day, must be one of the following: ' . implode(', ', $abbrs));
 		$this->wkst = $wkst;
+		// @todo I wonder if re-sorting the weekdays array would help me in any way...
 	
 	}
 	/**
@@ -327,18 +328,25 @@ class qCal_Date_Recur {
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
 		switch ($this->freq) {
 			case "SECONDLY":
+				// do secondly stuff...
 				break;
 			case "MINUTELY":
+				// do minutely stuff...
 				break;
 			case "HOURLY":
+				// do hourly stuff...
 				break;
 			case "DAILY":
+				// do daily stuff...
 				break;
 			case "WEEKLY":
+				// do weekly stuff...
 				break;
 			case "MONTHLY":
+				// do monthly stuff...
 				break;
 			case "YEARLY":
+				// do yearly stuff...
 				break;
 		}
 		// now we need to apply each byXXX rule to get the recurrence...
@@ -369,7 +377,7 @@ class qCal_Date_Recur {
 		if ($this->bysetpos) {
 			
 		}
-		// after all of the above (in this exact order), cound and until are evaluated
+		// after all of the above (in this exact order), count and until are evaluated
 	
 	}
 
