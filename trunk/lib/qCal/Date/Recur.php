@@ -116,12 +116,14 @@ class qCal_Date_Recur {
 	/**
 	 * Specifies the date when the recurrence stops, inclusively. If not present, and there is no count specified,
 	 * then the recurrence goes on "forever".
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $until string|qCal_Date|DateTime If time is specified, it must be UTC
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function until($until) {
+	public function until($until = null) {
 	
+		if (is_null($until)) return $this->until;
 		$this->until = new qCal_Date($until);
 		return $this;
 	
@@ -129,36 +131,42 @@ class qCal_Date_Recur {
 	/**
 	 * Specifies the amount of recurrences before the recurrence ends. If neither this nor "until" is specified,
 	 * the recurrence repeats "forever".
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $count integer The amount of recurrences before it stops
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function count($count) {
+	public function count($count = null) {
 	
+		if (is_null($count)) return $this->count;
 		$this->count = (integer) $count;
 		return $this;
 	
 	}
 	/**
 	 * Specifies the interval of recurrences
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $interval integer The interval of recurrences, for instance every "3" days
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function interval($interval) {
+	public function interval($interval = null) {
 	
+		if (is_null($interval)) return $this->interval;
 		$this->interval = (integer) $interval;
 		return $this;
 	
 	}
 	/**
 	 * Specifies a rule which will happen on every nth second. 
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $second integer|array Can be an integer (or array of ints) between 0 and 59
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function bySecond($second) {
+	public function bySecond($second = null) {
 	
+		if (is_null($second)) return $this->bysecond;
 		if (!is_array($second)) $second = array($second);
 		$this->bysecond = $second;
 		return $this;
@@ -166,12 +174,14 @@ class qCal_Date_Recur {
 	}
 	/**
 	 * Specifies a rule which will happen on every nth minute
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $minute integer|array Can be an integer (or array of ints) between 0 and 59
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byMinute($minute) {
+	public function byMinute($minute = null) {
 	
+		if (is_null($minute)) return $this->byminute;
 		if (!is_array($minute)) $minute = array($minute);
 		$this->byminute = $minute;
 		return $this;
@@ -179,12 +189,14 @@ class qCal_Date_Recur {
 	}
 	/**
 	 * Specifies a rule which will happen on every nth hour
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $hour integer|array Can be an integer (or array of ints) between 0 and 23
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byHour($hour) {
+	public function byHour($hour = null) {
 	
+		if (is_null($hour)) return $this->byhour;
 		if (!is_array($hour)) $hour = array($hour);
 		$this->byhour = $hour;
 		return $this;
@@ -193,14 +205,16 @@ class qCal_Date_Recur {
 	/**
 	 * Specifies a rule which will happen on whichever day is specified. For instance, "MO" would
 	 * mean every monday.
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param $day string|array Must be one of the 2-char week days specified above. Can be preceded by
 	 * a positive or negative integer to represent, for instance, the third monday of the month (3MO) or second to last
 	 * Sunday of the month (-2SU)
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byDay($day) {
+	public function byDay($day = null) {
 	
+		if (is_null($day)) return $this->byday;
 		if (!is_array($day)) $day = array($day);
 		$this->byday = $day;
 		return $this;
@@ -208,12 +222,14 @@ class qCal_Date_Recur {
 	}
 	/**
 	 * Specifies a rule which will happen on the month days specified. For instance, 23 would mean the 23rd of every month.
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param integer|array Must be between 1 and 31 or -31 to 1 (or an array of those values)
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byMonthDay($monthday) {
+	public function byMonthDay($monthday = null) {
 	
+		if (is_null($monthday)) return $this->bymonthday;
 		if (!is_array($monthday)) $monthday = array($monthday);
 		$this->bymonthday = $monthday;
 		return $this;
@@ -221,12 +237,14 @@ class qCal_Date_Recur {
 	}
 	/**
 	 * Specifies a rule which will happen on the nth day of the year
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param integer|array Must be between 1 and 366 or -366 to -1.
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byYearDay($yearday) {
+	public function byYearDay($yearday = null) {
 	
+		if (is_null($yearday)) return $this->byyearday;
 		if (!is_array($yearday)) $yearday = array($yearday);
 		$this->byyearday = $yearday;
 		return $this;
@@ -234,12 +252,14 @@ class qCal_Date_Recur {
 	}
 	/**
 	 * Specifies a rule which will happen on the nth week of the year
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param integer|array Must be between 1 and 53 or -53 to -1.
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byWeekNo($weekno) {
+	public function byWeekNo($weekno = null) {
 	
+		if (is_null($weekno)) return $this->byweekno;
 		if (!is_array($weekno)) $weekno = array($weekno);
 		$this->byweekno = $weekno;
 		return $this;
@@ -247,12 +267,14 @@ class qCal_Date_Recur {
 	}
 	/**
 	 * Specifies a rule which will happen on the nth month of the year
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @param integer|array Must be between 1 and 12
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function byMonth($month) {
+	public function byMonth($month = null) {
 	
+		if (is_null($month)) return $this->bymonth;
 		if (!is_array($month)) $month = array($month);
 		$this->bymonth = $month;
 		return $this;
@@ -261,12 +283,14 @@ class qCal_Date_Recur {
 	/**
 	 * Indicates the nth occurrence of the specific occurrence within the set of
 	 * events specified by the rule.
+	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
 	 * @todo I don't really understand how this works... :( Figure out wtf it is for.
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 * @return self
 	 */
-	public function bySetPos($setpos) {
+	public function bySetPos($setpos = null) {
 	
+		if (is_null($setpos)) return $this->bysetpos;
 		$this->bysetpos = (integer) $setpos;
 		return $this;
 	
