@@ -275,7 +275,11 @@ class qCal_Date_Recur {
 	 * Fetches instances of the recurrence rule in the given time period. Because recurrences
 	 * could potentially go on forever, there is no way to fetch ALL instances of a recurrence rule
 	 * other than providing a date range that spans the entire length of the recurrence.
-	 * @todo This is really really really fuckin hard...
+	 * 
+	 * The way this will need to work is, depending on the frequency, I will find all possible
+	 * occurences of the rule. For instance, if this is a "monthly" rule, I'll find out which month
+	 * to start in, then find all occurences possible. Then narrow down by the other rules I guess.
+	 * 
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 */
 	public function getInstances($start, $end) {
@@ -284,6 +288,22 @@ class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
+		switch ($this->freq) {
+			case "SECONDLY":
+				break;
+			case "MINUTELY":
+				break;
+			case "HOURLY":
+				break;
+			case "DAILY":
+				break;
+			case "WEEKLY":
+				break;
+			case "MONTHLY":
+				break;
+			case "YEARLY":
+				break;
+		}
 		// now we need to apply each byXXX rule to get the recurrence...
 		if ($this->bymonth) {
 			// find the first occurrence of the specified month and set that as the first occurence?
