@@ -7,14 +7,6 @@
 class qCal_Date_Recur {
 
 	/**
-	 * @var qCal_Date The start date/time of the recurrence
-	 */
-	protected $dtstart;
-	/**
-	 * @var string frequency of the recurrence
-	 */
-	protected $freq;
-	/**
 	 * @var array Allowed frequencies
 	 */
 	protected $freqtypes = array(
@@ -26,6 +18,26 @@ class qCal_Date_Recur {
 		'MONTHLY',
 		'YEARLY',
 	);
+	/**
+	 * @var array An array of week days. Used throughout this class to validate input.
+	 */
+	protected $weekdays = array(
+		'MO' => 'Monday',
+		'TU' => 'Tuesday',
+		'WE' => 'Wednesday',
+		'TH' => 'Thursday',
+		'FR' => 'Friday',
+		'SA' => 'Saturday',
+		'SU' => 'Sunday'
+	);
+	/**
+	 * @var qCal_Date The start date/time of the recurrence
+	 */
+	protected $dtstart;
+	/**
+	 * @var string frequency of the recurrence
+	 */
+	protected $freq;
 	/**
 	 * @var qCal_Date The date/time which the recurrence ends
 	 */
@@ -87,18 +99,6 @@ class qCal_Date_Recur {
 	 */
 	protected $wkst = "MO";
 	/**
-	 * @var array An array of week days. Used throughout this class to validate input.
-	 */
-	protected $weekdays = array(
-		'MO' => 'Monday',
-		'TU' => 'Tuesday',
-		'WE' => 'Wednesday',
-		'TH' => 'Thursday',
-		'FR' => 'Friday',
-		'SA' => 'Saturday',
-		'SU' => 'Sunday'
-	);
-	/**
 	 * Constructor
 	 * @param $freq string Must be one of the freqtypes specified above.
 	 * @throws qCal_Date_Exception_InvalidRecur if a frequency other than those specified above is passed in
@@ -124,6 +124,7 @@ class qCal_Date_Recur {
 	public function until($until = null) {
 	
 		if (is_null($until)) return $this->until;
+		if ($this->count()) throw new qCal_Date_Exception_InvalidRecur('A recurrence count and an until date cannot both be specified');
 		$this->until = new qCal_Date($until);
 		return $this;
 	
@@ -139,8 +140,18 @@ class qCal_Date_Recur {
 	public function count($count = null) {
 	
 		if (is_null($count)) return $this->count;
+		if ($this->until()) throw new qCal_Date_Exception_InvalidRecur('A recurrence count and an until date cannot both be specified');
 		$this->count = (integer) $count;
 		return $this;
+	
+	}
+	/**
+	 * Specifies the start of the work-week, which is Monday by default
+	 */
+	public function wkst($wkst) {
+	
+		if (is_null($wkst)) return $this->wkst;
+		// @todo finish this...
 	
 	}
 	/**
