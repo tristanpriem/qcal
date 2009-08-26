@@ -148,10 +148,12 @@ class qCal_Date_Recur {
 	/**
 	 * Specifies the start of the work-week, which is Monday by default
 	 */
-	public function wkst($wkst) {
+	public function wkst($wkst = null) {
 	
 		if (is_null($wkst)) return $this->wkst;
-		// @todo finish this...
+		$abbrs = array_keys($this->weekdays);
+		if (!in_array($wkst, $abbrs)) throw new qCal_Date_Exception_InvalidRecur('"' . $wkst . '" is not a valid week day, must be one of the following: ' . implode(', ', $abbrs));
+		$this->wkst = $wkst;
 	
 	}
 	/**

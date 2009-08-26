@@ -53,6 +53,17 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
+	public function testSetWeekworkStart() {
+	
+		$recur = new qCal_Date_Recur('minutely');
+		$recur->wkst('SU'); // set the work week start to Sunday
+		$this->assertEqual($recur->wkst(), 'SU');
+		// invalid work day should throw an exception
+		$this->expectException(new qCal_Date_Exception_InvalidRecur('"FOO" is not a valid week day, must be one of the following: MO, TU, WE, TH, FR, SA, SU'));
+		$recur->wkst('FOO');
+	
+	}
+	
 	public function testCanHaveCountOrUntilButNotBoth() {
 	
 		$rule = new qCal_Date_Recur('hourly');
