@@ -146,6 +146,34 @@ class UnitTestCase_Recur extends UnitTestCase {
 			new qCal_Date('01/01/2000 03:20am'),
 			new qCal_Date('01/01/2000 03:40am'),
 		));
+		
+	
+		// let's assume we want a recurrence every other hour starting from 01/01/2000 at 12:00am
+		// and ending at 01/01/2000 at 6:00 am
+		$hrInstances = array();
+		$hourly = new qCal_Date_Recur_Hourly('01/01/2000 12:00am');
+		while($hourly->onOrBefore('01/01/2000 6:00am')) {
+			// get current instance
+			$hrInstances[] = $hourly->getInstance();
+			// increment by 2 hours
+			$hourly->increment(2);
+		}
+	
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/01/2000 12:45:20am');
+		$after = new qCal_Date('01/01/2000 1:02:00am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$hly = new qCal_Date_Recur_Hourly('01/01/2000 12:00am');
+		$this->assertTrue($hly->onOrBefore($on));
+		$this->assertTrue($hly->onOrBefore($after));
+		$this->assertFalse($hly->onOrBefore($before));
+	
+		$this->assertEqual($hrInstances, array(
+			new qCal_Date('01/01/2000 12:00am'),
+			new qCal_Date('01/01/2000 02:00am'),
+			new qCal_Date('01/01/2000 04:00am'),
+			new qCal_Date('01/01/2000 06:00am'),
+		));
 	
 	}
 	
