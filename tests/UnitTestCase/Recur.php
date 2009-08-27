@@ -193,7 +193,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 		$on = new qCal_Date('01/01/2000 12:45:20am');
 		$after = new qCal_Date('01/02/2000 1:02:00am');
 		$before = new qCal_Date('12/31/1999 11:59:59pm');
-		$dly = new qCal_Date_Recur_Hourly('01/01/2000 12:00am');
+		$dly = new qCal_Date_Recur_Daily('01/01/2000 12:00am');
 		$this->assertTrue($dly->onOrBefore($on));
 		$this->assertTrue($dly->onOrBefore($after));
 		$this->assertFalse($dly->onOrBefore($before));
@@ -208,6 +208,35 @@ class UnitTestCase_Recur extends UnitTestCase {
 			new qCal_Date('01/19/2000'),
 			new qCal_Date('01/22/2000'),
 			new qCal_Date('01/25/2000'),
+		));
+		
+		// let's assume we want a recurrence every week starting from 01/01/2000
+		// and ending at 02/02/2000
+		// @todo This has the same issues as daily does with times being attached when they shouldn't be
+		$wInstances = array();
+		$weekly = new qCal_Date_Recur_Weekly('01/01/2000');
+		while($weekly->onOrBefore('02/02/2000')) {
+			// get current instance
+			$wInstances[] = $weekly->getInstance();
+			// increment by 3 days
+			$weekly->increment(1);
+		}
+		
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/03/2000 12:45:20am');
+		$after = new qCal_Date('01/09/2000 1:02:00am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$wly = new qCal_Date_Recur_Weekly('01/01/2000 12:00am');
+		$this->assertTrue($wly->onOrBefore($on));
+		$this->assertTrue($wly->onOrBefore($after));
+		$this->assertFalse($wly->onOrBefore($before));
+	
+		$this->assertEqual($wInstances, array(
+			new qCal_Date('01/01/2000'),
+			new qCal_Date('01/08/2000'),
+			new qCal_Date('01/15/2000'),
+			new qCal_Date('01/22/2000'),
+			new qCal_Date('01/29/2000'),
 		));
 	
 	}
