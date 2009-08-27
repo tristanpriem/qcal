@@ -72,6 +72,82 @@ class UnitTestCase_Recur extends UnitTestCase {
 			->until('02/12/2009');
 	
 	}
+	/**
+	 * Within the recur object, we use objects to compare the current date with
+	 * rule modifiers. This tests their functionality.
+	 */
+	public function testLoopHelpers() {
+	
+		// let's assume we want a recurrence every 30 seconds starting from 01/01/2000 at 12:00am
+		// and ending at 01/01/2000 at 12:05:15am
+		$sInstances = array();
+		$secondly = new qCal_Date_Recur_Secondly('01/01/2000 12:00am');
+		while($secondly->onOrBefore('01/01/2000 12:05:15am')) {
+			// get current instance
+			$sInstances[] = $secondly->getInstance();
+			// increment by 30 seconds
+			$secondly->increment(30);
+		}
+		
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/01/2000 12:00am');
+		$after = new qCal_Date('01/01/2000 12:00:01am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$sly = new qCal_Date_Recur_Secondly('01/01/2000 12:00am');
+		$this->assertTrue($sly->onOrBefore($on));
+		$this->assertTrue($sly->onOrBefore($after));
+		$this->assertFalse($sly->onOrBefore($before));
+		
+		$this->assertEqual($sInstances, array(
+			new qCal_Date('01/01/2000 12:00am'),
+			new qCal_Date('01/01/2000 12:00:30am'),
+			new qCal_Date('01/01/2000 12:01am'),
+			new qCal_Date('01/01/2000 12:01:30am'),
+			new qCal_Date('01/01/2000 12:02am'),
+			new qCal_Date('01/01/2000 12:02:30am'),
+			new qCal_Date('01/01/2000 12:03am'),
+			new qCal_Date('01/01/2000 12:03:30am'),
+			new qCal_Date('01/01/2000 12:04am'),
+			new qCal_Date('01/01/2000 12:04:30am'),
+			new qCal_Date('01/01/2000 12:05am'),
+		));
+		
+		// let's assume we want a recurrence every 20 minutes starting from 01/01/2000 at 12:00am
+		// and ending at 01/01/2000 at 3:50:15am
+		$minInstances = array();
+		$minutely = new qCal_Date_Recur_Minutely('01/01/2000 12:00am');
+		while($minutely->onOrBefore('01/01/2000 3:50:15am')) {
+			// get current instance
+			$minInstances[] = $minutely->getInstance();
+			// increment by 30 seconds
+			$minutely->increment(20);
+		}
+		
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/01/2000 12:00:20am');
+		$after = new qCal_Date('01/01/2000 12:02:00am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$mly = new qCal_Date_Recur_Minutely('01/01/2000 12:00am');
+		$this->assertTrue($mly->onOrBefore($on));
+		$this->assertTrue($mly->onOrBefore($after));
+		$this->assertFalse($mly->onOrBefore($before));
+		
+		$this->assertEqual($minInstances, array(
+			new qCal_Date('01/01/2000 12:00am'),
+			new qCal_Date('01/01/2000 12:20am'),
+			new qCal_Date('01/01/2000 12:40am'),
+			new qCal_Date('01/01/2000 01:00am'),
+			new qCal_Date('01/01/2000 01:20am'),
+			new qCal_Date('01/01/2000 01:40am'),
+			new qCal_Date('01/01/2000 02:00am'),
+			new qCal_Date('01/01/2000 02:20am'),
+			new qCal_Date('01/01/2000 02:40am'),
+			new qCal_Date('01/01/2000 03:00am'),
+			new qCal_Date('01/01/2000 03:20am'),
+			new qCal_Date('01/01/2000 03:40am'),
+		));
+	
+	}
 	
 	// public function testBuildRule() {
 	// 	
@@ -91,14 +167,14 @@ class UnitTestCase_Recur extends UnitTestCase {
 	/**
 	 * Let's start with a really simple rule and go from there...
 	 */
-	public function testBuildSimpleRule() {
-	
-		$rule = new qCal_Date_Recur('daily');
-		$rule->interval(1);
-		// should return every day in august
-		$dates = $rule->getInstances('08/01/2009', '09/01/2009');
-		// pr($dates);
-	
-	}
+	// public function testBuildSimpleRule() {
+	// 
+	// 	$rule = new qCal_Date_Recur('daily');
+	// 	$rule->interval(1);
+	// 	// should return every day in august
+	// 	$dates = $rule->getInstances('08/01/2009', '09/01/2009');
+	// 	// pr($dates);
+	// 
+	// }
 
 }
