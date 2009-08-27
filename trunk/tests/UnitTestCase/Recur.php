@@ -174,6 +174,41 @@ class UnitTestCase_Recur extends UnitTestCase {
 			new qCal_Date('01/01/2000 04:00am'),
 			new qCal_Date('01/01/2000 06:00am'),
 		));
+		
+		// let's assume we want a recurrence every three days starting from 01/01/2000 at 9:00am
+		// and ending at 01/27/2000 at 6:00 am
+		// @todo This kind of presents a problem... daily rules probably shouldn't really have a time component,
+		// daily rules should represent whole days rather than days at a certain time. my qCal_Date object requires
+		// a time because it just extends the built-in DateTime class. I need to figure out how I want to deal with this.
+		$dInstances = array();
+		$daily = new qCal_Date_Recur_Daily('01/01/2000');
+		while($daily->onOrBefore('01/27/2000')) {
+			// get current instance
+			$dInstances[] = $daily->getInstance();
+			// increment by 3 days
+			$daily->increment(3);
+		}
+		
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/01/2000 12:45:20am');
+		$after = new qCal_Date('01/02/2000 1:02:00am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$dly = new qCal_Date_Recur_Hourly('01/01/2000 12:00am');
+		$this->assertTrue($dly->onOrBefore($on));
+		$this->assertTrue($dly->onOrBefore($after));
+		$this->assertFalse($dly->onOrBefore($before));
+		
+		$this->assertEqual($dInstances, array(
+			new qCal_Date('01/01/2000'),
+			new qCal_Date('01/04/2000'),
+			new qCal_Date('01/07/2000'),
+			new qCal_Date('01/10/2000'),
+			new qCal_Date('01/13/2000'),
+			new qCal_Date('01/16/2000'),
+			new qCal_Date('01/19/2000'),
+			new qCal_Date('01/22/2000'),
+			new qCal_Date('01/25/2000'),
+		));
 	
 	}
 	
