@@ -318,6 +318,10 @@ class qCal_Date_Recur {
 	 * occurences of the rule. For instance, if this is a "monthly" rule, I'll find out which month
 	 * to start in, then find all occurences possible. Then narrow down by the other rules I guess.
 	 * 
+	 * @idea Maybe I should build classes for each of the frequency types. That way I could loop over
+	 * the object and get methods like qCal_Date_Recur_Monthly::isNthDay('SU') to find out what sunday
+	 * of the month it is... stuff like that... I dunno... ?
+	 * 
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 */
 	public function getInstances($start, $end) {
