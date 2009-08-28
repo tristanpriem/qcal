@@ -271,6 +271,35 @@ class UnitTestCase_Recur extends UnitTestCase {
 			new qCal_Date('07/01/2003'),
 			new qCal_Date('01/01/2004'),
 		));
+		
+		// let's assume we want a recurrence every year starting from 01/01/2000
+		// and ending at 02/08/2004
+		// @todo This has the same issues as daily does with times being attached when they shouldn't be
+		$yInstances = array();
+		$yearly = new qCal_Date_Recur_Yearly('01/01/2000');
+		while($yearly->onOrBefore('02/08/2004')) {
+			// get current instance
+			$yInstances[] = $yearly->getInstance();
+			// increment by 6 months
+			$yearly->increment(1);
+		}
+	
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/03/2000 12:45:20am');
+		$after = new qCal_Date('02/01/2000 1:02:00am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$yly = new qCal_Date_Recur_Yearly('01/01/2000 12:00am');
+		$this->assertTrue($yly->onOrBefore($on));
+		$this->assertTrue($yly->onOrBefore($after));
+		$this->assertFalse($yly->onOrBefore($before));
+	
+		$this->assertEqual($yInstances, array(
+			new qCal_Date('01/01/2000'),
+			new qCal_Date('01/01/2001'),
+			new qCal_Date('01/01/2002'),
+			new qCal_Date('01/01/2003'),
+			new qCal_Date('01/01/2004'),
+		));
 	
 	}
 	
