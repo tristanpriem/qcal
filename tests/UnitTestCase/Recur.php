@@ -158,7 +158,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 			// increment by 2 hours
 			$hourly->increment(2);
 		}
-	
+		
 		// make sure onOrBefore works right
 		$on = new qCal_Date('01/01/2000 12:45:20am');
 		$after = new qCal_Date('01/01/2000 1:02:00am');
@@ -218,7 +218,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 		while($weekly->onOrBefore('02/02/2000')) {
 			// get current instance
 			$wInstances[] = $weekly->getInstance();
-			// increment by 3 days
+			// increment by a week
 			$weekly->increment(1);
 		}
 		
@@ -230,13 +230,46 @@ class UnitTestCase_Recur extends UnitTestCase {
 		$this->assertTrue($wly->onOrBefore($on));
 		$this->assertTrue($wly->onOrBefore($after));
 		$this->assertFalse($wly->onOrBefore($before));
-	
+		
 		$this->assertEqual($wInstances, array(
 			new qCal_Date('01/01/2000'),
 			new qCal_Date('01/08/2000'),
 			new qCal_Date('01/15/2000'),
 			new qCal_Date('01/22/2000'),
 			new qCal_Date('01/29/2000'),
+		));
+		
+		// let's assume we want a recurrence every 6 months starting from 01/01/2000
+		// and ending at 02/08/2004
+		// @todo This has the same issues as daily does with times being attached when they shouldn't be
+		$mInstances = array();
+		$monthly = new qCal_Date_Recur_Monthly('01/01/2000');
+		while($monthly->onOrBefore('02/08/2004')) {
+			// get current instance
+			$mInstances[] = $monthly->getInstance();
+			// increment by 6 months
+			$monthly->increment(6);
+		}
+		
+		// make sure onOrBefore works right
+		$on = new qCal_Date('01/03/2000 12:45:20am');
+		$after = new qCal_Date('02/01/2000 1:02:00am');
+		$before = new qCal_Date('12/31/1999 11:59:59pm');
+		$mly = new qCal_Date_Recur_Monthly('01/01/2000 12:00am');
+		$this->assertTrue($mly->onOrBefore($on));
+		$this->assertTrue($mly->onOrBefore($after));
+		$this->assertFalse($mly->onOrBefore($before));
+		
+		$this->assertEqual($mInstances, array(
+			new qCal_Date('01/01/2000'),
+			new qCal_Date('07/01/2000'),
+			new qCal_Date('01/01/2001'),
+			new qCal_Date('07/01/2001'),
+			new qCal_Date('01/01/2002'),
+			new qCal_Date('07/01/2002'),
+			new qCal_Date('01/01/2003'),
+			new qCal_Date('07/01/2003'),
+			new qCal_Date('01/01/2004'),
 		));
 	
 	}
