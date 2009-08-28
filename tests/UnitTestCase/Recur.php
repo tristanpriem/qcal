@@ -321,14 +321,15 @@ class UnitTestCase_Recur extends UnitTestCase {
 	/**
 	 * Let's start with a really simple rule and go from there...
 	 */
-	// public function testBuildSimpleRule() {
-	// 
-	// 	$rule = new qCal_Date_Recur('daily');
-	// 	$rule->interval(1);
-	// 	// should return every day in august
-	// 	$dates = $rule->getInstances('08/01/2009', '09/01/2009');
-	// 	// pr($dates);
-	// 
-	// }
+	public function testBuildSimpleRule() {
+	
+		$rule = new qCal_Date_Recur('daily');
+		$rule->interval(1);
+		// should return every day in august
+		$dates = $rule->getInstances('08/01/2009', '08/31/2009');
+		// pr($dates[30]->format('m/d/Y')); // this is wrong... should not include 9/1/2009 and it does
+		$this->assertEqual(count($dates), 31);
+	
+	}
 
 }

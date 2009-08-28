@@ -330,9 +330,11 @@ class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
+		$instances = array();
 		switch ($this->freq) {
 			case "SECONDLY":
 				// do secondly stuff...
+				
 				break;
 			case "MINUTELY":
 				// do minutely stuff...
@@ -342,6 +344,11 @@ class qCal_Date_Recur {
 				break;
 			case "DAILY":
 				// do daily stuff...
+				$daily = new qCal_Date_Recur_Daily($start);
+				while ($daily->onOrBefore($end)) {
+					$daily->increment($this->interval);
+					$instances[] = $daily->getInstance();
+				}
 				break;
 			case "WEEKLY":
 				// do weekly stuff...
@@ -382,6 +389,7 @@ class qCal_Date_Recur {
 			
 		}
 		// after all of the above (in this exact order), count and until are evaluated
+		return $instances;
 	
 	}
 
