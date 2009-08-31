@@ -1,4 +1,6 @@
 <?php
+// @todo Rename children of this like qCal_Date_Recur_Helper_Daily rather than qCal_Date_Recur_Daily
+// to be consistent with naming everywhere else in the library
 abstract class qCal_Date_Recur_Helper {
 
 	/**
