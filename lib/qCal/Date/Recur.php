@@ -357,7 +357,21 @@ class qCal_Date_Recur {
 				// do monthly stuff...
 				break;
 			case "YEARLY":
-				// do yearly stuff...
+				// create separate "loopers" for each bymonth rule, so that when we loop over "years" we can keep track
+				// of all the separate recurrence rules we have. If there is bymonth of 1,5 then two loopers will be created
+				// and when we loop over years, the first one will grab all instances of January and the second will grab all
+				// instances of May
+				if (is_array($this->bymonth)) {
+					$loopers = array();
+					foreach ($this->bymonth as $bymonth) {
+						$loopers[] = new qCal_Date_Recur_Yearly();
+					}
+				}
+				// loop to find the rest of the occurences
+				// while ($yearly->onOrBefore($end)) {
+				// 	$yearly->increment($this->interval);
+				// 	$instances[] = $yearly->getInstance();
+				// }
 				break;
 		}
 		// now we need to apply each byXXX rule to get the recurrence...
