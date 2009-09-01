@@ -315,8 +315,8 @@ class qCal_Date_Recur {
 	 * other than providing a date range that spans the entire length of the recurrence.
 	 * 
 	 * The way this will need to work is, depending on the frequency, I will find all possible
-	 * occurences of the rule. For instance, if this is a "monthly" rule, I'll find out which month
-	 * to start in, then find all occurences possible. Then narrow down by the other rules I guess.
+	 * occurrence of the rule. For instance, if this is a "monthly" rule, I'll find out which month
+	 * to start in, then find all occurrence possible. Then narrow down by the other rules I guess.
 	 * 
 	 * @idea Maybe I should build classes for each of the frequency types. That way I could loop over
 	 * the object and get methods like qCal_Date_Recur_Monthly::isNthDay('SU') to find out what sunday
@@ -324,86 +324,13 @@ class qCal_Date_Recur {
 	 * 
 	 * @throws qCal_Date_Exception_InvalidRecur
 	 */
-	public function getInstances($start, $end) {
+	public function getRecurrences($start, $end) {
 	
 		$start = new qCal_Date($start);
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
-		$instances = array();
-		switch ($this->freq) {
-			case "SECONDLY":
-				// do secondly stuff...
-				
-				break;
-			case "MINUTELY":
-				// do minutely stuff...
-				break;
-			case "HOURLY":
-				// do hourly stuff...
-				break;
-			case "DAILY":
-				// do daily stuff...
-				$daily = new qCal_Date_Recur_Daily($start);
-				while ($daily->onOrBefore($end)) {
-					$daily->increment($this->interval);
-					$instances[] = $daily->getInstance();
-				}
-				break;
-			case "WEEKLY":
-				// do weekly stuff...
-				break;
-			case "MONTHLY":
-				// do monthly stuff...
-				break;
-			case "YEARLY":
-				// create separate "loopers" for each bymonth rule, so that when we loop over "years" we can keep track
-				// of all the separate recurrence rules we have. If there is bymonth of 1,5 then two loopers will be created
-				// and when we loop over years, the first one will grab all instances of January and the second will grab all
-				// instances of May
-				if (is_array($this->bymonth)) {
-					$loopers = array();
-					foreach ($this->bymonth as $bymonth) {
-						$loopers[] = new qCal_Date_Recur_Yearly();
-					}
-				}
-				// loop to find the rest of the occurences
-				// while ($yearly->onOrBefore($end)) {
-				// 	$yearly->increment($this->interval);
-				// 	$instances[] = $yearly->getInstance();
-				// }
-				break;
-		}
-		// now we need to apply each byXXX rule to get the recurrence...
-		if ($this->bymonth) {
-			// find the first occurrence of the specified month and set that as the first occurence?
-		}
-		if ($this->byweekno) {
-			
-		}
-		if ($this->byyearday) {
-			
-		}
-		if ($this->bymonthday) {
-			
-		}
-		if ($this->byday) {
-			
-		}
-		if ($this->byhour) {
-			
-		}
-		if ($this->byminute) {
-			
-		}
-		if ($this->bysecond) {
-			
-		}
-		if ($this->bysetpos) {
-			
-		}
-		// after all of the above (in this exact order), count and until are evaluated
-		return $instances;
+		
 	
 	}
 
