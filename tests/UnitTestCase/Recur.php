@@ -65,6 +65,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 			->until('02/12/2009');
 	
 	}
+	
 	/**
 	 * Within the recur object, we use objects to compare the current date with
 	 * rule modifiers. This tests their functionality.
@@ -296,24 +297,24 @@ class UnitTestCase_Recur extends UnitTestCase {
 	// 
 	// }
 	
-	// public function testLooperFactory() {
-	// 
-	// 	$yearly = qCal_Date_Recur_Looper::factory('yearly');
-	// 	$this->assertIsA($yearly, 'qCal_Date_Recur_Looper_Yearly');
-	// 	$monthly = qCal_Date_Recur_Looper::factory('MonTHLY');
-	// 	$this->assertIsA($monthly, 'qCal_Date_Recur_Looper_Monthly');
-	// 	$weekly = qCal_Date_Recur_Looper::factory('WEEKLY');
-	// 	$this->assertIsA($weekly, 'qCal_Date_Recur_Looper_Weekly');
-	// 	$daily = qCal_Date_Recur_Looper::factory('Daily');
-	// 	$this->assertIsA($daily, 'qCal_Date_Recur_Looper_Daily');
-	// 	$hourly = qCal_Date_Recur_Looper::factory('hourly');
-	// 	$this->assertIsA($hourly, 'qCal_Date_Recur_Looper_Hourly');
-	// 	$minutely = qCal_Date_Recur_Looper::factory('minutely');
-	// 	$this->assertIsA($minutely, 'qCal_Date_Recur_Looper_Minutely');
-	// 	$secondly = qCal_Date_Recur_Looper::factory('SeCoNdLy');
-	// 	$this->assertIsA($secondly, 'qCal_Date_Recur_Looper_Secondly');
-	// 
-	// }
+	public function testLooperFactory() {
+	
+		$yearly = qCal_Date_Recur::factory('yearly', time());
+		$this->assertIsA($yearly, 'qCal_Date_Recur_Yearly');
+		$monthly = qCal_Date_Recur::factory('MonTHLY', time());
+		$this->assertIsA($monthly, 'qCal_Date_Recur_Monthly');
+		$weekly = qCal_Date_Recur::factory('WEEKLY', time());
+		$this->assertIsA($weekly, 'qCal_Date_Recur_Weekly');
+		$daily = qCal_Date_Recur::factory('Daily', time());
+		$this->assertIsA($daily, 'qCal_Date_Recur_Daily');
+		$hourly = qCal_Date_Recur::factory('hourly', time());
+		$this->assertIsA($hourly, 'qCal_Date_Recur_Hourly');
+		$minutely = qCal_Date_Recur::factory('minutely', time());
+		$this->assertIsA($minutely, 'qCal_Date_Recur_Minutely');
+		$secondly = qCal_Date_Recur::factory('SeCoNdLy', time());
+		$this->assertIsA($secondly, 'qCal_Date_Recur_Secondly');
+	
+	}
 	
 	// public function testBuildRule() {
 	// 

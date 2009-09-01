@@ -293,6 +293,21 @@ abstract class qCal_Date_Recur {
 	
 	}
 	/**
+	 * Factory method generates the correct recur type based on the string it is passed: "yearly, weekly, etc."
+	 * @param string The frequency type of recurrence rule you want to generate
+	 * @param mixed The start date/time for the recurrence. Accepts anything qCal_Date accepts
+	 */
+	static public function factory($freq, $start) {
+	
+		$freq = ucfirst(strtolower($freq));
+		$className = "qCal_Date_Recur_" . $freq;
+		$fileName = str_replace("_", DIRECTORY_SEPARATOR, $className) . ".php";
+		qCal_Loader::loadFile($fileName);
+		$class = new $className($start);
+		return $class;
+	
+	}
+	/**
 	 * Fetches instances of the recurrence rule in the given time period. Because recurrences
 	 * could potentially go on forever, there is no way to fetch ALL instances of a recurrence rule
 	 * other than providing a date range that spans the entire length of the recurrence.
@@ -315,7 +330,7 @@ abstract class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
-		$this->doGetRecurrences($start, $end);
+		return $this->doGetRecurrences($start, $end);
 	
 	}
 	/**
