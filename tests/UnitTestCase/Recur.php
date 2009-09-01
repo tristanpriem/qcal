@@ -18,7 +18,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testGetInstancesStartMustComeBeforeEnd() {
 	
-		$recur = new qCal_Date_Recur('yearly');
+		$recur = new qCal_Date_Recur_Yearly;
 		$recur->interval(1);
 		$this->expectException(new qCal_Date_Exception_InvalidRecur('Start date must come before end date'));
 		$dates = $recur->getRecurrences('08/01/2009', '07/01/2009');
@@ -27,22 +27,15 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testGetInstancesRequiresInterval() {
 	
-		$recur = new qCal_Date_Recur('yearly');
+		$recur = new qCal_Date_Recur_Yearly;
 		$this->expectException(new qCal_Date_Exception_InvalidRecur('You must specify an interval'));
 		$dates = $recur->getRecurrences('08/01/2009', '09/01/2009');
 	
 	}
 	
-	public function testInvalidFrequency() {
-	
-		$this->expectException(new qCal_Date_Exception_InvalidRecur('"FOO" is not a valid frequency, must be one of the following: SECONDLY, MINUTELY, HOURLY, DAILY, WEEKLY, MONTHLY, YEARLY'));
-		$recur = new qCal_Date_Recur('FOO');
-	
-	}
-	
 	public function testGetters() {
 	
-		$recur = new qCal_Date_Recur('yearly');
+		$recur = new qCal_Date_Recur_Yearly;
 		$recur->count(10)
 			->byMonth(2)
 			->byDay('TU');
@@ -55,7 +48,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testSetWeekworkStart() {
 	
-		$recur = new qCal_Date_Recur('minutely');
+		$recur = new qCal_Date_Recur_Minutely;
 		$recur->wkst('SU'); // set the work week start to Sunday
 		$this->assertEqual($recur->wkst(), 'SU');
 		// invalid work day should throw an exception
@@ -66,7 +59,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testCanHaveCountOrUntilButNotBoth() {
 	
-		$rule = new qCal_Date_Recur('hourly');
+		$rule = new qCal_Date_Recur_Hourly;
 		$this->expectException(new qCal_Date_Exception_InvalidRecur('A recurrence count and an until date cannot both be specified'));
 		$rule->count(10)
 			->until('02/12/2009');
