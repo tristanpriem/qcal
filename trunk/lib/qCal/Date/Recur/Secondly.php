@@ -1,22 +1,9 @@
 <?php
-class qCal_Date_Recur_Secondly extends qCal_Date_Recur_Helper {
+class qCal_Date_Recur_Secondly extends qCal_Date_Recur {
 
-	/**
-	 * 
-	 */
-	public function increment($increment) {
+	protected function doGetRecurrences($start, $end) {
 	
-		$increment = (integer) $increment;
-		$this->datetime->modify("+$increment seconds");
-	
-	}
-	/**
-	 * 
-	 */
-	public function onOrBefore($date) {
-	
-		$date = new qCal_Date($date);
-		return ($this->datetime->time() <= $date->time());
+		// do stuff!
 	
 	}
 

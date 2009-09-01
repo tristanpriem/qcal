@@ -4,20 +4,8 @@
  * @todo The RFC says that invalid byXXX rule parts should simply be ignored. So I'm not sure if
  * I should be hurling exceptions at the poor user all over the place like I am in here.
  */
-class qCal_Date_Recur {
+abstract class qCal_Date_Recur {
 
-	/**
-	 * @var array Allowed frequencies
-	 */
-	protected $freqtypes = array(
-		'SECONDLY',
-		'MINUTELY',
-		'HOURLY',
-		'DAILY',
-		'WEEKLY',
-		'MONTHLY',
-		'YEARLY',
-	);
 	/**
 	 * @var array An array of week days. Used throughout this class to validate input.
 	 */
@@ -103,14 +91,9 @@ class qCal_Date_Recur {
 	 * @param $freq string Must be one of the freqtypes specified above.
 	 * @throws qCal_Date_Exception_InvalidRecur if a frequency other than those specified above is passed in
 	 */
-	public function __construct($freq, $dtstart = null) {
+	public function __construct($dtstart = null) {
 	
 		$this->dtstart = is_null($dtstart) ? null : new qCal_Date($dtstart);
-		$freq = strtoupper($freq);
-		if (!in_array($freq, $this->freqtypes)) {
-			throw new qCal_Date_Exception_InvalidRecur('"' . $freq . '" is not a valid frequency, must be one of the following: ' . implode(', ', $this->freqtypes));
-		}
-		$this->freq = $freq;
 	
 	}
 	/**
@@ -332,7 +315,13 @@ class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
+		$this->doGetRecurrences($start, $end);
 	
 	}
+	/**
+	 * Each type of rule needs to determine its recurrences so this is left abstract
+	 * to be implemented by children.
+	 */
+	abstract protected function doGetRecurrences($start, $end);
 
 }
