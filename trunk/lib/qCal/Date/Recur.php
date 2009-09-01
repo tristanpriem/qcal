@@ -323,6 +323,8 @@ class qCal_Date_Recur {
 	 * of the month it is... stuff like that... I dunno... ?
 	 * 
 	 * @throws qCal_Date_Exception_InvalidRecur
+	 * @todo The giant switch in this method is a glaring code smell, but it works for now. I will refactor
+	 * after version 0.1 and remove the switch (probably will implement qCal_Date_Recur_Yearly, qCal_Date_Recur_Monthly, etc.)
 	 */
 	public function getRecurrences($start, $end) {
 	
@@ -330,7 +332,6 @@ class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
-		// $looper = qCal_Date_Recur_Looper::factory($this->freq);
 	
 	}
 
