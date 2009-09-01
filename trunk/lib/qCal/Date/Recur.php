@@ -330,7 +330,7 @@ class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
-		
+		// $looper = qCal_Date_Recur_Looper::factory($this->freq);
 	
 	}
 

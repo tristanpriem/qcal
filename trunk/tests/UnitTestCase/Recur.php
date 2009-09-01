@@ -303,6 +303,25 @@ class UnitTestCase_Recur extends UnitTestCase {
 	// 
 	// }
 	
+	public function testLooperFactory() {
+	
+		$yearly = qCal_Date_Recur_Looper::factory('yearly');
+		$this->assertIsA($yearly, 'qCal_Date_Recur_Looper_Yearly');
+		$monthly = qCal_Date_Recur_Looper::factory('MonTHLY');
+		$this->assertIsA($monthly, 'qCal_Date_Recur_Looper_Monthly');
+		$weekly = qCal_Date_Recur_Looper::factory('WEEKLY');
+		$this->assertIsA($weekly, 'qCal_Date_Recur_Looper_Weekly');
+		$daily = qCal_Date_Recur_Looper::factory('Daily');
+		$this->assertIsA($daily, 'qCal_Date_Recur_Looper_Daily');
+		$hourly = qCal_Date_Recur_Looper::factory('hourly');
+		$this->assertIsA($hourly, 'qCal_Date_Recur_Looper_Hourly');
+		$minutely = qCal_Date_Recur_Looper::factory('minutely');
+		$this->assertIsA($minutely, 'qCal_Date_Recur_Looper_Minutely');
+		$secondly = qCal_Date_Recur_Looper::factory('SeCoNdLy');
+		$this->assertIsA($secondly, 'qCal_Date_Recur_Looper_Secondly');
+	
+	}
+	
 	public function testBuildRule() {
 	
 		$recur = new qCal_Date_Recur('yearly');
