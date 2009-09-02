@@ -316,20 +316,20 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
-	// public function testBuildRule() {
-	// 
-	// 	$recur = new qCal_Date_Recur('yearly');
-	// 	$recur->interval(2) // every other year
-	// 		->byMonth(1) // every other year in january
-	// 		->byDay('SU') // every sunday in january of every other year
-	// 		->byHour(array(8,9)) // every sunday in january of every other year at 8am and 9am
-	// 		->byMinute(30); // every sunday in january of every other year at 8:30am and 9:30am
-	// 	$start = '08/24/1995';
-	// 	$end = '08/24/2009';
-	// 	$dates = $recur->getRecurrences($start, $end);
-	// 	pr($dates); // should return an array of qCal_Dates that represent every instance in the timespan
-	// 
-	// }
+	public function testBuildRule() {
+	
+		$recur = new qCal_Date_Recur_Yearly;
+		$recur->interval(2) // every other year
+			->byMonth(array(1,2,3)) // every other year in january, february and march
+			->byDay('-1SU') // every last sunday in january, february and march of every other year
+			->byHour(array(8,9)) // every last sunday in january, february, and march of every other year at 8am and 9am
+			->byMinute(30); // every last sunday in january, february, and march of every other year at 8:30am and 9:30am
+		$start = '08/24/1995';
+		$end = '08/24/2009';
+		$dates = $recur->getRecurrences($start, $end);
+		//pr($dates); // should return an array of qCal_Dates that represent every instance in the timespan
+	
+	}
 	
 	/**
 	 * Let's start with a really simple rule and go from there...
