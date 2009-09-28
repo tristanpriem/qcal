@@ -203,6 +203,7 @@ abstract class qCal_Date_Recur {
 	 * Specifies a rule which will happen on whichever day is specified. For instance, "MO" would
 	 * mean every monday.
 	 * This is a getter as well as a setter (if no arg is supplied, it is a getter)
+	 * Sets $this->byday into an array of arrays like array('SU' => 1) for '1SU' and array('SU' => 0) for 'SU'
 	 * @param $day string|array Must be one of the 2-char week days specified above. Can be preceded by
 	 * a positive or negative integer to represent, for instance, the third monday of the month (3MO) or second to last
 	 * Sunday of the month (-2SU)
@@ -211,9 +212,29 @@ abstract class qCal_Date_Recur {
 	 */
 	public function byDay($day = null) {
 	
-		if (is_null($day)) return $this->byday;
+		if (is_null($day)) {
+			$ret = array();
+			foreach ($this->byday as $val) {
+				$num = (current($val) == 0) ? "" : current($val);
+				$ret[] = $num . key($val);
+			}
+			return $ret;
+		}
 		if (!is_array($day)) $day = array($day);
-		$this->byday = $day;
+		$days = array();
+		foreach ($day as $d) {
+			// optional plus or minus followed by a series of digits as group 1
+			// two-character week day as group 2
+			if (preg_match('/^([+-]?[0-9]+)?(MO|TU|WE|TH|FR|SA|SU)$/', $d, $matches)) {
+				$num = ($matches[1] == "") ? "0" : $matches[1];
+				$wday = $matches[2];
+				if (substr($num, 0, 1) == "+") {
+					$num = substr($num, 1);
+				}
+				$days[] = array($wday => $num);
+			}
+		}
+		$this->byday = $days;
 		return $this;
 	
 	}
@@ -330,13 +351,102 @@ abstract class qCal_Date_Recur {
 		$end = new qCal_Date($end);
 		if ($start->time() > $end->time()) throw new qCal_Date_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_Date_Exception_InvalidRecur('You must specify an interval');
-		return $this->doGetRecurrences($start, $end);
+		
+		$rules = array(
+			'bymonth' => array(),
+			'byweekno' => array(),
+			'byyearday' => array(),
+			'byday' => array(),
+		);
+		
+		// byMonth rules
+		if (is_array($this->bymonth)) {
+			foreach ($this->bymonth as $bymonth) {
+				$rules['bymonth'][] = new qCal_Date_Recur_Rule_ByMonth($bymonth);
+			}
+		}
+		
+		// byWeekNo rules
+		if (is_array($this->byweekno)) {
+			foreach ($this->byweekno as $byweekno) {
+				$rules['byweekno'][] = new qCal_Date_Recur_Rule_ByWeekNo($byweekno);
+			}
+		}
+		
+		// byYearDay rules
+		if (is_array($this->byyearday)) {
+			foreach ($this->byyearday as $byyearday) {
+				$rules['byyearday'][] = new qCal_Date_Recur_Rule_ByYearDay($byyearday);
+			}
+		}
+		
+		// byMonthDay rules (these get applied to bymonth rules)
+		if (is_array($this->bymonthday)) {
+			foreach ($this->bymonthday as $bymonthday) {
+				$bmdrule = new qCal_Date_Recur_Rule_ByMonthDay($bymonthday);
+				foreach ($rules['bymonth'] as $bymonth) {
+					$bymonth->attach($bmdrule);
+				}
+			}
+		}
+		
+		// byDay rules (these get applied to bymonth rules if they exist, otherwise simply to year)
+		if (is_array($this->byday)) {
+			foreach ($this->byday as $byday) {
+				$bdrule = new qCal_Date_Recur_Rule_ByDay($byday);
+				if (is_array($rules['bymonth']) && !empty($rules['bymonth'])) {
+					foreach ($rules['bymonth'] as $bymonth) {
+						$bymonth->attach($bdrule);
+					}
+				} else {
+					$rules['byday'][] = $bdrule;
+				}
+			}
+		}
+		
+		// byHour rules (these get applied to each rule above)
+		if (is_array($this->byhour)) {
+			foreach ($this->byhour as $byhour) {
+				$bhrule = new qCal_Date_Recur_Rule_ByHour($byhour);
+				foreach ($rules as $type => $ruleset) {
+					foreach ($ruleset as $rule) {
+						$rule->attach($bhrule);
+					}
+				}
+			}
+		}
+		
+		// byMinute rules (these get applied to each rule above)
+		if (is_array($this->byminute)) {
+			foreach ($this->byminute as $byminute) {
+				$bmrule = new qCal_Date_Recur_Rule_ByMinute($byminute);
+				foreach ($rules as $type => $ruleset) {
+					foreach ($ruleset as $rule) {
+						$rule->attach($bmrule);
+					}
+				}
+			}
+		}
+		
+		// bySecond rules (these get applied to each rule above)
+		if (is_array($this->bysecond)) {
+			foreach ($this->bysecond as $bysecond) {
+				$bsrule = new qCal_Date_Recur_Rule_BySecond($bysecond);
+				foreach ($rules as $type => $ruleset) {
+					foreach ($ruleset as $rule) {
+						$rule->attach($bsrule);
+					}
+				}
+			}
+		}
+		
+		return $this->doGetRecurrences($rules, $start, $end);
 	
 	}
 	/**
 	 * Each type of rule needs to determine its recurrences so this is left abstract
 	 * to be implemented by children.
 	 */
-	abstract protected function doGetRecurrences($start, $end);
+	abstract protected function doGetRecurrences($rules, $start, $end);
 
 }

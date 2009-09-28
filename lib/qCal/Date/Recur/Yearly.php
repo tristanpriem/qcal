@@ -1,100 +1,161 @@
 <?php
 class qCal_Date_Recur_Yearly extends qCal_Date_Recur {
 
-	protected function doGetRecurrences($start, $end) {
+	/**
+	 * @todo This is a god method that really should be split out into each
+	 * of the qCal_Date_Recur_Rule_ByXXX classes. For now I did all the logic
+	 * here to keep it simple and not confuse myself more than necessary.
+	 */
+	protected function doGetRecurrences($rules, $start, $end) {
 	
-		$rules = array(
-			'bymonth' => array(),
-			'byweekno' => array(),
-			'byyearday' => array(),
-			'byday' => array(),
-		);
+		// an array to store recurrences
+		$recurrences = array();
 		
-		// byMonth rules
-		if (is_array($this->bymonth)) {
-			foreach ($this->bymonth as $bymonth) {
-				$rules['bymonth'][] = new qCal_Date_Recur_Rule_ByMonth($bymonth);
-			}
-		}
+		// start day, year, and month
+		$sday = $start->format('d');
+		$smonth = $start->format('m');
+		$syear = $start->format('Y');
 		
-		// byWeekNo rules
-		if (is_array($this->byweekno)) {
-			foreach ($this->byweekno as $byweekno) {
-				$rules['byweekno'][] = new qCal_Date_Recur_Rule_ByWeekNo($byweekno);
-			}
-		}
+		// end day, year, and month
+		$eday = $end->format('d');
+		$emonth = $end->format('m');
+		$eyear = $end->format('Y');
 		
-		// byYearDay rules
-		if (is_array($this->byyearday)) {
-			foreach ($this->byyearday as $byyearday) {
-				$rules['byyearday'][] = new qCal_Date_Recur_Rule_ByYearDay($byyearday);
-			}
-		}
+		// loop over years, by increment
+		$year = $syear;
+		while ($year <= $eyear) {
 		
-		// byMonthDay rules (these get applied to bymonth rules)
-		if (is_array($this->bymonthday)) {
-			foreach ($this->bymonthday as $bymonthday) {
-				$bmdrule = new qCal_Date_Recur_Rule_ByMonthDay($bymonthday);
-				foreach ($rules['bymonth'] as $bymonth) {
-					$bymonth->attach($bmdrule);
-				}
-			}
-		}
-		
-		// byDay rules (these get applied to bymonth rules if they exist, otherwise simply to year)
-		if (is_array($this->byday)) {
-			foreach ($this->byday as $byday) {
-				$bdrule = new qCal_Date_Recur_Rule_ByDay($byday);
-				if (is_array($rules['bymonth']) && !empty($rules['bymonth'])) {
-					foreach ($rules['bymonth'] as $bymonth) {
-						$bymonth->attach($bdrule);
+			// if byMonth is specified...
+			if (count($this->byMonth())) {
+				// loop over each month
+				for ($month = 1; $month <= 12; $month++) {
+					// if this is the start year still and we haven't reached the start month, skip ahead
+					if ($year == $syear && $month < $smonth) {
+						continue;
 					}
-				} else {
-					$rules['byday'][] = $bdrule;
-				}
-			}
-		}
-		
-		// byHour rules (these get applied to each rule above)
-		if (is_array($this->byhour)) {
-			foreach ($this->byhour as $byhour) {
-				$bhrule = new qCal_Date_Recur_Rule_ByHour($byhour);
-				foreach ($rules as $type => $ruleset) {
-					foreach ($ruleset as $rule) {
-						$rule->attach($bhrule);
+					// if this is the end year and we have passed the end month, break out of loop
+					if ($year == $eyear && $month > $emonth) {
+						break;
+					}
+					// if this is not one of the bymonths, continue as well
+					if (!in_array($month, $this->byMonth())) {
+						continue;
+					}
+					// now we need to loop over each day of the month to look for byday or bymonthday
+					$thismonth = new qCal_Date(); // used to determine total days in the current month
+					$thismonth->setDate($year, $month, 1);
+					$weekdays = array(
+						'MO' => 0,
+						'TU' => 0,
+						'WE' => 0,
+						'TH' => 0,
+						'FR' => 0,
+						'SA' => 0,
+						'SU' => 0,
+					);
+					// @todo For now this only allows 1SU, SU, but not -1SU (no negatives for now)
+					for ($day = 1; $day <= $thismonth->format('t'); $day++) {
+						$alreadyadded = false;
+						$date = new qCal_Date;
+						$date->setDate($year, $month, $day);
+						$date->setTime(0, 0, 0);
+						$wdname = strtoupper(substr($date->format('l'), 0, 2));
+						// keep track of how many of each day of the week have gone by
+						$weekdays[$wdname]++;
+						// if byDay is specified...
+						// @todo this is inconsistent, I don't use the getter here because of its special functionality.
+						// I need to either remove the special functionality or not use getters elsewhere in this method
+						$byday = $this->byday;
+						if (count($byday)) {
+							// by day is broken into an array of arrays like array('TH' => 0), array('FR' => 1), array('MO' => -2) etc.
+							// with zero meaning every instance of that particular day should be included and number meaning the Nth of that day
+							foreach ($byday as $val) {
+								// if at least one of this wday has gone by...
+								$num = current($val);
+								if ($weekdays[$wdname] > 0) {
+									// check if it is the right week day and if a digit is specified (like 1SU) that it is checked as well
+									if ($wdname == key($val) && ($weekdays[$wdname] == $num || $num == 0)) {
+										$recurrences[] = $date;
+										$alreadyadded = true;
+									}
+								}
+							}
+						}
+						// if byMonthDay is specified...
+						if (count($this->byMonthDay())) {
+							foreach ($this->byMonthDay() as $mday) {
+								// only add this day if it hasn't been added already
+								if ($mday == $day && !$alreadyadded) {
+									$recurrences[] = $date;
+								}
+							}
+						}
+						for ($hour = 0; $hour <= 23; $hour++) {
+							if (count($this->byHour())) {
+								// if we find the hour, add an occurrence for each in byHour()
+								$hrecurrences = array();
+								foreach ($this->byHour() as $byhour) {
+									if ($hour == $byhour) {
+										$new = new qCal_Date();
+										$new = $new->copy($date);
+										$new->setTime($hour, 0, 0);
+										$hrecurrences[] = $new;
+									}
+								}
+								if (count($hrecurrences)) {
+									// find a way to insert these...
+								}
+							}
+							// for ($minute = 0; $minute <= 59; $minute++) {
+							// 	if (count($this->byMinute())) {
+							// 		// if we find the minute, add an occurrence for each in byMinute()
+							// 	}
+							// 	for ($second = 0; $second <= 59; $second++) {
+							// 		if (count($this->bySecond())) {
+							// 			// if we find the second, add an occurrence for each in bySecond()
+							// 		}
+							// 	}
+							// }
+						}
+						// now loop over each hour and add hours
+						if (count($this->byHour())) {
+							$hourrecurrences = array();
+							foreach ($this->byHour() as $hour) {
+								$new = new qCal_Date();
+								$new = $new->copy($date);
+								$new->setTime($hour, 0, 0);
+								$hourrecurrences[] = $new;
+							}
+						}
+						// now loop over byHours and add byMinutes
+						if (count($this->byMinute())) {
+							if (!isset($minuterecurrences)) $minuterecurrences = array();
+							foreach ($this->byMinute() as $minute) {
+								$new = new qCal_Date();
+								$new = $new->copy($date);
+								$new->setTime(0, $minute, 0);
+							}
+						}
+						
+						// now loop over byMinutes and add bySeconds
+						
 					}
 				}
 			}
+			
+			// if in the first year we don't find an instance, don't do the interval, just increment a year
+			if ($year == $syear && count($recurrences)) $year += $this->interval();
+			else ($year++);
 		}
 		
-		// byMinute rules (these get applied to each rule above)
-		if (is_array($this->byminute)) {
-			foreach ($this->byminute as $byminute) {
-				$bmrule = new qCal_Date_Recur_Rule_ByMinute($byminute);
-				foreach ($rules as $type => $ruleset) {
-					foreach ($ruleset as $rule) {
-						$rule->attach($bmrule);
-					}
-				}
-			}
+		// now loop over weeks to get byWeekNo
+		
+		foreach ($recurrences as $date) {
+			pr($date->format("r"));
 		}
+		exit;
 		
-		// bySecond rules (these get applied to each rule above)
-		if (is_array($this->bysecond)) {
-			foreach ($this->bysecond as $bysecond) {
-				$bsrule = new qCal_Date_Recur_Rule_BySecond($bysecond);
-				foreach ($rules as $type => $ruleset) {
-					foreach ($ruleset as $rule) {
-						$rule->attach($bsrule);
-					}
-				}
-			}
-		}
-		
-		// @todo bySetPos (this fetches certain recurrences from the final set)
-		
-		// now go over each rule and evaluate them out to real dates
-		
+		return $recurrences;
 		// for bymonth, it would make the most sense to loop over each month until the specified one
 		// is found. Then loop over each day to find its sub-rules.
 		

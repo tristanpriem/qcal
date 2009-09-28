@@ -321,13 +321,17 @@ class UnitTestCase_Recur extends UnitTestCase {
 		$recur = new qCal_Date_Recur_Yearly;
 		$recur->interval(2) // every other year
 			->byMonth(array(1,2,3)) // every other year in january, february and march
-			->byDay('-1SU') // every last sunday in january, february and march of every other year
-			->byHour(array(8,9)) // every last sunday in january, february, and march of every other year at 8am and 9am
+			->byMonthDay(10) // every 10th of the month
+			->byDay(array('1SU', '2TU', 'MO')) // every last sunday in january, february and march of every other year
+			->byHour(array(8,9)) // every first sunday in january, february, and march of every other year at 8am and 9am
 			->byMinute(30); // every last sunday in january, february, and march of every other year at 8:30am and 9:30am
 		$start = '08/24/1995';
 		$end = '08/24/2009';
 		$dates = $recur->getRecurrences($start, $end);
-		//pr($dates); // should return an array of qCal_Dates that represent every instance in the timespan
+		// pr($dates); // should return an array of qCal_Dates that represent every instance in the timespan
+		foreach ($dates as $date) {
+			pr($date->format('r'));
+		}
 	
 	}
 	
