@@ -7,7 +7,7 @@ class qCal_Date_Recur_Rule_ByMonth extends qCal_Date_Recur_Rule {
 	 */
 	public function getRecurrences() {
 	
-		
+		return array();
 	
 	}
 
