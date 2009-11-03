@@ -19,6 +19,7 @@ require_once 'convenience.php';
 require_once 'simpletest/unit_tester.php';
 require_once 'simpletest/reporter.php';
 require_once 'simpletest/mock_objects.php';
+
 // create mocks
 //Mock::generate('qCal_Component');
 //Mock::generate('qCal_Property');
@@ -40,7 +41,8 @@ $test->addTestCase(new UnitTestCase_Value_Date);
 $test->addTestCase(new UnitTestCase_Value_Recur);
 $test->addTestCase(new UnitTestCase_Value_Multi);
 $test->addTestCase(new UnitTestCase_Renderer);
-$test->addTestCase(new UnitTestCase_DateTime);
+//$test->addTestCase(new UnitTestCase_DateTime);
+$test->addTestCase(new UnitTestCase_DateV2);
 $test->addTestCase(new UnitTestCase_Recur);
 // $test->addTestCase(new UnitTestCase_Database);
 $test->run(new HtmlReporter());
