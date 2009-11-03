@@ -202,5 +202,18 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$this->assertEqual($date->getUtc(), '19860423T120000Z');
 	
 	}
+	/**
+	 * Test that when daylight savings is in effect, the object knows how to handle it
+	 * @todo Figure out how to test this...
+	 */
+	public function ZZZtestDaylightSavings() {
+	
+		$startdate = new qCal_Date("November 1st, 2009 12:00am");
+		$enddate = clone $startdate;
+		$enddate->modify("+24 hours");
+		// I am really not sure this is how this should work :(
+		$this->assertEqual($enddate, new qCal_Date("November 1st, 2009 11pm"));
+	
+	}
 
 }
