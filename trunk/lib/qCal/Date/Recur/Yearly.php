@@ -81,6 +81,7 @@ class qCal_Date_Recur_Yearly extends qCal_Date_Recur {
 								}
 							}
 						}
+						
 						// if byMonthDay is specified...
 						if (count($this->byMonthDay())) {
 							foreach ($this->byMonthDay() as $mday) {
@@ -90,33 +91,7 @@ class qCal_Date_Recur_Yearly extends qCal_Date_Recur {
 								}
 							}
 						}
-						for ($hour = 0; $hour <= 23; $hour++) {
-							if (count($this->byHour())) {
-								// if we find the hour, add an occurrence for each in byHour()
-								$hrecurrences = array();
-								foreach ($this->byHour() as $byhour) {
-									if ($hour == $byhour) {
-										$new = new qCal_Date();
-										$new = $new->copy($date);
-										$new->setTime($hour, 0, 0);
-										$hrecurrences[] = $new;
-									}
-								}
-								if (count($hrecurrences)) {
-									// find a way to insert these...
-								}
-							}
-							// for ($minute = 0; $minute <= 59; $minute++) {
-							// 	if (count($this->byMinute())) {
-							// 		// if we find the minute, add an occurrence for each in byMinute()
-							// 	}
-							// 	for ($second = 0; $second <= 59; $second++) {
-							// 		if (count($this->bySecond())) {
-							// 			// if we find the second, add an occurrence for each in bySecond()
-							// 		}
-							// 	}
-							// }
-						}
+						
 						// now loop over each hour and add hours
 						if (count($this->byHour())) {
 							$hourrecurrences = array();
@@ -127,6 +102,7 @@ class qCal_Date_Recur_Yearly extends qCal_Date_Recur {
 								$hourrecurrences[] = $new;
 							}
 						}
+						
 						// now loop over byHours and add byMinutes
 						if (count($this->byMinute())) {
 							if (!isset($minuterecurrences)) $minuterecurrences = array();
@@ -151,9 +127,9 @@ class qCal_Date_Recur_Yearly extends qCal_Date_Recur {
 		// now loop over weeks to get byWeekNo
 		
 		foreach ($recurrences as $date) {
-			pr($date->format("r"));
+			// pr($date->format("r"));
 		}
-		exit;
+		// exit;
 		
 		return $recurrences;
 		// for bymonth, it would make the most sense to loop over each month until the specified one
