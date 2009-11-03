@@ -4,6 +4,9 @@
  */
 class UnitTestCase_DateTime extends UnitTestCase {
 
+	/**
+	 * Test data
+	 */
 	protected $formats = array(
 		'ISO' => '1986-04-23 12:00:00',
 		'timestamp' => '514670400',
@@ -16,13 +19,22 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		'YYYY-MM-DDThh:mmTZD' => '1986-04-23T12:00+01:00',
 		'YYYY-MM-DDThh:mm:ssTZD' => '1986-04-23T12:00:00+01:00',
 	);
+	/**
+	 * Default time zone
+	 */
 	protected $defaulttimezone;
+	/**
+	 * Set up test environment
+	 */
 	public function setUp() {
 	
 		// save default timezone
 		$this->defaulttimezone = date_default_timezone_get();
 	
 	}
+	/**
+	 * Undo whatever was set up in the previous method
+	 */
 	public function tearDown() {
 	
 		// return to default timezone after test (why? I dont know)
@@ -122,7 +134,6 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$this->assertEqual($date->format('Y-m-d'), '2009-01-10');
 	
 	}
-	
 	/**
 	 * Test really old date
 	 * @todo eventually id like to make this support old dates like below, but for now, I'm fine with being bound by PHP's date limitations
