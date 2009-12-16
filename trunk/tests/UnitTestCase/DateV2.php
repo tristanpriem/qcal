@@ -63,8 +63,11 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 		$today = getdate();
 		$tomorrow = mktime(0, 0, 0, $today['mon'], $today['mday']+1, $today['year']);
+		$tomorrow = getdate($tomorrow);
 		$date = qCal_DateV2::factory("tomorrow");
-		//$this->assertEqual($date);
+		$this->assertEqual($date->getYear(), $tomorrow['year']);
+		$this->assertEqual($date->getMonth(), $tomorrow['mon']);
+		$this->assertEqual($date->getDay(), $tomorrow['mday']);
 	
 	}
 
