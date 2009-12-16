@@ -101,6 +101,9 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		// week day
 		$this->assertEqual($date->getWeekDay(), 4);
 		$this->assertEqual($date->getWeekDayName(), "Thursday");
+		
+		// unix timestamp
+		$this->assertEqual($date->getUnixTimestamp(), mktime(0,0,0,4,23,2009));
 	
 	}
 
