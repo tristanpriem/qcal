@@ -84,6 +84,12 @@ class qCal_DateV2 {
 		}
 	
 	}
+	
+	/**
+	 * Getters
+	 * The next dozen or so methods are just your standard getters for things such as month, day, year, week day, etc.
+	 */
+	
 	/**
 	 * Get the month (number) of this date
 	 * @return integer A number between 1 and 12 inclusively
@@ -156,5 +162,14 @@ class qCal_DateV2 {
 		return $this->dateArray[0];
 	
 	}
+	
+	/**
+	 * Date magic
+	 * This component is capable of doing some really convenient things with dates.
+	 * It is capable of determining things such as how many days until the end of the year,
+	 * which monday of the month it is (ie: third monday in february), etc.
+	 */
+	
+	
 
 }
