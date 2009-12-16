@@ -86,6 +86,17 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	public function testGetters() {
 	
 		$date = new qCal_DateV2(2009, 4, 23);
+		
+		// month
+		$this->assertEqual($date->getMonth(), 4);
+		$this->assertEqual($date->getMonthName(), "April");
+		
+		// day
+		
+		
+		// year
+		
+		// week day
 		$this->assertEqual($date->getWeekDay(true), 4);
 		$this->assertEqual($date->getWeekDay(), "Thursday");
 	
