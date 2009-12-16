@@ -15,9 +15,17 @@ class qCal_DateV2 {
 	 */
 	protected $date;
 	/**
+	 * @var int The start day of the week (defaults to Monday)
+	 */
+	protected $wkst = 1;
+	/**
 	 * @var array The results of a getdate() call
 	 */
 	protected $dateArray;
+	/**
+	 * @var array The month in a two-dimensional array (picture a calendar)
+	 */
+	protected $monthMap = array();
 	/**
 	 * Class constructor
 	 * @param int The year of this date
@@ -82,6 +90,33 @@ class qCal_DateV2 {
 				throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
 			}
 		}
+		
+		/**
+		 * When a date is instantiated, it caches information such as which weekday of the month it is.
+		 * For instance, it may be the 2nd Tuesday of the month and the 3rd to last Tuesday of the month.
+		 * It also does this for the year. It will be the 23rd Tuesday of the year and the 29th from last
+		 * Tuesday of the year (I have no idea if that's even possible, I'm just throwing random numbers
+		 * out there).
+		 */
+		
+		$this->dateArray["t"] = date("t", $this->date);
+		// @todo This will not be accurate if the week start isn't monday
+		$this->dateArray["W"] = date("W", $this->date);
+		
+		// $this->monthMap = $this->generateMonthMap();
+		// pre($this->monthMap);
+		
+		// weekday of month (ie: 2nd Tuesday of the month)
+		// $this->dateArray['wday_of_mon'] = "";
+		
+		// how many weekdays to the end of the month (ie: 2nd Tuesday from the end of the month)
+		// $this->dateArray['wday_to_end_mon'] = ;
+		
+		// weekday of year (ie: 25th Tuesday of the year)
+		// $this->dateArray['wday_of_year'] = ;
+		
+		// how many weekdays to the end of the year (ie: 35th Tuesday from the end of the year)
+		// $this->dateArray['wday_to_end_year'] = ;
 	
 	}
 	
@@ -154,6 +189,23 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * Get the amount of days in the current month of this year
+	 */
+	public function getNumDaysInMonth() {
+	
+		return $this->dateArray["t"];
+	
+	}
+	/**
+	 * Get the week of the year
+	 * @todo This is not accurate if the week start isn't monday. I need to adjust for that
+	 */
+	public function getWeekOfYear() {
+	
+		return $this->dateArray["W"];
+	
+	}
+	/**
 	 * Get a unix timestamp for the date
 	 * @return integer The amount of seconds since unix epoch (January 1, 1970 UTC)
 	 */
@@ -170,6 +222,26 @@ class qCal_DateV2 {
 	 * which monday of the month it is (ie: third monday in february), etc.
 	 */
 	
+	public function isXthWeekdayOfMonth($weekday, $xth) {
 	
+		
+	
+	}
+	
+	/**
+	 * Maps
+	 * The following methods build maps of the month and year, respectively.
+	 * What this means is it generates a multi-dimensional array with week days as one dimension
+	 * and the week as the second (picture a calendar).
+	 */
+	
+	/*public function generateMonthMap() {
+		
+		$map = array();
+		$mday = 1;
+		while ($mday <= $this->getDaysInMonth())
+		return $map;
+	
+	}*/
 
 }
