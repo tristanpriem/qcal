@@ -42,6 +42,7 @@ class qCal_DateV2 {
 	 * @param int The month of this date
 	 * @param int The day of this date
 	 * @throws qCal_Date_Exception_InvalidDate
+	 * @todo Add a param called "rollover" that allows you to provide dates like 1/35/2009, which would rollover to 2/4/2009
 	 */
 	public function setDate($year = null, $month = null, $day = null) {
 	

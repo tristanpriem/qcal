@@ -47,5 +47,16 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$date = new qCal_DateV2(2009, 1, 35);
 	
 	}
+	/**
+	 * @todo I wish I could set the server's date to leap-year so that when the qCal_Date
+	 * class calls time() it would be leap-year. Then I could test this properly...
+	 */
+	public function testInvalidLeapYear() {
+	
+		// you cannot specify a leap-year for a date that is not a leap-year
+		$this->expectException(new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"2/29/2009\""));
+		$date = new qCal_DateV2(2009, 2, 29);
+	
+	}
 
 }
