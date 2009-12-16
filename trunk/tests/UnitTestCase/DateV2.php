@@ -58,5 +58,14 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$date = new qCal_DateV2(2009, 2, 29);
 	
 	}
+	
+	public function testSetDateByString() {
+	
+		$today = getdate();
+		$tomorrow = mktime(0, 0, 0, $today['mon'], $today['mday']+1, $today['year']);
+		$date = qCal_DateV2::factory("tomorrow");
+		//$this->assertEqual($date);
+	
+	}
 
 }
