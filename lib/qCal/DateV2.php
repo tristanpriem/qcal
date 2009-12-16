@@ -31,6 +31,27 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * This is a factory method. It allows you to create a date by string or by another date object (to make a copy)
+	 */
+	public static function factory($date) {
+	
+		if (is_integer($date)) {
+			// @todo Handle timestamps
+		}
+		if (is_string($date)) {
+			if (!$timestamp = strtotime($date)) {
+				// if unix timestamp can't be created throw an exception
+				throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_DateV2::factory()");
+			}
+		}
+		
+		$date = getdate($timestamp);
+		$newdate = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
+		$newdate = getdate($newdate);
+		return new qCal_DateV2($newdate['year'], $newdate['mon'], $newdate['mday']);
+	
+	}
+	/**
 	 * Set the date of this class
 	 * The date defaults to now. If any part of the date is missing, it will default to whatever "now"'s
 	 * date portion is. For instance, if the year provided is 2006 and no other portion is given, it will
