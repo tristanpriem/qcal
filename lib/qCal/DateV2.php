@@ -115,13 +115,13 @@ class qCal_DateV2 {
 	
 	}
 	
-	public function getWeekDayNum() {
+	public function getWeekDay() {
 	
 		return $this->dateArray["wday"];
 	
 	}
 	
-	public function getWeekDay($number = false) {
+	public function getWeekDayName($number = false) {
 	
 		return $this->dateArray["weekday"];
 	

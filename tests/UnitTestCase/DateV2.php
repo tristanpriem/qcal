@@ -96,10 +96,11 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$this->assertEqual($date->getYearDay(), 112);
 		
 		// year
+		$this->assertEqual($date->getYear(), 2009);
 		
 		// week day
-		$this->assertEqual($date->getWeekDayNum(), 4);
-		$this->assertEqual($date->getWeekDay(), "Thursday");
+		$this->assertEqual($date->getWeekDay(), 4);
+		$this->assertEqual($date->getWeekDayName(), "Thursday");
 	
 	}
 
