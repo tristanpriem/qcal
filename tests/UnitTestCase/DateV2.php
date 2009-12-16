@@ -24,7 +24,20 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 		$date = new qCal_DateV2();
 		$now = time();
-		$this->assertEqual($date->format("mdY"), date("mdY", $now));
+		$this->assertEqual($date->getMonth(), date("m", $now));
+		$this->assertEqual($date->getDay(), date("d", $now));
+		$this->assertEqual($date->getYear(), date("Y", $now));
+		
+		// make sure that if only a portion of the date is given, the rest default to now
+		$date2 = new qCal_DateV2(2006);
+		$this->assertEqual($date2->getMonth(), date("m", $now));
+		$this->assertEqual($date2->getDay(), date("d", $now));
+		$this->assertEqual($date2->getYear(), "2006");
+		
+		$date3 = new qCal_DateV2(2006, 5);
+		$this->assertEqual($date3->getDay(), date("d", $now));
+		$this->assertEqual($date3->getMonth(), "5");
+		$this->assertEqual($date3->getYear(), "2006");
 	
 	}
 
