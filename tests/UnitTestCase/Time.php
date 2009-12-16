@@ -17,5 +17,15 @@ class UnitTestCase_Time extends UnitTestCase {
 		
 	
 	}
+	/**
+	 * Test that time defaults to now
+	 */
+	public function xtestTimeDefaultsToNow() {
+	
+		$time = new qCal_Time();
+		$now = time();
+		$this->assertEqual($this->assertEqual());
+	
+	}
 
 }
