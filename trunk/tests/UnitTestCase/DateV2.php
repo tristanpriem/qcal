@@ -92,8 +92,8 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$this->assertEqual($date->getMonthName(), "April");
 		
 		// day
-		//$this->assertEqual($date->getDay(), 23);
-		//$this->assertEqual()
+		$this->assertEqual($date->getDay(), 23);
+		$this->assertEqual($date->getYearDay(), 112);
 		
 		// year
 		

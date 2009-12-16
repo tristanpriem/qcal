@@ -103,6 +103,12 @@ class qCal_DateV2 {
 	
 	}
 	
+	public function getYearDay() {
+	
+		return $this->dateArray["yday"];
+	
+	}
+	
 	public function getYear() {
 	
 		return $this->dateArray["year"];
