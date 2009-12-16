@@ -79,5 +79,16 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$this->assertEqual($date->getDay(), $tomorrow['mday']);
 	
 	}
+	/**
+	 * The date object has many getters which allow for you to determine things like day of the week,
+	 * day of the year, etc. The following tests those getters.
+	 */
+	public function testGetters() {
+	
+		$date = new qCal_DateV2(2009, 4, 23);
+		$this->assertEqual($date->getWeekDay(true), 4);
+		$this->assertEqual($date->getWeekDay(), "Thursday");
+	
+	}
 
 }
