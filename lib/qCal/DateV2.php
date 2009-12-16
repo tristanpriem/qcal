@@ -7,7 +7,6 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
- * @todo Create a setDateByString method for things such as "The day after tomorrow"
  */
 class qCal_DateV2 {
 
@@ -25,9 +24,9 @@ class qCal_DateV2 {
 	 * @param int The month of this date
 	 * @param int The day of this date
 	 */
-	public function __construct($year = null, $month = null, $day = null) {
+	public function __construct($year = null, $month = null, $day = null, $rollover = false) {
 	
-		$this->setDate($year, $month, $day);
+		$this->setDate($year, $month, $day, $rollover);
 	
 	}
 	/**
@@ -63,9 +62,8 @@ class qCal_DateV2 {
 	 * @param int The month of this date
 	 * @param int The day of this date
 	 * @throws qCal_Date_Exception_InvalidDate
-	 * @todo Add a param called "rollover" that allows you to provide dates like 1/35/2009, which would rollover to 2/4/2009
 	 */
-	public function setDate($year = null, $month = null, $day = null) {
+	public function setDate($year = null, $month = null, $day = null, $rollover = false) {
 	
 		$now = getdate();
 		if (is_null($year)) {
@@ -79,8 +77,10 @@ class qCal_DateV2 {
 		}
 		$this->date = mktime(0, 0, 0, $month, $day, $year);
 		$this->dateArray = getdate($this->date);
-		if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
-			throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
+		if (!$rollover) {
+			if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
+				throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
+			}
 		}
 	
 	}

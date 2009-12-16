@@ -57,6 +57,24 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	}
 	/**
+	 * The same instantiation as was done in the test above will not throw an exception, but instead
+	 * will just roll over the extra four days into the next month if you specify the fourth argument as true
+	 */
+	public function testDateRollover() {
+	
+		$date = new qCal_DateV2(2009, 1, 35, true);
+		$this->assertEqual($date->getMonth(), 2);
+		$this->assertEqual($date->getDay(), 4);
+		$this->assertEqual($date->getYear(), 2009);
+		
+		// make sure year can roll over too
+		$date2 = new qCal_DateV2(2009, 12, 41, true);
+		$this->assertEqual($date2->getMonth(), 1);
+		$this->assertEqual($date2->getDay(), 10);
+		$this->assertEqual($date2->getYear(), 2010);
+	
+	}
+	/**
 	 * @todo I wish I could set the server's date to leap-year so that when the qCal_Date
 	 * class calls time() it would be leap-year. Then I could test this properly...
 	 */
