@@ -57,6 +57,9 @@ class qCal_DateV2 {
 		}
 		$this->date = mktime(0, 0, 0, $month, $day, $year);
 		$this->dateArray = getdate($this->date);
+		if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
+			throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
+		}
 	
 	}
 	

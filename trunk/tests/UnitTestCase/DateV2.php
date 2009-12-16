@@ -40,5 +40,12 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$this->assertEqual($date3->getYear(), "2006");
 	
 	}
+	
+	public function testInvalidDateThrowsException() {
+	
+		$this->expectException(new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"1/35/2009\""));
+		$date = new qCal_DateV2(2009, 1, 35);
+	
+	}
 
 }
