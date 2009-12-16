@@ -84,49 +84,73 @@ class qCal_DateV2 {
 		}
 	
 	}
-	
+	/**
+	 * Get the month (number) of this date
+	 * @return integer A number between 1 and 12 inclusively
+	 */
 	public function getMonth() {
 	
 		return $this->dateArray["mon"];
 	
 	}
-	
+	/**
+	 * Get the month of this date
+	 * @return string The actual name of the month, capitalized
+	 */
 	public function getMonthName() {
 	
 		return $this->dateArray["month"];
 	
 	}
-	
+	/**
+	 * Get the day of the month
+	 * @return integer A number between 1 and 31 inclusively
+	 */
 	public function getDay() {
 	
 		return $this->dateArray["mday"];
 	
 	}
-	
+	/**
+	 * Get the day of the year
+	 * @return integer A number between 0 and 365 inclusively
+	 */
 	public function getYearDay() {
 	
 		return $this->dateArray["yday"];
 	
 	}
-	
+	/**
+	 * Get the year
+	 * @return integer The year of this date, for example 1999
+	 */
 	public function getYear() {
 	
 		return $this->dateArray["year"];
 	
 	}
-	
+	/**
+	 * Get the day of the week 
+	 * @return integer A number between 0 (for Sunday) and 6 (for Saturday).
+	 */
 	public function getWeekDay() {
 	
 		return $this->dateArray["wday"];
 	
 	}
-	
-	public function getWeekDayName($number = false) {
+	/**
+	 * Get the day of the week
+	 * @return string The actual name of the day of the week, capitalized
+	 */
+	public function getWeekDayName() {
 	
 		return $this->dateArray["weekday"];
 	
 	}
-	
+	/**
+	 * Get a unix timestamp for the date
+	 * @return integer The amount of seconds since unix epoch (January 1, 1970 UTC)
+	 */
 	public function getUnixTimestamp() {
 	
 		return $this->dateArray[0];
