@@ -17,6 +17,15 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		
 	
 	}
+	public function testDateExceptionAcceptsDateObject() {
+	
+		$date = new qCal_DateV2;
+		$exception = new qCal_Date_Exception("Foo", 0, null, $date);
+		$this->assertEqual($exception->getDate(), $date);
+		$this->expectException($exception);
+		throw $exception;
+	
+	}
 	/**
 	 * The object should default to the current date and time
 	 */
