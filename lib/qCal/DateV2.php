@@ -126,5 +126,11 @@ class qCal_DateV2 {
 		return $this->dateArray["weekday"];
 	
 	}
+	
+	public function getUnixTimestamp() {
+	
+		return $this->dateArray[0];
+	
+	}
 
 }
