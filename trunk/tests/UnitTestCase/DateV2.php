@@ -108,6 +108,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		// month
 		$this->assertEqual($date->getMonth(), 4);
 		$this->assertEqual($date->getMonthName(), "April");
+		$this->assertEqual($date->getNumDaysInMonth(), 30);
 		
 		// day
 		$this->assertEqual($date->getDay(), 23);
@@ -116,13 +117,37 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		// year
 		$this->assertEqual($date->getYear(), 2009);
 		
-		// week day
+		// week
 		$this->assertEqual($date->getWeekDay(), 4);
 		$this->assertEqual($date->getWeekDayName(), "Thursday");
+		$this->assertEqual($date->getWeekOfYear(), 17);
 		
 		// unix timestamp
 		$this->assertEqual($date->getUnixTimestamp(), mktime(0,0,0,4,23,2009));
 	
 	}
+	
+	/**
+	 * The following are methods that test the date component's ability to do "date magic".
+	 * It tests things such as the date component's ability to determine if this is the 2nd
+	 * monday of the month, or the 2nd to last monday of the month. Or how many days from the
+	 * end of the year it is. Or whether it is the 2nd Tuesday of the year. Or whether
+	 */
+	
+	/**
+	 * This method tests that the date component is capable of determining of the date is the
+	 * Xth Xday of the month. For instance, it can determine if this date is the third Sunday
+	 * of the month or the second to last Tuesday of the month.
+	 * 
+	 * Internally, maybe the date component should do some of this kind of stuff and cache it
+	 * so that it doesn't have to actually do anything when a method like this is called.
+	 */
+	/*public function test_Is_Xth_Xday_Of_The_Month() {
+	
+		$date = new qCal_DateV2(2009, 12, 15);
+		$this->assertTrue($date->isXthWeekdayOfMonth("Tuesday", 3));
+		$this->assertTrue($date->isXthWeekdayOfMonth("Tuesday", -3));
+	
+	}*/
 
 }
