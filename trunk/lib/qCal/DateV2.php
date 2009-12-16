@@ -91,6 +91,12 @@ class qCal_DateV2 {
 	
 	}
 	
+	public function getMonthName() {
+	
+		return $this->dateArray["month"];
+	
+	}
+	
 	public function getDay() {
 	
 		return $this->dateArray["mday"];
