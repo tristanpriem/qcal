@@ -23,6 +23,10 @@ class qCal_DateV2 {
 	 */
 	protected $dateArray;
 	/**
+	 * @var string The date format that is used when outputting via __toString() 
+	 */
+	protected $format = "m/d/Y";
+	/**
 	 * @var array The month in a two-dimensional array (picture a calendar)
 	 */
 	protected $monthMap = array();
@@ -56,6 +60,41 @@ class qCal_DateV2 {
 		$newdate = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
 		$newdate = getdate($newdate);
 		return new qCal_DateV2($newdate['year'], $newdate['mon'], $newdate['mday']);
+	
+	}
+	/**
+	 * Set the format that should be used when calling either __toString() or format() without an argument.
+	 * @param string $format
+	 */
+	public function setFormat($format) {
+	
+		$this->format = (string) $format;
+	
+	}
+	/**
+	 * Formats the date according to either the existing $this->format, or if the $format arg is passed
+	 * in, it uses that.
+	 * @param string The format that is to be used (according to php's date function). Only date-related metacharacters work.
+	 */
+	public function format($format) {
+	
+		$escape = false;
+		$meta = str_split($format);
+		$output = array();
+		foreach($meta as $char) {
+			if ($char == '\\') {
+				$escape = true;
+				continue;
+			}
+			if (!$escape && array_key_exists($char, $this->dateArray)) {
+				$output[] = $this->dateArray[$char];
+			} else {
+				$output[] = $char;
+			}
+			// reset this to false after every iteration that wasn't "continued"
+			$escape = false;
+		}
+		return implode($output);
 	
 	}
 	/**
@@ -99,11 +138,35 @@ class qCal_DateV2 {
 		 * out there).
 		 */
 		
-		$this->dateArray["t"] = date("t", $this->date);
+		// @todo Look into how much more efficient it might be to call date() only once and then break apart the result...
+		
+		// all of php's date function's meta characters are available except the ones that relate to time
+		$this->dateArray["d"] = date("d", $this->date);
+		$this->dateArray["D"] = date("D", $this->date);
+		$this->dateArray["j"] = date("j", $this->date);
+		$this->dateArray["l"] = date("l", $this->date);
+		$this->dateArray["N"] = date("N", $this->date);
+		$this->dateArray["S"] = date("S", $this->date);
+		$this->dateArray["w"] = date("w", $this->date);
+		$this->dateArray["z"] = date("z", $this->date);
 		// @todo This will not be accurate if the week start isn't monday
 		$this->dateArray["W"] = date("W", $this->date);
+		$this->dateArray["F"] = date("F", $this->date);
+		$this->dateArray["m"] = date("m", $this->date);
+		$this->dateArray["M"] = date("M", $this->date);
+		$this->dateArray["n"] = date("n", $this->date);
+		$this->dateArray["t"] = date("t", $this->date);
+		$this->dateArray["L"] = date("L", $this->date);
+		$this->dateArray["o"] = date("o", $this->date);
+		$this->dateArray["y"] = date("y", $this->date);
+		$this->dateArray["Y"] = date("Y", $this->date);
+		// these are full date/time, and I'm not really sure they should be here... but I'll keep them for now...
+		$this->dateArray["c"] = date("c", $this->date);
+		$this->dateArray["r"] = date("r", $this->date);
+		$this->dateArray["U"] = date("U", $this->date);
 		
-		// $this->monthMap = $this->generateMonthMap();
+		$this->monthMap = $this->generateMonthMap();
+		
 		// pre($this->monthMap);
 		
 		// weekday of month (ie: 2nd Tuesday of the month)
@@ -222,7 +285,28 @@ class qCal_DateV2 {
 	 * which monday of the month it is (ie: third monday in february), etc.
 	 */
 	
-	public function isXthWeekdayOfMonth($weekday, $xth) {
+	/**
+	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
+	 * beginning or end of the month.
+	 * @param boolean If false, the counting starts from the beginning of the month, otherwise
+	 * it starts from the end of the month.
+	 */
+	public function getNumWeekdayOfMonth($startFromEnd = false) {
+	
+		if ($startFromEnd) {
+			
+		} else {
+			
+		}
+	
+	}
+	/**
+	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
+	 * beginning or end of the year.
+	 * @param boolean If false, the counting starts from the beginning of the year, otherwise
+	 * it starts from the end of the year.
+	 */
+	public function getNumWeekdayOfYear($startFromEnd = false) {
 	
 		
 	
@@ -235,13 +319,30 @@ class qCal_DateV2 {
 	 * and the week as the second (picture a calendar).
 	 */
 	
-	/*public function generateMonthMap() {
+	public function generateMonthMap() {
 		
 		$map = array();
 		$mday = 1;
-		while ($mday <= $this->getDaysInMonth())
+		while ($mday <= $this->getNumDaysInMonth()) {
+			// need to figure out how to skip to the first day of the month here... 
+			$mday++;
+		}
 		return $map;
 	
-	}*/
+	}
+	
+	/**
+	 * Magic methods
+	 */
+	
+	/**
+	 * Output the date as a string. Options are as follows:
+	 * 
+	 */
+	public function __toString() {
+	
+		return $this->format($this->format);
+	
+	}
 
 }

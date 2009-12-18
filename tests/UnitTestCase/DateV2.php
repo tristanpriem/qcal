@@ -98,6 +98,35 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	}
 	/**
+	 * Calling __toString will output the date in the format specified by calling setFormat()
+	 * You can use any of the date-related meta characters from php's date() function. Time-related
+	 * formatting will not work.
+	 */
+	public function testToString() {
+	
+		$date = new qCal_DateV2(2009, 12, 7);
+		// format defaults to m/d/Y
+		$this->assertEqual($date->__toString(), '12/07/2009');
+		// european format
+		$date->setFormat('d/m/Y');
+		$this->assertEqual($date->__toString(), '07/12/2009');
+		// no leading zeros
+		$date->setFormat('n/j/Y');
+		$this->assertEqual($date->__toString(), '12/7/2009');
+		// two-digit year
+		$date->setFormat('n/j/y');
+		$this->assertEqual($date->__toString(), '12/7/09');
+		
+		// time-related date meta-characters do not work
+		$date->setFormat('m/d/Y h:i:sa');
+		$this->assertEqual($date->__toString(), '12/07/2009 h:i:sa');
+		
+		// you can escape meta-characters with a backslash
+		$date->setFormat('\m\d\ymdy');
+		$this->assertEqual($date->__toString(), 'mdy120709');
+	
+	}
+	/**
 	 * The date object has many getters which allow for you to determine things like day of the week,
 	 * day of the year, etc. The following tests those getters.
 	 */
@@ -113,6 +142,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		// day
 		$this->assertEqual($date->getDay(), 23);
 		$this->assertEqual($date->getYearDay(), 112);
+		// $this->assertEqual($date->getFirstDayOfMonth()->__toString(), $);
 		
 		// year
 		$this->assertEqual($date->getYear(), 2009);
