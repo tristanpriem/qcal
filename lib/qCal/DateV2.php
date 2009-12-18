@@ -69,6 +69,7 @@ class qCal_DateV2 {
 	public function setFormat($format) {
 	
 		$this->format = (string) $format;
+		return $this;
 	
 	}
 	/**
@@ -222,6 +223,25 @@ class qCal_DateV2 {
 	public function getYearDay() {
 	
 		return $this->dateArray["yday"];
+	
+	}
+	/**
+	 * Return the first day of the month as a qCal_DateV2 object
+	 * @return qCal_DateV2 The first day of the month
+	 */
+	public function getFirstDayOfMonth() {
+	
+		return new qCal_DateV2($this->getYear(), $this->getMonth(), 1);
+	
+	}
+	/**
+	 * Return the last day of the month as a qCal_DateV2 object
+	 * @return qCal_DateV2 The last day of the month
+	 */
+	public function getLastDayOfMonth() {
+	
+		$lastday = $this->format("t");
+		return new qCal_DateV2($this->getYear(), $this->getMonth(), $lastday);
 	
 	}
 	/**
