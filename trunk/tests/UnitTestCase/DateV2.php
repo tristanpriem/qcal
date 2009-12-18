@@ -142,7 +142,10 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		// day
 		$this->assertEqual($date->getDay(), 23);
 		$this->assertEqual($date->getYearDay(), 112);
-		// $this->assertEqual($date->getFirstDayOfMonth()->__toString(), $);
+		$this->assertEqual($date->getFirstDayOfMonth()->__toString(), "04/01/2009");
+		$this->assertEqual($date->getFirstDayOfMonth()->format("l"), "Wednesday");
+		$this->assertEqual($date->getLastDayOfMonth()->__toString(), "04/30/2009");
+		$this->assertEqual($date->getLastDayOfMonth()->format("l"), "Thursday");
 		
 		// year
 		$this->assertEqual($date->getYear(), 2009);
@@ -154,6 +157,15 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		
 		// unix timestamp
 		$this->assertEqual($date->getUnixTimestamp(), mktime(0,0,0,4,23,2009));
+	
+	}
+	/**
+	 * Any of the setters in the object will return the object itself
+	 */
+	public function testFluidMethods() {
+	
+		$date = new qCal_DateV2(2009, 12, 17);
+		$this->assertEqual($date->setFormat("m/d/Y")->__toString(), "12/17/2009");
 	
 	}
 	
