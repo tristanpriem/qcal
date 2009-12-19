@@ -54,5 +54,31 @@ class UnitTestCase_Time extends UnitTestCase {
 		$this->assertEqual($time->getTimestamp(), $diff);
 	
 	}
+	/**
+	 * Time rolls over similar to how qCal_DateV2 rolls over, but it is off by default
+	 */
+	public function testTimeRolloverException() {
+	
+		$this->expectException(new qCal_Time_Exception_InvalidTime("Invalid time specified for qCal_Time: \"01:01:100\""));
+		$time = new qCal_Time(1, 1, 100); // should rollover to 1:02:40, but doesn't because rollover is off by default
+	
+	}
+	/**
+	 * Time rolls over similar to how qCal_DateV2 rolls over
+	 */
+	public function testTimeRollover() {
+	
+		$time = new qCal_Time(1, 1, 100, true); // should rollover to 1:02:40
+		$this->assertEqual($time->getTimestamp(), 3760);
+	
+	}
+	/**
+	 * You can use any of the date() function's time-related metacharacters
+	 */
+	public function testTimeFormat() {
+	
+		
+	
+	}
 
 }
