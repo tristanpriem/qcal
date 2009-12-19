@@ -15,6 +15,10 @@ class qCal_Time {
 	 */
 	protected $timeArray = array();
 	/**
+	 * The timezone for this class
+	 */
+	protected $timezone;
+	/**
 	 * Class constructor. Accepts hour, minute and second, and optionally a rollover boolean
 	 */
 	public function __construct($hour = null, $minute = null, $second = null, $timezone = null, $rollover = false) {
@@ -39,9 +43,11 @@ class qCal_Time {
 		if (is_null($second)) {
 			$second = date("s");
 		}
-		if (is_null($timezone)) {
-			// $timezone = new qCal_Time_Timezone();
+		if (!($timezone instanceof qCal_Time_Timezone)) {
+			$timezone = new qCal_Time_Timezone();
 		}
+		
+		$this->timezone = $timezone;
 		
 		if (!$rollover) {
 			if ($hour > 23 || $minute > 59 || $second > 59) {
