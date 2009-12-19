@@ -19,13 +19,13 @@ class qCal_Time {
 	 */
 	protected $second;
 	
-	public function __construct($hour = null, $minute = null, $second = null) {
+	public function __construct($hour = null, $minute = null, $second = null, $rollover = false) {
 	
-		$this->setTime($hour, $minute, $second);
+		$this->setTime($hour, $minute, $second, $rollover);
 	
 	}
 	
-	public function setTime($hour = null, $minute = null, $second = null) {
+	public function setTime($hour = null, $minute = null, $second = null, $rollover = false) {
 	
 		if (is_null($hour)) {
 			$hour = date("G");
@@ -36,14 +36,17 @@ class qCal_Time {
 		if (is_null($second)) {
 			$second = date("s");
 		}
-		$this->hour = $hour;
-		$this->minute = $minute;
-		$this->second = $second;
+		
+		if (!$rollover) {
+			if ($hour > 23 || $minute > 59 || $second > 59) {
+				throw new qCal_Time_Exception_InvalidTime(sprintf("Invalid time specified for qCal_Time: \"%02d:%02d:%02d\"", $hour, $minute, $second));
+			}
+		}
 		
 		// now set the timestamp
-		$time = $this->hour * 60 * 60;
-		$time = $time + $this->minute * 60;
-		$time = $time + $this->second;
+		$time = $hour * 60 * 60;
+		$time = $time + $minute * 60;
+		$time = $time + $second;
 		$this->timestamp = $time;
 	
 	}
