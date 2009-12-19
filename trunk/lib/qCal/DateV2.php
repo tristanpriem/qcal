@@ -393,7 +393,7 @@ class qCal_DateV2 {
 		}
 		
 		// now, using the year, month and numbered weekday, we need to find the actual day of the month...
-		$firstofmonth = new qCal_DateV2($year, $month, 1); //$this->getFirstDayOfMonth();
+		$firstofmonth = new qCal_DateV2($year, $month, 1);
 		$numdaysinmonth = $firstofmonth->getNumDaysInMonth();
 		$numweekdays = 0; // the number of weekdays that have occurred (in the loop)
 		$foundday = false;
@@ -415,7 +415,8 @@ class qCal_DateV2 {
 			}
 		} else {
 			$day = $numdaysinmonth;
-			$lastofmonth = new qCal_DateV2($year, $month, $numdaysinmonth); //$this->getLastDayOfMonth();
+			$lastofmonth = $firstofmonth->getLastDayOfMonth();
+
 			$wday = $lastofmonth->getWeekday();
 			while ($day >= 1) {
 				if ($weekday == $wday) {
