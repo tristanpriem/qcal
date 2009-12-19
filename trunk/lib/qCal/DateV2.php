@@ -27,6 +27,36 @@ class qCal_DateV2 {
 	 */
 	protected $format = "m/d/Y";
 	/**
+	 * @var array This is just a mapping of weekdays to 0 (for Sunday) through 6 (for Saturday)
+	 * which is a direct correlation with PHP's date function's "w" metacharacter
+	 */
+	protected $weekdays = array(
+		"sunday",
+		"monday",
+		"tuesday",
+		"wednesday",
+		"thursday",
+		"friday",
+		"saturday",
+	);
+	/**
+	 * @var array This is an array of months starting at 1 and ending on 12
+	 */
+	protected $months = array(
+		1 =>  "january",
+		2 =>  "february",
+		3 =>  "march",
+		4 =>  "april",
+		5 =>  "may",
+		6 =>  "june",
+		7 =>  "july",
+		8 =>  "august",
+		9 =>  "september",
+		10 => "october",
+		11 => "november",
+		12 => "december",
+	);
+	/**
 	 * @var array The month in a two-dimensional array (picture a calendar)
 	 */
 	protected $monthMap = array();
@@ -311,27 +341,107 @@ class qCal_DateV2 {
 	 * @param boolean If false, the counting starts from the beginning of the month, otherwise
 	 * it starts from the end of the month.
 	 */
-	public function getNumWeekdayOfMonth($startFromEnd = false) {
+	public function getXthWeekdayOfMonth($xth, $weekday = null, $month = null, $year = null) {
 	
-		if ($startFromEnd) {
-			
+		$negpos = substr($xth, 0, 1);
+		if ($negpos == "+" || $negpos == "-") {
+			$xth = (integer) substr($xth, 1);
 		} else {
-			
+			$negpos = "+";
 		}
-	
-	}
-	/**
-	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
-	 * beginning or end of the year.
-	 * @param boolean If false, the counting starts from the beginning of the year, otherwise
-	 * it starts from the end of the year.
-	 */
-	public function getNumWeekdayOfYear($startFromEnd = false) {
-	
 		
+		if (is_null($weekday)) {
+			$weekday = $this->getWeekday();
+		}
+		
+		if (ctype_digit((string) $weekday)) {
+			if (!array_key_exists($weekday, $this->weekdays)) {
+				throw new qCal_Date_Exception_InvalidWeekday("\"$weekday\" is not a valid weekday.");
+			}
+		} else {
+			$weekday = strtolower($weekday);
+			if (!in_array($weekday, $this->weekdays)) {
+				throw new qCal_Date_Exception_InvalidWeekday("\"$weekday\" is not a valid weekday.");
+			}
+			$wdays = array_flip($this->weekdays);
+			$weekday = $wdays[$weekday];
+		}
+		
+		if (is_null($month)) {
+			$month = $this->getMonth();
+		}
+		
+		if (ctype_digit((string) $month)) {
+			if (!array_key_exists($month, $this->months)) {
+				throw new qCal_Date_Exception_InvalidMonth("\"$month\" is not a valid month.");
+			}
+		} else {
+			$month = strtolower($month);
+			if (!in_array($month, $this->months)) {
+				throw new qCal_Date_Exception_InvalidMonth("\"$month\" is not a valid month.");
+			}
+			$mons = array_flip($this->months);
+			$month = $mons[$month];
+		}
+		
+		if (is_null($year)) {
+			$year = $this->getYear();
+		}
+		
+		if (!ctype_digit((string) $year) || strlen($year) != 4) {
+			throw new qCal_Date_Exception_InvalidYear("\"$year\" is not a valid year.");
+		}
+		
+		// now, using the year, month and numbered weekday, we need to find the actual day of the month...
+		$firstofmonth = new qCal_DateV2($year, $month, 1);
+		$numdaysinmonth = $firstofmonth->getNumDaysInMonth();
+		$numweekdays = 0; // the number of weekdays that have occurred (in the loop)
+		$foundday = false;
+		if ($negpos == "+") {
+			$day = 1;
+			$wday = $firstofmonth->getWeekday();
+			while ($day <= $numdaysinmonth) {
+				if ($weekday == $wday) {
+					$numweekdays++;
+					if ($numweekdays == $xth) {
+						// break out of the loop, we've found the right day! yay!
+						$foundday = $day;
+						break;
+					}
+				}
+				if ($wday == 6) $wday = 0; // reset to Sunday after Saturday
+				else $wday++;
+				$day++;
+			}
+		} else {
+			$day = $numdaysinmonth;
+			$lastofmonth = new qCal_DateV2($year, $month, $numdaysinmonth);
+			$wday = $lastofmonth->getWeekday();
+			while ($day >= 1) {
+				if ($weekday == $wday) {
+					$numweekdays++;
+					if ($numweekdays == $xth) {
+						// break out of the loop, we've found the right day! yay!
+						$foundday = $day;
+						break;
+					}
+				}
+				if ($wday == 0) $wday = 6; // reset to Saturday after Sunday
+				else $wday--;
+				$day--;
+			}
+		}
+		
+		if ($foundday) {
+			$date = new qCal_DateV2($year, $month, $day);
+		} else {
+			// @todo Figure this out...
+			throw new Exception("I don't know if this will ever be thrown... look into it...");
+		}
+		
+		return $date;
 	
 	}
-	
 	/**
 	 * Maps
 	 * The following methods build maps of the month and year, respectively.
