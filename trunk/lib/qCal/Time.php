@@ -90,6 +90,16 @@ class qCal_Time {
 	
 	}
 	/**
+	 * Set the format that should be used when calling either __toString() or format() without an argument.
+	 * @param string $format
+	 */
+	public function setFormat($format) {
+	
+		$this->format = (string) $format;
+		return $this;
+	
+	}
+	/**
 	 * Format the time with php's date function's metacharacters
 	 */
 	public function format($format) {
