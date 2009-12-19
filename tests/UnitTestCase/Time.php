@@ -61,6 +61,7 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 		$time = new qCal_Time(4, 20, 0);
 		$this->assertEqual($time->__toString(), "04:20:00");
+		$this->assertEqual($time->format("g:ia"), "4:20am");
 	
 	}
 	/**
