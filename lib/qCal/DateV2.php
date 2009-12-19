@@ -21,7 +21,7 @@ class qCal_DateV2 {
 	/**
 	 * @var array The results of a getdate() call
 	 */
-	protected $dateArray;
+	protected $dateArray = array();
 	/**
 	 * @var string The date format that is used when outputting via __toString() 
 	 */
@@ -153,6 +153,7 @@ class qCal_DateV2 {
 		if (is_null($day)) {
 			$day = $now['mday'];
 		}
+		// @todo Should this be using gmmaketime and then adjusting? Figure it out...
 		$this->date = mktime(0, 0, 0, $month, $day, $year);
 		$this->dateArray = getdate($this->date);
 		if (!$rollover) {
