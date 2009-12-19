@@ -180,7 +180,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		/**
 		 * Unix Timestamp
 		 */
-		$this->assertEqual($date->getUnixTimestamp(), mktime(0,0,0,4,23,2009));
+		$this->assertEqual($date->getUnixTimestamp(), mktime(0, 0, 0, 4, 23, 2009));
 	
 	}
 	/**
