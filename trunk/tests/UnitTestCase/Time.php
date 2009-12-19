@@ -42,16 +42,25 @@ class UnitTestCase_Time extends UnitTestCase {
 	/**
 	 * test that timezone defaults to server's timezone
 	 */
-	public function testTimestampIsHowManySecondsSinceSecondZeroOfToday() {
+	// public function testTimestampIsHowManySecondsSinceSecondZeroOfToday() {
+	// 
+	// 	$today = strtotime(date("Y/m/d"));
+	// 	$now = strtotime(date("Y/m/d G:i:s"));
+	// 	$nowhour = date("G", $now);
+	// 	$nowminute = date("i", $now);
+	// 	$nowsecond = date("s", $now);
+	// 	$diff = $now - $today;
+	// 	$time = new qCal_Time($nowhour, $nowminute, $nowsecond);
+	// 	$this->assertEqual($time->getTimestamp(), $diff);
+	// 
+	// }
+	/**
+	 * All of PHP's date function's time-related metacharacters should work with this class
+	 */
+	public function testFormatDateMetacharacters() {
 	
-		$today = strtotime(date("Y/m/d"));
-		$now = strtotime(date("Y/m/d G:i:s"));
-		$nowhour = date("G", $now);
-		$nowminute = date("i", $now);
-		$nowsecond = date("s", $now);
-		$diff = $now - $today;
-		$time = new qCal_Time($nowhour, $nowminute, $nowsecond);
-		$this->assertEqual($time->getTimestamp(), $diff);
+		$time = new qCal_Time(4, 20, 0);
+		// $this->assertEqual($time->__toString(), "4:20:00");
 	
 	}
 	/**
@@ -68,8 +77,9 @@ class UnitTestCase_Time extends UnitTestCase {
 	 */
 	public function testTimeRollover() {
 	
-		$time = new qCal_Time(1, 1, 100, true); // should rollover to 1:02:40
+		$time = new qCal_Time(1, 1, 100, null, true); // should rollover to 1:02:40
 		$this->assertEqual($time->getTimestamp(), 3760);
+		// $this->assertEqual($time->format(), "");
 	
 	}
 	/**
