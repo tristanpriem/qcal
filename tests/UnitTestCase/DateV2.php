@@ -134,28 +134,52 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 		$date = new qCal_DateV2(2009, 4, 23);
 		
-		// month
+		/**
+		 * Month
+		 */
 		$this->assertEqual($date->getMonth(), 4);
 		$this->assertEqual($date->getMonthName(), "April");
 		$this->assertEqual($date->getNumDaysInMonth(), 30);
 		
-		// day
+		/**
+		 * Day
+		 */
 		$this->assertEqual($date->getDay(), 23);
 		$this->assertEqual($date->getYearDay(), 112);
 		$this->assertEqual($date->getFirstDayOfMonth()->__toString(), "04/01/2009");
 		$this->assertEqual($date->getFirstDayOfMonth()->format("l"), "Wednesday");
 		$this->assertEqual($date->getLastDayOfMonth()->__toString(), "04/30/2009");
 		$this->assertEqual($date->getLastDayOfMonth()->format("l"), "Thursday");
+		// find the xth weekday (mon-sun) of the month
+		$this->assertEqual($date->getXthWeekdayOfMonth(2)->__toString(), "04/09/2009"); // find the second Thursday of the month (Because 4/23/2009 was on a Thursday, the weekday defaults to that. The year defaults to 2009 for basically the same reason)
+		$this->assertEqual($date->getXthWeekdayOfMonth(2, "Monday")->__toString(), "04/13/2009"); // find the second monday of the month (month defaults to april because that's what $date is currently set to)
+		$this->assertEqual($date->getXthWeekdayOfMonth(2, "Monday", "January")->__toString(), "01/12/2009"); // find the second monday in January (year defaults to 2009)
+		$this->assertEqual($date->getXthWeekdayOfMonth(2, "Monday", "January", 2008)->__toString(), "01/14/2008"); // find the second Monday in January, 2008
+		// now try negatives and positives
+		$this->assertEqual($date->getXthWeekdayOfMonth(-2)->__toString(), "04/23/2009"); // get the second to last Thursday of the month
+		$this->assertEqual($date->getXthWeekdayOfMonth("-2")->__toString(), "04/23/2009"); // get the second to last Thursday of the month
+		$this->assertEqual($date->getXthWeekdayOfMonth(+2)->__toString(), "04/09/2009"); // surprisingly, this works... interesting...
+		$this->assertEqual($date->getXthWeekdayOfMonth("+2")->__toString(), "04/09/2009");
+		// we can also use numbers instead of spelling out the names of weekdays and months. For the weekday part, use 0 for Sunday through 6 for Saturday (the same as PHP's date function's "w" metacharacter)
+		$this->assertEqual($date->getXthWeekdayOfMonth(2, 1)->__toString(), "04/13/2009"); // second monday
+		$this->assertEqual($date->getXthWeekdayOfMonth(2, 1, 1)->__toString(), "01/12/2009"); // second monday in january
 		
-		// year
+		
+		/**
+		 * Year
+		 */
 		$this->assertEqual($date->getYear(), 2009);
 		
-		// week
+		/**
+		 * Week
+		 */
 		$this->assertEqual($date->getWeekDay(), 4);
 		$this->assertEqual($date->getWeekDayName(), "Thursday");
 		$this->assertEqual($date->getWeekOfYear(), 17);
 		
-		// unix timestamp
+		/**
+		 * Unix Timestamp
+		 */
 		$this->assertEqual($date->getUnixTimestamp(), mktime(0,0,0,4,23,2009));
 	
 	}
