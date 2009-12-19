@@ -163,6 +163,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		// we can also use numbers instead of spelling out the names of weekdays and months. For the weekday part, use 0 for Sunday through 6 for Saturday (the same as PHP's date function's "w" metacharacter)
 		$this->assertEqual($date->getXthWeekdayOfMonth(2, 1)->__toString(), "04/13/2009"); // second monday
 		$this->assertEqual($date->getXthWeekdayOfMonth(2, 1, 1)->__toString(), "01/12/2009"); // second monday in january
+		$this->assertEqual($date->getXthWeekdayOfMonth(-2, 1)->__toString(), "04/20/2009"); // second to last monday in april
 		
 		
 		/**
