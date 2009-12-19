@@ -184,6 +184,17 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that an exception is thrown if there is a request for an non-existant weekday in the month
+	 */
+	public function testInvalidXthWeekday() {
+	
+		$this->expectException(new qCal_Date_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()"));
+		$date = new qCal_DateV2(2010, 1, 1);
+		$tenth_tuesday = $date->getXthWeekdayOfMonth(10, "Tuesday");
+		
+	
+	}
+	/**
 	 * Any of the setters in the object will return the object itself
 	 */
 	public function testFluidMethods() {
