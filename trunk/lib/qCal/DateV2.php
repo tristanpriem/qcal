@@ -436,7 +436,11 @@ class qCal_DateV2 {
 		if ($foundday && checkdate($month, $day, $year)) {
 			$date = new qCal_DateV2($year, $month, $day);
 		} else {
-			throw new qCal_Date_Exception_InvalidDate("{$month}/{$day}/{$year} is not a valid date.");
+			if ($day == 32) {
+				throw new qCal_Date_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()");
+			} else {
+				throw new qCal_Date_Exception_InvalidDate("You have entered an invalid date.");
+			}
 		}
 		
 		return $date;
