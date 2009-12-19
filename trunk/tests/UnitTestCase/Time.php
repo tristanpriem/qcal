@@ -60,7 +60,7 @@ class UnitTestCase_Time extends UnitTestCase {
 	public function testFormatDateMetacharacters() {
 	
 		$time = new qCal_Time(4, 20, 0);
-		// $this->assertEqual($time->__toString(), "4:20:00");
+		$this->assertEqual($time->__toString(), "04:20:00");
 	
 	}
 	/**
