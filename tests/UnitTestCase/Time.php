@@ -64,6 +64,13 @@ class UnitTestCase_Time extends UnitTestCase {
 		$this->assertEqual($time->format("g:ia"), "4:20am");
 	
 	}
+	public function testSetFormat() {
+	
+		$time = new qCal_Time(21, 15, 0);
+		$time->setFormat("g:i:sa");
+		$this->assertEqual($time->__toString(), "9:15:00pm");
+	
+	}
 	/**
 	 * Time rolls over similar to how qCal_DateV2 rolls over, but it is off by default
 	 */
