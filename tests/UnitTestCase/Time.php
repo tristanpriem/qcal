@@ -101,6 +101,16 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that metacharacters can be escaped with a backslash
+	 */
+	public function testEscapeMetacharacters() {
+	
+		$time = new qCal_Time(0, 0, 0);
+		$time->setFormat("\G:\i:\s\a G:i:sa");
+		$this->assertEqual($time->__toString(), "G:i:sa 0:00:00am");
+	
+	}
+	/**
 	 * Test that all of qCal_Time's setters are fluid, meaning they return an instance of themself
 	 */
 	public function testFluidMethods() {
