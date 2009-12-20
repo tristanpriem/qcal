@@ -77,6 +77,7 @@ class qCal_Time {
 		$this->timeArray['i'] = date("i", $this->time);
 		$this->timeArray['s'] = date("s", $this->time);
 		$this->timeArray['u'] = date("u", $this->time); // @todo Not sure if this works as expected...
+		return $this;
 	
 	}
 	
