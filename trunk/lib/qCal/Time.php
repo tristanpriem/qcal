@@ -63,7 +63,7 @@ class qCal_Time {
 		// seconds since the beginning of the day and avoid the math above :)
 		// this should use gmmaketime, but it's making my head hurt, so until
 		// I implement timezones, I'm using this...
-		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
+		$time = mktime($hour, $minute, $second, 1, 1, 1970);
 		$this->time = $time;
 		
 		// you can only use time-based metacharacters with this class, so they are defined here

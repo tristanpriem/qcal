@@ -53,6 +53,7 @@ class UnitTestCase_Time extends UnitTestCase {
 		$nowsecond = date("s", $now);
 		$diff = $now - $today;
 		$time = new qCal_Time($nowhour, $nowminute, $nowsecond);
+		// pr(date_default_timezone_get());
 		$this->assertEqual($time->getTimestamp(), $diff);
 	
 	}
