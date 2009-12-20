@@ -1,20 +1,22 @@
 <?php
 class UnitTestCase_Time extends UnitTestCase {
 
+	protected $timezone;
 	/**
 	 * Set up test environment
 	 */
 	public function setUp() {
 	
-		
+		$this->timezone = date_default_timezone_get();
 	
 	}
 	/**
 	 * Tear down test environment
+	 * Set the timezone back to what it was
 	 */
 	public function tearDown() {
 	
-		
+		date_default_timezone_set($this->timezone);
 	
 	}
 	/**
@@ -117,8 +119,23 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 		$time = new qCal_Time;
 		$time->setTime(23, 0, 0) // 11 o'clock pm
-			->setFormat("g:ia");
+			->setFormat("g:ia")
+			->setTimezone("America/Los_Angeles");
 		$this->assertEqual($time->__toString(), "11:00pm");
+	
+	}
+	/**
+	 * Test that you can set the timezone after instatiation
+	 */
+	public function testTimezoneSetter() {
+	
+		$time = new qCal_Time;
+		$time->setTime(0, 0, 0);
+		$this->assertEqual($time->__toString(), "00:00:00");
+		$time->setTimezone(new qCal_Time_Timezone("Atlantic/Azores"));
+		// hmm... shouldn't this be changed...?
+		$this->assertEqual($time->__toString(), "00:00:00");
+		$this->assertEqual($time->getTimezone()->getAbbreviation(), "AZOT");
 	
 	}
 

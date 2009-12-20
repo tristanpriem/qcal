@@ -47,7 +47,7 @@ class qCal_Time {
 			$timezone = new qCal_Time_Timezone();
 		}
 		
-		$this->timezone = $timezone;
+		$this->setTimezone($timezone);
 		
 		if (!$rollover) {
 			if ($hour > 23 || $minute > 59 || $second > 59) {
@@ -78,6 +78,22 @@ class qCal_Time {
 		$this->timeArray['s'] = date("s", $this->time);
 		$this->timeArray['u'] = date("u", $this->time); // @todo Not sure if this works as expected...
 		return $this;
+	
+	}
+	
+	public function setTimezone($timezone) {
+	
+		if (!($timezone instanceof qCal_Time_Timezone)) {
+			$timezone = new qCal_Time_Timezone($timezone);
+		}
+		$this->timezone = $timezone;
+		return $this;
+	
+	}
+	
+	public function getTimezone() {
+	
+		return $this->timezone;
 	
 	}
 	
