@@ -42,18 +42,18 @@ class UnitTestCase_Time extends UnitTestCase {
 	/**
 	 * test that timezone defaults to server's timezone
 	 */
-	// public function testTimestampIsHowManySecondsSinceSecondZeroOfToday() {
-	// 
-	// 	$today = strtotime(date("Y/m/d"));
-	// 	$now = strtotime(date("Y/m/d G:i:s"));
-	// 	$nowhour = date("G", $now);
-	// 	$nowminute = date("i", $now);
-	// 	$nowsecond = date("s", $now);
-	// 	$diff = $now - $today;
-	// 	$time = new qCal_Time($nowhour, $nowminute, $nowsecond);
-	// 	$this->assertEqual($time->getTimestamp(), $diff);
-	// 
-	// }
+	public function testTimestampIsHowManySecondsSinceSecondZeroOfToday() {
+	
+		$today = strtotime(date("Y/m/d"));
+		$now = strtotime(date("Y/m/d G:i:s"));
+		$nowhour = date("G", $now);
+		$nowminute = date("i", $now);
+		$nowsecond = date("s", $now);
+		$diff = $now - $today;
+		$time = new qCal_Time($nowhour, $nowminute, $nowsecond);
+		$this->assertEqual($time->getTimestamp(), $diff);
+	
+	}
 	/**
 	 * All of PHP's date function's time-related metacharacters should work with this class
 	 */
@@ -96,6 +96,17 @@ class UnitTestCase_Time extends UnitTestCase {
 	public function testTimeFormat() {
 	
 		
+	
+	}
+	/**
+	 * Test that all of qCal_Time's setters are fluid, meaning they return an instance of themself
+	 */
+	public function testFluidMethods() {
+	
+		$time = new qCal_Time;
+		$time->setTime(23, 0, 0) // 11 o'clock pm
+			->setFormat("g:ia");
+		$this->assertEqual($time->__toString(), "11:00pm");
 	
 	}
 
