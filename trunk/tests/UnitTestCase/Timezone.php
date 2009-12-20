@@ -19,6 +19,13 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	// 	date_default_timezone_set($this->timezone);
 	// 
 	// }
+	public function testTimezoneSetsServerTimezoneToGMT() {
+	
+		// this way, our timezone component works independently of the server timezone.
+		// if I can find a way to work with times without having php's functions adjust the output
+		// then I will. otherwise, I'll just have to set the timezone to GMT
+	
+	}
 	/**
 	 * The timezone defaults to server timezone
 	 */
