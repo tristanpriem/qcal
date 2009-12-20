@@ -22,6 +22,11 @@ class qCal_DateTime {
 	 */
 	protected $time;
 	/**
+	 * @var string The default string representation of datetime is a direct
+	 * correlation to the date function's "c" metacharacter
+	 */
+	protected $format = "Y-m-d\TH:i:sP";
+	/**
 	 * Class constructor
 	 * @param mixed Either a string representing the date, or a qCal_DateV2 object
 	 * @param mixed Either a string representing the time, or a qCal_Time object
@@ -32,7 +37,8 @@ class qCal_DateTime {
 			// use today's date
 			$date = new qCal_DateV2();
 		} elseif (!($date instanceof qCal_DateV2)) {
-			$
+			$date = new qCal_DateV2();
+			$date->setByString($date);
 		}
 		if (is_null($time)) {
 			// use today's time
@@ -60,6 +66,40 @@ class qCal_DateTime {
 	
 		$this->time = $time;
 		return $this;
+	
+	}
+	/**
+	 * When output as a string, you can configure how the datetime is displayed
+	 * using the same meta-characters as PHP's date function. Escape meta-characters
+	 * with a backslash.
+	 * @param string The format of the datetime when output as a string
+	 * @return $this (Fluid method)
+	 */
+	public function setFormat($format) {
+	
+		$this->format = (string) $format;
+		return $this;
+	
+	}
+	/**
+	 * Format the date/time similar to php's date function
+	 * @param string Any format string that works in PHP's date function works here.
+	 * @return string The formatted date
+	 */
+	public function format($format) {
+	
+		$timestamp = $this->date->getUnixTimestamp() + $this->time->getTimestamp();
+		return date($format, $timestamp);
+	
+	}
+	/**
+	 * The default string representation of datetime is a direct correlation to
+	 * the date function's "c" metacharacter
+	 * @return string The date formatted according to $this->formats
+	 */
+	public function __toString() {
+	
+		return $this->format($this->format);
 	
 	}
 

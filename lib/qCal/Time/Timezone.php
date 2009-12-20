@@ -1,6 +1,8 @@
 <?php
 class qCal_Time_Timezone {
 
+	protected $format = "P";
+	
 	public function __construct($timezone = null) {
 	
 		if (!is_null($timezone)) {
@@ -42,6 +44,18 @@ class qCal_Time_Timezone {
 	public function getName() {
 	
 		return date("e");
+	
+	}
+	
+	public function format($format) {
+	
+		return date($format);
+	
+	}
+	
+	public function __toString() {
+	
+		return $this->format($this->format);
 	
 	}
 

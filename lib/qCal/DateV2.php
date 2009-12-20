@@ -304,6 +304,7 @@ class qCal_DateV2 {
 	}
 	/**
 	 * Get the amount of days in the current month of this year
+	 * @return integer The number of days in the month
 	 */
 	public function getNumDaysInMonth() {
 	
@@ -312,6 +313,7 @@ class qCal_DateV2 {
 	}
 	/**
 	 * Get the week of the year
+	 * @return integer The week of the year (0-51 I think)
 	 * @todo This is not accurate if the week start isn't monday. I need to adjust for that
 	 */
 	public function getWeekOfYear() {
@@ -472,7 +474,7 @@ class qCal_DateV2 {
 	
 	/**
 	 * Output the date as a string. Options are as follows:
-	 * 
+	 * @return string The formatted date
 	 */
 	public function __toString() {
 	
