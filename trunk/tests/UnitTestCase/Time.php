@@ -95,7 +95,9 @@ class UnitTestCase_Time extends UnitTestCase {
 	 */
 	public function testTimeFormat() {
 	
-		
+		$time = new qCal_Time(1, 0, 0);
+		$time->setFormat("G:i:sa");
+		$this->assertEqual($time->__toString(), "1:00:00am");
 	
 	}
 	/**
