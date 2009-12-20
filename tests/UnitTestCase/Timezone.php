@@ -1,6 +1,6 @@
 <?php
 class UnitTestCase_Timezone extends UnitTestCase {
-	// 
+	// commented out because it makes the tests fail
 	// protected $timezone;
 	// /**
 	//  * Set up test environment
