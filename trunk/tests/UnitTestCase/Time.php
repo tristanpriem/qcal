@@ -136,6 +136,7 @@ class UnitTestCase_Time extends UnitTestCase {
 		// hmm... shouldn't this be changed...?
 		$this->assertEqual($time->__toString(), "00:00:00");
 		$this->assertEqual($time->getTimezone()->getAbbreviation(), "AZOT");
+		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "-3600");
 	
 	}
 
