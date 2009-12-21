@@ -21,9 +21,13 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	// }
 	public function testTimezoneSetsServerTimezoneToGMT() {
 	
+		$timezone = qCal_Timezone::factory(array("foo" => "bar", "name" => "FooBar/Assmunch", "abbreviation" => "tits", "offsetSeconds" => "-28800"));
 		// this way, our timezone component works independently of the server timezone.
 		// if I can find a way to work with times without having php's functions adjust the output
 		// then I will. otherwise, I'll just have to set the timezone to GMT
+		// date_default_timezone_set("GMT");
+		$date = gmdate("Y-m-d H:i:s", 0);
+		$date = qCal_DateV2::gmgetdate(0);
 	
 	}
 	/**
@@ -31,7 +35,7 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	 */
 	public function testTimezoneDefaultsToServerTimezone() {
 
-		$timezone = new qCal_Time_Timezone();
+		$timezone = qCal_Timezone::factory();
 		$this->assertEqual($timezone->getName(), date_default_timezone_get());
 
 	}
@@ -40,8 +44,9 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	 */
 	public function testFormatString() {
 	
-		$timezone = new qCal_Time_Timezone("America/Los_Angeles");
-		$this->assertEqual($timezone->__toString(), "-08:00");
+		$timezone = qCal_Timezone::factory("America/Los_Angeles");
+		$this->assertEqual($timezone->__toString(), "America/Los_Angeles");
+		$timezone->setFormat("P");
 	
 	}
 	/**
@@ -49,7 +54,7 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	 */
 	public function testTimezoneOffsetGetters() {
 	
-		$timezone = new qCal_Time_Timezone("America/Los_Angeles");
+		$timezone = qCal_Timezone::factory("America/Los_Angeles");
 		$this->assertEqual($timezone->getOffset(), "-08:00");
 		$this->assertEqual($timezone->getOffsetHours(), "-0800");
 		$this->assertEqual($timezone->getOffsetSeconds(), "-28800");
@@ -63,7 +68,7 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	 */
 	public function testTimezoneSetToGMT() {
 
-		$timezone = new qCal_Time_Timezone("GMT");
+		$timezone = qCal_Timezone::factory("GMT");
 		$this->assertEqual($timezone->getName(), "GMT");
 		$this->assertEqual($timezone->getOffset(), 0);
 

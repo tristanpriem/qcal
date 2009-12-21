@@ -89,7 +89,7 @@ class qCal_DateTime {
 	public function format($format) {
 	
 		$timestamp = $this->date->getUnixTimestamp() + $this->time->getTimestamp();
-		return date($format, $timestamp);
+		return gmdate($format, $timestamp);
 	
 	}
 	/**

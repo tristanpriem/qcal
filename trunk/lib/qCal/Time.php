@@ -43,8 +43,8 @@ class qCal_Time {
 		if (is_null($second)) {
 			$second = date("s");
 		}
-		if (!($timezone instanceof qCal_Time_Timezone)) {
-			$timezone = new qCal_Time_Timezone();
+		if (!($timezone instanceof qCal_Timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
 		}
 		
 		$this->setTimezone($timezone);
@@ -63,28 +63,28 @@ class qCal_Time {
 		// seconds since the beginning of the day and avoid the math above :)
 		// this should use gmmaketime, but it's making my head hurt, so until
 		// I implement timezones, I'm using this...
-		$time = mktime($hour, $minute, $second, 1, 1, 1970);
+		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
 		$this->time = $time;
 		
 		// you can only use time-based metacharacters with this class, so they are defined here
-		$this->timeArray['a'] = date("a", $this->time);
-		$this->timeArray['A'] = date("A", $this->time);
-		$this->timeArray['B'] = date("B", $this->time);
-		$this->timeArray['g'] = date("g", $this->time);
-		$this->timeArray['G'] = date("G", $this->time);
-		$this->timeArray['h'] = date("h", $this->time);
-		$this->timeArray['H'] = date("H", $this->time);
-		$this->timeArray['i'] = date("i", $this->time);
-		$this->timeArray['s'] = date("s", $this->time);
-		$this->timeArray['u'] = date("u", $this->time); // @todo Not sure if this works as expected...
+		$this->timeArray['a'] = gmdate("a", $this->time);
+		$this->timeArray['A'] = gmdate("A", $this->time);
+		$this->timeArray['B'] = gmdate("B", $this->time);
+		$this->timeArray['g'] = gmdate("g", $this->time);
+		$this->timeArray['G'] = gmdate("G", $this->time);
+		$this->timeArray['h'] = gmdate("h", $this->time);
+		$this->timeArray['H'] = gmdate("H", $this->time);
+		$this->timeArray['i'] = gmdate("i", $this->time);
+		$this->timeArray['s'] = gmdate("s", $this->time);
+		$this->timeArray['u'] = gmdate("u", $this->time); // @todo Not sure if this works as expected...
 		return $this;
 	
 	}
 	
 	public function setTimezone($timezone) {
 	
-		if (!($timezone instanceof qCal_Time_Timezone)) {
-			$timezone = new qCal_Time_Timezone($timezone);
+		if (!($timezone instanceof qCal_Timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
 		}
 		$this->timezone = $timezone;
 		return $this;

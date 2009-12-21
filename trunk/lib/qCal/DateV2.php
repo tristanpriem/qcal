@@ -66,9 +66,9 @@ class qCal_DateV2 {
 	 * @param int The month of this date
 	 * @param int The day of this date
 	 */
-	public function __construct($year = null, $month = null, $day = null, $rollover = false) {
+	public function __construct($year = null, $month = null, $day = null, $timezone = null, $rollover = false) {
 	
-		$this->setDate($year, $month, $day, $rollover);
+		$this->setDate($year, $month, $day, $timezone, $rollover);
 	
 	}
 	/**
@@ -86,10 +86,34 @@ class qCal_DateV2 {
 			}
 		}
 		
-		$date = getdate($timestamp);
-		$newdate = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
-		$newdate = getdate($newdate);
+		$date = self::gmgetdate($timestamp);
+		$newdate = gmmktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
+		$newdate = self::gmgetdate($newdate);
 		return new qCal_DateV2($newdate['year'], $newdate['mon'], $newdate['mday']);
+	
+	}
+	/**
+	 * Set the date's timezone component
+	 * @param string|qCal_Timezone Either a string which would correspond to any of PHP's
+	 * built-in timezones (ie: Americal/Los_Angeles) or a qCal_Timezone component.
+	 * @return qCal_DateV2 $this
+	 */
+	public function setTimezone($timezone) {
+	
+		if (!($timezone instanceof qCal_Timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
+		}
+		$this->timezone = $timezone;
+		return $this;
+	
+	}
+	/**
+	 * Get the date's timezone
+	 * @return qCal_Timezone 
+	 */
+	public function getTimezone() {
+	
+		return $this->timezone;
 	
 	}
 	/**
@@ -141,7 +165,7 @@ class qCal_DateV2 {
 	 * @param int The day of this date
 	 * @throws qCal_Date_Exception_InvalidDate
 	 */
-	public function setDate($year = null, $month = null, $day = null, $rollover = false) {
+	public function setDate($year = null, $month = null, $day = null, $timezone = null, $rollover = false) {
 	
 		$now = getdate();
 		if (is_null($year)) {
@@ -153,9 +177,13 @@ class qCal_DateV2 {
 		if (is_null($day)) {
 			$day = $now['mday'];
 		}
+		if (!($timezone instanceof qCal_Timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
+		}
 		// @todo Should this be using gmmaketime and then adjusting? Figure it out...
-		$this->date = mktime(0, 0, 0, $month, $day, $year);
-		$this->dateArray = getdate($this->date);
+		$this->setTimezone($timezone);
+		$this->date = gmmktime(0, 0, 0, $month, $day, $year);
+		$this->dateArray = self::gmgetdate($this->date);
 		if (!$rollover) {
 			if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
 				throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
@@ -173,29 +201,29 @@ class qCal_DateV2 {
 		// @todo Look into how much more efficient it might be to call date() only once and then break apart the result...
 		
 		// all of php's date function's meta characters are available except the ones that relate to time
-		$this->dateArray["d"] = date("d", $this->date);
-		$this->dateArray["D"] = date("D", $this->date);
-		$this->dateArray["j"] = date("j", $this->date);
-		$this->dateArray["l"] = date("l", $this->date);
-		$this->dateArray["N"] = date("N", $this->date);
-		$this->dateArray["S"] = date("S", $this->date);
-		$this->dateArray["w"] = date("w", $this->date);
-		$this->dateArray["z"] = date("z", $this->date);
+		$this->dateArray["d"] = gmdate("d", $this->date);
+		$this->dateArray["D"] = gmdate("D", $this->date);
+		$this->dateArray["j"] = gmdate("j", $this->date);
+		$this->dateArray["l"] = gmdate("l", $this->date);
+		$this->dateArray["N"] = gmdate("N", $this->date);
+		$this->dateArray["S"] = gmdate("S", $this->date);
+		$this->dateArray["w"] = gmdate("w", $this->date);
+		$this->dateArray["z"] = gmdate("z", $this->date);
 		// @todo This will not be accurate if the week start isn't monday
-		$this->dateArray["W"] = date("W", $this->date);
-		$this->dateArray["F"] = date("F", $this->date);
-		$this->dateArray["m"] = date("m", $this->date);
-		$this->dateArray["M"] = date("M", $this->date);
-		$this->dateArray["n"] = date("n", $this->date);
-		$this->dateArray["t"] = date("t", $this->date);
-		$this->dateArray["L"] = date("L", $this->date);
-		$this->dateArray["o"] = date("o", $this->date);
-		$this->dateArray["y"] = date("y", $this->date);
-		$this->dateArray["Y"] = date("Y", $this->date);
+		$this->dateArray["W"] = gmdate("W", $this->date);
+		$this->dateArray["F"] = gmdate("F", $this->date);
+		$this->dateArray["m"] = gmdate("m", $this->date);
+		$this->dateArray["M"] = gmdate("M", $this->date);
+		$this->dateArray["n"] = gmdate("n", $this->date);
+		$this->dateArray["t"] = gmdate("t", $this->date);
+		$this->dateArray["L"] = gmdate("L", $this->date);
+		$this->dateArray["o"] = gmdate("o", $this->date);
+		$this->dateArray["y"] = gmdate("y", $this->date);
+		$this->dateArray["Y"] = gmdate("Y", $this->date);
 		// these are full date/time, and I'm not really sure they should be here... but I'll keep them for now...
-		$this->dateArray["c"] = date("c", $this->date);
-		$this->dateArray["r"] = date("r", $this->date);
-		$this->dateArray["U"] = date("U", $this->date);
+		$this->dateArray["c"] = gmdate("c", $this->date);
+		$this->dateArray["r"] = gmdate("r", $this->date);
+		$this->dateArray["U"] = gmdate("U", $this->date);
 		
 		$this->monthMap = $this->generateMonthMap();
 		
@@ -479,6 +507,22 @@ class qCal_DateV2 {
 	public function __toString() {
 	
 		return $this->format($this->format);
+	
+	}
+	
+	/**
+	 * Static methods
+	 */
+	
+	/**
+	 * Because PHP does not provide a gmgetdate() function, I borrowed this one from the
+	 * comments on the getdate() function page on php.net
+	 * @param integer The timestamp to use to create the date
+	 */
+	public static function gmgetdate($timestamp = null) {
+	
+		$k = array('seconds','minutes','hours','mday','wday','mon','year','yday','weekday','month',0);
+		return(array_combine($k, split(":", gmdate('s:i:G:j:w:n:Y:z:l:F:U', is_null($timestamp) ? time() : $timestamp))));
 	
 	}
 
