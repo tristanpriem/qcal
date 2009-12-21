@@ -44,9 +44,21 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	 */
 	public function testFormatString() {
 	
+		// format defaults to timezone name
 		$timezone = qCal_Timezone::factory("America/Los_Angeles");
 		$this->assertEqual($timezone->__toString(), "America/Los_Angeles");
+		
+		// test that format can be changed
 		$timezone->setFormat("P");
+		$this->assertEqual($timezone->__toString(), "-08:00");
+		
+		// test escapability
+		$timezone->setFormat('\PP');
+		$this->assertEqual($timezone->__toString(), "P-08:00");
+		
+		// test each of the metacharacters available
+		$timezone->setFormat('eIOPTZ');
+		$this->assertEqual($timezone->__toString(), "America/Los_Angeles0-0800-08:00PST-28800");
 	
 	}
 	/**
