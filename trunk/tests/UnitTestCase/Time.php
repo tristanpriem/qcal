@@ -50,8 +50,7 @@ class UnitTestCase_Time extends UnitTestCase {
 		$nowminute = date("i", $now);
 		$nowsecond = date("s", $now);
 		$diff = $now - $today;
-		$time = new qCal_Time($nowhour, $nowminute, $nowsecond);
-		// pr(date_default_timezone_get());
+		$time = new qCal_Time($nowhour, $nowminute, $nowsecond, qCal_Timezone::factory("GMT"));
 		$this->assertEqual($time->getTimestamp(), $diff);
 	
 	}
@@ -86,7 +85,7 @@ class UnitTestCase_Time extends UnitTestCase {
 	 */
 	public function testTimeRollover() {
 	
-		$time = new qCal_Time(1, 1, 100, null, true); // should rollover to 1:02:40
+		$time = new qCal_Time(1, 1, 100, qCal_Timezone::factory("GMT"), true); // should rollover to 1:02:40
 		$this->assertEqual($time->getTimestamp(), 3760);
 		// $this->assertEqual($time->format(), "");
 	
@@ -136,6 +135,22 @@ class UnitTestCase_Time extends UnitTestCase {
 		$this->assertEqual($time->__toString(), "00:00:00");
 		$this->assertEqual($time->getTimezone()->getAbbreviation(), "AZOT");
 		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "-3600");
+	
+	}
+	/**
+	 * Test that timezone adjusts the time properly.
+	 * When you create a new time object, it defaults to GMT time, meaning no
+	 * adjustment to the time. When you set a timezone, like America/Los_Angeles, which is
+	 * -8 hours from GMT, then that amount of time should be added to the time (subtract 8 hours).
+	 * Basically we should get back the timestamp that is equal to the time specified, plus the timezone offset
+	 */
+	public function testTimezoneAdjustsTime() {
+	
+		$time = new qCal_Time(8, 0, 0); // 8:00am
+		$time->setTimezone(qCal_Timezone::factory("America/Los_Angeles"));
+		$this->assertEqual($time->getTimestamp(), "0"); // 8:00am
+		$time->setTimezone(qCal_Timezone::factory("GMT"));
+		$this->assertEqual($time->getTimestamp(), "28800");
 	
 	}
 

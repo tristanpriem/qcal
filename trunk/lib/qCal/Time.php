@@ -96,7 +96,7 @@ class qCal_Time {
 	 */
 	public function getTimestamp() {
 	
-		return $this->time;
+		return $this->time + $this->getTimezone()->getOffsetSeconds();
 	
 	}
 	/**
