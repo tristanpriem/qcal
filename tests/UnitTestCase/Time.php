@@ -135,6 +135,10 @@ class UnitTestCase_Time extends UnitTestCase {
 		$this->assertEqual($time->__toString(), "00:00:00");
 		$this->assertEqual($time->getTimezone()->getAbbreviation(), "AZOT");
 		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "-3600");
+		
+		// you should also be able to provide the name of the timezone to set it rather than using the factory
+		$time2 = new qCal_Time(0, 0, 0, "GMT");
+		$this->assertEqual($time2->getTimezone(), qCal_Timezone::factory("GMT"));
 	
 	}
 	/**
