@@ -62,6 +62,12 @@ class qCal_Time {
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
 		$this->time = $time;
 		
+		return $this->regenerateTimeArray();
+	
+	}
+	
+	protected function regenerateTimeArray() {
+	
 		$formatString = "a|A|B|g|G|h|H|i|s|u";
 		$keys = explode("|", $formatString);
 		$vals = explode("|", gmdate($formatString, $this->getTimestamp()));
@@ -76,6 +82,7 @@ class qCal_Time {
 			$timezone = qCal_Timezone::factory($timezone);
 		}
 		$this->timezone = $timezone;
+		$this->regenerateTimeArray();
 		return $this;
 	
 	}
