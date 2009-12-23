@@ -140,6 +140,8 @@ class UnitTestCase_Time extends UnitTestCase {
 		// you should also be able to provide the name of the timezone to set it rather than using the factory
 		$time2 = new qCal_Time(0, 0, 0, "GMT");
 		$this->assertEqual($time2->getTimezone(), qCal_Timezone::factory("GMT"));
+		$time2->setTimezone(new qCal_Timezone("CustomTimezone", 3600, "CT", false));
+		$this->assertEqual($time2->__toString(), "01:00:00");
 	
 	}
 	/**
