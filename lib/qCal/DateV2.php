@@ -66,9 +66,9 @@ class qCal_DateV2 {
 	 * @param int The month of this date
 	 * @param int The day of this date
 	 */
-	public function __construct($year = null, $month = null, $day = null, $timezone = null, $rollover = false) {
+	public function __construct($year = null, $month = null, $day = null, /*$timezone = null,*/ $rollover = false) {
 	
-		$this->setDate($year, $month, $day, $timezone, $rollover);
+		$this->setDate($year, $month, $day, /*$timezone,*/ $rollover);
 	
 	}
 	/**
@@ -97,7 +97,7 @@ class qCal_DateV2 {
 	 * @param string|qCal_Timezone Either a string which would correspond to any of PHP's
 	 * built-in timezones (ie: Americal/Los_Angeles) or a qCal_Timezone component.
 	 * @return qCal_DateV2 $this
-	 */
+
 	public function setTimezone($timezone) {
 	
 		if (!($timezone instanceof qCal_Timezone)) {
@@ -107,15 +107,17 @@ class qCal_DateV2 {
 		return $this;
 	
 	}
+	 */
 	/**
 	 * Get the date's timezone
 	 * @return qCal_Timezone 
-	 */
+
 	public function getTimezone() {
 	
 		return $this->timezone;
 	
 	}
+	 */
 	/**
 	 * Set the format that should be used when calling either __toString() or format() without an argument.
 	 * @param string $format
@@ -165,7 +167,7 @@ class qCal_DateV2 {
 	 * @param int The day of this date
 	 * @throws qCal_Date_Exception_InvalidDate
 	 */
-	public function setDate($year = null, $month = null, $day = null, $timezone = null, $rollover = false) {
+	public function setDate($year = null, $month = null, $day = null, /*$timezone = null,*/ $rollover = false) {
 	
 		$now = getdate();
 		if (is_null($year)) {
@@ -177,11 +179,11 @@ class qCal_DateV2 {
 		if (is_null($day)) {
 			$day = $now['mday'];
 		}
-		if (!($timezone instanceof qCal_Timezone)) {
+		/*if (!($timezone instanceof qCal_Timezone)) {
 			$timezone = qCal_Timezone::factory($timezone);
 		}
 		// @todo Should this be using gmmaketime and then adjusting? Figure it out...
-		$this->setTimezone($timezone);
+		$this->setTimezone($timezone);*/
 		$this->date = gmmktime(0, 0, 0, $month, $day, $year);
 		$this->dateArray = self::gmgetdate($this->date);
 		if (!$rollover) {
