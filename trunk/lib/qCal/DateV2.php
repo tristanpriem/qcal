@@ -203,6 +203,7 @@ class qCal_DateV2 {
 		$keys = explode("|", $formatString);
 		$vals = explode("|", gmdate($formatString, $this->date));
 		$this->dateArray = array_merge($this->dateArray, array_combine($keys, $vals));
+		return $this;
 	
 	}
 	

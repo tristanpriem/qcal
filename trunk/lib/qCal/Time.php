@@ -66,17 +66,10 @@ class qCal_Time {
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
 		$this->time = $time;
 		
-		// you can only use time-based metacharacters with this class, so they are defined here
-		$this->timeArray['a'] = gmdate("a", $this->time);
-		$this->timeArray['A'] = gmdate("A", $this->time);
-		$this->timeArray['B'] = gmdate("B", $this->time);
-		$this->timeArray['g'] = gmdate("g", $this->time);
-		$this->timeArray['G'] = gmdate("G", $this->time);
-		$this->timeArray['h'] = gmdate("h", $this->time);
-		$this->timeArray['H'] = gmdate("H", $this->time);
-		$this->timeArray['i'] = gmdate("i", $this->time);
-		$this->timeArray['s'] = gmdate("s", $this->time);
-		$this->timeArray['u'] = gmdate("u", $this->time); // @todo Not sure if this works as expected...
+		$formatString = "a|A|B|g|G|h|H|i|s|u";
+		$keys = explode("|", $formatString);
+		$vals = explode("|", gmdate($formatString, $this->time));
+		$this->timeArray = array_merge($this->timeArray, array_combine($keys, $vals));
 		return $this;
 	
 	}
