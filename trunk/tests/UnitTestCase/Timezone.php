@@ -85,5 +85,37 @@ class UnitTestCase_Timezone extends UnitTestCase {
 		$this->assertEqual($timezone->getOffset(), 0);
 
 	}
+	/**
+	 * Test that you can create your own custom timezone
+	 */
+	public function testCustomTimezone() {
+	
+		$timezone = new qCal_Timezone("Custom", "5400", "CSTM", false); // hour and a half past GMT
+		$this->assertEqual($timezone->getOffsetSeconds(), "5400");
+	
+	}
+	/**
+	 * You should be able to register a custom timezone so that you can refer to it by name later on
+	 */
+	public function testUnregisteredCustomTimezoneThrowsException() {
+	
+		$this->expectException(new qCal_Timezone_Exception_InvalidTimezone("'Custom' is not a valid timezone."));
+		$time = new qCal_Time(0, 0, 0, "Custom");
+	
+	}
+	/**
+	 * Now test that registering the timezone prevents the exception
+	 */
+	public function testCustomTimezoneRegister() {
+	
+		// now we register the timezone so that we can use it
+		$timezone = new qCal_Timezone("Custom", "5400", "CSTM", false);
+		qCal_Timezone::register($timezone);
+		$time = new qCal_Time(0, 0, 0, "Custom");
+		$this->assertEqual($time->getTimezone(), $timezone);
+		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "5400");
+		$this->assertEqual($time->getTimestamp(), "5400");
+	
+	}
 
 }
