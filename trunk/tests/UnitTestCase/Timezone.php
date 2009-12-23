@@ -115,6 +115,7 @@ class UnitTestCase_Timezone extends UnitTestCase {
 		$this->assertEqual($time->getTimezone(), $timezone);
 		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "5400");
 		$this->assertEqual($time->getTimestamp(), "5400");
+		$this->assertEqual($time->__toString(), "01:30:00");
 	
 	}
 

@@ -31,24 +31,20 @@ class qCal_Time {
 	 */
 	public function setTime($hour = null, $minute = null, $second = null, $timezone = null, $rollover = false) {
 	
-		/**
-		 * @todo These don't account for timezone
-		 */
-		if (is_null($hour)) {
-			$hour = date("G");
-		}
-		if (is_null($minute)) {
-			$minute = date("i");
-		}
-		if (is_null($second)) {
-			$second = date("s");
-		}
 		if (!($timezone instanceof qCal_Timezone)) {
 			$timezone = qCal_Timezone::factory($timezone);
 		}
-		
 		$this->setTimezone($timezone);
 		
+		if (is_null($hour)) {
+			$hour = date("G", $this->getTimestamp());
+		}
+		if (is_null($minute)) {
+			$minute = date("i", $this->getTimestamp());
+		}
+		if (is_null($second)) {
+			$second = date("s", $this->getTimestamp());
+		}
 		if (!$rollover) {
 			if ($hour > 23 || $minute > 59 || $second > 59) {
 				throw new qCal_Time_Exception_InvalidTime(sprintf("Invalid time specified for qCal_Time: \"%02d:%02d:%02d\"", $hour, $minute, $second));
@@ -68,7 +64,7 @@ class qCal_Time {
 		
 		$formatString = "a|A|B|g|G|h|H|i|s|u";
 		$keys = explode("|", $formatString);
-		$vals = explode("|", gmdate($formatString, $this->time));
+		$vals = explode("|", gmdate($formatString, $this->getTimestamp()));
 		$this->timeArray = array_merge($this->timeArray, array_combine($keys, $vals));
 		return $this;
 	
