@@ -199,52 +199,10 @@ class qCal_DateV2 {
 		 */
 		
 		// @todo Look into how much more efficient it might be to call date() only once and then break apart the result...
-				// 
-				// // all of php's date function's meta characters are available except the ones that relate to time
-				// $this->dateArray["d"] = gmdate("d", $this->date);
-				// $this->dateArray["D"] = gmdate("D", $this->date);
-				// $this->dateArray["j"] = gmdate("j", $this->date);
-				// $this->dateArray["l"] = gmdate("l", $this->date);
-				// $this->dateArray["N"] = gmdate("N", $this->date);
-				// $this->dateArray["S"] = gmdate("S", $this->date);
-				// $this->dateArray["w"] = gmdate("w", $this->date);
-				// $this->dateArray["z"] = gmdate("z", $this->date);
-				// // @todo This will not be accurate if the week start isn't monday
-				// $this->dateArray["W"] = gmdate("W", $this->date);
-				// $this->dateArray["F"] = gmdate("F", $this->date);
-				// $this->dateArray["m"] = gmdate("m", $this->date);
-				// $this->dateArray["M"] = gmdate("M", $this->date);
-				// $this->dateArray["n"] = gmdate("n", $this->date);
-				// $this->dateArray["t"] = gmdate("t", $this->date);
-				// $this->dateArray["L"] = gmdate("L", $this->date);
-				// $this->dateArray["o"] = gmdate("o", $this->date);
-				// $this->dateArray["y"] = gmdate("y", $this->date);
-				// $this->dateArray["Y"] = gmdate("Y", $this->date);
-				// // these are full date/time, and I'm not really sure they should be here... but I'll keep them for now...
-				// $this->dateArray["c"] = gmdate("c", $this->date);
-				// $this->dateArray["r"] = gmdate("r", $this->date);
-				// $this->dateArray["U"] = gmdate("U", $this->date);
-				// 
 		$formatString = "d|D|j|l|N|S|w|z|W|F|m|M|n|t|L|o|y|Y|c|r|U";
 		$keys = explode("|", $formatString);
 		$vals = explode("|", gmdate($formatString, $this->date));
 		$this->dateArray = array_merge($this->dateArray, array_combine($keys, $vals));
-		
-		$this->monthMap = $this->generateMonthMap();
-		
-		// pre($this->monthMap);
-		
-		// weekday of month (ie: 2nd Tuesday of the month)
-		// $this->dateArray['wday_of_mon'] = "";
-		
-		// how many weekdays to the end of the month (ie: 2nd Tuesday from the end of the month)
-		// $this->dateArray['wday_to_end_mon'] = ;
-		
-		// weekday of year (ie: 25th Tuesday of the year)
-		// $this->dateArray['wday_of_year'] = ;
-		
-		// how many weekdays to the end of the year (ie: 35th Tuesday from the end of the year)
-		// $this->dateArray['wday_to_end_year'] = ;
 	
 	}
 	
@@ -480,24 +438,6 @@ class qCal_DateV2 {
 		}
 		
 		return $date;
-	
-	}
-	/**
-	 * Maps
-	 * The following methods build maps of the month and year, respectively.
-	 * What this means is it generates a multi-dimensional array with week days as one dimension
-	 * and the week as the second (picture a calendar).
-	 */
-	
-	public function generateMonthMap() {
-		
-		$map = array();
-		$mday = 1;
-		while ($mday <= $this->getNumDaysInMonth()) {
-			// need to figure out how to skip to the first day of the month here... 
-			$mday++;
-		}
-		return $map;
 	
 	}
 	
