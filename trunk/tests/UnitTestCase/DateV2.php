@@ -18,17 +18,6 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	}
 	
-	/**
-	 * Because date will be using GMT, we have to manually adjust the date with a qCal_Timezone
-	 * object.
-
-	public function testDateTimezoneDefaultsToServerTimezone() {
-	
-		$date = new qCal_DateV2;
-		$this->assertEqual($date->getTimezone()->getOffsetSeconds(), -28800);
-	
-	}
-	 */	
 	public function testDateExceptionAcceptsDateObject() {
 	
 		$date = new qCal_DateV2;
@@ -216,17 +205,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 		$this->assertEqual($date->setFormat("m/d/Y")->__toString(), "12/17/2009");
 	
 	}
-	/**
-	 * It is possible for the timezone to cause the date to change
-
-	public function testTimezoneCausesDateChange() {
 	
-		$date = new qCal_DateV2(2009, 12, 17);
-		$date->setTimezone(qCal_Timezone::factory("America/Los_Angeles")); // subtracts eight hours from the day
-		$this->assertEqual($date->getDay(), 16);
-	
-	}
-	 */
 	/**
 	 * The following are methods that test the date component's ability to do "date magic".
 	 * It tests things such as the date component's ability to determine if this is the 2nd

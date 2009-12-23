@@ -93,32 +93,6 @@ class qCal_DateV2 {
 	
 	}
 	/**
-	 * Set the date's timezone component
-	 * @param string|qCal_Timezone Either a string which would correspond to any of PHP's
-	 * built-in timezones (ie: Americal/Los_Angeles) or a qCal_Timezone component.
-	 * @return qCal_DateV2 $this
-
-	public function setTimezone($timezone) {
-	
-		if (!($timezone instanceof qCal_Timezone)) {
-			$timezone = qCal_Timezone::factory($timezone);
-		}
-		$this->timezone = $timezone;
-		return $this;
-	
-	}
-	 */
-	/**
-	 * Get the date's timezone
-	 * @return qCal_Timezone 
-
-	public function getTimezone() {
-	
-		return $this->timezone;
-	
-	}
-	 */
-	/**
 	 * Set the format that should be used when calling either __toString() or format() without an argument.
 	 * @param string $format
 	 */
@@ -179,11 +153,7 @@ class qCal_DateV2 {
 		if (is_null($day)) {
 			$day = $now['mday'];
 		}
-		/*if (!($timezone instanceof qCal_Timezone)) {
-			$timezone = qCal_Timezone::factory($timezone);
-		}
-		// @todo Should this be using gmmaketime and then adjusting? Figure it out...
-		$this->setTimezone($timezone);*/
+		
 		$this->date = gmmktime(0, 0, 0, $month, $day, $year);
 		$this->dateArray = self::gmgetdate($this->date);
 		if (!$rollover) {
@@ -191,14 +161,6 @@ class qCal_DateV2 {
 				throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
 			}
 		}
-		
-		/**
-		 * When a date is instantiated, it caches information such as which weekday of the month it is.
-		 * For instance, it may be the 2nd Tuesday of the month and the 3rd to last Tuesday of the month.
-		 * It also does this for the year. It will be the 23rd Tuesday of the year and the 29th from last
-		 * Tuesday of the year (I have no idea if that's even possible, I'm just throwing random numbers
-		 * out there).
-		 */
 		
 		// @todo Look into how much more efficient it might be to call date() only once and then break apart the result...
 		$formatString = "d|D|j|l|N|S|w|z|W|F|m|M|n|t|L|o|y|Y|c|r|U";

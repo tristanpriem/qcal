@@ -64,7 +64,6 @@ class qCal_Timezone {
 	 */
 	public static function factory($timezone = null) {
 	
-		// pr($timezone);
 		if (is_array($timezone)) {
 			// remove anything irrelevant
 			$vals = array_intersect_key($timezone, array_flip(array('name','offsetSeconds','abbreviation','isDaylightSavings')));

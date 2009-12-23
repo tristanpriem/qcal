@@ -52,13 +52,8 @@ class qCal_Time {
 		}
 		
 		// now set the timestamp
-		/*$time = $hour * 60 * 60;
-		$time = $time + $minute * 60;
-		$time = $time + $second;*/
 		// by using the unix epoch date, we only end up with the amount of
-		// seconds since the beginning of the day and avoid the math above :)
-		// this should use gmmaketime, but it's making my head hurt, so until
-		// I implement timezones, I'm using this...
+		// seconds since the beginning of the day and avoid a bunch of math :)
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
 		$this->time = $time;
 		
