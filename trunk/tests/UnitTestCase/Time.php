@@ -113,15 +113,15 @@ class UnitTestCase_Time extends UnitTestCase {
 	/**
 	 * Test that all of qCal_Time's setters are fluid, meaning they return an instance of themself
 	 */
-	/*public function testFluidMethods() {
+	public function testFluidMethods() {
 	
 		$time = new qCal_Time;
 		$time->setTime(23, 0, 0, "GMT") // 11 o'clock pm
 			->setFormat("g:ia")
 			->setTimezone("America/Los_Angeles");
-		$this->assertEqual($time->__toString(), "11:00pm");
+		$this->assertEqual($time->__toString(), "3:00pm");
 	
-	}*/
+	}
 	/**
 	 * Test that you can set the timezone after instatiation
 	 */
