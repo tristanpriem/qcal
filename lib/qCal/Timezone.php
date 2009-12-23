@@ -13,6 +13,8 @@ class qCal_Timezone {
 	
 	protected $formatArray = array();
 	
+	protected static $timezones = array();
+	
 	/**
 	 * Class constructor
 	 * A timezone must have a name, offset (in seconds), and optionsally an abbreviation. Daylight savings defaults to false.
@@ -62,6 +64,7 @@ class qCal_Timezone {
 	 */
 	public static function factory($timezone = null) {
 	
+		// pr($timezone);
 		if (is_array($timezone)) {
 			// remove anything irrelevant
 			$vals = array_intersect_key($timezone, array_flip(array('name','offsetSeconds','abbreviation','isDaylightSavings')));
@@ -79,18 +82,48 @@ class qCal_Timezone {
 		} else {
 			// get the timezone information out of the string
 			$defaultTz = date_default_timezone_get();
-			if (is_string($timezone)) date_default_timezone_set($timezone);
 			
-			$name = date("e");
-			$offset = date("Z");
-			$abbr = date("T");
-			$ds = date("I");
-			$timezone = new qCal_Timezone($name, $offset, $abbr, $ds);
+			if (is_null($timezone)) $timezone = $defaultTz;
+			
+			// if the timezone being set is invalid, we will get a PHP notice, so error is suppressed here
+			// @todo It would be more clean and probably more efficient to use php's error handling to throw an exception here...
+			if (is_string($timezone)) {
+				@date_default_timezone_set($timezone);
+				// if the function above didn't work, this will be true
+				if (date_default_timezone_get() != $timezone) {
+					// if the timezone requested is registered, use it
+					if (array_key_exists($timezone, self::$timezones)) {
+						$timezone = self::$timezones[$timezone];
+					} else {
+						// otherwise, throw an exception
+						throw new qCal_Timezone_Exception_InvalidTimezone("'$timezone' is not a valid timezone.");
+					}
+				} else {
+					// if the timezone specified was a valid (native php) timezone, use it
+					$name = date("e");
+					$offset = date("Z");
+					$abbr = date("T");
+					$ds = date("I");
+					$timezone = new qCal_Timezone($name, $offset, $abbr, $ds);
+				}
+			}
 			
 			// now set it back to what it was...
 			date_default_timezone_set($defaultTz);
 		}
 		return $timezone;
+	
+	}
+	
+	public static function register(qCal_Timezone $timezone) {
+	
+		self::$timezones[$timezone->getName()] = $timezone;
+	
+	}
+	
+	public static function unregister($timezone) {
+	
+		unset(self::$timezones[(string) $timezone]);
 	
 	}
 	
