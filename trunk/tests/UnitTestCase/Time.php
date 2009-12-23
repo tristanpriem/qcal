@@ -133,8 +133,7 @@ class UnitTestCase_Time extends UnitTestCase {
 		$time->setTimezone(qCal_Timezone::factory("Atlantic/Azores"));
 		
 		// this tests that the time changes when you change the timezone
-		// I need to figure out how to make this reflect the new timezone...
-		// $this->assertEqual($time->__toString(), "23:00:00");
+		$this->assertEqual($time->__toString(), "23:00:00");
 		$this->assertEqual($time->getTimezone()->getAbbreviation(), "AZOT");
 		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "-3600");
 		
