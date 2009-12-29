@@ -95,7 +95,7 @@ class qCal_Timezone {
 						$timezone = self::$timezones[$timezone];
 					} else {
 						// otherwise, throw an exception
-						throw new qCal_Timezone_Exception_InvalidTimezone("'$timezone' is not a valid timezone.");
+						throw new qCal_DateTime_Exception_InvalidTimezone("'$timezone' is not a valid timezone.");
 					}
 				} else {
 					// if the timezone specified was a valid (native php) timezone, use it

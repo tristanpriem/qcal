@@ -18,24 +18,24 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testGetInstancesStartMustComeBeforeEnd() {
 	
-		$recur = new qCal_Date_Recur_Yearly;
+		$recur = new qCal_DateTime_Recur_Yearly;
 		$recur->interval(1);
-		$this->expectException(new qCal_Date_Exception_InvalidRecur('Start date must come before end date'));
+		$this->expectException(new qCal_DateTime_Exception_InvalidRecur('Start date must come before end date'));
 		$dates = $recur->getRecurrences('08/01/2009', '07/01/2009');
 	
 	}
 	
 	public function testGetInstancesRequiresInterval() {
 	
-		$recur = new qCal_Date_Recur_Yearly;
-		$this->expectException(new qCal_Date_Exception_InvalidRecur('You must specify an interval'));
+		$recur = new qCal_DateTime_Recur_Yearly;
+		$this->expectException(new qCal_DateTime_Exception_InvalidRecur('You must specify an interval'));
 		$dates = $recur->getRecurrences('08/01/2009', '09/01/2009');
 	
 	}
 	
 	public function testGetters() {
 	
-		$recur = new qCal_Date_Recur_Yearly;
+		$recur = new qCal_DateTime_Recur_Yearly;
 		$recur->count(10)
 			->byMonth(2)
 			->byDay('TU');
@@ -48,19 +48,19 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testSetWeekworkStart() {
 	
-		$recur = new qCal_Date_Recur_Minutely;
+		$recur = new qCal_DateTime_Recur_Minutely;
 		$recur->wkst('SU'); // set the work week start to Sunday
 		$this->assertEqual($recur->wkst(), 'SU');
 		// invalid work day should throw an exception
-		$this->expectException(new qCal_Date_Exception_InvalidRecur('"FOO" is not a valid week day, must be one of the following: MO, TU, WE, TH, FR, SA, SU'));
+		$this->expectException(new qCal_DateTime_Exception_InvalidRecur('"FOO" is not a valid week day, must be one of the following: MO, TU, WE, TH, FR, SA, SU'));
 		$recur->wkst('FOO');
 	
 	}
 	
 	public function testCanHaveCountOrUntilButNotBoth() {
 	
-		$rule = new qCal_Date_Recur_Hourly;
-		$this->expectException(new qCal_Date_Exception_InvalidRecur('A recurrence count and an until date cannot both be specified'));
+		$rule = new qCal_DateTime_Recur_Hourly;
+		$this->expectException(new qCal_DateTime_Exception_InvalidRecur('A recurrence count and an until date cannot both be specified'));
 		$rule->count(10)
 			->until('02/12/2009');
 	
@@ -299,26 +299,26 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testLooperFactory() {
 	
-		$yearly = qCal_Date_Recur::factory('yearly', time());
-		$this->assertIsA($yearly, 'qCal_Date_Recur_Yearly');
-		$monthly = qCal_Date_Recur::factory('MonTHLY', time());
-		$this->assertIsA($monthly, 'qCal_Date_Recur_Monthly');
-		$weekly = qCal_Date_Recur::factory('WEEKLY', time());
-		$this->assertIsA($weekly, 'qCal_Date_Recur_Weekly');
-		$daily = qCal_Date_Recur::factory('Daily', time());
-		$this->assertIsA($daily, 'qCal_Date_Recur_Daily');
-		$hourly = qCal_Date_Recur::factory('hourly', time());
-		$this->assertIsA($hourly, 'qCal_Date_Recur_Hourly');
-		$minutely = qCal_Date_Recur::factory('minutely', time());
-		$this->assertIsA($minutely, 'qCal_Date_Recur_Minutely');
-		$secondly = qCal_Date_Recur::factory('SeCoNdLy', time());
-		$this->assertIsA($secondly, 'qCal_Date_Recur_Secondly');
+		$yearly = qCal_DateTime_Recur::factory('yearly', time());
+		$this->assertIsA($yearly, 'qCal_DateTime_Recur_Yearly');
+		$monthly = qCal_DateTime_Recur::factory('MonTHLY', time());
+		$this->assertIsA($monthly, 'qCal_DateTime_Recur_Monthly');
+		$weekly = qCal_DateTime_Recur::factory('WEEKLY', time());
+		$this->assertIsA($weekly, 'qCal_DateTime_Recur_Weekly');
+		$daily = qCal_DateTime_Recur::factory('Daily', time());
+		$this->assertIsA($daily, 'qCal_DateTime_Recur_Daily');
+		$hourly = qCal_DateTime_Recur::factory('hourly', time());
+		$this->assertIsA($hourly, 'qCal_DateTime_Recur_Hourly');
+		$minutely = qCal_DateTime_Recur::factory('minutely', time());
+		$this->assertIsA($minutely, 'qCal_DateTime_Recur_Minutely');
+		$secondly = qCal_DateTime_Recur::factory('SeCoNdLy', time());
+		$this->assertIsA($secondly, 'qCal_DateTime_Recur_Secondly');
 	
 	}
 	
 	public function xxxtestBuildRule() {
 	
-		$recur = new qCal_Date_Recur_Yearly;
+		$recur = new qCal_DateTime_Recur_Yearly;
 		$recur->interval(2) // every other year
 			->byMonth(array(1,2,3)) // every other year in january, february and march
 			->byMonthDay(10) // every 10th of the month

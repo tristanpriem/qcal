@@ -98,7 +98,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawPeriod() {
 	
 		$value = new qCal_Value_Period('19970101T180000Z/19970102T070000Z');
-		$this->assertEqual($value->getValue(), new qCal_Date_Period('19970101T180000Z', '19970102T070000Z'));
+		$this->assertEqual($value->getValue(), new qCal_DateTime_Period('19970101T180000Z', '19970102T070000Z'));
 	
 	}
 	/**
@@ -180,7 +180,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawDuration() {
 	
 		$value = new qCal_Value_Duration('P1W3DT2H3M45S');
-		$this->assertEqual($value->getValue(), new qCal_Date_Duration('P1W3DT2H3M45S')); // this is how many seconds are in the duration
+		$this->assertEqual($value->getValue(), new qCal_DateTime_Duration('P1W3DT2H3M45S')); // this is how many seconds are in the duration
 	
 	}
 	/**
