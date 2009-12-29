@@ -47,7 +47,7 @@ class qCal_Date extends DateTime {
 		// pr($date);
 		if (!$timestamp = strtotime($date)) {
 			// if unix timestamp can't be created throw an exception
-			throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
+			throw new qCal_DateTime_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::setDate()");
 		}
 		if (is_null($timezone)) $timezone = new DateTimeZone(date_default_timezone_get());
 		parent::__construct($date, $timezone);

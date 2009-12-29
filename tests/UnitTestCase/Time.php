@@ -76,7 +76,7 @@ class UnitTestCase_Time extends UnitTestCase {
 	 */
 	public function testTimeRolloverException() {
 	
-		$this->expectException(new qCal_Time_Exception_InvalidTime("Invalid time specified for qCal_Time: \"01:01:100\""));
+		$this->expectException(new qCal_DateTime_Exception_InvalidTime("Invalid time specified for qCal_Time: \"01:01:100\""));
 		$time = new qCal_Time(1, 1, 100); // should rollover to 1:02:40, but doesn't because rollover is off by default
 	
 	}

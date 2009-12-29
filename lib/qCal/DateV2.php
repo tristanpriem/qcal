@@ -158,7 +158,7 @@ class qCal_DateV2 {
 		$this->dateArray = self::gmgetdate($this->date);
 		if (!$rollover) {
 			if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
-				throw new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
+				throw new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
 			}
 		}
 		
@@ -396,9 +396,9 @@ class qCal_DateV2 {
 			$date = new qCal_DateV2($year, $month, $day);
 		} else {
 			if ($day == 32) {
-				throw new qCal_Date_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()");
+				throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()");
 			} else {
-				throw new qCal_Date_Exception_InvalidDate("You have entered an invalid date.");
+				throw new qCal_DateTime_Exception_InvalidDate("You have entered an invalid date.");
 			}
 		}
 		

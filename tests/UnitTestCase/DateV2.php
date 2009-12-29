@@ -18,15 +18,15 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	}
 	
-	public function testDateExceptionAcceptsDateObject() {
+	/*public function testDateExceptionAcceptsDateObject() {
 	
 		$date = new qCal_DateV2;
-		$exception = new qCal_Date_Exception("Foo", 0, null, $date);
+		$exception = new qCal_DateTime_Exception("Foo", 0, null, $date);
 		$this->assertEqual($exception->getDate(), $date);
 		$this->expectException($exception);
 		throw $exception;
 	
-	}
+	}*/
 	/**
 	 * The object should default to the current date and time
 	 */
@@ -53,7 +53,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	public function testInvalidDateThrowsException() {
 	
-		$this->expectException(new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"1/35/2009\""));
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"1/35/2009\""));
 		$date = new qCal_DateV2(2009, 1, 35);
 	
 	}
@@ -82,7 +82,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	public function testInvalidLeapYear() {
 	
 		// you cannot specify a leap-year for a date that is not a leap-year
-		$this->expectException(new qCal_Date_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"2/29/2009\""));
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"2/29/2009\""));
 		$date = new qCal_DateV2(2009, 2, 29);
 	
 	}
@@ -190,7 +190,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testInvalidXthWeekday() {
 	
-		$this->expectException(new qCal_Date_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()"));
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()"));
 		$date = new qCal_DateV2(2010, 1, 1);
 		$tenth_tuesday = $date->getXthWeekdayOfMonth(10, "Tuesday");
 		

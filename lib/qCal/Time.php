@@ -47,7 +47,7 @@ class qCal_Time {
 		}
 		if (!$rollover) {
 			if ($hour > 23 || $minute > 59 || $second > 59) {
-				throw new qCal_Time_Exception_InvalidTime(sprintf("Invalid time specified for qCal_Time: \"%02d:%02d:%02d\"", $hour, $minute, $second));
+				throw new qCal_DateTime_Exception_InvalidTime(sprintf("Invalid time specified for qCal_Time: \"%02d:%02d:%02d\"", $hour, $minute, $second));
 			}
 		}
 		

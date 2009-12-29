@@ -99,7 +99,7 @@ class UnitTestCase_Timezone extends UnitTestCase {
 	 */
 	public function testUnregisteredCustomTimezoneThrowsException() {
 	
-		$this->expectException(new qCal_Timezone_Exception_InvalidTimezone("'Custom' is not a valid timezone."));
+		$this->expectException(new qCal_DateTime_Exception_InvalidTimezone("'Custom' is not a valid timezone."));
 		$time = new qCal_Time(0, 0, 0, "Custom");
 	
 	}
