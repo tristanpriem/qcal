@@ -61,6 +61,24 @@ class qCal_Time {
 	
 	}
 	
+	public function getHour() {
+	
+		return $this->timeArray['G'];
+	
+	}
+	
+	public function getMinute() {
+	
+		return $this->timeArray['i'];
+	
+	}
+	
+	public function getSecond() {
+	
+		return $this->timeArray['s'];
+	
+	}
+	
 	protected function regenerateTimeArray() {
 	
 		$formatString = "a|A|B|g|G|h|H|i|s|u";

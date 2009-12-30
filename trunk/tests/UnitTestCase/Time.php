@@ -87,7 +87,17 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 		$time = new qCal_Time(1, 1, 100, qCal_Timezone::factory("GMT"), true); // should rollover to 1:02:40
 		$this->assertEqual($time->getTimestamp(), 3760);
-		// $this->assertEqual($time->format(), "");
+	
+	}
+	/**
+	 * Test Time Getters (hours, minutes, seconds, etc.)
+	 */
+	public function testTimeGetters() {
+	
+		$time = new qCal_Time(8, 10, 5, "GMT");
+		$this->assertEqual($time->getHour(), 8);
+		$this->assertEqual($time->getMinute(), 10);
+		$this->assertEqual($time->getSecond(), 5);
 	
 	}
 	/**
@@ -152,14 +162,17 @@ class UnitTestCase_Time extends UnitTestCase {
 	 * -8 hours from GMT, then that amount of time should be added to the time (subtract 8 hours).
 	 * Basically we should get back the timestamp that is equal to the time specified, plus the timezone offset
 	 */
-	public function testTimezoneAdjustsTime() {
-	
-		$time = new qCal_Time(8, 0, 0); // 8:00am
-		$time->setTimezone(qCal_Timezone::factory("America/Los_Angeles"));
-		$this->assertEqual($time->getTimestamp(), "0"); // 8:00am
-		$time->setTimezone(qCal_Timezone::factory("GMT"));
-		$this->assertEqual($time->getTimestamp(), "28800");
-	
-	}
+	// public function testTimezoneAdjustsTimeCorrectly() {
+	// 
+	// 	$time = new qCal_Time(8, 0, 0, "GMT"); // 8:00am
+	// 	$this->assertEqual($time->getHour(), 8);
+	// 	$this->assertEqual($time->getMinute(), 0);
+	// 	$this->assertEqual($time->getSecond(), 0);
+	// 	$time->setTimezone(qCal_Timezone::factory("America/Los_Angeles"));
+	// 	$this->assertEqual($time->getTimestamp(), "0"); // 8:00am
+	// 	$time->setTimezone(qCal_Timezone::factory("GMT"));
+	// 	$this->assertEqual($time->getTimestamp(), "28800");
+	// 
+	// }
 
 }
