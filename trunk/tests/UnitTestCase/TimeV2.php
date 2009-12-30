@@ -2,6 +2,15 @@
 class UnitTestCase_TimeV2 extends UnitTestCase {
 
 	/**
+	 * Test that timezone defaults to server timezone
+	 */
+	public function testTimezoneDefault() {
+	
+		$time = new qCal_Time(0, 0, 0);
+		$this->assertEqual($time->getTimezone()->getName(), date_default_timezone_get());
+	
+	}
+	/**
 	 * Setting the timezone adjusts the offset used when calculating the timestamp
 	 */
 	public function testSetTimezone() {
