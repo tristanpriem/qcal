@@ -161,6 +161,8 @@ class UnitTestCase_Time extends UnitTestCase {
 	 * adjustment to the time. When you set a timezone, like America/Los_Angeles, which is
 	 * -8 hours from GMT, then that amount of time should be added to the time (subtract 8 hours).
 	 * Basically we should get back the timestamp that is equal to the time specified, plus the timezone offset
+	 * 
+	 * @todo Mimic the functionality of php's timezone stuff. Figure out how this should work...
 	 */
 	public function testTimezoneAdjustsTimeCorrectly() {
 	
@@ -175,6 +177,13 @@ class UnitTestCase_Time extends UnitTestCase {
 		$time->setTimezone(qCal_Timezone::factory("GMT"));
 		$this->assertEqual($time->getHour(), 8);
 		$this->assertEqual($time->getTimestamp(), 28800);
+		
+		// when defining a time with a timezone, the timestamp should be adjusted
+		$time = new qCal_Time(10, 30, 25, "America/Los_Angeles");
+		// $this->assertEqual($time->getTimestamp(), 0);
+		// $this->assertEqual($time->getHour(), 10);
+		// $this->assertEqual($time->getMinute(), 30);
+		// $this->assertEqual($time->getSecond(), 25);
 	
 	}
 
