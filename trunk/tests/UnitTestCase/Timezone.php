@@ -111,11 +111,12 @@ class UnitTestCase_Timezone extends UnitTestCase {
 		// now we register the timezone so that we can use it
 		$timezone = new qCal_Timezone("Custom", "5400", "CSTM", false);
 		qCal_Timezone::register($timezone);
+		// Create a new time with the custom timezone. The time should now be 12:00:00 in the custom timezone...
 		$time = new qCal_Time(0, 0, 0, "Custom");
 		$this->assertEqual($time->getTimezone(), $timezone);
 		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "5400");
-		$this->assertEqual($time->getTimestamp(), "5400");
-		$this->assertEqual($time->__toString(), "01:30:00");
+		$this->assertEqual($time->getTimestamp(true), "5400");
+		$this->assertEqual($time->__toString(), "00:00:00");
 	
 	}
 
