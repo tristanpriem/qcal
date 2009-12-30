@@ -6,6 +6,14 @@ class qCal_Time {
 	 */
 	protected $time;
 	/**
+	 * The default format that time is output as
+	 */
+	protected $format = "H:i:s";
+	/**
+	 * The timezone
+	 */
+	protected $timezone;
+	/**
 	 * Time array (contains hour, minute, second, etc.)
 	 */
 	protected $timeArray = array();
@@ -14,8 +22,8 @@ class qCal_Time {
 	 */
 	public function __construct($hour, $minute, $second, $timezone = null, $rollover = null) {
 	
-		$this->setTimezone($timezone);
-		$this->setTime($hour, $minute, $second, $rollover);
+		$this->setTimezone($timezone)
+			 ->setTime($hour, $minute, $second, $rollover);
 	
 	}
 	/**
@@ -37,6 +45,7 @@ class qCal_Time {
 		$vals = explode("|", gmdate($formatString, $time));
 		$this->timeArray = array_merge($this->timeArray, array_combine($keys, $vals));
 		$this->time = $time;
+		return $this;
 	
 	}
 	/**
@@ -72,6 +81,7 @@ class qCal_Time {
 			$timezone = qCal_Timezone::factory($timezone);
 		}
 		$this->timezone = $timezone;
+		return $this;
 	
 	}
 	/**
@@ -89,6 +99,47 @@ class qCal_Time {
 	
 		$offset = $this->getTimezone()->getOffsetSeconds();
 		return ($useOffset) ? $this->time + $offset : $this->time;
+	
+	}
+	/**
+	 * Set the format to use when outputting as a string
+	 */
+	public function setFormat($format) {
+	
+		$this->format = (string) $format;
+		return $this;
+	
+	}
+	/**
+	 * Output the object as a string
+	 */
+	public function __toString() {
+	
+		return $this->format($this->format);
+	
+	}
+	/**
+	 * Output the object using PHP's date() function's meta-characters
+	 */
+	public function format($format) {
+	
+		$escape = false;
+		$meta = str_split($format);
+		$output = array();
+		foreach($meta as $char) {
+			if ($char == '\\') {
+				$escape = true;
+				continue;
+			}
+			if (!$escape && array_key_exists($char, $this->timeArray)) {
+				$output[] = $this->timeArray[$char];
+			} else {
+				$output[] = $char;
+			}
+			// reset this to false after every iteration that wasn't "continued"
+			$escape = false;
+		}
+		return implode($output);
 	
 	}
 

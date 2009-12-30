@@ -1,46 +1,82 @@
 <?php
-class UnitTestCase_Time extends UnitTestCase {
+class UnitTestCase_TimeV2 extends UnitTestCase {
 
 	/**
-	 * Set up test environment
+	 * Test that timezone defaults to server timezone
 	 */
-	public function setUp() {
+	public function testTimezoneDefault() {
 	
-	
+		$time = new qCal_Time(0, 0, 0);
+		$this->assertEqual($time->getTimezone()->getName(), date_default_timezone_get());
 	
 	}
 	/**
-	 * Tear down test environment
+	 * Setting the timezone adjusts the offset used when calculating the timestamp
 	 */
-	public function tearDown() {
+	public function testSetTimezone() {
 	
-	
+		$time = new qCal_Time(0, 0, 0, "GMT");
+		$this->assertEqual($time->getHour(), 0);
+		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), 0);
+		$this->assertEqual($time->getTimestamp(), 0);
+		$this->assertEqual($time->getTimestamp(true), 0);
+		
+		// set timezone with string
+		$time->setTimezone("America/Los_Angeles");
+		$this->assertEqual($time->getHour(), 0);
+		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), -28800);
+		$this->assertEqual($time->getTimestamp(), 0);
+		$this->assertEqual($time->getTimestamp(true), -28800);
+		$this->assertEqual($time->getTimezone(), qCal_Timezone::factory("America/Los_Angeles"));
+		
+		// set timezone with object
+		$timezone = new qCal_Timezone("Custom", 7200, "CSTM", false); // GMT + 2 hours
+		$time->setTimezone($timezone);
+		$this->assertEqual($time->getHour(), 0);
+		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), 7200);
+		$this->assertEqual($time->getTimestamp(), 0);
+		$this->assertEqual($time->getTimestamp(true), 7200);
+		$this->assertEqual($time->getTimezone(), $timezone);
 	
 	}
 	/**
-	 * Test that time defaults to now
-	 * @note There is a very minor chance of this test failing if it happens to be called at 11:59:58... probably won't happen though.
-	 * @note Commented out because it takes too long and it's really not that important of a test
+	 * The time component is supposed to work in the most logical way. You create a time like this:
+	 * $time = new qCal_Time(4, 30, 0, "America/Los_Angeles");
+	 * $time->getHour(); // 4
+	 * $time->getTimestamp(); // timestamp should be equal to the time specified but at GMT
+	 * $time->setTimezone("GMT");
+	 * $time->getHour(); // still 4
+	 * $time->getTimestamp(); // timestamp 
 	 */
-	/*public function testTimeDefaultsToNow() {
+	public function testHourMinuteSecondDontChangeWhenTimezoneChangesOnlyTimestampDoes() {
 	
-		$today = date("Y/m/d");
-		$today = strtotime($today);
-		$before = time() - $today;
-		sleep(1);
-		$now = time() - $today;
-		sleep(1);
-		$time = new qCal_Time();
-		sleep(1);
-		$after = time() - $today;
-		pr("before: $before");
-		pr("now: $now");
-		pr("after: $after");
-		$this->assertTrue(($time->getTimestamp() > $before && $time->getTimestamp() < $after));
+		// create time in America/Los_Angeles: 10:30:00 in PST (America/Los_Angeles)
+		$time = new qCal_Time(10, 30, 0, "America/Los_Angeles");
+		
+		// requesting hour, minute, or second should return the instantiated hour, minute or second
+		$this->assertEqual($time->getHour(), 10);
+		$this->assertEqual($time->getMinute(), 30);
+		$this->assertEqual($time->getSecond(), 0);
+		
+		// requesting the timestamp should return the time specified, but in GMT
+		$this->assertEqual($time->getTimestamp(), 37800);
+		// passing "true" to getTimestamp() should return the time specified, but with the offset applied
+		$this->assertEqual($time->getTimestamp(true), 9000); // -8 hours
+		
+		// now change the timezone and try again...
+		$time->setTimezone("America/New_York"); // GMT - 5 hours
+		$this->assertEqual($time->getHour(), 10);
+		$this->assertEqual($time->getMinute(), 30);
+		$this->assertEqual($time->getSecond(), 0);
+		$this->assertEqual($time->getTimestamp(), 37800);
+		$this->assertEqual($time->getTimestamp(true), 19800); // -5 hours
 	
-	}*/
+	}
 	/**
-	 * test that timezone defaults to server's timezone
+	 * Because PHP stores the time as how many seconds since unix epoch, we cannot simply create a
+	 * time component without a date attached to it. We MUST have a date attached to it. To make things
+	 * simple, we store the time as how many seconds since start of unix epoch. That way it is like
+	 * it is how many seconds since the start of the day, which is close to storing time without a date
 	 */
 	public function testTimestampIsHowManySecondsSinceSecondZeroOfToday() {
 	
@@ -55,7 +91,8 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
-	 * All of PHP's date function's time-related metacharacters should work with this class
+	 * All of PHP's date function's time-related meta-characters should work with this class
+	 * Any of the other meta-characters defined for date() do not work.
 	 */
 	public function testFormatDateMetacharacters() {
 	
@@ -64,6 +101,9 @@ class UnitTestCase_Time extends UnitTestCase {
 		$this->assertEqual($time->format("g:ia"), "4:20am");
 	
 	}
+	/**
+	 * Test that setting the format causes __toString to use that format thereafter
+	 */
 	public function testSetFormat() {
 	
 		$time = new qCal_Time(21, 15, 0, "GMT");
@@ -125,96 +165,11 @@ class UnitTestCase_Time extends UnitTestCase {
 	 */
 	public function testFluidMethods() {
 	
-		$time = new qCal_Time;
-		$time->setTime(23, 0, 0, "GMT") // 11 o'clock pm
-			->setFormat("g:ia")
+		$time = new qCal_Time(3, 0, 0);
+		$time->setFormat("g:ia")
 			->setTimezone("America/Los_Angeles");
-		$this->assertEqual($time->__toString(), "3:00pm");
+		$this->assertEqual($time->__toString(), "3:00am");
 	
 	}
-	/**
-	 * Test that you can set the timezone after instatiation
-	 */
-	public function testTimezoneSetter() {
-	
-		$time = new qCal_Time;
-		$time->setTime(0, 0, 0, "GMT");
-		$this->assertEqual($time->__toString(), "00:00:00");
-		$time->setTimezone(qCal_Timezone::factory("Atlantic/Azores"));
-		
-		// this tests that the time changes when you change the timezone
-		$this->assertEqual($time->__toString(), "23:00:00");
-		$this->assertEqual($time->getTimezone()->getAbbreviation(), "AZOT");
-		$this->assertEqual($time->getTimezone()->getOffsetSeconds(), "-3600");
-		
-		// you should also be able to provide the name of the timezone to set it rather than using the factory
-		$time2 = new qCal_Time(0, 0, 0, "GMT");
-		$this->assertEqual($time2->getTimezone(), qCal_Timezone::factory("GMT"));
-		$time2->setTimezone(new qCal_Timezone("CustomTimezone", 3600, "CT", false));
-		$this->assertEqual($time2->__toString(), "01:00:00");
-		$this->assertEqual($time2->getTimezone()->getName(), "CustomTimezone");
-	
-	}
-	/**
-	 * When you are working with a timezone, all of the getters should return
-	 * the time WITH the timezone offset except getTimestamp() which returns
-	 * the actual timestamp at GMT unless you pass true as the first arg, which
-	 * will cause it to return the timestamp with the offset
-	 */
-	public function testTimestampOffsetDefaultsToFalse() {
-	/*
-		date_default_timezone_set("America/New_York");
-		$datetime = mktime(8, 0, 0, 1, 1, 1970);
-		$datetime = date("H:i:s U", $datetime);
-		pre($datetime);
-	*/
-		$time = new qCal_Time(8, 0, 0, "America/Los_Angeles");
-		$this->assertEqual($time->getHour(), 8);
-		$this->assertEqual($time->getTimestamp(), 28800);
-		$this->assertEqual($time->getTimestamp(true), 0);
-		
-		// now check that it also works after you change the timezone
-		$time->setTimezone("America/New_York");
-		// time does not change when you change timezone. Offset does.
-		$this->assertEqual($time->getHour(), 8);
-		// the timestamp should not have changed
-		$this->assertEqual($time->getTimestamp(), 28800);
-		// but the timezone with offset should have (this should be eight o'clock in new york)
-		$this->assertEqual($time->getTimestamp(true), 18000);
-	
-	}
-	/**
-	 * Test that timezone adjusts the time properly.
-	 * When you create a new time object, it defaults to GMT time, meaning no
-	 * adjustment to the time. When you set a timezone, like America/Los_Angeles, which is
-	 * -8 hours from GMT, then that amount of time should be added to the time (subtract 8 hours).
-	 * Basically we should get back the timestamp that is equal to the time specified, plus the timezone offset
-	 * 
-	 * @todo Mimic the functionality of php's timezone stuff. Figure out how this should work...
-	 */
-	// public function testTimezoneAdjustsTimeCorrectly() {
-	// 
-	// 	$time = new qCal_Time(8, 0, 0, "GMT"); // 8:00am
-	// 	$this->assertEqual($time->getHour(), 8);
-	// 	$this->assertEqual($time->getMinute(), 0);
-	// 	$this->assertEqual($time->getSecond(), 0);
-	// 	$this->assertEqual($time->getTimestamp(), 28800);
-	// 	$time->setTimezone(qCal_Timezone::factory("America/Los_Angeles"));
-	// 	$this->assertEqual($time->getHour(), 0);
-	// 	// timestamp is still the same because we haven't changed anything but the timezone
-	// 	$this->assertEqual($time->getTimestamp(), 28800); // 8:00am
-	// 	$time->setTimezone(qCal_Timezone::factory("GMT"));
-	// 	$this->assertEqual($time->getHour(), 8);
-	// 	$this->assertEqual($time->getTimestamp(), 28800);
-	// 	
-	// 	// when defining a time with a timezone, the timestamp should be adjusted
-	// 	$time = new qCal_Time(10, 30, 25, "America/Los_Angeles");
-	// 	$this->assertEqual($time->getTimestamp(), 0);
-	// 	$this->assertEqual($time->getTimestamp(true), 0);
-	// 	$this->assertEqual($time->getHour(), 10);
-	// 	$this->assertEqual($time->getMinute(), 30);
-	// 	$this->assertEqual($time->getSecond(), 25);
-	// 
-	// }
 
 }
