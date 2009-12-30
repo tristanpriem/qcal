@@ -19,44 +19,41 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	
 	}
 	/**
-	 * Datetime should default to now
+	 * DateTime is instantiated in the same way qCal_Date and qCal_Time are instantiated
+	 * There is also a factory method very similar to those classes (which we'll test next)
 	 */
-	public function testDateTimeDefaultsToNow() {
+	public function testInstantiateDateTime() {
 	
-		$before = gmdate("U");
-		//$datetime = qCal_DateTime::factory("now");
-		// pr($before);
-		// pre($datetime->getUnixTimestamp());
-		// $this->assertTrue($datetime->getUnixTimestamp() >= $before);
+		$year = "2009";
+		$month = "4";
+		$day = "23";
+		$hour = "12";
+		$minute = "30";
+		$second = "00";
+		$timezone = "America/Los_Angeles";
+		$rollover = false;
+		$datetime = new qCal_DateTime($year, $month, $day, $hour, $minute, $second, $timezone, $rollover); // 4/23/2009 at 12:30:00
+		$this->assertEqual($datetime->getYear(), $year);
+		$this->assertEqual($datetime->getMonth(), $month);
+		$this->assertEqual($datetime->getDay(), $day);
+		$this->assertEqual($datetime->getHour(), $hour);
+		$this->assertEqual($datetime->getMinute(), $minute);
+		$this->assertEqual($datetime->getSecond(), $second);
+		$this->assertEqual($datetime->getTimezone()->getName(), $timezone);
 	
 	}
 	/**
-	 * @todo Figure out how you want to handle timezones. It would be nice if we didn't have to provide
-	 * a timezone component both to qCal_DateV2 AND qCal_Time. It would be nice if I could just do something
-	 * like qCal::setTimezone($timezone), but I don't think that would work if I needed to work with multiple
-	 * timezones.
-	 * or 
+	 * Test the factory method
 	 */
-	public function testDateTimeAcceptsObjects() {
+	public function testFactoryMethod() {
 	
-		$date = new qCal_DateV2(2010, 4, 23); // my 24th birthday!
-		$time = new qCal_Time(17, 30, 0, "America/Los_Angeles"); // 5:30pm
-		$datetime = new qCal_DateTime($date, $time); // instantiate with date and time objects
-		// $this->assertEqual($datetime->__toString(), "2010-04-23T17:30:00-08:00"); // for some reason this is coming out to -07:00 rather than -08:00 :(
-		
-		$time = new qCal_Time(17, 30, 0);
-		// $this->assertEqual($time->setFormat('\TH:i:sP')->__toString(), "T17:30:00-08:00");
-	
-	}
-	/**
-	 * Test date/time can be generated the same way as qCal_DateV2 and qCal_Time.
-	 * By using a simple string (passed to PHP's strtotime() function)
-	 */
-	public function testDateTimeFactory() {
-	
-		//$datetime = qCal_DateTime::factory("2009-09-09 01:30:45", qCal_Timezone::factory("America/Denver")); // -7 hours from GMT
-		//$this->assertEqual($datetime->format("Y-m-d H:i:s"), "2009-09-09 01:30:45");
-		//$this->assertEqual($datetime->getTime()->getTimezone()->getName(), "America/Denver");
+		$datetime = qCal_DateTime::factory("03/20/1990 10:00:00pm");
+		$this->assertEqual($datetime->getYear(), 1990);
+		$this->assertEqual($datetime->getMonth(), 3);
+		$this->assertEqual($datetime->getDay(), 20);
+		$this->assertEqual($datetime->getHour(), 22);
+		$this->assertEqual($datetime->getMinute(), 0);
+		$this->assertEqual($datetime->getSecond(), 0);
 	
 	}
 

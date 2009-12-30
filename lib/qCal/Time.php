@@ -21,6 +21,7 @@ class qCal_Time {
 	 * Class constructor
 	 * This component is immutable. It can only be created, not modified. The only portion of it that
 	 * can be modified is the timezone.
+	 * @todo Make this default to "now"
 	 */
 	public function __construct($hour, $minute, $second, $timezone = null, $rollover = null) {
 	
