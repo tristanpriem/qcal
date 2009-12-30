@@ -206,7 +206,10 @@ class qCal_DateTime {
 	 */
 	public function getUtc() {
 	
-		return $this->format("");
+		// format date/time in UTC
+		// @todo I would prefer to use $this->format() for this, but the way it currently works makes it impossible
+		// @todo This is soooo sloppy... I think it's due to the fact that I am calculating the offset incorrectly in getTimestamp()
+		return gmdate("Ymd", $this->date->getUnixTimestamp()) . gmdate("\THis\Z", $this->time->getTimestamp() - $this->time->getTimezone()->getOffsetSeconds());
 	
 	}
 
