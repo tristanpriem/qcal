@@ -141,5 +141,38 @@ class qCal_DateTime {
 		return $this->time->getTimezone();
 	
 	}
+	/**
+	 * Get unix timestamp
+	 */
+	public function getUnixTimestamp() {
+	
+		return $this->date->getUnixTimestamp() + $this->time->getTimestamp();
+	
+	}
+	/**
+	 * Format the date/time using PHP's date() function's meta-characters
+	 */
+	public function format($format) {
+	
+		
+	
+	}
+	/**
+	 * Output date/time as string
+	 */
+	public function __toString() {
+	
+		return $this->format($this->format);
+	
+	}
+	/**
+	 * Get date/time as UTC
+
+	public function getUtc() {
+	
+		return $this->format();
+	
+	}
+	 */
 
 }

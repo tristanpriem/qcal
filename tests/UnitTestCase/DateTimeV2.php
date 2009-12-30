@@ -56,5 +56,23 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 		$this->assertEqual($datetime->getSecond(), 0);
 	
 	}
+	/**
+	 * Test that date/time can be converted to timestamp
+	 */
+	public function testTimestampConversion() {
+	
+		$datetime = qCal_DateTime::factory("03/20/1993 01:00:00pm", "America/Los_Angeles");
+		$this->assertEqual($datetime->getUnixTimestamp(), "732632400");
+	
+	}
+	/**
+	 * Test conversion to UTC
+	 */
+	public function testUTCConversion() {
+	
+		$datetime = qCal_DateTime::factory("2/22/1988 9:44am", "America/Los_Angeles"); // February 22, 1988 at 9:44am Pacific Standard Time
+		//$this->assertEqual($datetime->getUtc(), "19880222T174400Z"); // UTC is GMT time
+	
+	}
 
 }
