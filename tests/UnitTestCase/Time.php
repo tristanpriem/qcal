@@ -156,6 +156,34 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
+	 * When you are working with a timezone, all of the getters should return
+	 * the time WITH the timezone offset except getTimestamp() which returns
+	 * the actual timestamp at GMT unless you pass true as the first arg, which
+	 * will cause it to return the timestamp with the offset
+	 */
+	public function testTimestampOffsetDefaultsToFalse() {
+	/*
+		date_default_timezone_set("America/New_York");
+		$datetime = mktime(8, 0, 0, 1, 1, 1970);
+		$datetime = date("H:i:s U", $datetime);
+		pre($datetime);
+	*/
+		$time = new qCal_Time(8, 0, 0, "America/Los_Angeles");
+		$this->assertEqual($time->getHour(), 8);
+		$this->assertEqual($time->getTimestamp(), 28800);
+		$this->assertEqual($time->getTimestamp(true), 0);
+		
+		// now check that it also works after you change the timezone
+		$time->setTimezone("America/New_York");
+		// time does not change when you change timezone. Offset does.
+		$this->assertEqual($time->getHour(), 8);
+		// the timestamp should not have changed
+		$this->assertEqual($time->getTimestamp(), 28800);
+		// but the timezone with offset should have (this should be eight o'clock in new york)
+		$this->assertEqual($time->getTimestamp(true), 18000);
+	
+	}
+	/**
 	 * Test that timezone adjusts the time properly.
 	 * When you create a new time object, it defaults to GMT time, meaning no
 	 * adjustment to the time. When you set a timezone, like America/Los_Angeles, which is
@@ -164,27 +192,29 @@ class UnitTestCase_Time extends UnitTestCase {
 	 * 
 	 * @todo Mimic the functionality of php's timezone stuff. Figure out how this should work...
 	 */
-	public function testTimezoneAdjustsTimeCorrectly() {
-	
-		$time = new qCal_Time(8, 0, 0, "GMT"); // 8:00am
-		$this->assertEqual($time->getHour(), 8);
-		$this->assertEqual($time->getMinute(), 0);
-		$this->assertEqual($time->getSecond(), 0);
-		$this->assertEqual($time->getTimestamp(), 28800);
-		$time->setTimezone(qCal_Timezone::factory("America/Los_Angeles"));
-		$this->assertEqual($time->getHour(), 0);
-		$this->assertEqual($time->getTimestamp(), 0); // 8:00am
-		$time->setTimezone(qCal_Timezone::factory("GMT"));
-		$this->assertEqual($time->getHour(), 8);
-		$this->assertEqual($time->getTimestamp(), 28800);
-		
-		// when defining a time with a timezone, the timestamp should be adjusted
-		$time = new qCal_Time(10, 30, 25, "America/Los_Angeles");
-		// $this->assertEqual($time->getTimestamp(), 0);
-		// $this->assertEqual($time->getHour(), 10);
-		// $this->assertEqual($time->getMinute(), 30);
-		// $this->assertEqual($time->getSecond(), 25);
-	
-	}
+	// public function testTimezoneAdjustsTimeCorrectly() {
+	// 
+	// 	$time = new qCal_Time(8, 0, 0, "GMT"); // 8:00am
+	// 	$this->assertEqual($time->getHour(), 8);
+	// 	$this->assertEqual($time->getMinute(), 0);
+	// 	$this->assertEqual($time->getSecond(), 0);
+	// 	$this->assertEqual($time->getTimestamp(), 28800);
+	// 	$time->setTimezone(qCal_Timezone::factory("America/Los_Angeles"));
+	// 	$this->assertEqual($time->getHour(), 0);
+	// 	// timestamp is still the same because we haven't changed anything but the timezone
+	// 	$this->assertEqual($time->getTimestamp(), 28800); // 8:00am
+	// 	$time->setTimezone(qCal_Timezone::factory("GMT"));
+	// 	$this->assertEqual($time->getHour(), 8);
+	// 	$this->assertEqual($time->getTimestamp(), 28800);
+	// 	
+	// 	// when defining a time with a timezone, the timestamp should be adjusted
+	// 	$time = new qCal_Time(10, 30, 25, "America/Los_Angeles");
+	// 	$this->assertEqual($time->getTimestamp(), 0);
+	// 	$this->assertEqual($time->getTimestamp(true), 0);
+	// 	$this->assertEqual($time->getHour(), 10);
+	// 	$this->assertEqual($time->getMinute(), 30);
+	// 	$this->assertEqual($time->getSecond(), 25);
+	// 
+	// }
 
 }
