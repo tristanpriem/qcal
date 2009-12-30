@@ -25,7 +25,7 @@ class qCal_DateTime {
 	 * @var string The default string representation of datetime is a direct
 	 * correlation to the date function's "c" metacharacter
 	 */
-	protected $format = "Y-m-d\TH:i:sP";
+	protected $format = "Y-m-d\TH:i:s";
 	/**
 	 * Class constructor
 	 * @todo Make this default to "now"
@@ -162,7 +162,9 @@ class qCal_DateTime {
 	 */
 	public function format($format) {
 	
-		
+		$df = $this->date->format($format);
+		$df = $this->time->format($df);
+		return $df;
 	
 	}
 	/**

@@ -80,6 +80,24 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	
 	}
 	/**
+	 * Test string output
+	 */
+	public function testStringOutput() {
+	
+		$dt = new qCal_DateTime(2000, 10, 1, 5, 0, 0);
+		$this->assertEqual($dt->__toString(), "2000-10-01T05:00:00");
+	
+	}
+	/**
+	 * Test that format method allows date() function's meta-characters
+	 */
+	public function testDateTimeFormat() {
+	
+		$dt = new qCal_DateTime(2000, 10, 1, 5, 0, 0);
+		$this->assertEqual($dt->format("m/d/Y H:i:s"), "10/01/2000 05:00:00");
+	
+	}
+	/**
 	 * Test conversion to UTC
 	 */
 	public function testUTCConversion() {
