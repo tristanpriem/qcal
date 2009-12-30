@@ -19,6 +19,8 @@ class qCal_Time {
 	protected $timeArray = array();
 	/**
 	 * Class constructor
+	 * This component is immutable. It can only be created, not modified. The only portion of it that
+	 * can be modified is the timezone.
 	 */
 	public function __construct($hour, $minute, $second, $timezone = null, $rollover = null) {
 	
@@ -28,6 +30,7 @@ class qCal_Time {
 	}
 	/**
 	 * Set the time
+	 * @access protected This class is immutable, so this is protected. Only the constructor calls it.
 	 */
 	protected function setTime($hour, $minute, $second, $rollover = null) {
 	
@@ -98,7 +101,9 @@ class qCal_Time {
 	public function getTimestamp($useOffset = false) {
 	
 		$offset = $this->getTimezone()->getOffsetSeconds();
-		return ($useOffset) ? $this->time + $offset : $this->time;
+		return ($useOffset) ?
+			$this->time + $offset :
+			$this->time;
 	
 	}
 	/**
@@ -108,14 +113,6 @@ class qCal_Time {
 	
 		$this->format = (string) $format;
 		return $this;
-	
-	}
-	/**
-	 * Output the object as a string
-	 */
-	public function __toString() {
-	
-		return $this->format($this->format);
 	
 	}
 	/**
@@ -140,6 +137,14 @@ class qCal_Time {
 			$escape = false;
 		}
 		return implode($output);
+	
+	}
+	/**
+	 * Output the object as a string
+	 */
+	public function __toString() {
+	
+		return $this->format($this->format);
 	
 	}
 
