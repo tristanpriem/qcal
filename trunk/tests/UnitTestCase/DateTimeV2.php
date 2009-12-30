@@ -99,6 +99,7 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	}
 	/**
 	 * Test conversion to UTC
+	 * @todo The entire process for UTC conversion is hacky at best. Fix it up in the next release.
 	 */
 	public function testUTCConversion() {
 	
