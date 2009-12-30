@@ -176,11 +176,19 @@ class UnitTestCase_Time extends UnitTestCase {
 	 */
 	public function testFactoryMethod() {
 	
-		$time = qCal_Time::factory("1:30pm");
+		// test with default timezone
+		$time = qCal_Time::factory("1:30pm"); // should default to America/Los_Angeles
 		$this->assertEqual($time->getHour(), 13);
 		$this->assertEqual($time->getMinute(), 30);
 		$this->assertEqual($time->getSecond(), 0);
 		$this->assertEqual($time->getTimezone()->getName(), date_default_timezone_get());
+		
+		// test with specific timezone
+		$time = qCal_Time::factory("1:30pm", "MST"); // GMT - 7 hours
+		$this->assertEqual($time->getHour(), 13); // timezone doesn't change the time
+		$this->assertEqual($time->getMinute(), 30);
+		$this->assertEqual($time->getSecond(), 0);
+		$this->assertEqual($time->getTimezone()->getName(), "MST");
 	
 	}
 	/**

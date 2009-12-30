@@ -56,20 +56,29 @@ class qCal_Time {
 	 */
 	public static function factory($time, $timezone = null) {
 	
-		if (is_null($timezone)) {
+		if (is_null($timezone) || !($timezone instanceof qCal_Timezone)) {
 			$timezone = qCal_Timezone::factory($timezone);
 		}
+		// get the default timezone so we can set it back to it later
+		$tz = date_default_timezone_get();
+		// set the timezone to GMT temporarily
+		date_default_timezone_set("GMT");
+		
 		if (is_integer($time)) {
 			// @todo Handle timestamps
 		}
 		if (is_string($time)) {
-			$tstring = "01/01/1970 " . $time;
+			$tstring = "01/01/1970 $time";
 			if (!$timestamp = strtotime($tstring)) {
 				// if unix timestamp can't be created throw an exception
 				throw new qCal_DateTime_Exception_InvalidTime("Invalid or ambiguous time string passed to qCal_Time::factory()");
 			}
 		}
-		list($hour, $minute, $second) = explode(":", gmdate("H:i:s", $timestamp + $timezone->getOffsetSeconds()));
+		list($hour, $minute, $second) = explode(":", gmdate("H:i:s", $timestamp));
+		
+		// set the timezone back to what it was
+		date_default_timezone_set($tz);
+		
 		return new qCal_Time($hour, $minute, $second, $timezone);
 	
 	}
