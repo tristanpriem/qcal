@@ -61,7 +61,10 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	 */
 	public function testTimezoneChangedAfterInstantiation() {
 	
-		// coming soon!
+		$datetime = new qCal_DateTime(2010, 10, 10, 10, 10, 10, "Pacific/Tahiti"); // -10 hours
+		$this->assertEqual($datetime->getTimezone()->getName(), "Pacific/Tahiti");
+		$datetime->setTimezone("America/Los_Angeles");
+		$this->assertEqual($datetime->getTimezone()->getName(), "America/Los_Angeles");
 	
 	}
 	/**
