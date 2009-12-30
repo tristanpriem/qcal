@@ -63,6 +63,9 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	
 		$datetime = qCal_DateTime::factory("03/20/1993 01:00:00pm", "America/Los_Angeles");
 		$this->assertEqual($datetime->getUnixTimestamp(), "732632400");
+		
+		// now get the timestamp WITH the timezone offset
+		// $this->assertEqual($datetime->getUnixTimestamp(true), "732661200");
 	
 	}
 	/**
@@ -71,7 +74,7 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	public function testUTCConversion() {
 	
 		$datetime = qCal_DateTime::factory("2/22/1988 9:44am", "America/Los_Angeles"); // February 22, 1988 at 9:44am Pacific Standard Time
-		//$this->assertEqual($datetime->getUtc(), "19880222T174400Z"); // UTC is GMT time
+		// $this->assertEqual($datetime->getUtc(), "19880222T174400Z"); // UTC is GMT time
 	
 	}
 
