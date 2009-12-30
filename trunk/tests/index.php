@@ -45,7 +45,7 @@ $test->addTestCase(new UnitTestCase_DateTimeV2);
 $test->addTestCase(new UnitTestCase_DateV2);
 //$test->addTestCase(new UnitTestCase_Timezone);
 //$test->addTestCase(new UnitTestCase_Time);
-$test->addTestCase(new UnitTestCase_TimeV2);
+$test->addTestCase(new UnitTestCase_Time);
 $test->addTestCase(new UnitTestCase_Recur);
 // $test->addTestCase(new UnitTestCase_Database);
 $test->run(new HtmlReporter());
