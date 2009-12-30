@@ -31,17 +31,6 @@ class UnitTestCase_TimeV2 extends UnitTestCase {
 	
 	}
 	/**
-	 * In the iCalendar format, a lot of the time, rather than have to work with offsets and timezones
-	 * the standard just calculates the specified time/timezone as it would be in UTC, which is GMT.
-	 * This sub-component should be capable of calculating that
-	 */
-	public function testTimeCanCalculateUTC() {
-	
-		// $time = new qCal_Time(15, 0, 0, "America/Los_Angeles");
-		// $this->assertEqual($time->getTimestamp(), 0);
-	
-	}
-	/**
 	 * The time component is supposed to work in the most logical way. You create a time like this:
 	 * $time = new qCal_Time(4, 30, 0, "America/Los_Angeles");
 	 * $time->getHour(); // 4
@@ -72,6 +61,24 @@ class UnitTestCase_TimeV2 extends UnitTestCase {
 		$this->assertEqual($time->getSecond(), 0);
 		$this->assertEqual($time->getTimestamp(), 37800);
 		$this->assertEqual($time->getTimestamp(true), 19800); // -5 hours
+	
+	}
+	/**
+	 * Because PHP stores the time as how many seconds since unix epoch, we cannot simply create a
+	 * time component without a date attached to it. We MUST have a date attached to it. To make things
+	 * simple, we store the time as how many seconds since start of unix epoch. That way it is like
+	 * it is how many seconds since the start of the day, which is close to storing time without a date
+	 */
+	public function testTimestampIsHowManySecondsSinceSecondZeroOfToday() {
+	
+		$today = strtotime(date("Y/m/d"));
+		$now = strtotime(date("Y/m/d G:i:s"));
+		$nowhour = date("G", $now);
+		$nowminute = date("i", $now);
+		$nowsecond = date("s", $now);
+		$diff = $now - $today;
+		$time = new qCal_Time($nowhour, $nowminute, $nowsecond, qCal_Timezone::factory("GMT"));
+		$this->assertEqual($time->getTimestamp(), $diff);
 	
 	}
 

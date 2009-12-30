@@ -29,6 +29,8 @@ class qCal_Time {
 				throw new qCal_DateTime_Exception_InvalidTime(sprintf("Invalid time specified for qCal_Time: \"%02d:%02d:%02d\"", $hour, $minute, $second));
 			}
 		}
+		// since PHP is incapable of storing a time without a date, we use the first day of
+		// the unix epoch so that we only have the amount of seconds since the zero of unix epoch
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
 		$formatString = "a|A|B|g|G|h|H|i|s|u";
 		$keys = explode("|", $formatString);
