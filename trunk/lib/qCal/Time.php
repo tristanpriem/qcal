@@ -52,6 +52,28 @@ class qCal_Time {
 	
 	}
 	/**
+	 * Generate a qCal_Time object via a string or a number of other methods
+	 */
+	public static function factory($time, $timezone = null) {
+	
+		if (is_null($timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
+		}
+		if (is_integer($time)) {
+			// @todo Handle timestamps
+		}
+		if (is_string($time)) {
+			$tstring = "01/01/1970 " . $time;
+			if (!$timestamp = strtotime($tstring)) {
+				// if unix timestamp can't be created throw an exception
+				throw new qCal_DateTime_Exception_InvalidTime("Invalid or ambiguous time string passed to qCal_Time::factory()");
+			}
+		}
+		list($hour, $minute, $second) = explode(":", gmdate("H:i:s", $timestamp + $timezone->getOffsetSeconds()));
+		return new qCal_Time($hour, $minute, $second, $timezone);
+	
+	}
+	/**
 	 * Get the hour
 	 */
 	public function getHour() {

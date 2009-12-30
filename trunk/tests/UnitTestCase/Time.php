@@ -172,6 +172,18 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
+	 * Time can be generated from string by using the factory method
+	 */
+	public function testFactoryMethod() {
+	
+		$time = qCal_Time::factory("1:30pm");
+		$this->assertEqual($time->getHour(), 13);
+		$this->assertEqual($time->getMinute(), 30);
+		$this->assertEqual($time->getSecond(), 0);
+		$this->assertEqual($time->getTimezone()->getName(), date_default_timezone_get());
+	
+	}
+	/**
 	 * @todo Look into the leap-second and what this class needs to do to support it
 	 */
 	public function testLeapSecond() {
