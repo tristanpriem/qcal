@@ -57,6 +57,14 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 	
 	}
 	/**
+	 * Test that timezone can be changed after instantiation
+	 */
+	public function testTimezoneChangedAfterInstantiation() {
+	
+		// coming soon!
+	
+	}
+	/**
 	 * Test that date/time can be converted to timestamp
 	 */
 	public function testTimestampConversion() {
@@ -65,7 +73,7 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 		$this->assertEqual($datetime->getUnixTimestamp(), "732632400");
 		
 		// now get the timestamp WITH the timezone offset
-		// $this->assertEqual($datetime->getUnixTimestamp(true), "732661200");
+		$this->assertEqual($datetime->getUnixTimestamp(true), "732603600"); // - 8 hours
 	
 	}
 	/**
