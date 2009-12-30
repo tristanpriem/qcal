@@ -171,5 +171,13 @@ class UnitTestCase_Time extends UnitTestCase {
 		$this->assertEqual($time->__toString(), "3:00am");
 	
 	}
+	/**
+	 * @todo Look into the leap-second and what this class needs to do to support it
+	 */
+	public function testLeapSecond() {
+	
+		// coming soon!
+	
+	}
 
 }
