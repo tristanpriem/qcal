@@ -159,12 +159,38 @@ class qCal_DateTime {
 	}
 	/**
 	 * Format the date/time using PHP's date() function's meta-characters
+	 * @todo It's obvious I need to find a better solution to formatting since I have repeated this method
+	 * in three classes now...
 	 */
 	public function format($format) {
 	
-		$df = $this->date->format($format);
-		$df = $this->time->format($df);
-		return $df;
+		$escape = false;
+		$meta = str_split($format);
+		$output = array();
+		foreach($meta as $char) {
+			if ($char == '\\') {
+				$escape = true;
+				continue;
+			}
+			if (!$escape && $this->convertChar($char) != $char) {
+				$output[] = $this->convertChar($char);
+			} else {
+				$output[] = $char;
+			}
+			// reset this to false after every iteration that wasn't "continued"
+			$escape = false;
+		}
+		return implode($output);
+	
+	}
+	/**
+	 * convert character
+	 */
+	protected function convertChar($char) {
+	
+		$char = $this->date->format($char);
+		$char = $this->time->format($char);
+		return $char;
 	
 	}
 	/**
@@ -177,12 +203,11 @@ class qCal_DateTime {
 	}
 	/**
 	 * Get date/time as UTC
-
+	 */
 	public function getUtc() {
 	
-		return $this->format();
+		return $this->format("");
 	
 	}
-	 */
 
 }
