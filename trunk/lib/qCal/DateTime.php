@@ -28,78 +28,117 @@ class qCal_DateTime {
 	protected $format = "Y-m-d\TH:i:sP";
 	/**
 	 * Class constructor
-	 * @param mixed Either a string representing the date, or a qCal_DateV2 object
-	 * @param mixed Either a string representing the time, or a qCal_Time object
+	 * @todo Make this default to "now"
+	 * @todo It is possible that the timezone could put the date back (or forward?) a day. This does not account for that
 	 */
-	public function __construct($date = null, $time = null) {
+	public function __construct($year, $month, $day, $hour, $minute, $second, $timezone = null, $rollover = null) {
 	
-		if (is_null($date)) {
-			// use today's date
-			$date = new qCal_DateV2();
-		} elseif (!($date instanceof qCal_DateV2)) {
-			$date = new qCal_DateV2();
-			$date->setByString($date);
-		}
-		if (is_null($time)) {
-			// use today's time
-			$time = new qCal_Time();
-		}
-		$this->setDate($date)
-			 ->setTime($time);
+		$date = new qCal_DateV2($year, $month, $day, $rollover);
+		$time = new qCal_Time($hour, $minute, $second, $timezone, $rollover);
+		$this->setDate($date);
+		$this->setTime($time);
 	
 	}
 	/**
-	 * Set the date portion of this object
-	 * @param qCal_DateV2 An object representing the date
+	 * Generate a datetime object via string
 	 */
-	public function setDate(qCal_DateV2 $date) {
+	public static function factory($datetime, $timezone = null) {
+	
+		if (is_null($timezone) || !($timezone instanceof qCal_Timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
+		}
+		// get the default timezone so we can set it back to it later
+		$tz = date_default_timezone_get();
+		// set the timezone to GMT temporarily
+		date_default_timezone_set("GMT");
+		
+		if (is_integer($datetime)) {
+			// @todo Handle timestamps
+		}
+		if (is_string($datetime)) {
+			if (!$timestamp = strtotime($datetime)) {
+				// if unix timestamp can't be created throw an exception
+				throw new qCal_DateTime_Exception("Invalid or ambiguous date/time string passed to qCal_DateTime::factory()");
+			}
+		}
+		list($year, $month, $day, $hour, $minute, $second) = explode("|", gmdate("Y|m|d|H|i|s", $timestamp));
+		
+		// set the timezone back to what it was
+		date_default_timezone_set($tz);
+		
+		return new qCal_DateTime($year, $month, $day, $hour, $minute, $second, $timezone);
+	
+	}
+	/**
+	 * Set the date component
+	 */
+	protected function setDate(qCal_DateV2 $date) {
 	
 		$this->date = $date;
-		return $this;
 	
 	}
 	/**
-	 * Set the time portion of this object
-	 * @param qCal_Time An object representing the time
+	 * Set the time component
 	 */
-	public function setTime(qCal_Time $time) {
+	protected function setTime(qCal_Time $time) {
 	
 		$this->time = $time;
-		return $this;
 	
 	}
 	/**
-	 * When output as a string, you can configure how the datetime is displayed
-	 * using the same meta-characters as PHP's date function. Escape meta-characters
-	 * with a backslash.
-	 * @param string The format of the datetime when output as a string
-	 * @return $this (Fluid method)
+	 * Get Year
 	 */
-	public function setFormat($format) {
+	public function getYear() {
 	
-		$this->format = (string) $format;
-		return $this;
+		return $this->date->getYear();
 	
 	}
 	/**
-	 * Format the date/time similar to php's date function
-	 * @param string Any format string that works in PHP's date function works here.
-	 * @return string The formatted date
+	 * Get Month
 	 */
-	public function format($format) {
+	public function getMonth() {
 	
-		$timestamp = $this->date->getUnixTimestamp() + $this->time->getTimestamp();
-		return gmdate($format, $timestamp);
+		return $this->date->getMonth();
 	
 	}
 	/**
-	 * The default string representation of datetime is a direct correlation to
-	 * the date function's "c" metacharacter
-	 * @return string The date formatted according to $this->formats
+	 * Get Day
 	 */
-	public function __toString() {
+	public function getDay() {
 	
-		return $this->format($this->format);
+		return $this->date->getDay();
+	
+	}
+	/**
+	 * Get Hour
+	 */
+	public function getHour() {
+	
+		return $this->time->getHour();
+	
+	}
+	/**
+	 * Get Minute
+	 */
+	public function getMinute() {
+	
+		return $this->time->getMinute();
+	
+	}
+	/**
+	 * Get Second
+	 */
+	public function getSecond() {
+	
+		return $this->time->getSecond();
+	
+	}
+	/**
+	 * Get Timezone
+	 */
+	public function getTimezone() {
+	
+		return $this->time->getTimezone();
 	
 	}
 

@@ -66,9 +66,51 @@ class qCal_DateV2 {
 	 * @param int The month of this date
 	 * @param int The day of this date
 	 */
-	public function __construct($year = null, $month = null, $day = null, /*$timezone = null,*/ $rollover = false) {
+	public function __construct($year = null, $month = null, $day = null, $rollover = false) {
 	
-		$this->setDate($year, $month, $day, /*$timezone,*/ $rollover);
+		$this->setDate($year, $month, $day, $rollover);
+	
+	}
+	/**
+	 * Set the date of this class
+	 * The date defaults to now. If any part of the date is missing, it will default to whatever "now"'s
+	 * date portion is. For instance, if the year provided is 2006 and no other portion is given, it will
+	 * default to today's month and day, but in the year 2006. If, for any reason the date defaults to a 
+	 * nonsensical date, an exception will be thrown. For instance, if you specify the year as 2006, and
+	 * the current date is february 29th, an exception will be thrown because the 29th of February does not
+	 * exist in 2006. 
+	 * @param int The year of this date
+	 * @param int The month of this date
+	 * @param int The day of this date
+	 * @throws qCal_Date_Exception_InvalidDate
+	 */
+	public function setDate($year = null, $month = null, $day = null, $rollover = false) {
+	
+		$now = getdate();
+		if (is_null($year)) {
+			$year = $now['year'];
+		}
+		if (is_null($month)) {
+			$month = $now['mon'];
+		}
+		if (is_null($day)) {
+			$day = $now['mday'];
+		}
+		
+		$this->date = gmmktime(0, 0, 0, $month, $day, $year);
+		$this->dateArray = self::gmgetdate($this->date);
+		if (!$rollover) {
+			if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
+				throw new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
+			}
+		}
+		
+		// @todo Look into how much more efficient it might be to call date() only once and then break apart the result...
+		$formatString = "d|D|j|l|N|S|w|z|W|F|m|M|n|t|L|o|y|Y|c|r|U";
+		$keys = explode("|", $formatString);
+		$vals = explode("|", gmdate($formatString, $this->date));
+		$this->dateArray = array_merge($this->dateArray, array_combine($keys, $vals));
+		return $this;
 	
 	}
 	/**
@@ -126,48 +168,6 @@ class qCal_DateV2 {
 			$escape = false;
 		}
 		return implode($output);
-	
-	}
-	/**
-	 * Set the date of this class
-	 * The date defaults to now. If any part of the date is missing, it will default to whatever "now"'s
-	 * date portion is. For instance, if the year provided is 2006 and no other portion is given, it will
-	 * default to today's month and day, but in the year 2006. If, for any reason the date defaults to a 
-	 * nonsensical date, an exception will be thrown. For instance, if you specify the year as 2006, and
-	 * the current date is february 29th, an exception will be thrown because the 29th of February does not
-	 * exist in 2006. 
-	 * @param int The year of this date
-	 * @param int The month of this date
-	 * @param int The day of this date
-	 * @throws qCal_Date_Exception_InvalidDate
-	 */
-	public function setDate($year = null, $month = null, $day = null, /*$timezone = null,*/ $rollover = false) {
-	
-		$now = getdate();
-		if (is_null($year)) {
-			$year = $now['year'];
-		}
-		if (is_null($month)) {
-			$month = $now['mon'];
-		}
-		if (is_null($day)) {
-			$day = $now['mday'];
-		}
-		
-		$this->date = gmmktime(0, 0, 0, $month, $day, $year);
-		$this->dateArray = self::gmgetdate($this->date);
-		if (!$rollover) {
-			if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
-				throw new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
-			}
-		}
-		
-		// @todo Look into how much more efficient it might be to call date() only once and then break apart the result...
-		$formatString = "d|D|j|l|N|S|w|z|W|F|m|M|n|t|L|o|y|Y|c|r|U";
-		$keys = explode("|", $formatString);
-		$vals = explode("|", gmdate($formatString, $this->date));
-		$this->dateArray = array_merge($this->dateArray, array_combine($keys, $vals));
-		return $this;
 	
 	}
 	
