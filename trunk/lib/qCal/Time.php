@@ -129,6 +129,7 @@ class qCal_Time {
 	}
 	/**
 	 * Get the timestamp
+	 * @todo I'm not sure if this is supposed to subtract or add the offset... look into it...
 	 */
 	public function getTimestamp($useOffset = false) {
 	
