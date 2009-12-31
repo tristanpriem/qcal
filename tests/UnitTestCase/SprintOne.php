@@ -58,5 +58,20 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 		$this->assertEqual($date3->getNumDaysUntilEndOfMonth(), 11);
 	
 	}
+	
+	/**
+	 * How many weeks from the beginning or end of the month or year it is
+	 * (ie: January 3rd is in the first week of the year and 51 weeks from the end of the year)
+	 * @todo This needs to be capable of setting the "week start day", which will have an impact on this method...
+	 */
+	public function testHowManyWeeksFromTheBeginningOrEndOfTheMonthOrYearItIs() {
+	
+		$date = new qCal_DateV2(2010, 1, 15);
+		// $date->setWeekStart("Sunday");
+		$this->assertEqual($date->getWeekOfYear(), 2);
+		$date2 = new qCal_DateV2(2010, 4, 23);
+		$this->assertEqual($date2->getWeekOfYear(), 16);
+	
+	}
 
 }
