@@ -278,6 +278,14 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * Determine if this is a leap year
+	 */
+	public function isLeapYear() {
+	
+		return (boolean) $this->dateArray["L"];
+	
+	}
+	/**
 	 * Get a unix timestamp for the date
 	 * @return integer The amount of seconds since unix epoch (January 1, 1970 UTC)
 	 */

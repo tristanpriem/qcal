@@ -204,6 +204,18 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	}
 	
 	/**
+	 * Test that date can determine if it is in a leap year
+	 */
+	public function testIsLeapyear() {
+	
+		$date = new qCal_DateV2(2009, 4, 23);
+		$this->assertFalse($date->isLeapYear());
+		$date2 = new qCal_DateV2(2008, 4, 23);
+		$this->assertTrue($date2->isLeapYear());
+	
+	}
+	
+	/**
 	 * The following are methods that test the date component's ability to do "date magic".
 	 * It tests things such as the date component's ability to determine if this is the 2nd
 	 * monday of the month, or the 2nd to last monday of the month. Or how many days from the
