@@ -39,13 +39,23 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	 */
 	public function testHowManyDaysFromTheBeginningOrEndOfTheMonthOrYearItIs() {
 	
+		/**
+		 * Year
+		 */
+		// days 'til end of year
 		$date = new qCal_DateV2(2010, 1, 15, "GMT"); // mom's birthday!
 		$this->assertEqual($date->getYearDay(), 14); // year day starts at zero
 		$this->assertEqual($date->getYearDay(true), 15); // pass true to the method and it will start from one
 		$this->assertEqual($date->getNumDaysUntilEndOfYear(), 350);
+		$date2 = new qCal_DateV2(2010, 12, 25); // jesus's birthday (not really, but w/e)!
+		$this->assertEqual($date2->getNumDaysUntilEndOfYear(), 6);
 		
-		$date2 = new qCal_DateV2(2010, 3, 20); // mom and dady's anniversary!
-		$this->assertEqual($date2->getDay(), 20); // this one is pretty obvious...
+		/**
+		 * Month
+		 */
+		$date3 = new qCal_DateV2(2010, 3, 20); // mom and dady's anniversary!
+		$this->assertEqual($date3->getDay(), 20); // this one is pretty obvious...
+		$this->assertEqual($date3->getNumDaysUntilEndOfMonth(), 11);
 	
 	}
 

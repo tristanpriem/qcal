@@ -251,6 +251,14 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * Get the number of days until the end of the month
+	 */
+	public function getNumDaysUntilEndOfMonth() {
+	
+		return $this->getNumDaysInMonth() - $this->getDay();
+	
+	}
+	/**
 	 * Get the year
 	 * @return integer The year of this date, for example 1999
 	 */
