@@ -39,7 +39,9 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	 */
 	public function testHowManyDaysFromTheBeginningOrEndOfTheMonthOrYearItIs() {
 	
-		
+		$date = new qCal_DateV2(2010, 1, 15, "GMT"); // mom's birthday!
+		$this->assertEqual($date->getYearDay(), 14); // year day starts at zero
+		$this->assertEqual($date->getYearDay(true), 15); // pass true to the method and it will start from one
 	
 	}
 
