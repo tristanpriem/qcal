@@ -503,7 +503,7 @@ class qCal_DateV2 {
 		
 		// @todo: Can't use checkdate here, so find another validation method...
 		if ($found) {
-			$date = new qCal_DateV2($year, 1, $found, true);
+			$date = new qCal_DateV2($year, 1, $found, true); // takes advantage of the rollover feature :)
 		} else {
 			throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfYear()");
 		}
