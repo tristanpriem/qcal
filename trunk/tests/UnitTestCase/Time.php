@@ -192,6 +192,18 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
+	 * Swatch Internet Time (http://en.wikipedia.org/wiki/Swatch_Internet_Time)
+	 * This is a method of time-keeping that eliminates leap-years, leap-seconds, timezones, daylight savings,
+	 * non-decimal units, and all of the other inconsistencies and annoyances which you normally have to deal
+	 * with when working with times.
+	 */
+	public function testSwatchInternetTime() {
+	
+		// @todo Because this method of time-keeping has not been widely adopted,
+		// I don't feel it is a real priority at the moment, but it's something I do intend to implement eventually
+	
+	}
+	/**
 	 * @todo Look into the leap-second and what this class needs to do to support it
 	 */
 	public function testLeapSecond() {
