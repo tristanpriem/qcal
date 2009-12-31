@@ -47,4 +47,10 @@ $test->addTestCase(new UnitTestCase_Timezone);
 $test->addTestCase(new UnitTestCase_Time);
 $test->addTestCase(new UnitTestCase_Recur);
 // $test->addTestCase(new UnitTestCase_Database);
+
+/**
+ * Sprint One: 12/15/2009 - 12/29/2009
+ */
+// $test->addTestCase(new UnitTestCase_SprintOne);
+
 $test->run(new HtmlReporter());

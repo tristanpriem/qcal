@@ -405,6 +405,62 @@ class qCal_DateV2 {
 		return $date;
 	
 	}
+	/**
+	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
+	 * beginning or end of the year.
+	 * @param boolean If false, the counting starts from the beginning of the year, otherwise
+	 * it starts from the end of the year.
+	 */
+	public function getXthWeekdayOfYear($xth, $weekday = null, $year = null) {
+	
+		$negpos = substr($xth, 0, 1);
+		if ($negpos == "+" || $negpos == "-") {
+			$xth = (integer) substr($xth, 1);
+		} else {
+			$negpos = "+";
+		}
+		
+		if (is_null($weekday)) {
+			$weekday = $this->getWeekday();
+		}
+		
+		if (ctype_digit((string) $weekday)) {
+			if (!array_key_exists($weekday, $this->weekdays)) {
+				throw new qCal_Date_Exception_InvalidWeekday("\"$weekday\" is not a valid weekday.");
+			}
+		} else {
+			$weekday = strtolower($weekday);
+			if (!in_array($weekday, $this->weekdays)) {
+				throw new qCal_Date_Exception_InvalidWeekday("\"$weekday\" is not a valid weekday.");
+			}
+			$wdays = array_flip($this->weekdays);
+			$weekday = $wdays[$weekday];
+		}
+		
+		if (is_null($year)) {
+			$year = $this->getYear();
+		}
+		
+		if (!ctype_digit((string) $year) || strlen($year) != 4) {
+			throw new qCal_Date_Exception_InvalidYear("\"$year\" is not a valid year.");
+		}
+		
+		// now find the specified day by counting either forwards or backwards to the day in question
+		$numweekdays = 0; // the number of weekdays that have occurred within the loop
+		$found = false; // whether or not the specified day has been found
+		if ($negpos == "+") {
+			// count forward
+			$firstofyear = new qCal_DateV2($year, 1, 1);
+			$firstwkdy = $firstofyear->getXthWeekdayOfMonth(1, $weekday); // find the the first occurrence of "weekday"
+			
+		} else {
+			// count backward
+			$lastofyear = new qCal_DateV2($year, 12, 31);
+		}
+		
+		return $date;
+	
+	}
 	
 	/**
 	 * Magic methods

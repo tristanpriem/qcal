@@ -89,13 +89,10 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	public function testSetDateByString() {
 	
-		$today = qCal_DateV2::gmgetdate();
-		$tomorrow = gmmktime(0, 0, 0, $today['mon'], $today['mday']+1, $today['year']);
-		$tomorrow = qCal_DateV2::gmgetdate($tomorrow);
-		$date = qCal_DateV2::factory("tomorrow");
-		$this->assertEqual($date->getYear(), $tomorrow['year']);
-		$this->assertEqual($date->getMonth(), $tomorrow['mon']);
-		// $this->assertEqual($date->getDay(), $tomorrow['mday']);
+		// test that something like "tomorrow" works
+		$tomorrow = qCal_DateV2::factory("tomorrow");
+		// coming soon!
+		// $this->assertEqual($tomorrow->getDay());
 	
 	}
 	/**
