@@ -214,6 +214,24 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * Find how many days until the end of the year.
+	 * For instance, if the date is December 25th, there are 6 days until the end of the year
+	 */
+	public function getNumDaysUntilEndOfYear() {
+	
+		$yearday = $this->getYearDay(true);
+		return $this->getNumDaysInYear() - $yearday;
+	
+	}
+	/**
+	 * Get the amount of days in the year (365 unless it is a leap-year, then it's 366)
+	 */
+	public function getNumDaysInYear() {
+	
+		return ($this->isLeapYear()) ? 366 : 365;
+	
+	}
+	/**
 	 * Return the first day of the month as a qCal_DateV2 object
 	 * @return qCal_DateV2 The first day of the month
 	 */
