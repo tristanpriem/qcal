@@ -14,6 +14,7 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	}
 	
 	/**
+	 * Date
 	 * The date component also needs to be capable of efficiently computing things such as...
 	 */
 	
@@ -85,6 +86,20 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	
 		$date = new qCal_DateV2(2010, 10, 23);
 		$this->assertEqual($date->getMonthsUntilEndOfYear(), 2);
+	
+	}
+	
+	/**
+	 * Timezone
+	 */
+	
+	/**
+	 * Certain timezones have daylight savings rules. The timezone component needs to be aware
+	 * of those rules and adjust the time accordingly.
+	 */
+	public function testTimezoneIsAwareOfDaylightSavings() {
+	
+		// coming soon!
 	
 	}
 
