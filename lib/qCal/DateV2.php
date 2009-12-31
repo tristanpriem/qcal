@@ -367,7 +367,9 @@ class qCal_DateV2 {
 		if ($negpos == "+") {
 			$day = 1;
 			$wday = $firstofmonth->getWeekday();
+			// while we are in the current month, loop
 			while ($day <= $numdaysinmonth) {
+				// if the specified weekday == the current week day in the loop
 				if ($weekday == $wday) {
 					$numweekdays++;
 					if ($numweekdays == $xth) {
@@ -383,7 +385,6 @@ class qCal_DateV2 {
 		} else {
 			$day = $numdaysinmonth;
 			$lastofmonth = $firstofmonth->getLastDayOfMonth();
-
 			$wday = $lastofmonth->getWeekday();
 			while ($day >= 1) {
 				if ($weekday == $wday) {
@@ -454,16 +455,57 @@ class qCal_DateV2 {
 		}
 		
 		// now find the specified day by counting either forwards or backwards to the day in question
+		$firstofyear = new qCal_DateV2($year, 1, 1);
+		$numdaysinyear = ($firstofyear->isLeapYear()) ? 366 : 365;
 		$numweekdays = 0; // the number of weekdays that have occurred within the loop
 		$found = false; // whether or not the specified day has been found
 		if ($negpos == "+") {
 			// count forward
-			$firstofyear = new qCal_DateV2($year, 1, 1);
-			$firstwkdy = $firstofyear->getXthWeekdayOfMonth(1, $weekday); // find the the first occurrence of "weekday"
-			
+			// loop over every day of every month looking for the right one
+			$day = 1;
+			$wday = $firstofyear->getWeekDay();
+			while ($day <= $numdaysinyear) {
+				// if the specified weekday == the current week day in the loop
+				if ($weekday == $wday) {
+					$numweekdays++;
+					if ($numweekdays == $xth) {
+						// break out of the loop, we've found the right day! yay!
+						$found = $day;
+						break;
+					}
+				}
+				if ($wday == 6) $wday = 0; // reset to Sunday after Saturday
+				else $wday++;
+				$day++;
+			}
 		} else {
 			// count backward
 			$lastofyear = new qCal_DateV2($year, 12, 31);
+			// count forward
+			// loop over every day of every month looking for the right one
+			$day = $numdaysinyear;
+			$wday = $lastofyear->getWeekDay();
+			while ($day >= 1) {
+				// if the specified weekday == the current week day in the loop
+				if ($weekday == $wday) {
+					$numweekdays++;
+					if ($numweekdays == $xth) {
+						// break out of the loop, we've found the right day! yay!
+						$found = $day;
+						break;
+					}
+				}
+				if ($wday == 0) $wday = 6; // reset to Saturday after Sunday
+				else $wday--;
+				$day--;
+			}
+		}
+		
+		// @todo: Can't use checkdate here, so find another validation method...
+		if ($found) {
+			$date = new qCal_DateV2($year, 1, $found, true);
+		} else {
+			throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfYear()");
 		}
 		
 		return $date;
