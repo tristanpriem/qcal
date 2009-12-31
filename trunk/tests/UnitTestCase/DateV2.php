@@ -187,7 +187,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testInvalidXthWeekday() {
 	
-		$this->expectException(new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()"));
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfMonth()"));
 		$date = new qCal_DateV2(2010, 1, 1);
 		$tenth_tuesday = $date->getXthWeekdayOfMonth(10, "Tuesday");
 		
