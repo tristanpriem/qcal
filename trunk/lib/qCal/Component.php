@@ -417,6 +417,16 @@ abstract class qCal_Component {
 		return $renderer->render($this);
 	
 	}
+	
+	/**
+	 * Output the icalendar component as a string (render it)
+	 */
+	public function __toString() {
+	
+		return $this->render();
+	
+	}
+	
 	/**
 	 * getFreeBusyTime
 	 * Looks through all of the data in the calendar and returns a qCal_Component_Vfreebusy object
