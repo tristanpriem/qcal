@@ -224,6 +224,15 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * Get how many months until the end of the year
+	 * @todo This is really rudimentary. There is more to this, but this works for now...
+	 */
+	public function getMonthsUntilEndOfYear() {
+	
+		return 12 - $this->getMonth();
+	
+	}
+	/**
 	 * Get the amount of days in the year (365 unless it is a leap-year, then it's 366)
 	 */
 	public function getNumDaysInYear() {
