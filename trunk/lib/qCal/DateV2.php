@@ -207,9 +207,10 @@ class qCal_DateV2 {
 	 * Get the day of the year
 	 * @return integer A number between 0 and 365 inclusively
 	 */
-	public function getYearDay() {
+	public function getYearDay($startFromOne = false) {
 	
-		return $this->dateArray["yday"];
+		$yearDay = $this->dateArray["yday"] + (integer) $startFromOne;
+		return $yearDay;
 	
 	}
 	/**
