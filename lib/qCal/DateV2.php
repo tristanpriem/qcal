@@ -396,7 +396,7 @@ class qCal_DateV2 {
 			$date = new qCal_DateV2($year, $month, $day);
 		} else {
 			if ($day == 32) {
-				throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()");
+				throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfMonth()");
 			} else {
 				throw new qCal_DateTime_Exception_InvalidDate("You have entered an invalid date.");
 			}
