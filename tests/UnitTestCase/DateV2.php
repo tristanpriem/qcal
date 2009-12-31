@@ -216,6 +216,18 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	}
 	
 	/**
+	 * Test that you can determine the amount of days in the year (usually 365, but 366 on leap-year)
+	 */
+	public function testNumDaysInYear() {
+	
+		$date = new qCal_DateV2(2009, 4, 23);
+		$this->assertEqual($date->getNumDaysInYear(), 365);
+		$date2 = new qCal_DateV2(2008, 4, 23);
+		$this->assertTrue($date2->getNumDaysInYear(), 366);
+	
+	}
+	
+	/**
 	 * The following are methods that test the date component's ability to do "date magic".
 	 * It tests things such as the date component's ability to determine if this is the 2nd
 	 * monday of the month, or the 2nd to last monday of the month. Or how many days from the

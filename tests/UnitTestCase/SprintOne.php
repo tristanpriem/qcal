@@ -42,6 +42,10 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 		$date = new qCal_DateV2(2010, 1, 15, "GMT"); // mom's birthday!
 		$this->assertEqual($date->getYearDay(), 14); // year day starts at zero
 		$this->assertEqual($date->getYearDay(true), 15); // pass true to the method and it will start from one
+		$this->assertEqual($date->getNumDaysUntilEndOfYear(), 350);
+		
+		$date2 = new qCal_DateV2(2010, 3, 20); // mom and dady's anniversary!
+		$this->assertEqual($date2->getDay(), 20); // this one is pretty obvious...
 	
 	}
 
