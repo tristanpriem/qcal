@@ -305,6 +305,15 @@ class qCal_DateV2 {
 	
 	}
 	/**
+	 * Get how many weeks until the end of the year
+	 * @todo This is really rudimentary. There is more to this, but this works for now...
+	 */
+	public function getWeeksUntilEndOfYear() {
+	
+		return 52 - $this->getWeekOfYear();
+	
+	}
+	/**
 	 * Determine if this is a leap year
 	 */
 	public function isLeapYear() {

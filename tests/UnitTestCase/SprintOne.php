@@ -71,6 +71,10 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 		$this->assertEqual($date->getWeekOfYear(), 2);
 		$date2 = new qCal_DateV2(2010, 4, 23);
 		$this->assertEqual($date2->getWeekOfYear(), 16);
+		
+		// how many weeks until the end of the year?
+		$date3 = new qCal_DateV2(2010, 12, 1);
+		$this->assertEqual($date3->getWeeksUntilEndOfYear(), 4);
 	
 	}
 
