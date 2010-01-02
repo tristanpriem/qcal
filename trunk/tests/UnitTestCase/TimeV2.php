@@ -90,5 +90,8 @@ class UnitTestCase_TimeV2 extends UnitTestCase {
 		$this->assertEqual($time->getTimestamp(), $diff);
 	
 	}
+	/**
+	 * @todo Look into leap-seconds (right above 4.3.6 in the spec)
+	 */
 
 }
