@@ -6,6 +6,15 @@
 class qCal_Loader {
 
 	/**
+	 * Load a class
+	 */
+	static public function loadClass($name) {
+	
+		$path = str_replace("_", DIRECTORY_SEPARATOR, $name) . ".php";
+		self::loadFile($path);
+	
+	}
+	/**
 	 * Loads a file or throws an exception
 	 */
 	static public function loadFile($filename) {
