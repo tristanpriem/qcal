@@ -5,6 +5,7 @@ define('QCAL_PATH', realpath('../lib'));
 define('TESTCASE_PATH', realpath('../tests'));
 define('TESTFILE_PATH', realpath('../tests/files'));
 define('TESTCLASS_PATH', realpath('../tests/testclasses'));
+
 // establish include path
 set_include_path(
     SIMPLETEST_PATH . PATH_SEPARATOR .
