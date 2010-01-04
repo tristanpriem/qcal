@@ -49,6 +49,9 @@ $test->addTestCase(new UnitTestCase_Recur);
  * Sprint One: 12/15/2009 - 12/29/2009
  */
 $test->addTestCase(new UnitTestCase_SprintOne);
+/**
+ * Sprint Two: 12/30/2009 - 1/14/2009
+ */
 $test->addTestCase(new UnitTestCase_SprintTwo);
 
 $test->run(new HtmlReporter());
