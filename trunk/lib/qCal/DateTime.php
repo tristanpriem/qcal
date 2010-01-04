@@ -61,13 +61,13 @@ class qCal_DateTime {
 		// handles unix timestamp
 		if (is_integer($datetime) || ctype_digit((string) $datetime)) {
 			$timestamp = $datetime;
-		}
-		
-		// handles just about any string representation of date/time (strtotime)
-		if (is_string($datetime) || empty($datetime)) {
-			if (!$timestamp = strtotime($datetime)) {
-				// if unix timestamp can't be created throw an exception
-				throw new qCal_DateTime_Exception("Invalid or ambiguous date/time string passed to qCal_DateTime::factory()");
+		} else {
+			// handles just about any string representation of date/time (strtotime)
+			if (is_string($datetime) || empty($datetime)) {
+				if (!$timestamp = strtotime($datetime)) {
+					// if unix timestamp can't be created throw an exception
+					throw new qCal_DateTime_Exception("Invalid or ambiguous date/time string passed to qCal_DateTime::factory()");
+				}
 			}
 		}
 		

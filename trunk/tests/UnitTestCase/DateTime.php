@@ -57,6 +57,24 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	
 	}
 	/**
+	 * Factory should accept unix timestamps
+	FIGURE OUT HOW TIMEZONES SHOULD WORK HERE...
+
+	public function testFactoryAcceptsUnixTimestamps() {
+	
+		$dt = qCal_DateTime::factory(1262603182, "GMT");
+		$this->assertEqual($dt->__toString(), "2010-01-04T11:06:22");
+		
+		$dt2 = qCal_DateTime::factory("1262603182", "GMT");
+		$this->assertEqual($dt2->__toString(), "2010-01-04T11:06:22");
+		
+		$dt3 = qCal_DateTime::factory("1262603182", "America/Los_Angeles");
+		pre(date("m-d-Y H:i:s", 1262603182));
+		//$this->assertEqual($dt3->__toString(), "2010-01-04T03:06:22");
+	
+	}
+	 */
+	/**
 	 * Test that timezone can be changed after instantiation
 	 */
 	public function testTimezoneChangedAfterInstantiation() {
