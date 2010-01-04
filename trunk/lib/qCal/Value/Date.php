@@ -36,11 +36,27 @@
  * 
  *  19970714
  */
-class qCal_Value_Date extends qCal_Value_DateTime {
+class qCal_Value_Date extends qCal_Value {
 
+	/**
+	 * qCal_Date object
+	 */
+	protected $value;
+	/**
+	 * Convert the internal date storage to a string
+	 */
 	protected function toString($value) {
 	
 		return $value->format('Ymd');
+	
+	}
+	/**
+	 * This converts to a qCal_Date for internal storage
+	 */
+	protected function doCast($value) {
+	
+		$date = qCal_DateV2::factory($value);
+		return $date;
 	
 	}
 

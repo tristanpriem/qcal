@@ -20,9 +20,15 @@ class qCal_DateTime_Period {
 	 */
 	public function __construct($start, $end) {
 	
-		$this->start = new qCal_Date($start);
-		$this->end = new qCal_Date($end);
-		if ($this->seconds() < 0) {
+		if (!($start instanceof qCal_DateTime)) {
+			$start = qCal_DateTime::factory($start);
+		}
+		if (!($end instanceof qCal_DateTime)) {
+			$end = qCal_DateTime::factory($end);
+		}
+		$this->start = $start;
+		$this->end = $end;
+		if ($this->getSeconds() < 0) {
 			throw new qCal_DateTime_Exception_InvalidPeriod("The start date must come before the end date.");
 		}
 	
@@ -31,15 +37,15 @@ class qCal_DateTime_Period {
 	 * Converts to how many seconds between the two. because this is the smallest increment
 	 * used in this class, seconds are used to determine other increments
 	 */
-	public function seconds() {
+	public function getSeconds() {
 	
-		return $this->end->time() - $this->start->time();
+		return $this->end->getUnixTimestamp() - $this->start->getUnixTimestamp();
 	
 	}
 	/**
 	 * Returns start date
 	 */
-	public function start() {
+	public function getStart() {
 	
 		return $this->start;
 	
@@ -47,7 +53,7 @@ class qCal_DateTime_Period {
 	/**
 	 * Returns end date
 	 */
-	public function end() {
+	public function getEnd() {
 	
 		return $this->end;
 	

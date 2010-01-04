@@ -46,7 +46,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		));
 		$tz = new qCal_Component_Vtimezone(array(
 			'tzid' => 'California-Los_Angeles',
-			'last-modified' => new qCal_Date(time()),
+			'last-modified' => qCal_DateTime::factory("now", "America/Los_Angeles"),
 			'tzurl' => 'http://www.example.com/tz1',
 		), array($standard));
 		$newtime = time();
@@ -56,7 +56,8 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		$tzurl = $tz->getProperty('tzurl');
 		$this->assertEqual(count($tzlm), 1);
 		$this->assertEqual(count($tzurl), 1);
-		$this->assertEqual($tzlm[0]->getValue(), date('Ymd\THis', $newtime));
+		//@todo this probably isn't right... gmdate shouldn't work here... but I don't know for sure...
+		$this->assertEqual($tzlm[0]->getValue(), gmdate('Ymd\THis', $newtime));
 		$this->assertEqual($tzurl[0]->getValue(), 'http://www.example.com/tz2');
 	
 	}
@@ -105,7 +106,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		));
 		// fake us eastern timezone
 		$useastern->attach(new qCal_Component_Standard(array(
-			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'dtstart' => qCal_DateTime::factory('20090913T000000Z'),
 			'offsetto' => new qCal_Property_Tzoffsetto('0200'),
 			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
 		)));
@@ -114,7 +115,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		));
 		// fake us western timezone
 		$uswestern->attach(new qCal_Component_Standard(array(
-			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'dtstart' => qCal_DateTime::factory('20090913T000000Z'),
 			'offsetto' => new qCal_Property_Tzoffsetto('0100'),
 			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0300'),
 		)));
@@ -137,7 +138,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		));
 		// fake us eastern timezone
 		$useastern->attach(new qCal_Component_Standard(array(
-			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'dtstart' => qCal_DateTime::factory('20090913T000000Z'),
 			'offsetto' => new qCal_Property_Tzoffsetto('0200'),
 			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0400'),
 		)));
@@ -146,7 +147,7 @@ class UnitTestCase_Component_Timezone extends UnitTestCase {
 		));
 		// fake us western timezone
 		$uswestern->attach(new qCal_Component_Standard(array(
-			'dtstart' => new qCal_Date('20090913T000000Z'),
+			'dtstart' => qCal_DateTime::factory('20090913T000000Z'),
 			'offsetto' => new qCal_Property_Tzoffsetto('0100'),
 			'offsetfrom' => new qCal_Property_Tzoffsetfrom('0300'),
 		)));

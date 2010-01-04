@@ -61,7 +61,7 @@ class qCal_Value_Period extends qCal_Value {
 
 	protected $value;
 	/**
-	 * @todo: implement this
+	 * Cast a string value into a qCal_DateTime_Period object
 	 */
 	protected function doCast($value) {
 	
@@ -69,10 +69,10 @@ class qCal_Value_Period extends qCal_Value {
 		if (count($parts) !== 2) {
 			throw new qCal_DateTime_Exception_InvalidPeriod("A period must contain a start date and either an end date, or a duration of time.");
 		}
-		$start = new qCal_Date($parts[0]);
+		$start = qCal_DateTime::factory($parts[0]);
 		try {
-			$end = new qCal_Date($parts[1]);
-		} catch (qCal_DateTime_Exception_InvalidDate $e) {
+			$end = qCal_DateTime::factory($parts[1]);
+		} catch (qCal_DateTime_Exception $e) { // @todo This should probably be a more specific exception
 			// invalid date, so try duration
 			// @todo: I might want to create a qCal_Date object to represent a duration (not tied to any points in time)
 			// using a qCal_Value object here is sort of inconsistent. Plus, I can see value in having that functionality
@@ -80,7 +80,7 @@ class qCal_Value_Period extends qCal_Value {
 			// also, there is a difference in a period and a duration in that if you say start on feb 26 and end on march 2
 			// that will be a different "duration" depending on the year. that goes for months with alternate amounts of days too
 			$duration = new qCal_DateTime_Duration($parts[1]);
-			$end = new qCal_Date($start->time() + $duration->seconds());
+			$end = qCal_DateTime::factory($start->getUnixTimestamp() + $duration->getSeconds()); // @todo This needs to be updated once qCal_DateTime accepts timestamps 
 		}
 		return new qCal_DateTime_Period($start, $end);
 	
@@ -90,8 +90,8 @@ class qCal_Value_Period extends qCal_Value {
 	 */
 	protected function toString($value) {
 	
-		return $value->start()->getUtc() . "/"
-				 . $value->end()->getUtc();
+		return $value->getStart()->getUtc() . "/"
+				 . $value->getEnd()->getUtc();
 	
 	}
 

@@ -122,7 +122,11 @@ class qCal_Value_Datetime extends qCal_Value {
 	 */
 	protected function doCast($value) {
 	
-		$date = new qCal_Date($value);
+		// @todo This may be the wrong place to do this...
+		if ($value instanceof qCal_DateTime) {
+			return $value;
+		}
+		$date = qCal_DateTime::factory($value);
 		return $date;
 	
 	}

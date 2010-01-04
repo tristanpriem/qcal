@@ -41,10 +41,16 @@ class qCal_DateTime {
 	}
 	/**
 	 * Generate a datetime object via string
+	 * @todo Should this accept qCal_Date and qCal_DateTime objects?
 	 */
 	public static function factory($datetime, $timezone = null) {
 	
 		if (is_null($timezone) || !($timezone instanceof qCal_Timezone)) {
+			// @todo Make sure this doesn't cause any issues 
+			// detect if we're working with a UTC string like "19970101T180000Z", where the Z means use UTC time
+			if (strtolower(substr($datetime, -1)) == "z") {
+				$timezone = "UTC";
+			}
 			$timezone = qCal_Timezone::factory($timezone);
 		}
 		// get the default timezone so we can set it back to it later
@@ -52,15 +58,23 @@ class qCal_DateTime {
 		// set the timezone to GMT temporarily
 		date_default_timezone_set("GMT");
 		
-		if (is_integer($datetime)) {
-			// @todo Handle timestamps
+		// handles unix timestamp
+		if (is_integer($datetime) || ctype_digit((string) $datetime)) {
+			$timestamp = $datetime;
 		}
-		if (is_string($datetime)) {
+		
+		// handles just about any string representation of date/time (strtotime)
+		if (is_string($datetime) || empty($datetime)) {
 			if (!$timestamp = strtotime($datetime)) {
 				// if unix timestamp can't be created throw an exception
 				throw new qCal_DateTime_Exception("Invalid or ambiguous date/time string passed to qCal_DateTime::factory()");
 			}
 		}
+		
+		if (!isset($timestamp)) {
+			throw new qCal_DateTime_Exception("Could not generate a qCal_DateTime object.");
+		}
+		
 		list($year, $month, $day, $hour, $minute, $second) = explode("|", gmdate("Y|m|d|H|i|s", $timestamp));
 		
 		// set the timezone back to what it was

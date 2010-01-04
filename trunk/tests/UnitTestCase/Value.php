@@ -116,7 +116,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawDate() {
 	
 		$value = new qCal_Value_Date('2009-04-23');
-		$this->assertEqual($value->getValue(), new qCal_Date('2009-04-23'));
+		$this->assertEqual($value->getValue(), qCal_DateV2::factory('2009-04-23'));
 	
 	}
 	/**
@@ -134,7 +134,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawDateTime() {
 	
 		$value = new qCal_Value_DateTime('2009-04-23 6:00');
-		$this->assertEqual($value->getValue(), new qCal_Date('2009-04-23 6:00'));
+		$this->assertEqual($value->getValue(), qCal_DateTime::factory('2009-04-23 6:00'));
 	
 	}
 	/**
