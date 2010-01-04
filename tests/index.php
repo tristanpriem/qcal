@@ -38,10 +38,10 @@ $test->addTestCase(new UnitTestCase_Value_Date);
 $test->addTestCase(new UnitTestCase_Value_Recur);
 $test->addTestCase(new UnitTestCase_Value_Multi);
 $test->addTestCase(new UnitTestCase_Renderer);
-$test->addTestCase(new UnitTestCase_DateTimeV2);
+$test->addTestCase(new UnitTestCase_DateTime);
 $test->addTestCase(new UnitTestCase_Date);
 $test->addTestCase(new UnitTestCase_Timezone);
-$test->addTestCase(new UnitTestCase_TimeV2);
+$test->addTestCase(new UnitTestCase_Time);
 $test->addTestCase(new UnitTestCase_Recur);
 // $test->addTestCase(new UnitTestCase_Database);
 

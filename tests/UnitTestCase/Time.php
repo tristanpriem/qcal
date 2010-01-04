@@ -1,5 +1,5 @@
 <?php
-class UnitTestCase_TimeV2 extends UnitTestCase {
+class UnitTestCase_Time extends UnitTestCase {
 
 	/**
 	 * Test that timezone defaults to server timezone

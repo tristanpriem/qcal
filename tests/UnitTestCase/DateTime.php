@@ -1,5 +1,5 @@
 <?php
-class UnitTestCase_DateTimeV2 extends UnitTestCase {
+class UnitTestCase_DateTime extends UnitTestCase {
 
 	/**
 	 * Set up test environment
