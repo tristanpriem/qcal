@@ -8,7 +8,7 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
-class qCal_DateV2 {
+class qCal_Date {
 
 	/**
 	 * @var unix timestamp
@@ -101,7 +101,7 @@ class qCal_DateV2 {
 		$this->dateArray = self::gmgetdate($this->date);
 		if (!$rollover) {
 			if ($this->dateArray["mday"] != $day || $this->dateArray["mon"] != $month || $this->dateArray["year"] != $year) {
-				throw new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"{$month}/{$day}/{$year}\"");
+				throw new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_Date: \"{$month}/{$day}/{$year}\"");
 			}
 		}
 		
@@ -124,14 +124,14 @@ class qCal_DateV2 {
 		if (is_string($date)) {
 			if (!$timestamp = strtotime($date)) {
 				// if unix timestamp can't be created throw an exception
-				throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_DateV2::factory()");
+				throw new qCal_Date_Exception_InvalidDate("Invalid or ambiguous date string passed to qCal_Date::factory()");
 			}
 		}
 		
 		$date = self::gmgetdate($timestamp);
 		$newdate = gmmktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
 		$newdate = self::gmgetdate($newdate);
-		return new qCal_DateV2($newdate['year'], $newdate['mon'], $newdate['mday']);
+		return new qCal_Date($newdate['year'], $newdate['mon'], $newdate['mday']);
 	
 	}
 	/**
@@ -241,22 +241,22 @@ class qCal_DateV2 {
 	
 	}
 	/**
-	 * Return the first day of the month as a qCal_DateV2 object
-	 * @return qCal_DateV2 The first day of the month
+	 * Return the first day of the month as a qCal_Date object
+	 * @return qCal_Date The first day of the month
 	 */
 	public function getFirstDayOfMonth() {
 	
-		return new qCal_DateV2($this->getYear(), $this->getMonth(), 1);
+		return new qCal_Date($this->getYear(), $this->getMonth(), 1);
 	
 	}
 	/**
-	 * Return the last day of the month as a qCal_DateV2 object
-	 * @return qCal_DateV2 The last day of the month
+	 * Return the last day of the month as a qCal_Date object
+	 * @return qCal_Date The last day of the month
 	 */
 	public function getLastDayOfMonth() {
 	
 		$lastday = $this->format("t");
-		return new qCal_DateV2($this->getYear(), $this->getMonth(), $lastday);
+		return new qCal_Date($this->getYear(), $this->getMonth(), $lastday);
 	
 	}
 	/**
@@ -405,7 +405,7 @@ class qCal_DateV2 {
 		}
 		
 		// now, using the year, month and numbered weekday, we need to find the actual day of the month...
-		$firstofmonth = new qCal_DateV2($year, $month, 1);
+		$firstofmonth = new qCal_Date($year, $month, 1);
 		$numdaysinmonth = $firstofmonth->getNumDaysInMonth();
 		$numweekdays = 0; // the number of weekdays that have occurred (in the loop)
 		$foundday = false;
@@ -447,10 +447,10 @@ class qCal_DateV2 {
 		}
 		
 		if ($foundday && checkdate($month, $day, $year)) {
-			$date = new qCal_DateV2($year, $month, $day);
+			$date = new qCal_Date($year, $month, $day);
 		} else {
 			if ($day == 32) {
-				throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfMonth()");
+				throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()");
 			} else {
 				throw new qCal_DateTime_Exception_InvalidDate("You have entered an invalid date.");
 			}
@@ -500,7 +500,7 @@ class qCal_DateV2 {
 		}
 		
 		// now find the specified day by counting either forwards or backwards to the day in question
-		$firstofyear = new qCal_DateV2($year, 1, 1);
+		$firstofyear = new qCal_Date($year, 1, 1);
 		$numdaysinyear = ($firstofyear->isLeapYear()) ? 366 : 365;
 		$numweekdays = 0; // the number of weekdays that have occurred within the loop
 		$found = false; // whether or not the specified day has been found
@@ -525,7 +525,7 @@ class qCal_DateV2 {
 			}
 		} else {
 			// count backward
-			$lastofyear = new qCal_DateV2($year, 12, 31);
+			$lastofyear = new qCal_Date($year, 12, 31);
 			// count forward
 			// loop over every day of every month looking for the right one
 			$day = $numdaysinyear;
@@ -548,9 +548,9 @@ class qCal_DateV2 {
 		
 		// @todo: Can't use checkdate here, so find another validation method...
 		if ($found) {
-			$date = new qCal_DateV2($year, 1, $found, true); // takes advantage of the rollover feature :)
+			$date = new qCal_Date($year, 1, $found, true); // takes advantage of the rollover feature :)
 		} else {
-			throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfYear()");
+			throw new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfYear()");
 		}
 		
 		return $date;

@@ -4,17 +4,17 @@
  * 
  * In order to perform all the complex date/time based math and logic required to
  * implement the iCalendar spec, we need a complex date/time class. This class represents
- * a specific point in time, including the time. Internally it makes use of qCal_DateV2 and
+ * a specific point in time, including the time. Internally it makes use of qCal_Date and
  * qCal_Time. If only a date or only a time needs to be represented, then one of those
  * classes should be used.
  * 
- * @package qCal_DateV2
+ * @package qCal_Date
  * @
  */
 class qCal_DateTime {
 
 	/**
-	 * @var qCal_DateV2 An object that represents the date
+	 * @var qCal_Date An object that represents the date
 	 */
 	protected $date;
 	/**
@@ -33,7 +33,7 @@ class qCal_DateTime {
 	 */
 	public function __construct($year, $month, $day, $hour, $minute, $second, $timezone = null, $rollover = null) {
 	
-		$date = new qCal_DateV2($year, $month, $day, $rollover);
+		$date = new qCal_Date($year, $month, $day, $rollover);
 		$time = new qCal_Time($hour, $minute, $second, $timezone, $rollover);
 		$this->setDate($date);
 		$this->setTime($time);
@@ -86,7 +86,7 @@ class qCal_DateTime {
 	/**
 	 * Set the date component
 	 */
-	protected function setDate(qCal_DateV2 $date) {
+	protected function setDate(qCal_Date $date) {
 	
 		$this->date = $date;
 	
