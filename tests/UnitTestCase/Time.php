@@ -112,7 +112,7 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
-	 * Time rolls over similar to how qCal_DateV2 rolls over, but it is off by default
+	 * Time rolls over similar to how qCal_Date rolls over, but it is off by default
 	 */
 	public function testTimeRolloverException() {
 	
@@ -121,7 +121,7 @@ class UnitTestCase_Time extends UnitTestCase {
 	
 	}
 	/**
-	 * Time rolls over similar to how qCal_DateV2 rolls over
+	 * Time rolls over similar to how qCal_Date rolls over
 	 */
 	public function testTimeRollover() {
 	

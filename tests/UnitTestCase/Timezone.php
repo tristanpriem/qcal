@@ -27,7 +27,7 @@ class UnitTestCase_Timezone extends UnitTestCase {
 		// then I will. otherwise, I'll just have to set the timezone to GMT
 		// date_default_timezone_set("GMT");
 		$date = gmdate("Y-m-d H:i:s", 0);
-		$date = qCal_DateV2::gmgetdate(0);
+		$date = qCal_Date::gmgetdate(0);
 	
 	}
 	/**

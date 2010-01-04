@@ -20,7 +20,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	/*public function testDateExceptionAcceptsDateObject() {
 	
-		$date = new qCal_DateV2;
+		$date = new qCal_Date;
 		$exception = new qCal_DateTime_Exception("Foo", 0, null, $date);
 		$this->assertEqual($exception->getDate(), $date);
 		$this->expectException($exception);
@@ -32,19 +32,19 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testDateDefaultsToNow() {
 	
-		$date = new qCal_DateV2();
+		$date = new qCal_Date();
 		$now = time();
 		$this->assertEqual($date->getMonth(), date("m", $now));
 		$this->assertEqual($date->getDay(), date("d", $now));
 		$this->assertEqual($date->getYear(), date("Y", $now));
 		
 		// make sure that if only a portion of the date is given, the rest default to now
-		$date2 = new qCal_DateV2(2006);
+		$date2 = new qCal_Date(2006);
 		$this->assertEqual($date2->getMonth(), date("m", $now));
 		$this->assertEqual($date2->getDay(), date("d", $now));
 		$this->assertEqual($date2->getYear(), "2006");
 		
-		$date3 = new qCal_DateV2(2006, 5);
+		$date3 = new qCal_Date(2006, 5);
 		$this->assertEqual($date3->getDay(), date("d", $now));
 		$this->assertEqual($date3->getMonth(), "5");
 		$this->assertEqual($date3->getYear(), "2006");
@@ -53,8 +53,8 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	
 	public function testInvalidDateThrowsException() {
 	
-		$this->expectException(new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"1/35/2009\""));
-		$date = new qCal_DateV2(2009, 1, 35);
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_Date: \"1/35/2009\""));
+		$date = new qCal_Date(2009, 1, 35);
 	
 	}
 	/**
@@ -63,13 +63,13 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testDateRollover() {
 	
-		$date = new qCal_DateV2(2009, 1, 35, true);
+		$date = new qCal_Date(2009, 1, 35, true);
 		$this->assertEqual($date->getMonth(), 2);
 		$this->assertEqual($date->getDay(), 4);
 		$this->assertEqual($date->getYear(), 2009);
 		
 		// make sure year can roll over too
-		$date2 = new qCal_DateV2(2009, 12, 41, true);
+		$date2 = new qCal_Date(2009, 12, 41, true);
 		$this->assertEqual($date2->getMonth(), 1);
 		$this->assertEqual($date2->getDay(), 10);
 		$this->assertEqual($date2->getYear(), 2010);
@@ -82,15 +82,15 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	public function testInvalidLeapYear() {
 	
 		// you cannot specify a leap-year for a date that is not a leap-year
-		$this->expectException(new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_DateV2: \"2/29/2009\""));
-		$date = new qCal_DateV2(2009, 2, 29);
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("Invalid date specified for qCal_Date: \"2/29/2009\""));
+		$date = new qCal_Date(2009, 2, 29);
 	
 	}
 	
 	public function testSetDateByString() {
 	
 		// test that something like "tomorrow" works
-		$tomorrow = qCal_DateV2::factory("tomorrow");
+		$tomorrow = qCal_Date::factory("tomorrow");
 		// coming soon!
 		// $this->assertEqual($tomorrow->getDay());
 	
@@ -102,7 +102,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testToString() {
 	
-		$date = new qCal_DateV2(2009, 12, 7);
+		$date = new qCal_Date(2009, 12, 7);
 		// format defaults to m/d/Y
 		$this->assertEqual($date->__toString(), '12/07/2009');
 		// european format
@@ -130,7 +130,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testGetters() {
 	
-		$date = new qCal_DateV2(2009, 4, 23);
+		$date = new qCal_Date(2009, 4, 23);
 		
 		/**
 		 * Month
@@ -187,8 +187,8 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testInvalidXthWeekday() {
 	
-		$this->expectException(new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_DateV2::getXthWeekdayOfMonth()"));
-		$date = new qCal_DateV2(2010, 1, 1);
+		$this->expectException(new qCal_DateTime_Exception_InvalidDate("You have specified an incorrect number of days for qCal_Date::getXthWeekdayOfMonth()"));
+		$date = new qCal_Date(2010, 1, 1);
 		$tenth_tuesday = $date->getXthWeekdayOfMonth(10, "Tuesday");
 		
 	
@@ -198,7 +198,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testFluidMethods() {
 	
-		$date = new qCal_DateV2(2009, 12, 17);
+		$date = new qCal_Date(2009, 12, 17);
 		$this->assertEqual($date->setFormat("m/d/Y")->__toString(), "12/17/2009");
 	
 	}
@@ -208,9 +208,9 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testIsLeapyear() {
 	
-		$date = new qCal_DateV2(2009, 4, 23);
+		$date = new qCal_Date(2009, 4, 23);
 		$this->assertFalse($date->isLeapYear());
-		$date2 = new qCal_DateV2(2008, 4, 23);
+		$date2 = new qCal_Date(2008, 4, 23);
 		$this->assertTrue($date2->isLeapYear());
 	
 	}
@@ -220,9 +220,9 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	public function testNumDaysInYear() {
 	
-		$date = new qCal_DateV2(2009, 4, 23);
+		$date = new qCal_Date(2009, 4, 23);
 		$this->assertEqual($date->getNumDaysInYear(), 365);
-		$date2 = new qCal_DateV2(2008, 4, 23);
+		$date2 = new qCal_Date(2008, 4, 23);
 		$this->assertTrue($date2->getNumDaysInYear(), 366);
 	
 	}
@@ -244,7 +244,7 @@ class UnitTestCase_DateV2 extends UnitTestCase {
 	 */
 	/*public function test_Is_Xth_Xday_Of_The_Month() {
 	
-		$date = new qCal_DateV2(2009, 12, 15);
+		$date = new qCal_Date(2009, 12, 15);
 		$this->assertTrue($date->isXthWeekdayOfMonth("Tuesday", 3));
 		$this->assertTrue($date->isXthWeekdayOfMonth("Tuesday", -3));
 	

@@ -55,7 +55,7 @@ class qCal_Value_Date extends qCal_Value {
 	 */
 	protected function doCast($value) {
 	
-		$date = qCal_DateV2::factory($value);
+		$date = qCal_Date::factory($value);
 		return $date;
 	
 	}

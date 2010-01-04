@@ -24,7 +24,7 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	 */
 	public function testDateComponentCanDetermineWhichWeekDayOfMonthOrYearItIs() {
 	
-		$date = new qCal_DateV2(2009, 2, 22);
+		$date = new qCal_Date(2009, 2, 22);
 		$this->assertEqual($date->getWeekDayName(), "Sunday");
 		$this->assertEqual($date->getXthWeekdayOfMonth(-1), $date); // last sunday of the month
 		$this->assertEqual($date->getXthWeekdayOfMonth(4), $date); // fourth sunday of the month
@@ -44,17 +44,17 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 		 * Year
 		 */
 		// days 'til end of year
-		$date = new qCal_DateV2(2010, 1, 15, "GMT"); // mom's birthday!
+		$date = new qCal_Date(2010, 1, 15, "GMT"); // mom's birthday!
 		$this->assertEqual($date->getYearDay(), 14); // year day starts at zero
 		$this->assertEqual($date->getYearDay(true), 15); // pass true to the method and it will start from one
 		$this->assertEqual($date->getNumDaysUntilEndOfYear(), 350);
-		$date2 = new qCal_DateV2(2010, 12, 25); // jesus's birthday (not really, but w/e)!
+		$date2 = new qCal_Date(2010, 12, 25); // jesus's birthday (not really, but w/e)!
 		$this->assertEqual($date2->getNumDaysUntilEndOfYear(), 6);
 		
 		/**
 		 * Month
 		 */
-		$date3 = new qCal_DateV2(2010, 3, 20); // mom and dady's anniversary!
+		$date3 = new qCal_Date(2010, 3, 20); // mom and dady's anniversary!
 		$this->assertEqual($date3->getDay(), 20); // this one is pretty obvious...
 		$this->assertEqual($date3->getNumDaysUntilEndOfMonth(), 11);
 	
@@ -67,14 +67,14 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	 */
 	public function testHowManyWeeksFromTheBeginningOrEndOfTheMonthOrYearItIs() {
 	
-		$date = new qCal_DateV2(2010, 1, 15);
+		$date = new qCal_Date(2010, 1, 15);
 		// $date->setWeekStart("Sunday");
 		$this->assertEqual($date->getWeekOfYear(), 2);
-		$date2 = new qCal_DateV2(2010, 4, 23);
+		$date2 = new qCal_Date(2010, 4, 23);
 		$this->assertEqual($date2->getWeekOfYear(), 16);
 		
 		// how many weeks until the end of the year?
-		$date3 = new qCal_DateV2(2010, 12, 1);
+		$date3 = new qCal_Date(2010, 12, 1);
 		$this->assertEqual($date3->getWeeksUntilEndOfYear(), 4);
 	
 	}
@@ -84,7 +84,7 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	 */
 	public function testHowManyMonthsLeftInTheYear() {
 	
-		$date = new qCal_DateV2(2010, 10, 23);
+		$date = new qCal_Date(2010, 10, 23);
 		$this->assertEqual($date->getMonthsUntilEndOfYear(), 2);
 	
 	}
