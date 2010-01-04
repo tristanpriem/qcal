@@ -110,5 +110,9 @@ class UnitTestCase_DateTimeV2 extends UnitTestCase {
 		$this->assertEqual($datetime->getUtc(), "19880222T045200Z"); // changed timezone to GMT + 1 hour
 	
 	}
+	/**
+	 * @todo I need to add a test so that something like "19970101T180000Z", when passed to qCal_DateTime::factory()
+	 * knows to assign the GMT timezone to it because the "Z" stands for UTC
+	 */
 
 }

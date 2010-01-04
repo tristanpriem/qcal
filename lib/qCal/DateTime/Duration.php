@@ -106,7 +106,7 @@ class qCal_DateTime_Duration {
 	/**
 	 * Get duration in seconds
 	 */
-	public function seconds() {
+	public function getSeconds() {
 	
 		return (integer) $this->sign . $this->duration;
 	

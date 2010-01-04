@@ -79,7 +79,7 @@ class UnitTestCase_Renderer extends UnitTestCase {
 		$journal = new qCal_Component_Vjournal(array(
 			'summary' => 'The most interesting, but non-interesting journal entry ever.',
 			'description' => 'This is a sentence that ends with a semi-colon, which I\'m not sure needs to be escaped; I will read the RFC a bit and find out what, exactly, needs to escaped. I know commas do though, and this entry has plenty of those.',
-			'dtstart' => new qCal_Date('20090809T113500')
+			'dtstart' => qCal_DateTime::factory('20090809T113500')
 		));
 		$this->assertEqual($journal->render(), "BEGIN:VJOURNAL\r\nSUMMARY:The most interesting\, but non-interesting journal entry ever.\r\nDESCRIPTION:This is a sentence that ends with a semi-colon\, which I'm not \r\n sure needs to be escaped; I will read the RFC a bit and find out what\, exa\r\n ctly\, needs to escaped. I know commas do though\, and this entry has plent\r\n y of those.\r\nDTSTART:20090809T113500\r\nEND:VJOURNAL\r\n");
 	

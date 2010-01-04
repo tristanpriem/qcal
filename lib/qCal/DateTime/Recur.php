@@ -93,7 +93,7 @@ abstract class qCal_DateTime_Recur {
 	 */
 	public function __construct($dtstart = null) {
 	
-		$this->dtstart = is_null($dtstart) ? null : new qCal_Date($dtstart);
+		$this->dtstart = is_null($dtstart) ? null : qCal_DateTime::factory($dtstart);
 	
 	}
 	/**
@@ -108,7 +108,7 @@ abstract class qCal_DateTime_Recur {
 	
 		if (is_null($until)) return $this->until;
 		if ($this->count()) throw new qCal_DateTime_Exception_InvalidRecur('A recurrence count and an until date cannot both be specified');
-		$this->until = new qCal_Date($until);
+		$this->until = qCal_DateTime::factory($until);
 		return $this;
 	
 	}
@@ -347,9 +347,9 @@ abstract class qCal_DateTime_Recur {
 	 */
 	public function getRecurrences($start, $end) {
 	
-		$start = new qCal_Date($start);
-		$end = new qCal_Date($end);
-		if ($start->time() > $end->time()) throw new qCal_DateTime_Exception_InvalidRecur('Start date must come before end date');
+		$start = qCal_DateTime::factory($start);
+		$end = qCal_DateTime::factory($end);
+		if ($start->getUnixTimestamp() > $end->getUnixTimestamp()) throw new qCal_DateTime_Exception_InvalidRecur('Start date must come before end date');
 		if (!$this->interval) throw new qCal_DateTime_Exception_InvalidRecur('You must specify an interval');
 		
 		$rules = array(
