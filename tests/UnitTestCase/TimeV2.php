@@ -91,6 +91,127 @@ class UnitTestCase_TimeV2 extends UnitTestCase {
 	
 	}
 	/**
+	 * All of PHP's date function's time-related meta-characters should work with this class
+	 * Any of the other meta-characters defined for date() do not work.
+	 */
+	public function testFormatDateMetacharacters() {
+
+		$time = new qCal_Time(4, 20, 0, "GMT");
+		$this->assertEqual($time->__toString(), "04:20:00");
+		$this->assertEqual($time->format("g:ia"), "4:20am");
+
+	}
+	/**
+	 * Test that setting the format causes __toString to use that format thereafter
+	 */
+	public function testSetFormat() {
+
+		$time = new qCal_Time(21, 15, 0, "GMT");
+		$time->setFormat("g:i:sa");
+		$this->assertEqual($time->__toString(), "9:15:00pm");
+
+	}
+	/**
+	 * Time rolls over similar to how qCal_Date rolls over, but it is off by default
+	 */
+	public function testTimeRolloverException() {
+
+		$this->expectException(new qCal_DateTime_Exception_InvalidTime("Invalid time specified for qCal_Time: \"01:01:100\""));
+		$time = new qCal_Time(1, 1, 100); // should rollover to 1:02:40, but doesn't because rollover is off by default
+
+	}
+	/**
+	 * Time rolls over similar to how qCal_Date rolls over
+	 */
+	public function testTimeRollover() {
+
+		$time = new qCal_Time(1, 1, 100, qCal_Timezone::factory("GMT"), true); // should rollover to 1:02:40
+		$this->assertEqual($time->getTimestamp(), 3760);
+
+	}
+	/**
+	 * Test Time Getters (hours, minutes, seconds, etc.)
+	 */
+	public function testTimeGetters() {
+
+		$time = new qCal_Time(8, 10, 5, "GMT");
+		$this->assertEqual($time->getHour(), 8);
+		$this->assertEqual($time->getMinute(), 10);
+		$this->assertEqual($time->getSecond(), 5);
+
+	}
+	/**
+	 * You can use any of the date() function's time-related metacharacters
+	 */
+	public function testTimeFormat() {
+
+		$time = new qCal_Time(1, 0, 0, "GMT");
+		$time->setFormat("G:i:sa");
+		$this->assertEqual($time->__toString(), "1:00:00am");
+
+	}
+	/**
+	 * Test that metacharacters can be escaped with a backslash
+	 */
+	public function testEscapeMetacharacters() {
+
+		$time = new qCal_Time(0, 0, 0, "GMT");
+		$time->setFormat("\G:\i:\s\a G:i:sa");
+		$this->assertEqual($time->__toString(), "G:i:sa 0:00:00am");
+
+	}
+	/**
+	 * Test that all of qCal_Time's setters are fluid, meaning they return an instance of themself
+	 */
+	public function testFluidMethods() {
+
+		$time = new qCal_Time(3, 0, 0);
+		$time->setFormat("g:ia")
+			->setTimezone("America/Los_Angeles");
+		$this->assertEqual($time->__toString(), "3:00am");
+
+	}
+	/**
+	 * Time can be generated from string by using the factory method
+	 */
+	public function testFactoryMethod() {
+
+		// test with default timezone
+		$time = qCal_Time::factory("1:30pm"); // should default to America/Los_Angeles
+		$this->assertEqual($time->getHour(), 13);
+		$this->assertEqual($time->getMinute(), 30);
+		$this->assertEqual($time->getSecond(), 0);
+		$this->assertEqual($time->getTimezone()->getName(), date_default_timezone_get());
+
+		// test with specific timezone
+		$time = qCal_Time::factory("1:30pm", "MST"); // GMT - 7 hours
+		$this->assertEqual($time->getHour(), 13); // timezone doesn't change the time
+		$this->assertEqual($time->getMinute(), 30);
+		$this->assertEqual($time->getSecond(), 0);
+		$this->assertEqual($time->getTimezone()->getName(), "MST");
+
+	}
+	/**
+	 * Swatch Internet Time (http://en.wikipedia.org/wiki/Swatch_Internet_Time)
+	 * This is a method of time-keeping that eliminates leap-years, leap-seconds, timezones, daylight savings,
+	 * non-decimal units, and all of the other inconsistencies and annoyances which you normally have to deal
+	 * with when working with times.
+	 */
+	public function testSwatchInternetTime() {
+
+		// @todo Because this method of time-keeping has not been widely adopted,
+		// I don't feel it is a real priority at the moment, but it's something I do intend to implement eventually
+
+	}
+	/**
+	 * @todo Look into the leap-second and what this class needs to do to support it
+	 */
+	public function testLeapSecond() {
+
+		// coming soon!
+
+	}
+	/**
 	 * @todo Look into leap-seconds (right above 4.3.6 in the spec)
 	 */
 
