@@ -30,7 +30,7 @@ function pre($var) {
  * Define the autoload function so that classes get loaded automatically in testing
  * I may eventually try to work out some type of autoload solution in the library but im not sure
  * of the implications as of yet.
- */
+
 function __autoload($className) {
 	$paths = explode(PATH_SEPARATOR, get_include_path());
 	foreach ($paths as $path) {
@@ -43,3 +43,4 @@ function __autoload($className) {
 	    }
     }
 }
+ */

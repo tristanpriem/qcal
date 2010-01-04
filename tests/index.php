@@ -14,6 +14,9 @@ set_include_path(
 	TESTCLASS_PATH . PATH_SEPARATOR . 
     get_include_path()
 );
+
+// require autoloader
+require_once QCAL_PATH . '/autoload.php';
 // require convenience functions
 require_once 'convenience.php';
 // require necessary simpletest files
