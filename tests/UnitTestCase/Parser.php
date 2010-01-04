@@ -64,6 +64,7 @@ class UnitTestCase_Parser extends UnitTestCase {
 	 * which, if provided, will be used to search for the file that is provided in parseFile()
 	 * If no searchpath is provided, it will use the include path. Paths should be separated by
 	 * PATH_SEPARATOR.
+	 * @todo I think I want to change this to "search_path" instead of "searchpath"
 	 */
 	public function testParserAcceptsSearchPath() {
 	
@@ -83,6 +84,7 @@ class UnitTestCase_Parser extends UnitTestCase {
 		$parser->parseFile($filename);
 	
 	}
+	
 	/**
 	 * Tell the parser to ignore validation errors (things like valarm missing its action property)
 	 * @todo I will implement this if there is a need for it.
