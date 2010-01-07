@@ -1,28 +1,33 @@
 <?php
-// define path to simpletest here
-define('SIMPLETEST_PATH', realpath('./simpletest'));
-define('QCAL_PATH', realpath('../lib'));
-define('TESTCASE_PATH', realpath('../tests'));
-define('TESTFILE_PATH', realpath('../tests/files'));
-define('TESTCLASS_PATH', realpath('../tests/testclasses'));
+/**
+ * The config file defines the location of Simpletest, qCal's library files,
+ * the test classes, and the sample ics/ical files.
+ */
+require_once 'config.php';
+
+define('TESTCASE_PATH', dirname(__FILE__));
+define('TESTFILE_PATH', TESTCASE_PATH . '/files');
+define('TESTCLASS_PATH', TESTCASE_PATH . '/testclasses');
+define('DS', DIRECTORY_SEPARATOR);
+define('PS', PATH_SEPARATOR);
 
 // establish include path
 set_include_path(
-    SIMPLETEST_PATH . PATH_SEPARATOR .
-    QCAL_PATH . PATH_SEPARATOR .
-    TESTCASE_PATH . PATH_SEPARATOR .
-	TESTCLASS_PATH . PATH_SEPARATOR . 
+    SIMPLETEST_PATH . PS .
+    QCAL_PATH . PS .
+    TESTCASE_PATH . PS .
+	TESTCLASS_PATH . PS . 
     get_include_path()
 );
 
 // require autoloader
 require_once QCAL_PATH . '/autoload.php';
 // require convenience functions
-require_once 'convenience.php';
+require_once TESTCASE_PATH . '/convenience.php';
 // require necessary simpletest files
-require_once 'simpletest/unit_tester.php';
-require_once 'simpletest/reporter.php';
-require_once 'simpletest/mock_objects.php';
+require_once SIMPLETEST_PATH . '/unit_tester.php';
+require_once SIMPLETEST_PATH . '/reporter.php';
+require_once SIMPLETEST_PATH . '/mock_objects.php';
 
 // add tests cases to group and run the tests
 $test = new GroupTest('Core qCal Tests');
