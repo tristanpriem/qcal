@@ -25,7 +25,7 @@ class qCal_DateTime {
 	 * @var string The default string representation of datetime is a direct
 	 * correlation to the date function's "c" metacharacter
 	 */
-	protected $format = "Y-m-d\TH:i:s";
+	protected $format = "Y-m-d\TH:i:sP";
 	/**
 	 * Class constructor
 	 * @todo Make this default to "now"
@@ -116,14 +116,6 @@ class qCal_DateTime {
 	
 	}
 	/**
-	 * Get Timezone
-	 */
-	public function getTimezone() {
-	
-		return $this->time->getTimezone();
-	
-	}
-	/**
 	 * Get unix timestamp
 	 */
 	public function getUnixTimestamp($useOffset = true) {
@@ -164,6 +156,7 @@ class qCal_DateTime {
 	
 		$char = $this->date->format($char);
 		$char = $this->time->format($char);
+		$char = $this->time->getTimezone()->format($char);
 		return $char;
 	
 	}
