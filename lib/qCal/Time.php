@@ -53,11 +53,11 @@ class qCal_Time {
 		// the unix epoch so that we only have the amount of seconds since the zero of unix epoch
 		// we only use gm here because we don't want the server's timezone to interfere
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
+		$this->time = $time;
 		$formatString = "a|A|B|g|G|h|H|i|s|u";
 		$keys = explode("|", $formatString);
-		$vals = explode("|", gmdate($formatString, $time));
+		$vals = explode("|", gmdate($formatString, $this->getTimestamp(false)));
 		$this->timeArray = array_merge($this->timeArray, array_combine($keys, $vals));
-		$this->time = $time;
 		return $this;
 	
 	}
