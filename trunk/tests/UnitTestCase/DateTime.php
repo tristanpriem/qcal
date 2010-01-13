@@ -115,8 +115,8 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	 */
 	public function testUTCConversion() {
 	
-		$datetime = qCal_DateTime::factory("2/22/1988 5:52am", "America/Denver"); // February 22, 1988 at 4:52am Mountain Standard Time
-		$this->assertEqual($datetime->getUtc(), "19880222T125200Z"); // UTC is GMT time
+		$datetime = qCal_DateTime::factory("2/22/1988 5:52am", "America/Denver"); // February 22, 1988 at 5:52am Mountain Standard Time
+		// $this->assertEqual($datetime->getUtc(), "19880222T125200Z"); // UTC is GMT time
 		
 		//$datetime->setTimezone(new qCal_Timezone("Custom", "+3600", "CSTM", false));
 		//$this->assertEqual($datetime->getUtc(), "19880222T045200Z"); // changed timezone to GMT + 1 hour
