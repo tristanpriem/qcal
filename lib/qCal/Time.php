@@ -2,7 +2,8 @@
 class qCal_Time {
 
 	/**
-	 * Timestamp
+	 * Timestamp (represents time at GMT, so must have timezone's offest
+	 * applied before it will be accurate for your specified timezone)
 	 */
 	protected $time;
 	/**
@@ -19,11 +20,9 @@ class qCal_Time {
 	protected $timeArray = array();
 	/**
 	 * Class constructor
-	 * This component is immutable. It can only be created, not modified. The only portion of it that
-	 * can be modified is the timezone.
-	 * @todo Make this default to "now"
+	 * This component is immutable. It can only be created, not modified.
 	 */
-	public function __construct($hour, $minute, $second, $timezone = null, $rollover = null) {
+	public function __construct($hour = null, $minute = null, $second = null, $timezone = null, $rollover = null) {
 	
 		$this->setTimezone($timezone)
 			 ->setTime($hour, $minute, $second, $rollover);
@@ -33,8 +32,18 @@ class qCal_Time {
 	 * Set the time
 	 * @access protected This class is immutable, so this is protected. Only the constructor calls it.
 	 */
-	protected function setTime($hour, $minute, $second, $rollover = null) {
+	protected function setTime($hour = null, $minute = null, $second = null, $rollover = null) {
 	
+		
+		if (is_null($hour)) {
+			$hour = gmdate("H");
+		}
+		if (is_null($minute)) {
+			$minute = gmdate("i");
+		}
+		if (is_null($second)) {
+			$second = gmdate("s");
+		}
 		if (is_null($rollover)) $rollover = false;
 		if (!$rollover) {
 			if ($hour > 23 || $minute > 59 || $second > 59) {
@@ -44,12 +53,32 @@ class qCal_Time {
 		// since PHP is incapable of storing a time without a date, we use the first day of
 		// the unix epoch so that we only have the amount of seconds since the zero of unix epoch
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
+		$this->time = $time;
 		$formatString = "a|A|B|g|G|h|H|i|s|u";
 		$keys = explode("|", $formatString);
-		$vals = explode("|", gmdate($formatString, $time));
+		$vals = explode("|", gmdate($formatString, $this->time));
 		$this->timeArray = array_merge($this->timeArray, array_combine($keys, $vals));
-		$this->time = $time;
 		return $this;
+	
+	}
+	/**
+	 * Set the timezone
+	 */
+	protected function setTimezone($timezone) {
+	
+		if (is_null($timezone) || !($timezone instanceof qCal_Timezone)) {
+			$timezone = qCal_Timezone::factory($timezone);
+		}
+		$this->timezone = $timezone;
+		return $this;
+	
+	}
+	/**
+	 * Get the timezone
+	 */
+	public function getTimezone() {
+	
+		return $this->timezone;
 	
 	}
 	/**
@@ -108,35 +137,11 @@ class qCal_Time {
 	
 	}
 	/**
-	 * Set the timezone
-	 */
-	public function setTimezone($timezone) {
-	
-		if (is_null($timezone) || !($timezone instanceof qCal_Timezone)) {
-			$timezone = qCal_Timezone::factory($timezone);
-		}
-		$this->timezone = $timezone;
-		return $this;
-	
-	}
-	/**
-	 * Get the timezone
-	 */
-	public function getTimezone() {
-	
-		return $this->timezone;
-	
-	}
-	/**
 	 * Get the timestamp
-	 * @todo I'm not sure if this is supposed to subtract or add the offset... look into it...
 	 */
-	public function getTimestamp($useOffset = false) {
+	public function getTimestamp() {
 	
-		$offset = $this->getTimezone()->getOffsetSeconds();
-		return ($useOffset) ?
-			$this->time + $offset :
-			$this->time;
+		return $this->time;
 	
 	}
 	/**

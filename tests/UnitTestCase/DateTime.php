@@ -75,26 +75,12 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	}
 	 */
 	/**
-	 * Test that timezone can be changed after instantiation
-	 */
-	public function testTimezoneChangedAfterInstantiation() {
-	
-		$datetime = new qCal_DateTime(2010, 10, 10, 10, 10, 10, "Pacific/Tahiti"); // -10 hours
-		$this->assertEqual($datetime->getTimezone()->getName(), "Pacific/Tahiti");
-		$datetime->setTimezone("America/Los_Angeles");
-		$this->assertEqual($datetime->getTimezone()->getName(), "America/Los_Angeles");
-	
-	}
-	/**
 	 * Test that date/time can be converted to timestamp
 	 */
 	public function testTimestampConversion() {
 	
 		$datetime = qCal_DateTime::factory("03/20/1993 01:00:00pm", "America/Los_Angeles");
 		$this->assertEqual($datetime->getUnixTimestamp(), "732632400");
-		
-		// now get the timestamp WITH the timezone offset
-		$this->assertEqual($datetime->getUnixTimestamp(true), "732603600"); // - 8 hours
 	
 	}
 	/**
@@ -124,8 +110,8 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$datetime = qCal_DateTime::factory("2/22/1988 5:52am", "America/Denver"); // February 22, 1988 at 4:52am Mountain Standard Time
 		$this->assertEqual($datetime->getUtc(), "19880222T125200Z"); // UTC is GMT time
 		
-		$datetime->setTimezone(new qCal_Timezone("Custom", "+3600", "CSTM", false));
-		$this->assertEqual($datetime->getUtc(), "19880222T045200Z"); // changed timezone to GMT + 1 hour
+		//$datetime->setTimezone(new qCal_Timezone("Custom", "+3600", "CSTM", false));
+		//$this->assertEqual($datetime->getUtc(), "19880222T045200Z"); // changed timezone to GMT + 1 hour
 	
 	}
 	/**

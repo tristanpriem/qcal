@@ -100,14 +100,6 @@ class qCal_DateTime {
 	
 	}
 	/**
-	 * Set the timezone
-	 */
-	public function setTimezone($timezone) {
-	
-		$this->time->setTimezone($timezone);
-	
-	}
-	/**
 	 * Get Year
 	 */
 	public function getYear() {
