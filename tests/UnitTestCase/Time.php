@@ -23,8 +23,14 @@ class UnitTestCase_Time extends UnitTestCase {
 		// when the server's timezone is set to the same timezone
 		// and return 10:30
 		$time = new qCal_Time(10, 30, 0, "America/Los_Angeles");
-		$this->assertEqual(date("H:i", $time->getTimestamp(true)), "18:30"); // timestamp in GMT
+		date_default_timezone_set("America/Los_Angeles");
+		$this->assertEqual(gmdate("H:i", $time->getTimestamp(true)), "10:30"); // timestamp in GMT
 		$this->assertEqual(date("H:i", $time->getTimestamp(false)), "10:30"); // timestamp in America/Los_Angeles
+		
+		date_default_timezone_set("GMT");
+		$time = new qCal_Time(12, 45, 0, "GMT");
+		$this->assertEqual(gmdate("H:i", $time->getTimestamp(true)), "12:45");
+		$this->assertEqual(date("H:i", $time->getTimestamp(false)), "12:45");
 		
 		date_default_timezone_set($defaultTz);
 	
