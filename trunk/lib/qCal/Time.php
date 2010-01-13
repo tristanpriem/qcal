@@ -51,12 +51,13 @@ class qCal_Time {
 		}
 		// since PHP is incapable of storing a time without a date, we use the first day of
 		// the unix epoch so that we only have the amount of seconds since the zero of unix epoch
+		// we only use gm here because we don't want the server's timezone to interfere
 		$time = gmmktime($hour, $minute, $second, 1, 1, 1970);
-		$this->time = $time; // this should be the time specified, but in GMT
 		$formatString = "a|A|B|g|G|h|H|i|s|u";
 		$keys = explode("|", $formatString);
-		$vals = explode("|", gmdate($formatString, $this->time));
+		$vals = explode("|", gmdate($formatString, $time));
 		$this->timeArray = array_merge($this->timeArray, array_combine($keys, $vals));
+		$this->time = $time;
 		return $this;
 	
 	}
@@ -139,11 +140,11 @@ class qCal_Time {
 	/**
 	 * Get the timestamp
 	 */
-	public function getTimestamp($gmt = false) {
+	public function getTimestamp($useOffset = true) {
 	
-		$time = ($gmt) ?
-			$this->time : 
-			$this->time - $this->getTimezone()->getOffsetSeconds();
+		$time = ($useOffset) ?
+			$this->time - $this->getTimezone()->getOffsetSeconds() : 
+			$this->time;
 		return $time;
 	
 	}
