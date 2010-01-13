@@ -80,13 +80,19 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	public function testTimestampConversion() {
 	
 		$datetime = qCal_DateTime::factory("03/20/1993 01:00:00pm", "America/Los_Angeles");
-		// $this->assertEqual(gmdate("g:i:sa", $datetime->getUnixTimestamp(true)), "1:00:00pm");
-		// $this->assertEqual(gmdate("g:i:sa", $datetime->getUnixTimestamp(false)), "9:00:00pm");
+		// this will result in the time specified above plus 8 hours because the tz offset is -8
+		$this->assertEqual(gmdate("g:i:sa", $datetime->getUnixTimestamp(true)), "9:00:00pm");
+		// this will result in the time specified above
+		$this->assertEqual(gmdate("g:i:sa", $datetime->getUnixTimestamp(false)), "1:00:00pm");
 		
 		$defaultTz = date_default_timezone_get();
 		
 		date_default_timezone_set("America/Los_Angeles");
-		// $this->assertEqual(date("g:i", $datetime->getUnixTimestamp(false)), "9:00");
+		// this will result in the time specified above because date adjusts the timestamp that is returned
+		$this->assertEqual(date("g:i", $datetime->getUnixTimestamp()), "1:00");
+		
+		date_default_timezone_set("GMT");
+		$this->assertEqual(date("H:i", $datetime->getUnixTimestamp()), "21:00");
 		
 		date_default_timezone_set($defaultTz);
 	
@@ -115,11 +121,9 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	 */
 	public function testUTCConversion() {
 	
-		$datetime = qCal_DateTime::factory("2/22/1988 5:52am", "America/Denver"); // February 22, 1988 at 5:52am Mountain Standard Time
-		// $this->assertEqual($datetime->getUtc(), "19880222T125200Z"); // UTC is GMT time
-		
-		//$datetime->setTimezone(new qCal_Timezone("Custom", "+3600", "CSTM", false));
-		//$this->assertEqual($datetime->getUtc(), "19880222T045200Z"); // changed timezone to GMT + 1 hour
+		$datetime = qCal_DateTime::factory("2/22/1988 5:52am", "America/Denver"); // February 22, 1988 at 5:52am Mountain Standard Time (-7 hours)
+		// UTC is GMT time, which means that the result of this should be the time specified plus seven hours
+		$this->assertEqual($datetime->getUtc(), "19880222T125200Z");
 	
 	}
 	/**
