@@ -24,12 +24,25 @@ class UnitTestCase_Time extends UnitTestCase {
 		// and return 10:30
 		$time = new qCal_Time(10, 30, 0, "America/Los_Angeles");
 		date_default_timezone_set("America/Los_Angeles");
-		$this->assertEqual(gmdate("H:i", $time->getTimestamp(true)), "10:30"); // timestamp in GMT
-		$this->assertEqual(date("H:i", $time->getTimestamp(false)), "10:30"); // timestamp in America/Los_Angeles
+		$this->assertEqual($time->getHour(), "10");
+		
+		// gmdate() doesn't apply any offset to the timestamp, so I use it here so that
+		// we don't have to worry about its effect on the timestamp
+		// getTimestamp() should return a timestamp that is GMT 10:30 + 8 hours
+		// because then if you call date() with the server's timezone set to -8 hours, it will be correct
+		$this->assertEqual(gmdate("H:i", $time->getTimestamp()), "18:30");
+		$this->assertEqual(date("H:i", $time->getTimestamp()), "10:30");
+		
+		// date() subtracts 8 hours from the timestamp
+		// getTimestamp(false) returns the timestamp without any adjustment (so 10:30 GMT)
+		// so calling date() with getTimestamp(false) should result in the time minus 8 hours
+		// calling gmdate() with getTimestamp(false) should result in the time without any adjustment
+		$this->assertEqual(date("H:i", $time->getTimestamp(false)), "02:30");
+		$this->assertEqual(gmdate("H:i", $time->getTimestamp(false)), "10:30");
 		
 		date_default_timezone_set("GMT");
 		$time = new qCal_Time(12, 45, 0, "GMT");
-		$this->assertEqual(gmdate("H:i", $time->getTimestamp(true)), "12:45");
+		$this->assertEqual(date("H:i", $time->getTimestamp(true)), "12:45");
 		$this->assertEqual(date("H:i", $time->getTimestamp(false)), "12:45");
 		
 		date_default_timezone_set($defaultTz);

@@ -158,9 +158,9 @@ class qCal_DateTime {
 	/**
 	 * Get unix timestamp
 	 */
-	public function getUnixTimestamp($useOffset = false) {
+	public function getUnixTimestamp($gmt = false) {
 	
-		return $this->date->getUnixTimestamp() + $this->time->getTimestamp($useOffset);
+		return $this->date->getUnixTimestamp() + $this->time->getTimestamp($gmt);
 	
 	}
 	/**
