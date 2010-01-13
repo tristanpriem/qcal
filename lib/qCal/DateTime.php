@@ -31,7 +31,7 @@ class qCal_DateTime {
 	 * @todo Make this default to "now"
 	 * @todo It is possible that the timezone could put the date back (or forward?) a day. This does not account for that
 	 */
-	public function __construct($year, $month, $day, $hour, $minute, $second, $timezone = null, $rollover = null) {
+	public function __construct($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $timezone = null, $rollover = null) {
 	
 		$date = new qCal_Date($year, $month, $day, $rollover);
 		$time = new qCal_Time($hour, $minute, $second, $timezone, $rollover);
