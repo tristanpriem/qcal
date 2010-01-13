@@ -34,7 +34,6 @@ class qCal_Time {
 	 */
 	protected function setTime($hour = null, $minute = null, $second = null, $rollover = null) {
 	
-		
 		if (is_null($hour)) {
 			$hour = gmdate("H");
 		}
@@ -96,6 +95,7 @@ class qCal_Time {
 		
 		if (is_integer($time)) {
 			// @todo Handle timestamps
+			// @maybe not...
 		}
 		if (is_string($time)) {
 			$tstring = "01/01/1970 $time";
@@ -139,9 +139,12 @@ class qCal_Time {
 	/**
 	 * Get the timestamp
 	 */
-	public function getTimestamp() {
+	public function getTimestamp($gmt = false) {
 	
-		return $this->time;
+		$time = ($gmt) ?
+			$this->time - $this->getTimezone()->getOffsetSeconds() : 
+			$this->time;
+		return $time;
 	
 	}
 	/**

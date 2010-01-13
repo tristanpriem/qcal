@@ -10,7 +10,23 @@ class UnitTestCase_Time extends UnitTestCase {
 		// $time->setTimezone("America/Los_Angeles");
 		// pr($time->format("H:i:s"));
 		// pr($time->getHour());
+	
+	}
+	/**
+	 * Test that when you instantiate a time, it takes the timezone into account
+	 * when creating the timestamp.
+	 */
+	public function testTimezoneAffectsTimestamp() {
+	
+		$defaultTz = date_default_timezone_get();
+		// the timestamp for this should be able to be passed to date()
+		// when the server's timezone is set to the same timezone
+		// and return 10:30
+		$time = new qCal_Time(10, 30, 0, "America/Los_Angeles");
+		$this->assertEqual(date("H:i", $time->getTimestamp(true)), "18:30"); // timestamp in GMT
+		$this->assertEqual(date("H:i", $time->getTimestamp(false)), "10:30"); // timestamp in America/Los_Angeles
 		
+		date_default_timezone_set($defaultTz);
 	
 	}
 	/**
