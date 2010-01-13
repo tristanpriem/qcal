@@ -33,13 +33,13 @@ class UnitTestCase_DateTime extends UnitTestCase {
 		$timezone = "America/Los_Angeles";
 		$rollover = false;
 		$datetime = new qCal_DateTime($year, $month, $day, $hour, $minute, $second, $timezone, $rollover); // 4/23/2009 at 12:30:00
-		$this->assertEqual($datetime->getYear(), $year);
-		$this->assertEqual($datetime->getMonth(), $month);
-		$this->assertEqual($datetime->getDay(), $day);
-		$this->assertEqual($datetime->getHour(), $hour);
-		$this->assertEqual($datetime->getMinute(), $minute);
-		$this->assertEqual($datetime->getSecond(), $second);
-		$this->assertEqual($datetime->getTimezone()->getName(), $timezone);
+		$this->assertEqual($datetime->getDate()->getYear(), $year);
+		$this->assertEqual($datetime->getDate()->getMonth(), $month);
+		$this->assertEqual($datetime->getDate()->getDay(), $day);
+		$this->assertEqual($datetime->getTime()->getHour(), $hour);
+		$this->assertEqual($datetime->getTime()->getMinute(), $minute);
+		$this->assertEqual($datetime->getTime()->getSecond(), $second);
+		$this->assertEqual($datetime->getTime()->getTimezone()->getName(), $timezone);
 	
 	}
 	/**
@@ -48,12 +48,12 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	public function testFactoryMethod() {
 	
 		$datetime = qCal_DateTime::factory("03/20/1990 10:00:00pm");
-		$this->assertEqual($datetime->getYear(), 1990);
-		$this->assertEqual($datetime->getMonth(), 3);
-		$this->assertEqual($datetime->getDay(), 20);
-		$this->assertEqual($datetime->getHour(), 22);
-		$this->assertEqual($datetime->getMinute(), 0);
-		$this->assertEqual($datetime->getSecond(), 0);
+		$this->assertEqual($datetime->getDate()->getYear(), 1990);
+		$this->assertEqual($datetime->getDate()->getMonth(), 3);
+		$this->assertEqual($datetime->getDate()->getDay(), 20);
+		$this->assertEqual($datetime->getTime()->getHour(), 22);
+		$this->assertEqual($datetime->getTime()->getMinute(), 0);
+		$this->assertEqual($datetime->getTime()->getSecond(), 0);
 	
 	}
 	/**

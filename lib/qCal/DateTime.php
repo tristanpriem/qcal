@@ -100,51 +100,19 @@ class qCal_DateTime {
 	
 	}
 	/**
-	 * Get Year
+	 * Get time portion as object
 	 */
-	public function getYear() {
+	public function getTime() {
 	
-		return $this->date->getYear();
+		return $this->time;
 	
 	}
 	/**
-	 * Get Month
+	 * Get date portion as object
 	 */
-	public function getMonth() {
+	public function getDate() {
 	
-		return $this->date->getMonth();
-	
-	}
-	/**
-	 * Get Day
-	 */
-	public function getDay() {
-	
-		return $this->date->getDay();
-	
-	}
-	/**
-	 * Get Hour
-	 */
-	public function getHour() {
-	
-		return $this->time->getHour();
-	
-	}
-	/**
-	 * Get Minute
-	 */
-	public function getMinute() {
-	
-		return $this->time->getMinute();
-	
-	}
-	/**
-	 * Get Second
-	 */
-	public function getSecond() {
-	
-		return $this->time->getSecond();
+		return $this->date;
 	
 	}
 	/**
