@@ -85,7 +85,7 @@ class UnitTestCase_SprintOne extends UnitTestCase {
 	public function testHowManyMonthsLeftInTheYear() {
 	
 		$date = new qCal_Date(2010, 10, 23);
-		$this->assertEqual($date->getMonthsUntilEndOfYear(), 2);
+		$this->assertEqual($date->getNumMonthsUntilEndOfYear(), 2);
 	
 	}
 	

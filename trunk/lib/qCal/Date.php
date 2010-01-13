@@ -84,7 +84,7 @@ class qCal_Date {
 	 * @param int The day of this date
 	 * @throws qCal_Date_Exception_InvalidDate
 	 */
-	public function setDate($year = null, $month = null, $day = null, $rollover = false) {
+	protected function setDate($year = null, $month = null, $day = null, $rollover = false) {
 	
 		$now = getdate();
 		if (is_null($year)) {
@@ -227,7 +227,7 @@ class qCal_Date {
 	 * Get how many months until the end of the year
 	 * @todo This is really rudimentary. There is more to this, but this works for now...
 	 */
-	public function getMonthsUntilEndOfYear() {
+	public function getNumMonthsUntilEndOfYear() {
 	
 		return 12 - $this->getMonth();
 	
@@ -350,8 +350,10 @@ class qCal_Date {
 	/**
 	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
 	 * beginning or end of the month.
-	 * @param boolean If false, the counting starts from the beginning of the month, otherwise
-	 * it starts from the end of the month.
+	 * @param integer $xth A positive or negative number that determines which weekday of the month we want
+	 * @param string|integer $weekday Either Sunday-Saturday or 0-6 to specify the weekday we want
+	 * @param string|integer $month Either January-December or 1-12 to specify the month we want
+	 * @param integer $year A valid year to specify which year we want
 	 */
 	public function getXthWeekdayOfMonth($xth, $weekday = null, $month = null, $year = null) {
 	
@@ -462,8 +464,6 @@ class qCal_Date {
 	/**
 	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
 	 * beginning or end of the year.
-	 * @param boolean If false, the counting starts from the beginning of the year, otherwise
-	 * it starts from the end of the year.
 	 */
 	public function getXthWeekdayOfYear($xth, $weekday = null, $year = null) {
 	
