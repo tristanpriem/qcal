@@ -102,8 +102,8 @@ class UnitTestCase_DateTime extends UnitTestCase {
 	 */
 	public function testStringOutput() {
 	
-		$dt = new qCal_DateTime(2000, 10, 1, 5, 0, 0);
-		$this->assertEqual($dt->__toString(), "2000-10-01T05:00:00");
+		$dt = new qCal_DateTime(2000, 10, 1, 5, 0, 0, "America/Los_Angeles");
+		$this->assertEqual($dt->__toString(), "2000-10-01T05:00:00-08:00");
 	
 	}
 	/**
