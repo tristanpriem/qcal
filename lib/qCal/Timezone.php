@@ -18,6 +18,10 @@ class qCal_Timezone {
 	/**
 	 * Class constructor
 	 * A timezone must have a name, offset (in seconds), and optionsally an abbreviation. Daylight savings defaults to false.
+	 * @todo When $abbreviation isn't specified, and $name is a valid pre-defined PHP timezone identifier, use its
+	 * 		 corresponding abbreviation rather than the name itself
+	 * @todo When $offset isn't provided and $name is a valid timezone, use its corresponding offset, but if $name is not
+	 * 		 a valid timezone identifier and no offset is provided, throw an exception
 	 */
 	public function __construct($name, $offset, $abbreviation = null, $daylightsavings = null) {
 	

@@ -58,5 +58,19 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 		$this->assertEqual($datetime->getUtc(true), "2009-10-31T18:30:00Z");
 	
 	}
+	
+	/**
+	 * Test qCal_Timezone examples
+	 */
+	public function testTimezoneToStringOutput() {
+	
+		$tz = new qCal_Timezone("America/Los_Angeles", -28800, "PST");
+		$tz->setFormat("T P");
+		$this->assertEqual($tz->__toString(), "PST -08:00");
+		
+		$tz->setFormat("Z"); 
+		$this->assertEqual($tz->__toString(), "-28800");
+	
+	}
 
 }
