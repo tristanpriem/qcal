@@ -171,9 +171,10 @@ class qCal_DateTime {
 	/**
 	 * Get date/time as UTC
 	 */
-	public function getUtc() {
+	public function getUtc($humanReadable = false) {
 	
-		return gmdate("Ymd", $this->date->getUnixTimestamp()) . gmdate("\THis\Z", $this->time->getTimestamp());
+		if ($humanReadable) return gmdate('Y-m-d', $this->date->getUnixTimestamp()) . gmdate('\TH:i:s\Z', $this->time->getTimestamp());
+		else return gmdate('Ymd', $this->date->getUnixTimestamp()) . gmdate('\THis\Z', $this->time->getTimestamp());
 	
 	}
 
