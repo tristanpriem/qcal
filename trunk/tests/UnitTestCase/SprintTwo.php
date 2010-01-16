@@ -17,6 +17,10 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	 * The following are tests for all of the examples in the documentation
 	 */
 	
+	/**
+	 * qCal_Date example tests
+	 */
+	
 	public function testDateInstantiationDocumentationExamples() {
 	
 		$date1 = new qCal_Date(2010, 1, 10); // results in January 10th, 2010
@@ -45,6 +49,36 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 
 		$date->setFormat('l, F \the jS, Y'); 
 		//echo $date; // outputs "Sunday, January the 10th, 2010"
+	
+	}
+	
+	public function testDateGetXthWeekdayOfMonthExamples() {
+	
+		$date = new qCal_Date(2010, 1, 10); // Sunday, January 10th, 2010
+		
+		$first_sunday_in_january = $date->getXthWeekdayOfMonth(1); // will return a qCal_Date object for January 3rd, 2010
+		$this->assertEqual($first_sunday_in_january->__toString(), "01/03/2010");
+		
+		$first_tuesday_in_january = $date->getXthWeekdayOfMonth(1, "tuesday"); // will return a qCal_Date object for January 5th, 2010
+		$this->assertEqual($first_tuesday_in_january->__toString(), "01/05/2010");
+		
+		$second_to_last_wednesday_in_january = $date->getXthWeekdayOfMonth(-2, "wednesday"); // will return a qCal_Date object for January 20th, 2010
+		$this->assertEqual($second_to_last_wednesday_in_january->__toString(), "01/20/2010");
+		
+		$second_monday_in_february = $date->getXthWeekdayOfMonth(2, 1, 2); // will return qCal_Date object for February 8th, 2010
+		$this->assertEqual($second_monday_in_february->__toString(), "02/08/2010");
+		
+		$second_monday_in_february = $date->getXthWeekdayOfMonth(2, "monday", "february"); // the previous example could also be done like this
+		$this->assertEqual($second_monday_in_february->__toString(), "02/08/2010");
+		
+		$last_sunday_in_august = $date->getXthWeekdayOfMonth(-1, "sunday", "august"); // will return qCal_Date object for August 29th, 2010
+		$this->assertEqual($last_sunday_in_august->__toString(), "08/29/2010");
+		
+		$last_sunday_in_december_2011 = $date->getXthWeekdayOfMonth(-1, "sunday", "december", 2011); // will return qCal_Date object for December 25th, 2011
+		$this->assertEqual($last_sunday_in_december_2011->__toString(), "12/25/2011");
+		
+		$first_sunday_in_january_2012 = $date->getXthWeekdayOfMonth(1, 0, 1, 2012); // will return qCal_Date object for January 1st, 2012
+		$this->assertEqual($first_sunday_in_january_2012->__toString(), "01/01/2012");
 	
 	}
 	
