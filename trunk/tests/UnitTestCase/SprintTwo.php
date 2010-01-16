@@ -201,6 +201,11 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 
 		$datetime->setFormat("H"); 
 		$this->assertEqual($datetime->__toString(), "15"); // outputs "15"
+		
+		$datetime = new qCal_DateTime(2010, 11, 10, 6, 30, 0, "GMT");
+		$string = $datetime->format("H:i");
+		$this->assertEqual($datetime->__toString(), "2010-11-10T06:30:00+00:00"); // still outputs "2010-11-10T06:30:00+00:00" because we did not call setFormat()
+		$this->assertEqual($string, "06:30"); // outputs "06:30"
 	
 	}
 	
