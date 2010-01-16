@@ -132,6 +132,24 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	/**
 	 * Test qCal_Timezone examples
 	 */
+	
+	public function testFactoryExamples() {
+	
+		$gmt = qCal_Timezone::factory("GMT"); // will result in Greenwich Mean Time
+		$this->assertEqual($gmt->getOffsetSeconds(), 0);
+		
+		$la = qCal_Timezone::factory("America/Los_Angeles"); // will result in timezone for America/Los_Angeles, which is eight hours behind UTC
+		$this->assertEqual($la->getOffsetSeconds(), -28800);
+		
+		$eastern = qCal_Timezone::factory("US/Eastern"); // will result in the timezone for Eastern Standard Time, which is five hours behind UTC
+		$this->assertEqual($eastern->getOffsetSeconds(), (3600 * -5));
+		
+		$defaultTZ = qCal_Timezone::factory(); // will result in whatever timezone your server is currently set to
+		$dfOffset = date("Z");
+		$this->assertEqual($gmt->getOffsetSeconds(), $dfOffset);
+	
+	}
+	
 	public function testTimezoneToStringOutput() {
 	
 		$tz = new qCal_Timezone("America/Los_Angeles", -28800, "PST");
