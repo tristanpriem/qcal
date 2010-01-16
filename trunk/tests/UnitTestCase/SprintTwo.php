@@ -190,6 +190,20 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	
 	}
 	
+	public function testDateTimeConvertToString() {
+	
+		$datetime = new qCal_DateTime(2010, 1, 12, 4, 30, 0, "America/Los_Angeles");
+		$this->assertEqual($datetime->__toString(), "2010-01-12T04:30:00-08:00"); // will output "2010-01-12T04:00:00-08:00"
+		
+		$datetime = new qCal_DateTime(2010, 12, 10, 15, 30, 0, "GMT");
+		$datetime->setFormat('m/d/Y \a\t g:ia');
+		$this->assertEqual($datetime->__toString(), "12/10/2010 at 3:30pm"); // outputs "12/10/2010 at 3:30pm"
+
+		$datetime->setFormat("H"); 
+		$this->assertEqual($datetime->__toString(), "15"); // outputs "15"
+	
+	}
+	
 	public function testGetUtc() {
 	
 		$datetime = new qCal_DateTime(2009, 10, 31, 10, 30, 0, "America/Los_Angeles");
