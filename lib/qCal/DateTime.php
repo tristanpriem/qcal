@@ -124,6 +124,15 @@ class qCal_DateTime {
 	
 	}
 	/**
+	 * Set the format to use when outputting as a string
+	 */
+	public function setFormat($format) {
+	
+		$this->format = (string) $format;
+		return $this;
+	
+	}
+	/**
 	 * Format the date/time using PHP's date() function's meta-characters
 	 * @todo It's obvious I need to find a better solution to formatting since I have repeated this method
 	 * in three classes now...
