@@ -106,6 +106,18 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	
 	}
 	
+	public function testGetFirstAndLastDayOfMonth() {
+	
+		$date = new qCal_Date(2010, 1, 10);
+		$first = $date->getFirstDayOfMonth(); // will return a qCal_Date object for January 1st, 2010
+		$this->assertEqual($first->__toString(), "01/01/2010");
+		
+		$date = new qCal_Date(2010, 1, 10);
+		$last = $date->getLastDayOfMonth(); // will return a qCal_Date object for January 31st, 2010
+		$this->assertEqual($last->__toString(), "01/31/2010");
+	
+	}
+	
 	/**
 	 * Test qCal_DateTime examples
 	 */
