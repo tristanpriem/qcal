@@ -119,6 +119,23 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	}
 	
 	/**
+	 * Test qCal_Time examples
+	 */
+	
+	public function testTimeConstructor() {
+	
+		$time = new qCal_Time(10, 30, 0, "GMT"); // will result in an object for 10:30:00am GMT
+		$this->assertEqual($time->__toString(), "10:30:00");
+		
+		$time = new qCal_Time(23, 0, 0, new qCal_Timezone("Custom_Timezone", -3600)); // will result in an object for 11:00:00pm with a custom timezone
+		$this->assertEqual($time->__toString(), "23:00:00");
+		
+		$time = new qCal_Time(5, 70, 0, null, true); // will result in 6:10:00 using the server's default timezone
+		$this->assertEqual($time->__toString(), "06:10:00");
+	
+	}
+	
+	/**
 	 * Test qCal_DateTime examples
 	 */
 	public function testGetUtc() {
