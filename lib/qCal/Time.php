@@ -99,18 +99,23 @@ class qCal_Time {
 			// @maybe not...
 		}
 		if (is_string($time)) {
-			$tstring = "01/01/1970 $time";
-			if (!$timestamp = strtotime($tstring)) {
-				// if unix timestamp can't be created throw an exception
-				throw new qCal_DateTime_Exception_InvalidTime("Invalid or ambiguous time string passed to qCal_Time::factory()");
+			if ($time == "now") {
+				$time = new qCal_Time(null, null, null, $timezone);
+			} else {
+				$tstring = "01/01/1970 $time";
+				if (!$timestamp = strtotime($tstring)) {
+					// if unix timestamp can't be created throw an exception
+					throw new qCal_DateTime_Exception_InvalidTime("Invalid or ambiguous time string passed to qCal_Time::factory()");
+				}
+				list($hour, $minute, $second) = explode(":", gmdate("H:i:s", $timestamp));
+				$time = new qCal_Time($hour, $minute, $second, $timezone);
 			}
 		}
-		list($hour, $minute, $second) = explode(":", gmdate("H:i:s", $timestamp));
 		
 		// set the timezone back to what it was
 		date_default_timezone_set($tz);
 		
-		return new qCal_Time($hour, $minute, $second, $timezone);
+		return $time;
 	
 	}
 	/**
