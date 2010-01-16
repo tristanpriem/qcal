@@ -126,12 +126,25 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	
 		$time = new qCal_Time(10, 30, 0, "GMT"); // will result in an object for 10:30:00am GMT
 		$this->assertEqual($time->__toString(), "10:30:00");
+		$this->assertEqual($time->getTimezone()->getName(), "GMT");
 		
 		$time = new qCal_Time(23, 0, 0, new qCal_Timezone("Custom_Timezone", -3600)); // will result in an object for 11:00:00pm with a custom timezone
 		$this->assertEqual($time->__toString(), "23:00:00");
+		$this->assertEqual($time->getTimezone()->getName(), "Custom_Timezone");
 		
 		$time = new qCal_Time(5, 70, 0, null, true); // will result in 6:10:00 using the server's default timezone
 		$this->assertEqual($time->__toString(), "06:10:00");
+		$this->assertEqual($time->getTimezone()->getName(), date_default_timezone_get());
+	
+	}
+	
+	public function testTimeFactory() {
+	
+		$time1 = qCal_Time::factory("4:00"); // will result in 4:00am using the server's timezone
+		$this->assertEqual($time1->__toString(), "04:00:00");
+		
+		$time2 = qCal_Time::factory("tomorrow", "GMT"); // will result in whatever tomorrow's date is in GMT
+		$time3 = qCal_Time::factory("now", "America/Los_Angeles"); // will result in the current time in America/Los_Angeles
 	
 	}
 	
