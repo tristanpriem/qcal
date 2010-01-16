@@ -148,9 +148,48 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	
 	}
 	
+	public function testTimeToString() {
+	
+		$time = new qCal_Time(4, 0, 0);
+		$this->assertEqual($time->__toString(), "04:00:00"); // will output "04:00:00"
+		
+		$time = new qCal_Time(15, 30, 30);
+		$time->setFormat("g:ia");
+		$this->assertEqual($time->__toString(), "3:30pm"); // outputs "3:30pm"
+
+		$time->setFormat("H");
+		$this->assertEqual($time->__toString(), "15"); // outputs "15"
+		
+		$time = new qCal_Time(6, 30, 0);
+		$string = $time->format("H:i");
+		$this->assertEqual($time->__toString(), "06:30:00"); // still outputs "06:30:00" because we did not call setFormat()
+		$this->assertEqual($string, "06:30"); // outputs "06:30"
+	
+	}
+	
 	/**
 	 * Test qCal_DateTime examples
 	 */
+	
+	public function testDateTimeFactory() {
+	
+		$datetime1 = qCal_DateTime::factory("January 21st, 2010 3pm", "GMT");
+		$this->assertEqual($datetime1->__toString(), "2010-01-21T15:00:00+00:00");
+		
+		// this is not very easy to test...
+		// $datetime2 = qCal_DateTime::factory("noon tomorrow"); // will result in whatever tomorrow's date is and at noon
+		
+		// nor is this
+		// $datetime3 = qCal_DateTime::factory("now"); // will result in today's date and time
+		
+		// nor is this
+		// $datetime4 = qCal_DateTime::factory(time()); // will result in today's date and time
+		
+		$datetime5 = qCal_DateTime::factory("October 1st, 2009 9am", "America/Los_Angeles"); // will result in October 1st, 2009 at 9am in America/Los_Angeles time
+		$this->assertEqual($datetime5->__toString(), "2009-10-01T09:00:00-08:00");
+	
+	}
+	
 	public function testGetUtc() {
 	
 		$datetime = new qCal_DateTime(2009, 10, 31, 10, 30, 0, "America/Los_Angeles");
