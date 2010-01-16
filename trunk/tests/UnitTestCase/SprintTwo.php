@@ -82,6 +82,30 @@ class UnitTestCase_SprintTwo extends UnitTestCase {
 	
 	}
 	
+	public function testDateGetXthWeekdayOfYearExamples() {
+	
+		$date = new qCal_Date(2010, 1, 10); // Sunday, January 10th, 2010
+		
+		$first_sunday_of_year = $date->getXthWeekdayOfYear(1); // will return a qCal_Date object for January 3rd, 2010
+		$this->assertEqual($first_sunday_of_year->__toString(), "01/03/2010");
+		
+		$first_monday_of_the_year = $date->getXthWeekdayOfYear(1, "monday"); // will return a qCal_Date object for January 4th, 2010
+		$this->assertEqual($first_monday_of_the_year->__toString(), "01/04/2010");
+		
+		$last_monday_of_the_year = $date->getXthWeekdayOfYear(-1, "monday"); // will return a qCal_Date object for December 27th, 2010
+		$this->assertEqual($last_monday_of_the_year->__toString(), "12/27/2010");
+		
+		$thirtieth_sunday_of_the_year = $date->getXthWeekdayOfYear(30, 0); // will return a qCal_Date object for July 25th, 2010
+		$this->assertEqual($thirtieth_sunday_of_the_year->__toString(), "07/25/2010");
+		
+		$thirtieth_sunday_of_the_year = $date->getXthWeekdayOfYear(30, "sunday"); // the previous example could also be done like this
+		$this->assertEqual($thirtieth_sunday_of_the_year->__toString(), "07/25/2010");
+		
+		$tenth_monday_of_2012 = $date->getXthWeekdayOfYear(10, "monday", 2012); // will return a qCal_Date object for March 5th, 2012
+		$this->assertEqual($tenth_monday_of_2012->__toString(), "03/05/2012");
+	
+	}
+	
 	/**
 	 * Test qCal_DateTime examples
 	 */
