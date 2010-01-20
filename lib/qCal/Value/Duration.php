@@ -60,7 +60,7 @@ class qCal_Value_Duration extends qCal_Value {
 	 */
 	protected function doCast($value) {
 	
-		return new qCal_DateTime_Duration($value);
+		return qCal_DateTime_Duration::factory($value);
 	
 	}
 

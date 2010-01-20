@@ -79,7 +79,7 @@ class qCal_Value_Period extends qCal_Value {
 			// within the qCal_Date subcomponent
 			// also, there is a difference in a period and a duration in that if you say start on feb 26 and end on march 2
 			// that will be a different "duration" depending on the year. that goes for months with alternate amounts of days too
-			$duration = new qCal_DateTime_Duration($parts[1]);
+			$duration = qCal_DateTime_Duration::factory($parts[1]);
 			$end = qCal_DateTime::factory($start->getUnixTimestamp() + $duration->getSeconds()); // @todo This needs to be updated once qCal_DateTime accepts timestamps 
 		}
 		return new qCal_DateTime_Period($start, $end);
