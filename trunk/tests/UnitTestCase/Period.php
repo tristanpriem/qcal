@@ -32,5 +32,12 @@ class UnitTestCase_Period extends UnitTestCase {
 		$this->assertEqual($period->getEnd(), new qCal_DateTime(2009, 5, 14, 18, 0, 0));
 	
 	}
+	
+	public function testToDuration() {
+	
+		$period = new qCal_DateTime_Period("2009-04-23 12:00", "2009-05-14 12:00");
+		$this->assertEqual($period->toDuration(), new qCal_DateTime_Duration(array("weeks" => 3)));
+	
+	}
 
 }
