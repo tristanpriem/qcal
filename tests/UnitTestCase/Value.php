@@ -180,7 +180,7 @@ class UnitTestCase_Value extends UnitTestCase {
 	public function testRawDuration() {
 	
 		$value = new qCal_Value_Duration('P1W3DT2H3M45S');
-		$this->assertEqual($value->getValue(), new qCal_DateTime_Duration('P1W3DT2H3M45S')); // this is how many seconds are in the duration
+		$this->assertEqual($value->getValue(), qCal_DateTime_Duration::factory('P1W3DT2H3M45S')); // this is how many seconds are in the duration
 	
 	}
 	/**
