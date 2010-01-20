@@ -24,7 +24,12 @@ class qCal_DateTime_Period {
 			$start = qCal_DateTime::factory($start);
 		}
 		if (!($end instanceof qCal_DateTime)) {
-			$end = qCal_DateTime::factory($end);
+			if ($end instanceof qCal_DateTime_Duration) {
+				$endTS = $start->getUnixTimestamp() + $end->getSeconds();
+				$end = qCal_DateTime::factory($endTS);
+			} else {
+				$end = qCal_DateTime::factory($end);
+			}
 		}
 		$this->start = $start;
 		$this->end = $end;
@@ -40,6 +45,14 @@ class qCal_DateTime_Period {
 	public function getSeconds() {
 	
 		return $this->end->getUnixTimestamp() - $this->start->getUnixTimestamp();
+	
+	}
+	/**
+	 * Convert to a duration
+	 */
+	public function toDuration() {
+	
+		return new qCal_DateTime_Duration(array("seconds" => $this->getSeconds()));
 	
 	}
 	/**
