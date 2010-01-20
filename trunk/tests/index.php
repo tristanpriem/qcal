@@ -45,6 +45,8 @@ $test->addTestCase(new UnitTestCase_Value_Multi);
 $test->addTestCase(new UnitTestCase_Renderer);
 $test->addTestCase(new UnitTestCase_DateTime);
 $test->addTestCase(new UnitTestCase_Date);
+$test->addTestCase(new UnitTestCase_Duration);
+$test->addTestCase(new UnitTestCase_Period);
 $test->addTestCase(new UnitTestCase_Timezone);
 $test->addTestCase(new UnitTestCase_Time);
 $test->addTestCase(new UnitTestCase_Recur);
