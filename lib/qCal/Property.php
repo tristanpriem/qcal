@@ -222,6 +222,9 @@ abstract class qCal_Property {
 	
 		$name = strtoupper($name);
 		// if value param has been passed in, change the type of this property to its value
+		// @todo If there are other parameters that actually change the way the property
+		// behaves like this one, I think we're going to need to come up with a better
+		// way to handle parameters.
 		if ($name == "VALUE") {
 			$value = strtoupper($value);
 			$this->type = $value;
