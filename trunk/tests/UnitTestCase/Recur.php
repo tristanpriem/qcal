@@ -72,5 +72,18 @@ class UnitTestCase_Recur extends UnitTestCase {
 				 ->count(1000); // for a thousand occurrances
 	
 	}
+	
+	public function testInstantiate() {
+	
+		$yearly = new qCal_DateTime_Recur_Yearly("2008-01-01 12:00am");
+		$yearly->interval(2) // every other year
+			->byDay("SU,MO,TU") // on every sunday, monday and tuesday
+			->byMonth("1,3,5,7,9,11") // in every other month
+			->byHour("1") // at 1 o'clock
+			->byMinute("30") // make that at 1:30
+			->until("2012"); // until 2012
+		$this->assertIsA($yearly->getRecurrences(), "qCal_DateTime_Recur_Set");
+	
+	}
 
 }
