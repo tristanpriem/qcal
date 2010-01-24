@@ -90,6 +90,19 @@ abstract class qCal_DateTime_Recur {
 	
 	}
 	
+	public function bySecond($second = null) {
+	
+		if (is_null($second)) {
+			$second = $this->ruleset->getRule("Second");
+			if ($second instanceof qCal_DateTime_Recur_Rule_Second) return $second->__toString();
+			else return false;
+		}
+		$bysecond = new qCal_DateTime_Recur_Rule_Second($second);
+		$this->ruleset->addRule($bysecond);
+		return $this;
+	
+	}
+	
 	public function byMonth($month = null) {
 	
 		if (is_null($month)) {
@@ -112,6 +125,19 @@ abstract class qCal_DateTime_Recur {
 		}
 		$bymonthday = new qCal_DateTime_Recur_Rule_MonthDay($monthday);
 		$this->ruleset->addRule($bymonthday);
+		return $this;
+	
+	}
+	
+	public function byYearDay($yearday = null) {
+	
+		if (is_null($yearday)) {
+			$yearday = $this->ruleset->getRule("YearDay");
+			if ($yearday instanceof qCal_DateTime_Recur_Rule_YearDay) return $yearday->__toString();
+			else return false;
+		}
+		$byyearday = new qCal_DateTime_Recur_Rule_YearDay($yearday);
+		$this->ruleset->addRule($byyearday);
 		return $this;
 	
 	}
@@ -142,7 +168,7 @@ abstract class qCal_DateTime_Recur {
 	
 	}
 	
-	public function getRecurrences() {
+	public function getRecurrenceSet() {
 	
 		// generate the list of dates/times and create the following iterator
 		// another option would be to pass all of the appropriate information
@@ -151,5 +177,12 @@ abstract class qCal_DateTime_Recur {
 		return $this->ruleset;
 	
 	}
+	
+	/**
+	 * Generate one interval's worth of recurrences. So if this is a yearly
+	 * rule and the interval is one, then generate a year's worth of recurrences.
+	 * @todo I'd like to find a way to make this not be public.
+	 */
+	abstract public function getRecurrenceSubset();
 
 }
