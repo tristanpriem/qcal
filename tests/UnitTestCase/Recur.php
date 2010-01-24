@@ -83,7 +83,14 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testInstantiate() {
 	
-		$this->assertIsA($this->yearly->getRecurrences(), "qCal_DateTime_Recur_Set");
+		$this->assertIsA($this->yearly->getRecurrenceSet(), "qCal_DateTime_Recur_Set");
+	
+	}
+	
+	public function testGetCurrent() {
+	
+		$set = $this->yearly->getRecurrenceSet();
+		
 	
 	}
 

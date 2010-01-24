@@ -7,8 +7,16 @@
  */
 class qCal_DateTime_Recur_Set implements Iterator {
 
+	/**
+	 * Contains a reference to the qCal_DateTime_Recur instance that
+	 * created this recurrence set.
+	 */
 	protected $recur;
 	
+	/**
+	 * Contains an array of qCal_DateTime_Recur_Rule objects which determine
+	 * the recurrence pattern
+	 */
 	protected $rules = array();
 	
 	/**
@@ -16,6 +24,9 @@ class qCal_DateTime_Recur_Set implements Iterator {
 	 */
 	protected $current;
 	
+	/**
+	 * Constructor - initializes the recurrence set
+	 */
 	public function __construct(qCal_DateTime_Recur $recur) {
 	
 		$this->recur = $recur;
@@ -31,12 +42,18 @@ class qCal_DateTime_Recur_Set implements Iterator {
 	
 	}
 	
+	/**
+	 * Determine whether the set contains a rule with the specified name
+	 */
 	public function hasRule($name) {
 	
 		return (boolean) array_key_exists($name, $this->rules);
 	
 	}
 	
+	/**
+	 * Returns a reference to the rule with the specified name
+	 */
 	public function getRule($name) {
 	
 		// @todo: maybe this should throw an exception if array key doesn't exist...
@@ -44,6 +61,9 @@ class qCal_DateTime_Recur_Set implements Iterator {
 	
 	}
 	
+	/**
+	 * Removes a rule from the set by the specified name
+	 */
 	public function removeRule($name) {
 	
 		unset($this->rules[$name]);
@@ -73,7 +93,8 @@ class qCal_DateTime_Recur_Set implements Iterator {
 		 * how to loop and look for recurrence dates.
 		 */
 		
-		// delegate this to children...
+		$this->subset = $this->recur->getRecurrenceSubset();
+		$this->current = $this->recur->getStart();
 	
 	}
 	
@@ -83,11 +104,21 @@ class qCal_DateTime_Recur_Set implements Iterator {
 	
 	}
 	
+	/**
+	 * Returns the current recurrence as a string
+	 */
+	public function __toString() {
+	
+		return $this->toDateTime()->__toString();
+	
+	}
+	
 	// @todo need to implement Iterator methods...
 	
 	public function current() {
 	
 		$this->initRecurrences();
+		return $this->current;
 	
 	}
 	
