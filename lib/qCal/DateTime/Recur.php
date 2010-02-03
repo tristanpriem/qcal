@@ -37,6 +37,11 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	protected $rules = array();
 	
 	/**
+	 * @var qCal_DateTime_Recur_Recurrence The current recurrence in the set
+	 */
+	protected $current;
+	
+	/**
 	 * Class constructor
 	 * This method instantiates the object by setting its "type" and its start date/time.
 	 * @param mixed $start Either a qCal_DateTime or a string representing one
@@ -129,6 +134,18 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	}
 	
 	/**
+	 * Retrieve all recurrences from $start to $end
+	 * @param mixed $start Either a qCal_DateTime object or a string representing one for the start date/time
+	 * @param mixed $end Either a qCal_DateTime object or a string representing one for the end date/time
+	 * @return array A list of all recurrences
+	 */
+	public function getRecurrenceRange($start, $end) {
+	
+		// I'm not sure I even want this method... I'll leave it blank for now... 
+	
+	}
+	
+	/**
 	 * Begin Iterator Methods
 	 */
 	
@@ -140,7 +157,11 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function current() {
 	
-		// return new qCal_DateTime_Recur_Recurrence($this->current);
+		if (!$this->current) {
+			// initialize the current recurrence if there isn't one
+			$this->current = new qCal_DateTime_Recur_Recurrence($this->start);
+		}
+		return $this->current;
 	
 	}
 	
