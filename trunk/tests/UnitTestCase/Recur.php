@@ -41,6 +41,13 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
+	public function testRuleFactory() {
+	
+		$bymonth = qCal_DateTime_Recur_Rule::factory('month', '1,2,3,4,5,6');
+		$this->assertEqual($bymonth, new qCal_DateTime_Recur_Rule_ByMonth(array(1,2,3,4,5,6)));
+	
+	}
+	
 	public function testCurrentReturnsStartObjectIfNoRulesAreApplied() {
 	
 		$recur = qCal_DateTime_Recur::factory('yearly', '2010');
@@ -52,6 +59,20 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 		$recur = qCal_DateTime_Recur::factory('yearly', '2010-02-03');
 		$this->assertIsA($recur->current(), 'qCal_DateTime_Recur_Recurrence');
+	
+	}
+	
+	public function testInstantiateWithArrayOfRules() {
+	
+		$rules = array(
+			new qCal_DateTime_Recur_Rule_ByMonth(array(1,2,3,4,5,6)),
+			new qCal_DateTime_Recur_Rule_ByMonthDay(array(1, 5, 10, 15, 20, 25, 30)),
+			new qCal_DateTime_Recur_Rule_ByHour(1),
+			new qCal_DateTime_Recur_Rule_ByMinute(30),
+			new qCal_DateTime_Recur_Rule_BySetPos(20),
+		);
+		$recur = new qCal_DateTime_Recur_Yearly('2012', $rules);
+		// $this->assertEqual($recur->getRules(), $rules);
 	
 	}
 	
