@@ -8,13 +8,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function setUp() {
 	
-		$this->yearly = new qCal_DateTime_Recur_Yearly("2008-01-01 12:00am");
-		$this->yearly->interval(2) // every other year
-			->byDay("SU,MO,TU") // on every sunday, monday and tuesday
-			->byMonth("1,3,5,7,9,11") // in every other month
-			->byHour("1") // at 1 o'clock
-			->byMinute("30") // make that at 1:30
-			->until("2012"); // until 2012
+		
 	
 	}
 	
@@ -24,8 +18,22 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
+	public function testInstantiation() {
+	
+		
+	
+	}
+	
 	public function XXXtestRecurPlayground() {
 	
+		$this->yearly = new qCal_DateTime_Recur_Yearly("2008-01-01 12:00am");
+		$this->yearly->interval(2) // every other year
+			->byDay("SU,MO,TU") // on every sunday, monday and tuesday
+			->byMonth("1,3,5,7,9,11") // in every other month
+			->byHour("1") // at 1 o'clock
+			->byMinute("30") // make that at 1:30
+			->until("2012"); // until 2012
+		
 		/**
 		 * For yearly rules, just about any type of modifier is going to increase the number
 		 * of recurrences.
@@ -78,19 +86,6 @@ class UnitTestCase_Recur extends UnitTestCase {
 				 ->byWeekday("Sunday", "1,2,3") // on the first, second, and third sundays
 				 ->byMonth(1) // in January
 				 ->count(1000); // for a thousand occurrances
-	
-	}
-	
-	public function testInstantiate() {
-	
-		$this->assertIsA($this->yearly->getRecurrenceSet(), "qCal_DateTime_Recur_Set");
-	
-	}
-	
-	public function testGetCurrent() {
-	
-		$set = $this->yearly->getRecurrenceSet();
-		
 	
 	}
 
