@@ -26,7 +26,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testFactoryInvalidRecurrenceRuleException() {
 	
-		$this->expectException(new qCal_DateTime_Exception_InvalidRecurrenceRule("'01/15/2012' is an unsupported recurrence rule."));
+		$this->expectException(new qCal_DateTime_Exception_InvalidRecurrenceRule("'qCal_Date' is an unsupported recurrence rule."));
 		$start = new qCal_DateTime(2012, 1, 1, 12, 0, 0, qCal_Timezone::factory('America/Los_Angeles'));
 		$recur = new qCal_DateTime_Recur_Yearly($start, array(new qCal_Date(2012, 1, 15)));
 	
