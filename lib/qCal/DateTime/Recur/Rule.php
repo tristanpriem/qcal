@@ -11,6 +11,82 @@
  */
 class qCal_DateTime_Recur_Rule {
 
+	/**
+	 * @var array The values that this rule represents. For instance, if the
+	 * rule is a qCal_DateTime_Recur_Rule_ByMonth, this could be a list of
+	 * integers from 1 to 12 or a list of strings (january through december)
+	 */
+	protected $values = array();
 	
+	/**
+	 * Class Constructor
+	 * @param mixed $values Either an array of values or a single value 
+	 * @access public
+	 */
+	public function __construct($values) {
+	
+		if (!is_array($values)) {
+			$values = (array) $values;
+		}
+		$this->values = $values;
+	
+	}
+	
+	/**
+	 * Factory Method
+	 * Generate a qCal_DateTime_Recur_Rule object from strings
+	 * @param string $rule The rule type you want to generate. The following
+	 * are valid: day, hour, minute, month, monthday, second, setpos, weekno,
+	 * yearday, count, interval, until, wkst
+	 */
+	public static function factory($rule, $values) {
+	
+		// set up error message in case we can't find the specified rule
+		$errorMsg = "'$rule' is an unsupported recurrence rule.";
+		$rule = strtolower((string) $rule);
+		switch ($rule) {
+			case "day":
+			case "hour":
+			case "minute":
+			case "month":
+			case "second":
+				$rule = 'By' . ucfirst($rule);
+				break;
+			case "count":	
+			case "interval":
+			case "until":
+			case "wkst":
+				$rule = ucfirst($rule);
+			case "monthday":
+				$rule = "ByMonthDay";
+				break;
+			case "setpos":
+				$rule = "BySetPos";
+				break;
+			case "weekno":
+				$rule = "ByWeekNo";
+				break;
+			case "yearday":
+				$rule = "ByYearDay";
+				break;
+			default:
+				throw new qCal_DateTime_Exception_InvalidRecurrenceRule($errorMsg);
+		}
+		$class = "qCal_DateTime_Recur_Rule_" . $rule;
+		$values = explode(",", $values);
+		return new $class($values);
+	
+	}
+	
+	/**
+	 * Retrieve the values contained in this rule
+	 * @return array A list of values for this rule
+	 * @access public
+	 */
+	public function getValues() {
+	
+		return $this->values;
+	
+	}
 
 }
