@@ -4,7 +4,7 @@
  * it consists of a start and end point in time
  * 
  * @package qCal
- * @subpackage qCal_Date
+ * @subpackage qCal_DateTime
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
