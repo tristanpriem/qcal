@@ -18,8 +18,8 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	public function testInstantiation() {
 	
-		$recur = new qCal_DateTime_Recur('yearly', new qCal_DateTime(2010, 10, 23, 12, 0, 0, new qCal_Timezone('America/Los_Angeles')));
-		$this->assertIsA($recur, 'qCal_DateTime_Recur');
+		// $recur = new qCal_DateTime_Recur('yearly', new qCal_DateTime(2010, 10, 23, 12, 0, 0, new qCal_Timezone('America/Los_Angeles')));
+		// $this->assertIsA($recur, 'qCal_DateTime_Recur');
 	
 	}
 	
