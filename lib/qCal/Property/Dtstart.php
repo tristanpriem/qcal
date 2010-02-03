@@ -2,6 +2,7 @@
 /**
  * Date/Time Start Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -42,24 +43,24 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   dtstart    = "DTSTART" dtstparam ":" dtstval CRLF
+ *   dtstart	= "DTSTART" dtstparam ":" dtstval CRLF
  * 
  *   dtstparam  = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" "VALUE" "=" ("DATE-TIME" / "DATE")) /
- *              (";" tzidparam) /
+ *			  (";" "VALUE" "=" ("DATE-TIME" / "DATE")) /
+ *			  (";" tzidparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *                *(";" xparam)
+ *				*(";" xparam)
  * 
- *              )
+ *			  )
  * 
- *   dtstval    = date-time / date
+ *   dtstval	= date-time / date
  *   ;Value MUST match value type
  * 
  * Example: The following is an example of this property:
@@ -72,8 +73,8 @@ class qCal_Property_Dtstart extends qCal_Property {
 	protected $allowedComponents = array('VEVENT','VTODO','VFREEBUSY','VTIMEZONE','VJOURNAL','STANDARD','DAYLIGHT');
 	/**
 	 * Strange that in the notes for this, it says:
-	 *     Conformance: This property can be specified in the "VEVENT", "VTODO",
-	 *     "VFREEBUSY", or "VTIMEZONE" calendar components.
+	 *	 Conformance: This property can be specified in the "VEVENT", "VTODO",
+	 *	 "VFREEBUSY", or "VTIMEZONE" calendar components.
 	 * But in the notes for journal it says that dtstart is allowed in a journal
 	 */
 

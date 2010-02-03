@@ -2,6 +2,7 @@
 /**
  * Date/Time End Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -35,22 +36,22 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   dtend      = "DTEND" dtendparam":" dtendval CRLF
+ *   dtend	  = "DTEND" dtendparam":" dtendval CRLF
  * 
  *   dtendparam = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" "VALUE" "=" ("DATE-TIME" / "DATE")) /
- *              (";" tzidparam) /
+ *			  (";" "VALUE" "=" ("DATE-TIME" / "DATE")) /
+ *			  (";" tzidparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  *   dtendval   = date-time / date
  *   ;Value MUST match value type

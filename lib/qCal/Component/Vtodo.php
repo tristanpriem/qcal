@@ -2,6 +2,7 @@
 /**
  * Todo Component
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -16,33 +17,33 @@
  * Formal Definition: A "VTODO" calendar component is defined by the
  * following notation:
  * 
- *   todoc      = "BEGIN" ":" "VTODO" CRLF
- *                todoprop *alarmc
- *                "END" ":" "VTODO" CRLF
+ *   todoc	  = "BEGIN" ":" "VTODO" CRLF
+ *				todoprop *alarmc
+ *				"END" ":" "VTODO" CRLF
  * 
  *   todoprop   = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              class / completed / created / description / dtstamp /
- *              dtstart / geo / last-mod / location / organizer /
- *              percent / priority / recurid / seq / status /
- *              summary / uid / url /
+ *			  class / completed / created / description / dtstamp /
+ *			  dtstart / geo / last-mod / location / organizer /
+ *			  percent / priority / recurid / seq / status /
+ *			  summary / uid / url /
  * 
- *              ; either 'due' or 'duration' may appear in
- *              ; a 'todoprop', but 'due' and 'duration'
- *              ; MUST NOT occur in the same 'todoprop'
+ *			  ; either 'due' or 'duration' may appear in
+ *			  ; a 'todoprop', but 'due' and 'duration'
+ *			  ; MUST NOT occur in the same 'todoprop'
  * 
- *              due / duration /
+ *			  due / duration /
  * 
- *              ; the following are optional,
- *              ; and MAY occur more than once
- *              attach / attendee / categories / comment / contact /
- *              exdate / exrule / rstatus / related / resources /
- *              rdate / rrule / x-prop
+ *			  ; the following are optional,
+ *			  ; and MAY occur more than once
+ *			  attach / attendee / categories / comment / contact /
+ *			  exdate / exrule / rstatus / related / resources /
+ *			  rdate / rrule / x-prop
  * 
- *              )
+ *			  )
  * 
  * Description: A "VTODO" calendar component is a grouping of component
  * properties and possibly "VALARM" calendar components that represent

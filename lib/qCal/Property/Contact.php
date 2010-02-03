@@ -2,6 +2,7 @@
 /**
  * Contact Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -29,20 +30,20 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   contact    = "CONTACT" contparam ":" text CRLF
+ *   contact	= "CONTACT" contparam ":" text CRLF
  * 
  *   contparam  = *(
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" altrepparam) / (";" languageparam) /
+ *			  (";" altrepparam) / (";" languageparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following is an example of this property referencing
  * textual contact information:
@@ -54,8 +55,8 @@
  * contact information:
  * 
  *   CONTACT;ALTREP="ldap://host.com:6666/o=3DABC%20Industries\,
- *    c=3DUS??(cn=3DBJim%20Dolittle)":Jim Dolittle\, ABC Industries\,
- *    +1-919-555-1234
+ *	c=3DUS??(cn=3DBJim%20Dolittle)":Jim Dolittle\, ABC Industries\,
+ *	+1-919-555-1234
  * 
  * The following is an example of this property with an alternate
  * representation of a MIME body part containing the contact
@@ -63,14 +64,14 @@
  * content-type:
  * 
  *   CONTACT;ALTREP="CID=<part3.msg970930T083000SILVER@host.com>":Jim
- *     Dolittle\, ABC Industries\, +1-919-555-1234
+ *	 Dolittle\, ABC Industries\, +1-919-555-1234
  * 
  * The following is an example of this property referencing a network
  * resource, such as a vCard [RFC 2426] object containing the contact
  * information:
  * 
  *   CONTACT;ALTREP="http://host.com/pdi/jdoe.vcf":Jim
- *     Dolittle\, ABC Industries\, +1-919-555-1234
+ *	 Dolittle\, ABC Industries\, +1-919-555-1234
  */
 class qCal_Property_Contact extends qCal_Property {
 

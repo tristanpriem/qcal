@@ -2,6 +2,7 @@
 /**
  * Recurrence Date/Times Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -49,24 +50,24 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   rdate      = "RDATE" rdtparam ":" rdtval *("," rdtval) CRLF
+ *   rdate	  = "RDATE" rdtparam ":" rdtval *("," rdtval) CRLF
  * 
  *   rdtparam   = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" "VALUE" "=" ("DATE-TIME" / "DATE" / "PERIOD")) /
- *              (";" tzidparam) /
+ *			  (";" "VALUE" "=" ("DATE-TIME" / "DATE" / "PERIOD")) /
+ *			  (";" tzidparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
- *   rdtval     = date-time / date / period
+ *   rdtval	 = date-time / date / period
  *   ;Value MUST match value type
  * 
  * Example: The following are examples of this property:
@@ -76,10 +77,10 @@
  *   RDATE;TZID=US-EASTERN:19970714T083000
  * 
  *   RDATE;VALUE=PERIOD:19960403T020000Z/19960403T040000Z,
- *    19960404T010000Z/PT3H
+ *	19960404T010000Z/PT3H
  * 
  *   RDATE;VALUE=DATE:19970101,19970120,19970217,19970421
- *    19970526,19970704,19970901,19971014,19971128,19971129,19971225
+ *	19970526,19970704,19970901,19971014,19971128,19971129,19971225
  */
 class qCal_Property_Rdate extends qCal_Property_MultiValue {
 

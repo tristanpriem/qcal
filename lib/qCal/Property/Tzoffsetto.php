@@ -2,6 +2,7 @@
 /**
  * Time Zone Offset To Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -35,7 +36,7 @@
  * 
  *   tzoffsetto = "TZOFFSETTO" toparam ":" utc-offset CRLF
  * 
- *   toparam    = *(";" xparam)
+ *   toparam	= *(";" xparam)
  * 
  * Example: The following are examples of this property:
  * 

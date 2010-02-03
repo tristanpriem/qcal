@@ -2,6 +2,7 @@
 /**
  * Time Transparency Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -34,13 +35,13 @@
  * Format Definition: The property is specified by the following
  * notation:
  * 
- *   transp     = "TRANSP" tranparam ":" transvalue CRLF
+ *   transp	 = "TRANSP" tranparam ":" transvalue CRLF
  * 
  *   tranparam  = *(";" xparam)
  * 
- *   transvalue = "OPAQUE"      ;Blocks or opaque on busy time searches.
- *              / "TRANSPARENT" ;Transparent on busy time searches.
- *      ;Default value is OPAQUE
+ *   transvalue = "OPAQUE"	  ;Blocks or opaque on busy time searches.
+ *			  / "TRANSPARENT" ;Transparent on busy time searches.
+ *	  ;Default value is OPAQUE
  * 
  * Example: The following is an example of this property for an event
  * that is transparent or does not block on free/busy time searches:

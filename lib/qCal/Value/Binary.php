@@ -2,6 +2,7 @@
 /**
  * Binary Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -19,10 +20,10 @@
  * Formal Definition: The value type is defined by the following
  * notation:
  * 
- *   binary     = *(4b-char) [b-end]
+ *   binary	 = *(4b-char) [b-end]
  *   ; A "BASE64" encoded character string, as defined by [RFC 2045].
  * 
- *   b-end      = (2b-char "==") / (3b-char "=")
+ *   b-end	  = (2b-char "==") / (3b-char "=")
  * 
  *   b-char = ALPHA / DIGIT / "+" / "/"
  * 
@@ -37,9 +38,9 @@
  * binary value data.
  * 
  *   ATTACH;VALUE=BINARY;ENCODING=BASE64:MIICajCCAdOgAwIBAgICBEUwDQY
- *    JKoZIhvcNAQEEBQAwdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlI
- *    ENvbW11bmljYXRpb25zIENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZv
- *      <...remainder of "BASE64" encoded binary data...>
+ *	JKoZIhvcNAQEEBQAwdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlI
+ *	ENvbW11bmljYXRpb25zIENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZv
+ *	  <...remainder of "BASE64" encoded binary data...>
  * 
  * qCal_DataType_Binary
  * This object defines any binary object that may be attached to an

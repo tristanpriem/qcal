@@ -2,6 +2,7 @@
 /**
  * Recurrence Id Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -63,23 +64,23 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   recurid    = "RECURRENCE-ID" ridparam ":" ridval CRLF
+ *   recurid	= "RECURRENCE-ID" ridparam ":" ridval CRLF
  * 
  *   ridparam   = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" "VALUE" "=" ("DATE-TIME" / "DATE)) /
- *              (";" tzidparam) / (";" rangeparam) /
- *           ; the following is optional,
- *              ; and MAY occur more than once
+ *			  (";" "VALUE" "=" ("DATE-TIME" / "DATE)) /
+ *			  (";" tzidparam) / (";" rangeparam) /
+ *		   ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
- *   ridval     = date-time / date
+ *   ridval	 = date-time / date
  *   ;Value MUST match value type
  * 
  * Example: The following are examples of this property:

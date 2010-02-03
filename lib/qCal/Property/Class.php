@@ -2,6 +2,7 @@
 /**
  * Classification Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -38,12 +39,12 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   class      = "CLASS" classparam ":" classvalue CRLF
+ *   class	  = "CLASS" classparam ":" classvalue CRLF
  * 
  *   classparam = *(";" xparam)
  * 
  *   classvalue = "PUBLIC" / "PRIVATE" / "CONFIDENTIAL" / iana-token
- *              / x-name
+ *			  / x-name
  *   ;Default is PUBLIC
  * 
  * Example: The following is an example of this property:

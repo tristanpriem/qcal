@@ -2,6 +2,7 @@
 /**
  * Dated/Time Stamp Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -37,7 +38,7 @@
  * last modified.
  * Format Definition: The property is defined by the following notation:
  * 
- *   dtstamp    = "DTSTAMP" stmparam ":" date-time CRLF
+ *   dtstamp	= "DTSTAMP" stmparam ":" date-time CRLF
  * 
  *   stmparam   = *(";" xparam)
  * 

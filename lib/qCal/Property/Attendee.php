@@ -2,13 +2,14 @@
 /**
  * Attendee Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Make sure that allowedComponents is correct. I am still a little
- *       confused about how this property works. It is apparent that it is
- *       used differently based on compoenent. I think the correct place
- *       to put logic like that is in the component itself.
+ *	   confused about how this property works. It is apparent that it is
+ *	   used differently based on compoenent. I think the correct place
+ *	   to put logic like that is in the component itself.
  * 
  * RFC 2445 Definition
  * 
@@ -71,66 +72,66 @@
  * 
  *   attparam   = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" cutypeparam) / (";"memberparam) /
- *              (";" roleparam) / (";" partstatparam) /
- *              (";" rsvpparam) / (";" deltoparam) /
- *              (";" delfromparam) / (";" sentbyparam) /
- *              (";"cnparam) / (";" dirparam) /
- *              (";" languageparam) /
+ *			  (";" cutypeparam) / (";"memberparam) /
+ *			  (";" roleparam) / (";" partstatparam) /
+ *			  (";" rsvpparam) / (";" deltoparam) /
+ *			  (";" delfromparam) / (";" sentbyparam) /
+ *			  (";"cnparam) / (";" dirparam) /
+ *			  (";" languageparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following are examples of this property's use for a to-
  * do:
  * 
  *   ORGANIZER:MAILTO:jsmith@host1.com
  *   ATTENDEE;MEMBER="MAILTO:DEV-GROUP@host2.com":
- *    MAILTO:joecool@host2.com
+ *	MAILTO:joecool@host2.com
  *   ATTENDEE;DELEGATED-FROM="MAILTO:immud@host3.com":
- *    MAILTO:ildoit@host1.com
+ *	MAILTO:ildoit@host1.com
  * 
  * The following is an example of this property used for specifying
  * multiple attendees to an event:
  * 
  *   ORGANIZER:MAILTO:jsmith@host1.com
  *   ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=TENTATIVE;CN=Henry Cabot
- *    :MAILTO:hcabot@host2.com
+ *	:MAILTO:hcabot@host2.com
  *   ATTENDEE;ROLE=REQ-PARTICIPANT;DELEGATED-FROM="MAILTO:bob@host.com"
- *    ;PARTSTAT=ACCEPTED;CN=Jane Doe:MAILTO:jdoe@host1.com
+ *	;PARTSTAT=ACCEPTED;CN=Jane Doe:MAILTO:jdoe@host1.com
  * 
  * The following is an example of this property with a URI to the
  * directory information associated with the attendee:
  * 
  *   ATTENDEE;CN=John Smith;DIR="ldap://host.com:6666/o=eDABC%
- *    20Industries,c=3DUS??(cn=3DBJim%20Dolittle)":MAILTO:jimdo@
- *    host1.com
+ *	20Industries,c=3DUS??(cn=3DBJim%20Dolittle)":MAILTO:jimdo@
+ *	host1.com
  * 
  * The following is an example of this property with "delegatee" and
  * "delegator" information for an event:
  * 
  *   ORGANIZER;CN=John Smith:MAILTO:jsmith@host.com
  *   ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=TENTATIVE;DELEGATED-FROM=
- *    "MAILTO:iamboss@host2.com";CN=Henry Cabot:MAILTO:hcabot@
- *    host2.com
+ *	"MAILTO:iamboss@host2.com";CN=Henry Cabot:MAILTO:hcabot@
+ *	host2.com
  *   ATTENDEE;ROLE=NON-PARTICIPANT;PARTSTAT=DELEGATED;DELEGATED-TO=
- *    "MAILTO:hcabot@host2.com";CN=The Big Cheese:MAILTO:iamboss
- *    @host2.com
+ *	"MAILTO:hcabot@host2.com";CN=The Big Cheese:MAILTO:iamboss
+ *	@host2.com
  *   ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=Jane Doe
- *    :MAILTO:jdoe@host1.com
+ *	:MAILTO:jdoe@host1.com
  * 
  * Example: The following is an example of this property's use when
  * another calendar user is acting on behalf of the "Attendee":
  * 
  *   ATTENDEE;SENT-BY=MAILTO:jan_doe@host1.com;CN=John Smith:MAILTO:
- *    jsmith@host1.com
+ *	jsmith@host1.com
  */
 class qCal_Property_Attendee extends qCal_Property {
 

@@ -2,6 +2,7 @@
 /**
  * Journal Component
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -17,26 +18,26 @@
  * following notation:
  * 
  *   journalc   = "BEGIN" ":" "VJOURNAL" CRLF
- *                jourprop
- *                "END" ":" "VJOURNAL" CRLF
+ *				jourprop
+ *				"END" ":" "VJOURNAL" CRLF
  * 
  *   jourprop   = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              class / created / description / dtstart / dtstamp /
- *              last-mod / organizer / recurid / seq / status /
- *              summary / uid / url /
+ *			  class / created / description / dtstart / dtstamp /
+ *			  last-mod / organizer / recurid / seq / status /
+ *			  summary / uid / url /
  * 
- *              ; the following are optional,
- *              ; and MAY occur more than once
+ *			  ; the following are optional,
+ *			  ; and MAY occur more than once
  * 
- *              attach / attendee / categories / comment /
- *              contact / exdate / exrule / related / rdate /
- *              rrule / rstatus / x-prop
+ *			  attach / attendee / categories / comment /
+ *			  contact / exdate / exrule / related / rdate /
+ *			  rrule / rstatus / x-prop
  * 
- *              )
+ *			  )
  * 
  * Description: A "VJOURNAL" calendar component is a grouping of
  * component properties that represent one or more descriptive text
@@ -69,13 +70,13 @@
  *   DTSTART;VALUE=DATE:19970317
  *   SUMMARY:Staff meeting minutes
  *   DESCRIPTION:1. Staff meeting: Participants include Joe\, Lisa
- *     and Bob. Aurora project plans were reviewed. There is currently
- *     no budget reserves for this project. Lisa will escalate to
- *     management. Next meeting on Tuesday.\n
- *     2. Telephone Conference: ABC Corp. sales representative called
- *     to discuss new printer. Promised to get us a demo by Friday.\n
- *     3. Henry Miller (Handsoff Insurance): Car was totaled by tree.
- *     Is looking into a loaner car. 654-2323 (tel).
+ *	 and Bob. Aurora project plans were reviewed. There is currently
+ *	 no budget reserves for this project. Lisa will escalate to
+ *	 management. Next meeting on Tuesday.\n
+ *	 2. Telephone Conference: ABC Corp. sales representative called
+ *	 to discuss new printer. Promised to get us a demo by Friday.\n
+ *	 3. Henry Miller (Handsoff Insurance): Car was totaled by tree.
+ *	 Is looking into a loaner car. 654-2323 (tel).
  *   END:VJOURNAL
  */
 class qCal_Component_Vjournal extends qCal_Component {

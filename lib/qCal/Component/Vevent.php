@@ -2,6 +2,7 @@
 /**
  * Event Component
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -16,34 +17,34 @@
  * Format Definition: A "VEVENT" calendar component is defined by the
  * following notation:
  * 
- *   eventc     = "BEGIN" ":" "VEVENT" CRLF
- *                eventprop *alarmc
- *                "END" ":" "VEVENT" CRLF
+ *   eventc	 = "BEGIN" ":" "VEVENT" CRLF
+ *				eventprop *alarmc
+ *				"END" ":" "VEVENT" CRLF
  * 
  *   eventprop  = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              class / created / description / dtstart / geo /
- *              last-mod / location / organizer / priority /
- *              dtstamp / seq / status / summary / transp /
- *              uid / url / recurid /
+ *			  class / created / description / dtstart / geo /
+ *			  last-mod / location / organizer / priority /
+ *			  dtstamp / seq / status / summary / transp /
+ *			  uid / url / recurid /
  * 
- *              ; either 'dtend' or 'duration' may appear in
- *              ; a 'eventprop', but 'dtend' and 'duration'
- *              ; MUST NOT occur in the same 'eventprop'
+ *			  ; either 'dtend' or 'duration' may appear in
+ *			  ; a 'eventprop', but 'dtend' and 'duration'
+ *			  ; MUST NOT occur in the same 'eventprop'
  * 
- *              dtend / duration /
+ *			  dtend / duration /
  * 
- *              ; the following are optional,
- *              ; and MAY occur more than once
+ *			  ; the following are optional,
+ *			  ; and MAY occur more than once
  * 
- *              attach / attendee / categories / comment /
- *              contact / exdate / exrule / rstatus / related /
- *              resources / rdate / rrule / x-prop
+ *			  attach / attendee / categories / comment /
+ *			  contact / exdate / exrule / rstatus / related /
+ *			  resources / rdate / rrule / x-prop
  * 
- *              )
+ *			  )
  * 
  * Description: A "VEVENT" calendar component is a grouping of component
  * properties, and possibly including "VALARM" calendar components, that

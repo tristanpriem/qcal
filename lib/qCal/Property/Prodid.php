@@ -2,6 +2,7 @@
 /**
  * Product Identifier Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -35,7 +36,7 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   prodid     = "PRODID" pidparam ":" pidvalue CRLF
+ *   prodid	 = "PRODID" pidparam ":" pidvalue CRLF
  * 
  *   pidparam   = *(";" xparam)
  * 

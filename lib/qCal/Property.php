@@ -3,6 +3,7 @@
  * Base component property class. version, attach, rrule are all examples
  * of component properties.
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -93,7 +94,7 @@ abstract class qCal_Property {
 		try {
 			qCal_Loader::loadFile($fileName);
 			$class = new $className($value, $params);
-		} catch (qCal_Exception_InvalidFile $e) {
+		} catch (qCal_Exception_FileNotFound $e) {
 			// if there is no class available for this property, check if it is non-standard
 			$xname = strtoupper(substr($name, 0, 2));
 			// non-standard property

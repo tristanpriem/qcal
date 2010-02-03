@@ -4,6 +4,7 @@
  * This data type differs from "period" in that it does not specify start
  * and end time, just the duration (5 weeks, 1 day, etc)
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -25,7 +26,7 @@
  *  dur-hour   = 1*DIGIT "H" [dur-minute]
  *  dur-minute = 1*DIGIT "M" [dur-second]
  *  dur-second = 1*DIGIT "S"
- *  dur-day    = 1*DIGIT "D"
+ *  dur-day	= 1*DIGIT "D"
  * 
  * Description: If the property permits, multiple "duration" values are
  * specified by a COMMA character (US-ASCII decimal 44) separated list

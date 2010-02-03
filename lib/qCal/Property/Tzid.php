@@ -2,6 +2,7 @@
 /**
  * Time Zone Identifier Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -30,21 +31,21 @@
  * unique ID in a globally defined time zone registry (when such
  * registry is defined).
  * 
- *      Note: This document does not define a naming convention for time
- *      zone identifiers. Implementers may want to use the naming
- *      conventions defined in existing time zone specifications such as
- *      the public-domain Olson database [TZ]. The specification of
- *      globally unique time zone identifiers is not addressed by this
- *      document and is left for future study.
+ *	  Note: This document does not define a naming convention for time
+ *	  zone identifiers. Implementers may want to use the naming
+ *	  conventions defined in existing time zone specifications such as
+ *	  the public-domain Olson database [TZ]. The specification of
+ *	  globally unique time zone identifiers is not addressed by this
+ *	  document and is left for future study.
  * 
  * Format Definition: This property is defined by the following
  * notation:
  * 
- *   tzid       = "TZID" tzidpropparam ":" [tzidprefix] text CRLF
+ *   tzid	   = "TZID" tzidpropparam ":" [tzidprefix] text CRLF
  * 
- *   tzidpropparam      = *(";" xparam)
+ *   tzidpropparam	  = *(";" xparam)
  * 
- *   ;tzidprefix        = "/"
+ *   ;tzidprefix		= "/"
  *   ; Defined previously. Just listed here for reader convenience.
  * 
  * Example: The following are examples of non-globally unique time zone

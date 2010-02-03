@@ -1,26 +1,48 @@
 <?php
+/**
+ * qCal_Time
+ * 
+ * This class is used to represent a time that is not associated with any specific date.
+ * 
+ * @package qCal
+ * @subpackage qCal_DateTime
+ * @copyright Luke Visinoni (luke.visinoni@gmail.com)
+ * @author Luke Visinoni (luke.visinoni@gmail.com)
+ * @license GNU Lesser General Public License
+ */
 class qCal_Time {
 
 	/**
-	 * Timestamp (represents time at GMT, so must have timezone's offest
+	 * @var integer Timestamp (represents time at GMT, so must have timezone's offset
 	 * applied before it will be accurate for your specified timezone)
 	 */
 	protected $time;
+	
 	/**
-	 * The default format that time is output as
+	 * @var string The default format that time is output as
 	 */
 	protected $format = "H:i:s";
+	
 	/**
-	 * The timezone
+	 * @var qCal_Timezone The timezone
 	 */
 	protected $timezone;
+	
 	/**
-	 * Time array (contains hour, minute, second, etc.)
+	 * @var array Time array (contains hour, minute, second, etc.)
 	 */
 	protected $timeArray = array();
+	
 	/**
 	 * Class constructor
 	 * This component is immutable. It can only be created, not modified.
+	 * @param integer $hour
+	 * @param integer $minute
+	 * @param integer $second
+	 * @param mixed $timezone Either a qCal_Timezone or a string representing one
+	 * @param integer $rollover Set this to true if you want to be able to use "rollover" time intervals.
+	 * For instance, you could specify 100 seconds, which would translate to 1 minute, 40 seconds.
+	 * @access public
 	 */
 	public function __construct($hour = null, $minute = null, $second = null, $timezone = null, $rollover = null) {
 	
@@ -30,7 +52,13 @@ class qCal_Time {
 	}
 	/**
 	 * Set the time
-	 * @access protected This class is immutable, so this is protected. Only the constructor calls it.
+	 * This class is immutable, so this is protected. Only the constructor calls it.
+	 * @param integer $hour
+	 * @param integer $minute
+	 * @param integer $second
+	 * @param integer $rollover (see above)
+	 * @access protected
+	 * @return $this
 	 */
 	protected function setTime($hour = null, $minute = null, $second = null, $rollover = null) {
 	
@@ -61,8 +89,12 @@ class qCal_Time {
 		return $this;
 	
 	}
+	
 	/**
 	 * Set the timezone
+	 * @param mixed $timezone Either a qCal_Timezone object or a string representing one
+	 * @return $this
+	 * @access protected
 	 */
 	protected function setTimezone($timezone) {
 	
@@ -75,6 +107,8 @@ class qCal_Time {
 	}
 	/**
 	 * Get the timezone
+	 * @return qCal_Timezone
+	 * @access public
 	 */
 	public function getTimezone() {
 	
@@ -83,6 +117,10 @@ class qCal_Time {
 	}
 	/**
 	 * Generate a qCal_Time object via a string or a number of other methods
+	 * @param string A time string to convert into a qCal_Time object (ex: 4:00)
+	 * @param mixed Either a qCal_Timezone object or a string representing one
+	 * @access public
+	 * @static
 	 */
 	public static function factory($time, $timezone = null) {
 	
@@ -120,6 +158,8 @@ class qCal_Time {
 	}
 	/**
 	 * Get the hour
+	 * @return integer The hour
+	 * @access public
 	 */
 	public function getHour() {
 	
@@ -128,6 +168,8 @@ class qCal_Time {
 	}
 	/**
 	 * Get the minute
+	 * @return integer The minute
+	 * @access public
 	 */
 	public function getMinute() {
 	
@@ -136,6 +178,8 @@ class qCal_Time {
 	}
 	/**
 	 * Get the second
+	 * @return integer The second
+	 * @access public
 	 */
 	public function getSecond() {
 	
@@ -144,6 +188,11 @@ class qCal_Time {
 	}
 	/**
 	 * Get the timestamp
+	 * @param boolean $useOffset Set to true to get a timestamp that takes the
+	 * timezone offset into consideration
+	 * @return integer This is not a unix timestamp because there is no date
+	 * associated with this time. It is a timestamp from the beginning of the day
+	 * @access public
 	 */
 	public function getTimestamp($useOffset = true) {
 	
@@ -155,6 +204,10 @@ class qCal_Time {
 	}
 	/**
 	 * Set the format to use when outputting as a string
+	 * @param string $format Use PHP's date() function's time-related
+	 * metacharacters to set the format used when this object is printed
+	 * @return $this
+	 * @access public
 	 */
 	public function setFormat($format) {
 	
@@ -164,6 +217,10 @@ class qCal_Time {
 	}
 	/**
 	 * Output the object using PHP's date() function's meta-characters
+	 * @param string $format Use PHP's date() function's time-related
+	 * metacharacters to set the format that this returns
+	 * @return string This object formatted as a string
+	 * @access public
 	 */
 	public function format($format) {
 	
@@ -188,6 +245,8 @@ class qCal_Time {
 	}
 	/**
 	 * Output the object as a string
+	 * @return string This object formatted as a string
+	 * @access public
 	 */
 	public function __toString() {
 	

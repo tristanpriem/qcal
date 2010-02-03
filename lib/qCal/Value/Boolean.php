@@ -2,6 +2,7 @@
 /**
  * Boolean Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -17,7 +18,7 @@
  * notation:
  * 
  * 
- *   boolean    = "TRUE" / "FALSE"
+ *   boolean	= "TRUE" / "FALSE"
  * 
  * Description: These values are case insensitive text. No additional
  * content value encoding (i.e., BACKSLASH character encoding) is

@@ -2,6 +2,7 @@
 /**
  * Request Status Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -45,50 +46,50 @@
  * defined later in this memo.
  * 
  *   |==============+===============================================|
- *   | Short Return | Longer Return Status Description              |
- *   | Status Code  |                                               |
+ *   | Short Return | Longer Return Status Description			  |
+ *   | Status Code  |											   |
  *   |==============+===============================================|
- *   |    1.xx      | Preliminary success. This class of status     |
- *   |              | of status code indicates that the request has |
- *   |              | request has been initially processed but that |
- *   |              | completion is pending.                        |
+ *   |	1.xx	  | Preliminary success. This class of status	 |
+ *   |			  | of status code indicates that the request has |
+ *   |			  | request has been initially processed but that |
+ *   |			  | completion is pending.						|
  *   |==============+===============================================|
- *   |    2.xx      | Successful. This class of status code         |
- *   |              | indicates that the request was completed      |
- *   |              | successfuly. However, the exact status code   |
- *   |              | can indicate that a fallback has been taken.  |
+ *   |	2.xx	  | Successful. This class of status code		 |
+ *   |			  | indicates that the request was completed	  |
+ *   |			  | successfuly. However, the exact status code   |
+ *   |			  | can indicate that a fallback has been taken.  |
  *   |==============+===============================================|
- *   |    3.xx      | Client Error. This class of status code       |
- *   |              | indicates that the request was not successful.|
- *   |              | The error is the result of either a syntax or |
- *   |              | a semantic error in the client formatted      |
- *   |              | request. Request should not be retried until  |
- *   |              | the condition in the request is corrected.    |
+ *   |	3.xx	  | Client Error. This class of status code	   |
+ *   |			  | indicates that the request was not successful.|
+ *   |			  | The error is the result of either a syntax or |
+ *   |			  | a semantic error in the client formatted	  |
+ *   |			  | request. Request should not be retried until  |
+ *   |			  | the condition in the request is corrected.	|
  *   |==============+===============================================|
- *   |    4.xx      | Scheduling Error. This class of status code   |
- *   |              | indicates that the request was not successful.|
- *   |              | Some sort of error occurred within the        |
- *   |              | calendaring and scheduling service, not       |
- *   |              | directly related to the request itself.       |
+ *   |	4.xx	  | Scheduling Error. This class of status code   |
+ *   |			  | indicates that the request was not successful.|
+ *   |			  | Some sort of error occurred within the		|
+ *   |			  | calendaring and scheduling service, not	   |
+ *   |			  | directly related to the request itself.	   |
  *   |==============+===============================================|
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   rstatus    = "REQUEST-STATUS" rstatparam ":"
- *                statcode ";" statdesc [";" extdata]
+ *   rstatus	= "REQUEST-STATUS" rstatparam ":"
+ *				statcode ";" statdesc [";" extdata]
  * 
  *   rstatparam = *(
  * 
- *              ; the following is optional,
- *              ; but MUST NOT occur more than once
- *           (";" languageparm) /
+ *			  ; the following is optional,
+ *			  ; but MUST NOT occur more than once
+ *		   (";" languageparm) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  *   statcode   = 1*DIGIT *("." 1*DIGIT)
  *   ;Hierarchical, numeric return status code
@@ -96,7 +97,7 @@
  *   statdesc   = text
  *   ;Textual status description
  * 
- *   extdata    = text
+ *   extdata	= text
  *   ;Textual exception data. For example, the offending property
  *   ;name and value or complete property line.
  * 
@@ -109,12 +110,12 @@
  *   REQUEST-STATUS:3.1;Invalid property value;DTSTART:96-Apr-01
  * 
  *   REQUEST-STATUS:2.8; Success\, repeating event ignored. Scheduled
- *    as a single event.;RRULE:FREQ=WEEKLY\;INTERVAL=2
+ *	as a single event.;RRULE:FREQ=WEEKLY\;INTERVAL=2
  * 
  *   REQUEST-STATUS:4.1;Event conflict. Date/time is busy.
  * 
  *   REQUEST-STATUS:3.7;Invalid calendar user;ATTENDEE:
- *    MAILTO:jsmith@host.com
+ *	MAILTO:jsmith@host.com
  */
 class qCal_Property_Sequence extends qCal_Property {
 

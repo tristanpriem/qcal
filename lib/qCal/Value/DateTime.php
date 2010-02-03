@@ -2,6 +2,7 @@
 /**
  * Date-Time Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -15,7 +16,7 @@
  * notation:
  * 
  *  date-time  = date "T" time ;As specified in the date and time
- *                             ;value definitions
+ *							 ;value definitions
  * 
  * Description: If the property permits, multiple "date-time" values are
  * specified as a COMMA character (US-ASCII decimal 44) separated list
@@ -34,7 +35,7 @@
  * The form of date and time with UTC offset MUST NOT be used. For
  * example, the following is not valid for a date-time value:
  * 
- *  DTSTART:19980119T230000-0800       ;Invalid time format
+ *  DTSTART:19980119T230000-0800	   ;Invalid time format
  * 
  * FORM #1: DATE WITH LOCAL TIME
  * 
@@ -87,16 +88,16 @@
  * section on Time Zone. For example, the following represents 2 AM in
  * New York on Janurary 19, 1998:
  * 
- *       DTSTART;TZID=US-Eastern:19980119T020000
+ *	   DTSTART;TZID=US-Eastern:19980119T020000
  * 
  * Example: The following represents July 14, 1997, at 1:30 PM in New
  * York City in each of the three time formats, using the "DTSTART"
  * property.
  * 
- *  DTSTART:19970714T133000            ;Local time
- *  DTSTART:19970714T173000Z           ;UTC time
- *  DTSTART;TZID=US-Eastern:19970714T133000    ;Local time and time
- *                     ; zone reference
+ *  DTSTART:19970714T133000			;Local time
+ *  DTSTART:19970714T173000Z		   ;UTC time
+ *  DTSTART;TZID=US-Eastern:19970714T133000	;Local time and time
+ *					 ; zone reference
  * 
  * A time value MUST ONLY specify 60 seconds when specifying the
  * periodic "leap second" in the time value. For example:

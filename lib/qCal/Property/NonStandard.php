@@ -2,11 +2,12 @@
 /**
  * Non-standard Property(s)
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo I am not sure exactly how I plan on dealing with non-standard
- *       properties, but for now, I'm representing them with this class
+ *	   properties, but for now, I'm representing them with this class
  * @todo Should this be a MultiValue?
  * @todo Should this allow multiple instances?
  * 
@@ -46,8 +47,8 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   x-prop     = x-name *(";" xparam) [";" languageparam] ":" text CRLF
- *      ; Lines longer than 75 octets should be folded
+ *   x-prop	 = x-name *(";" xparam) [";" languageparam] ":" text CRLF
+ *	  ; Lines longer than 75 octets should be folded
  * 
  * Example: The following might be the ABC vendor's extension for an
  * audio-clip form of subject property:

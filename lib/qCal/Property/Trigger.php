@@ -2,6 +2,7 @@
 /**
  * Trigger Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -68,35 +69,35 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   trigger    = "TRIGGER" (trigrel / trigabs)
+ *   trigger	= "TRIGGER" (trigrel / trigabs)
  * 
- *   trigrel    = *(
+ *   trigrel	= *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *                (";" "VALUE" "=" "DURATION") /
- *                (";" trigrelparam) /
+ *				(";" "VALUE" "=" "DURATION") /
+ *				(";" trigrelparam) /
  * 
- *              ; the following is optional,
- *           ; and MAY occur more than once
+ *			  ; the following is optional,
+ *		   ; and MAY occur more than once
  * 
- *                (";" xparam)
- *                ) ":"  dur-value
+ *				(";" xparam)
+ *				) ":"  dur-value
  * 
- *   trigabs    = 1*(
+ *   trigabs	= 1*(
  * 
- *              ; the following is REQUIRED,
- *              ; but MUST NOT occur more than once
+ *			  ; the following is REQUIRED,
+ *			  ; but MUST NOT occur more than once
  * 
- *                (";" "VALUE" "=" "DATE-TIME") /
+ *				(";" "VALUE" "=" "DATE-TIME") /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *                (";" xparam)
+ *				(";" xparam)
  * 
- *                ) ":" date-time
+ *				) ":" date-time
  * 
  * Example: A trigger set 15 minutes prior to the start of the event or
  * to-do.

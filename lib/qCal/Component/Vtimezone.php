@@ -2,6 +2,7 @@
 /**
  * Timezone Component
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -18,57 +19,57 @@
  * 
  *   timezonec  = "BEGIN" ":" "VTIMEZONE" CRLF
  * 
- *                2*(
+ *				2*(
  * 
- *                ; 'tzid' is required, but MUST NOT occur more
- *                ; than once
+ *				; 'tzid' is required, but MUST NOT occur more
+ *				; than once
  * 
- *              tzid /
+ *			  tzid /
  * 
- *                ; 'last-mod' and 'tzurl' are optional,
- *              but MUST NOT occur more than once
+ *				; 'last-mod' and 'tzurl' are optional,
+ *			  but MUST NOT occur more than once
  * 
- *              last-mod / tzurl /
+ *			  last-mod / tzurl /
  * 
- *                ; one of 'standardc' or 'daylightc' MUST occur
- *              ..; and each MAY occur more than once.
+ *				; one of 'standardc' or 'daylightc' MUST occur
+ *			  ..; and each MAY occur more than once.
  * 
- *              standardc / daylightc /
+ *			  standardc / daylightc /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *                x-prop
+ *				x-prop
  * 
- *                )
+ *				)
  * 
- *                "END" ":" "VTIMEZONE" CRLF
+ *				"END" ":" "VTIMEZONE" CRLF
  * 
  *   standardc  = "BEGIN" ":" "STANDARD" CRLF
  * 
- *                tzprop
+ *				tzprop
  * 
- *                "END" ":" "STANDARD" CRLF
+ *				"END" ":" "STANDARD" CRLF
  * 
  *   daylightc  = "BEGIN" ":" "DAYLIGHT" CRLF
  * 
- *                tzprop
+ *				tzprop
  * 
- *                "END" ":" "DAYLIGHT" CRLF
+ *				"END" ":" "DAYLIGHT" CRLF
  * 
- *   tzprop     = 3*(
+ *   tzprop	 = 3*(
  * 
- *              ; the following are each REQUIRED,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are each REQUIRED,
+ *			  ; but MUST NOT occur more than once
  * 
- *              dtstart / tzoffsetto / tzoffsetfrom /
+ *			  dtstart / tzoffsetto / tzoffsetfrom /
  * 
- *              ; the following are optional,
- *              ; and MAY occur more than once
+ *			  ; the following are optional,
+ *			  ; and MAY occur more than once
  * 
- *              comment / rdate / rrule / tzname / x-prop
+ *			  comment / rdate / rrule / tzname / x-prop
  * 
- *              )
+ *			  )
  * 
  * Description: A time zone is unambiguously defined by the set of time
  * measurement rules determined by the governing body for a given
@@ -86,31 +87,31 @@
  * 
  *   Effective Observance Rule
  * 
- *   Date       (Date/Time)             Offset  Abbreviation
+ *   Date	   (Date/Time)			 Offset  Abbreviation
  * 
- *   1967-*     last Sun in Oct, 02:00  -0500   EST
+ *   1967-*	 last Sun in Oct, 02:00  -0500   EST
  * 
  *   1967-1973  last Sun in Apr, 02:00  -0400   EDT
  * 
- *   1974-1974  Jan 6,  02:00           -0400   EDT
+ *   1974-1974  Jan 6,  02:00		   -0400   EDT
  * 
- *   1975-1975  Feb 23, 02:00           -0400   EDT
+ *   1975-1975  Feb 23, 02:00		   -0400   EDT
  * 
  *   1976-1986  last Sun in Apr, 02:00  -0400   EDT
  * 
- *   1987-*     first Sun in Apr, 02:00 -0400   EDT
+ *   1987-*	 first Sun in Apr, 02:00 -0400   EDT
  * 
- *      Note: The specification of a global time zone registry is not
- *      addressed by this document and is left for future study.
- *      However, implementers may find the Olson time zone database [TZ]
- *      a useful reference. It is an informal, public-domain collection
- *      of time zone information, which is currently being maintained by
- *      volunteer Internet participants, and is used in several
- *      operating systems. This database contains current and historical
- *      time zone information for a wide variety of locations around the
- *      globe; it provides a time zone identifier for every unique time
- *      zone rule set in actual use since 1970, with historical data
- *      going back to the introduction of standard time.
+ *	  Note: The specification of a global time zone registry is not
+ *	  addressed by this document and is left for future study.
+ *	  However, implementers may find the Olson time zone database [TZ]
+ *	  a useful reference. It is an informal, public-domain collection
+ *	  of time zone information, which is currently being maintained by
+ *	  volunteer Internet participants, and is used in several
+ *	  operating systems. This database contains current and historical
+ *	  time zone information for a wide variety of locations around the
+ *	  globe; it provides a time zone identifier for every unique time
+ *	  zone rule set in actual use since 1970, with historical data
+ *	  going back to the introduction of standard time.
  * 
  * Interoperability between two calendaring and scheduling applications,
  * especially for recurring events, to-dos or journal entries, is
@@ -153,17 +154,17 @@
  * consists of a collection of properties that describe Daylight Saving
  * Time. In general this collection of properties consists of:
  * 
- *      - the first onset date-time for the observance
+ *	  - the first onset date-time for the observance
  * 
- *      - the last onset date-time for the observance, if a last onset
- *        is known.
+ *	  - the last onset date-time for the observance, if a last onset
+ *		is known.
  * 
- *      - the offset to be applied for the observance
+ *	  - the offset to be applied for the observance
  * 
- *      - a rule that describes the day and time when the observance
- *        takes effect
+ *	  - a rule that describes the day and time when the observance
+ *		takes effect
  * 
- *      - an optional name for the observance
+ *	  - an optional name for the observance
  * 
  * For a given time zone, there may be multiple unique definitions of
  * the observances over a period of time. Each observance is described
@@ -226,15 +227,15 @@
  * observance defined by this time zone sub-component. Some specific
  * requirements for the usage of RRULE for this purpose include:
  * 
- *      - If observance is known to have an effective end date, the
- *      "UNTIL" recurrence rule parameter MUST be used to specify the
- *      last valid onset of this observance (i.e., the UNTIL date-time
- *      will be equal to the last instance generated by the recurrence
- *      pattern). It MUST be specified in UTC time.
+ *	  - If observance is known to have an effective end date, the
+ *	  "UNTIL" recurrence rule parameter MUST be used to specify the
+ *	  last valid onset of this observance (i.e., the UNTIL date-time
+ *	  will be equal to the last instance generated by the recurrence
+ *	  pattern). It MUST be specified in UTC time.
  * 
- *      - The "DTSTART" and the "TZOFFSETTO" properties MUST be used
- *      when generating the onset date-time values (instances) from the
- *      RRULE.
+ *	  - The "DTSTART" and the "TZOFFSETTO" properties MUST be used
+ *	  when generating the onset date-time values (instances) from the
+ *	  RRULE.
  * 
  * Alternatively, the "RDATE" property can be used to define the onset
  * of the observance by giving the individual onset date and times.

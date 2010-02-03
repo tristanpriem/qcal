@@ -2,6 +2,7 @@
 /**
  * Related To Id Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -51,21 +52,21 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   related    = "RELATED-TO" [relparam] ":" text CRLF
+ *   related	= "RELATED-TO" [relparam] ":" text CRLF
  * 
  *   relparam   = *(
  * 
- *              ; the following is optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following is optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" reltypeparam) /
+ *			  (";" reltypeparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparm)
+ *			  (";" xparm)
  * 
- *              )
+ *			  )
  * 
  * The following is an example of this property:
  * 

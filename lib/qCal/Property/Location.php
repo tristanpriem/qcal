@@ -2,6 +2,7 @@
 /**
  * Location Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -35,24 +36,24 @@
  * 
  *   locparam   = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" altrepparam) / (";" languageparam) /
+ *			  (";" altrepparam) / (";" languageparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following are some examples of this property:
  * 
  *   LOCATION:Conference Room - F123, Bldg. 002
  * 
  *   LOCATION;ALTREP="http://xyzcorp.com/conf-rooms/f123.vcf":
- *    Conference Room - F123, Bldg. 002
+ *	Conference Room - F123, Bldg. 002
  */
 class qCal_Property_Location extends qCal_Property {
 

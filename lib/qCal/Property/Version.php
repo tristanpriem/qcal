@@ -2,6 +2,7 @@
 /**
  * Version Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -27,18 +28,18 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   version    = "VERSION" verparam ":" vervalue CRLF
+ *   version	= "VERSION" verparam ":" vervalue CRLF
  * 
  *   verparam   = *(";" xparam)
  * 
- *   vervalue   = "2.0"         ;This memo
- *              / maxver
- *              / (minver ";" maxver)
+ *   vervalue   = "2.0"		 ;This memo
+ *			  / maxver
+ *			  / (minver ";" maxver)
  * 
- *   minver     = <A IANA registered iCalendar version identifier>
+ *   minver	 = <A IANA registered iCalendar version identifier>
  *   ;Minimum iCalendar version needed to parse the iCalendar object
  * 
- *   maxver     = <A IANA registered iCalendar version identifier>
+ *   maxver	 = <A IANA registered iCalendar version identifier>
  *   ;Maximum iCalendar version needed to parse the iCalendar object
  * 
  * Example: The following is an example of this property:

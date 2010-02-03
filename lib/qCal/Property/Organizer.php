@@ -2,6 +2,7 @@
 /**
  * Organizer Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -46,22 +47,22 @@
  * Format Definition: The property is defined by the following notation:
  * 
  *   organizer  = "ORGANIZER" orgparam ":"
- *                cal-address CRLF
+ *				cal-address CRLF
  * 
  *   orgparam   = *(
  * 
- *              ; the following are optional,
- *           ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *		   ; but MUST NOT occur more than once
  * 
- *              (";" cnparam) / (";" dirparam) / (";" sentbyparam) /
- *              (";" languageparam) /
+ *			  (";" cnparam) / (";" dirparam) / (";" sentbyparam) /
+ *			  (";" languageparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following is an example of this property:
  * 
@@ -71,7 +72,7 @@
  * directory information associated with the organizer:
  * 
  *   ORGANIZER;CN=JohnSmith;DIR="ldap://host.com:6666/o=3DDC%20Associ
- *    ates,c=3DUS??(cn=3DJohn%20Smith)":MAILTO:jsmith@host1.com
+ *	ates,c=3DUS??(cn=3DJohn%20Smith)":MAILTO:jsmith@host1.com
  * 
  * The following is an example of this property used by another calendar
  * user who is acting on behalf of the organizer, with responses
@@ -79,7 +80,7 @@
  * user:
  * 
  *   ORGANIZER;SENT-BY="MAILTO:jane_doe@host.com":
- *    MAILTO:jsmith@host1.com
+ *	MAILTO:jsmith@host1.com
  */
 class qCal_Property_Organizer extends qCal_Property {
 
