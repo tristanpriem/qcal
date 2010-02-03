@@ -1,6 +1,9 @@
 <?php
 /**
  * Date duration
+ * This class represents a duration of time that is not associated with any
+ * specific point in time. For instance, rather than "From 1/1/2010 to 1/1/2011"
+ * this class represents something like "three weeks and two days".
  * 
  * @package qCal
  * @subpackage qCal_DateTime
