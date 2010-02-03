@@ -2,6 +2,7 @@
 /**
  * URI Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -15,7 +16,7 @@
  * Formal Definition: The data type is defined by the following
  * notation:
  * 
- *  uri        = <As defined by any IETF RFC>
+ *  uri		= <As defined by any IETF RFC>
  * 
  * Description: This data type might be used to reference binary
  * information, for values that are large, or otherwise undesirable to

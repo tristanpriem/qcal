@@ -2,6 +2,7 @@
 /**
  * Time Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -14,11 +15,11 @@
  * Formal Definition: The data type is defined by the following
  * notation:
  * 
- *  time               = time-hour time-minute time-second [time-utc]
+ *  time			   = time-hour time-minute time-second [time-utc]
  * 
- *  time-hour          = 2DIGIT        ;00-23
- *  time-minute        = 2DIGIT        ;00-59
- *  time-second        = 2DIGIT        ;00-60
+ *  time-hour		  = 2DIGIT		;00-23
+ *  time-minute		= 2DIGIT		;00-59
+ *  time-second		= 2DIGIT		;00-60
  *  ;The "60" value is used to account for "leap" seconds.
  * 
  *  time-utc   = "Z"
@@ -43,7 +44,7 @@
  * The form of time with UTC offset MUST NOT be used. For example, the
  * following is NOT VALID for a time value:
  * 
- *  230000-0800        ;Invalid time format
+ *  230000-0800		;Invalid time format
  * 
  * FORM #1 LOCAL TIME
  * 

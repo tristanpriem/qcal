@@ -2,6 +2,7 @@
 /**
  * Calendar User Address Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -14,7 +15,7 @@
  * Formal Definition: The value type is as defined by the following
  * notation:
  * 
- *  cal-address        = uri
+ *  cal-address		= uri
  * 
  * Description: The value is a URI as defined by [RFC 1738] or any other
  * IANA registered form for a URI. When used to address an Internet

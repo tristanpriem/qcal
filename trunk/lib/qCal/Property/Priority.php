@@ -2,6 +2,7 @@
 /**
  * Priority Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -61,8 +62,8 @@
  * 
  *   prioparam  = *(";" xparam)
  * 
- *   privalue   = integer       ;Must be in the range [0..9]
- *      ; All other values are reserved for future use
+ *   privalue   = integer	   ;Must be in the range [0..9]
+ *	  ; All other values are reserved for future use
  * 
  * The following is an example of a property with the highest priority:
  * 

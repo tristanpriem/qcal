@@ -2,6 +2,7 @@
 /**
  * Time Zone URL Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -31,7 +32,7 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   tzurl      = "TZURL" tzurlparam ":" uri CRLF
+ *   tzurl	  = "TZURL" tzurlparam ":" uri CRLF
  * 
  *   tzurlparam = *(";" xparam)
  * 

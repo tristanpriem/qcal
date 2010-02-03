@@ -5,6 +5,7 @@
  * extremely versitile data type. It can represent a very wide range of
  * recurring dates, as well as include and exclude dates.
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -17,60 +18,60 @@
  * Formal Definition: The value type is defined by the following
  * notation:
  * 
- *  recur      = "FREQ"=freq *(
+ *  recur	  = "FREQ"=freq *(
  * 
- *             ; either UNTIL or COUNT may appear in a 'recur',
- *             ; but UNTIL and COUNT MUST NOT occur in the same 'recur'
+ *			 ; either UNTIL or COUNT may appear in a 'recur',
+ *			 ; but UNTIL and COUNT MUST NOT occur in the same 'recur'
  * 
- *             ( ";" "UNTIL" "=" enddate ) /
- *             ( ";" "COUNT" "=" 1*DIGIT ) /
+ *			 ( ";" "UNTIL" "=" enddate ) /
+ *			 ( ";" "COUNT" "=" 1*DIGIT ) /
  * 
- *             ; the rest of these keywords are optional,
- *             ; but MUST NOT occur more than once
+ *			 ; the rest of these keywords are optional,
+ *			 ; but MUST NOT occur more than once
  * 
- *             ( ";" "INTERVAL" "=" 1*DIGIT )          /
- *             ( ";" "BYSECOND" "=" byseclist )        /
- *             ( ";" "BYMINUTE" "=" byminlist )        /
- *             ( ";" "BYHOUR" "=" byhrlist )           /
- *             ( ";" "BYDAY" "=" bywdaylist )          /
- *             ( ";" "BYMONTHDAY" "=" bymodaylist )    /
- *             ( ";" "BYYEARDAY" "=" byyrdaylist )     /
- *             ( ";" "BYWEEKNO" "=" bywknolist )       /
- *             ( ";" "BYMONTH" "=" bymolist )          /
- *             ( ";" "BYSETPOS" "=" bysplist )         /
- *             ( ";" "WKST" "=" weekday )              /
- *             ( ";" x-name "=" text )
- *             )
+ *			 ( ";" "INTERVAL" "=" 1*DIGIT )		  /
+ *			 ( ";" "BYSECOND" "=" byseclist )		/
+ *			 ( ";" "BYMINUTE" "=" byminlist )		/
+ *			 ( ";" "BYHOUR" "=" byhrlist )		   /
+ *			 ( ";" "BYDAY" "=" bywdaylist )		  /
+ *			 ( ";" "BYMONTHDAY" "=" bymodaylist )	/
+ *			 ( ";" "BYYEARDAY" "=" byyrdaylist )	 /
+ *			 ( ";" "BYWEEKNO" "=" bywknolist )	   /
+ *			 ( ";" "BYMONTH" "=" bymolist )		  /
+ *			 ( ";" "BYSETPOS" "=" bysplist )		 /
+ *			 ( ";" "WKST" "=" weekday )			  /
+ *			 ( ";" x-name "=" text )
+ *			 )
  * 
- *  freq       = "SECONDLY" / "MINUTELY" / "HOURLY" / "DAILY"
- *             / "WEEKLY" / "MONTHLY" / "YEARLY"
+ *  freq	   = "SECONDLY" / "MINUTELY" / "HOURLY" / "DAILY"
+ *			 / "WEEKLY" / "MONTHLY" / "YEARLY"
  * 
- *  enddate    = date
- *  enddate    =/ date-time            ;An UTC value
+ *  enddate	= date
+ *  enddate	=/ date-time			;An UTC value
  * 
  *  byseclist  = seconds / ( seconds *("," seconds) )
  * 
- *  seconds    = 1DIGIT / 2DIGIT       ;0 to 59
+ *  seconds	= 1DIGIT / 2DIGIT	   ;0 to 59
  * 
  *  byminlist  = minutes / ( minutes *("," minutes) )
  * 
- *  minutes    = 1DIGIT / 2DIGIT       ;0 to 59
+ *  minutes	= 1DIGIT / 2DIGIT	   ;0 to 59
  * 
  *  byhrlist   = hour / ( hour *("," hour) )
  * 
- *  hour       = 1DIGIT / 2DIGIT       ;0 to 23
+ *  hour	   = 1DIGIT / 2DIGIT	   ;0 to 23
  * 
  *  bywdaylist = weekdaynum / ( weekdaynum *("," weekdaynum) )
  * 
  *  weekdaynum = [([plus] ordwk / minus ordwk)] weekday
  * 
- *  plus       = "+"
+ *  plus	   = "+"
  * 
- *  minus      = "-"
+ *  minus	  = "-"
  * 
- *  ordwk      = 1DIGIT / 2DIGIT       ;1 to 53
+ *  ordwk	  = 1DIGIT / 2DIGIT	   ;1 to 53
  * 
- *  weekday    = "SU" / "MO" / "TU" / "WE" / "TH" / "FR" / "SA"
+ *  weekday	= "SU" / "MO" / "TU" / "WE" / "TH" / "FR" / "SA"
  *  ;Corresponding to SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
  *  ;FRIDAY, SATURDAY and SUNDAY days of the week.
  * 
@@ -78,21 +79,21 @@
  * 
  *  monthdaynum = ([plus] ordmoday) / (minus ordmoday)
  * 
- *  ordmoday   = 1DIGIT / 2DIGIT       ;1 to 31
+ *  ordmoday   = 1DIGIT / 2DIGIT	   ;1 to 31
  * 
  *  byyrdaylist = yeardaynum / ( yeardaynum *("," yeardaynum) )
  * 
  *  yeardaynum = ([plus] ordyrday) / (minus ordyrday)
  * 
- *  ordyrday   = 1DIGIT / 2DIGIT / 3DIGIT      ;1 to 366
+ *  ordyrday   = 1DIGIT / 2DIGIT / 3DIGIT	  ;1 to 366
  * 
  *  bywknolist = weeknum / ( weeknum *("," weeknum) )
  * 
- *  weeknum    = ([plus] ordwk) / (minus ordwk)
+ *  weeknum	= ([plus] ordwk) / (minus ordwk)
  * 
  *  bymolist   = monthnum / ( monthnum *("," monthnum) )
  * 
- *  monthnum   = 1DIGIT / 2DIGIT       ;1 to 12
+ *  monthnum   = 1DIGIT / 2DIGIT	   ;1 to 12
  * 
  *  bysplist   = setposday / ( setposday *("," setposday) )
  * 
@@ -181,9 +182,9 @@
  * year. This rule part is only valid for YEARLY rules. For example, 3
  * represents the third week of the year.
  * 
- *     Note: Assuming a Monday week start, week 53 can only occur when
- *     Thursday is January 1 or if it is a leap year and Wednesday is
- *     January 1.
+ *	 Note: Assuming a Monday week start, week 53 can only occur when
+ *	 Thursday is January 1 or if it is a leap year and Wednesday is
+ *	 January 1.
  * 
  * The BYMONTH rule part specifies a COMMA character (US-ASCII decimal
  * 44) separated list of months of the year. Valid values are 1 to 12.

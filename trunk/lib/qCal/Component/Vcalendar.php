@@ -5,11 +5,12 @@
  * the calendar as a whole. All other components must be nested within
  * this component.
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Implement a method of NOT allowing more than one of properties
- *       such as METHOD to be set.
+ *	   such as METHOD to be set.
  * 
  * RFC 2445 Definition
  *
@@ -22,8 +23,8 @@
  * object is as follows:
  * 
  *   icalobject = 1*("BEGIN" ":" "VCALENDAR" CRLF
- *                icalbody
- *                "END" ":" "VCALENDAR" CRLF)
+ *				icalbody
+ *				"END" ":" "VCALENDAR" CRLF)
  * 
  * The following is a simple example of an iCalendar object:
  * 

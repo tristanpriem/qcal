@@ -2,6 +2,7 @@
 /**
  * Comment Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -23,29 +24,29 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   comment    = "COMMENT" commparam ":" text CRLF
+ *   comment	= "COMMENT" commparam ":" text CRLF
  * 
  *   commparam  = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" altrepparam) / (";" languageparam) /
+ *			  (";" altrepparam) / (";" languageparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following is an example of this property:
  * 
  *   COMMENT:The meeting really needs to include both ourselves
- *     and the customer. We can't hold this  meeting without them.
- *     As a matter of fact\, the venue for the meeting ought to be at
+ *	 and the customer. We can't hold this  meeting without them.
+ *	 As a matter of fact\, the venue for the meeting ought to be at
  * 
- *     their site. - - John
+ *	 their site. - - John
  * 
  * The data type for this property is TEXT.
  */

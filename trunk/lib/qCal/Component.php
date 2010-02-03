@@ -3,6 +3,7 @@
  * Base calendar component class. Events, Todos, and Calendars are
  * examples of components in qCal
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -24,35 +25,35 @@
  * 
  *  calprops   = 2*(
  * 
- *             ; 'prodid' and 'version' are both REQUIRED,
- *             ; but MUST NOT occur more than once
+ *			 ; 'prodid' and 'version' are both REQUIRED,
+ *			 ; but MUST NOT occur more than once
  * 
- *             prodid /version /
+ *			 prodid /version /
  * 
- *             ; 'calscale' and 'method' are optional,
- *             ; but MUST NOT occur more than once
+ *			 ; 'calscale' and 'method' are optional,
+ *			 ; but MUST NOT occur more than once
  * 
- *             calscale        /
- *             method          /
+ *			 calscale		/
+ *			 method		  /
  * 
- *             x-prop
+ *			 x-prop
  * 
- *             )
+ *			 )
  * 
  *  component  = 1*(eventc / todoc / journalc / freebusyc /
- *             / timezonec / iana-comp / x-comp)
+ *			 / timezonec / iana-comp / x-comp)
  * 
  *  iana-comp  = "BEGIN" ":" iana-token CRLF
  * 
- *               1*contentline
+ *			   1*contentline
  * 
- *               "END" ":" iana-token CRLF
+ *			   "END" ":" iana-token CRLF
  * 
- *  x-comp     = "BEGIN" ":" x-name CRLF
+ *  x-comp	 = "BEGIN" ":" x-name CRLF
  * 
- *               1*contentline
+ *			   1*contentline
  * 
- *               "END" ":" x-name CRLF
+ *			   "END" ":" x-name CRLF
  * 
  * An iCalendar object MUST include the "PRODID" and "VERSION" calendar
  * properties. In addition, it MUST include at least one calendar
@@ -93,24 +94,28 @@ abstract class qCal_Component {
 	protected $properties = array();
 	/**
 	 * Contains an array of this component's required properties
+	 * @var array
 	 */
 	protected $requiredProperties = array();
 	/**
 	 * Parent component (all components but vcalendar should have one once attached)
+	 * @var qCal_Component
 	 */
 	protected $parent;
 	/**
 	 * Class constructor
-	 * Accepts an array of properties, which can be simple values or actual property objects
+	 * @param array $properties Accepts an array of properties, which can be simple values or actual property objects
 	 * Pass in a null value to use a property's default value (some dont have defaults, so beware)
 	 * Example:
 	 * $cal = new qCal_Component_Calendar(array(
-     *     'prodid' => '-// Some Property Id//',
-     *     'someotherproperty' => null,
-     *     qCal_Property_Version(2.0),
+	 *	 'prodid' => '-// Some Property Id//',
+	 *	 'someotherproperty' => null,
+	 *	 qCal_Property_Version(2.0),
 	 * ), array(
 	 * 	   qCal_Component_Daylight(),
 	 * ));
+	 * @param array $components Accepts an array of sub-components (for instance VALARM inside a VEVENT)
+	 * @access public
 	 */
 	public  function __construct($properties = array(), $components = array()) {
 	
@@ -147,6 +152,12 @@ abstract class qCal_Component {
 	
 	}
 	/**
+	 * Performs all assertions that are necessary to be in accordance with RFC 2445 for each component
+	 * @return void
+	 * @throws qCal_Exception_InvalidPropertyValue if an invalid property value is found
+	 * @throws qCal_Exception_MissingProperty if a property is missing
+	 * @access public
+	 * @return Up to child component... need to look at that...
 	 * @todo (lazy load functionality) Check that this is a valid component. This method is sort of lazy-loaded. It only gets called
 	 * if the user has requested data that requires validation and the component has not been validated already.
 	 * @todo Shouldn't this loop over children and validate them too? Maybe optionally?
@@ -176,12 +187,13 @@ abstract class qCal_Component {
 			}
 		}
 		// this allows per-component validation :)
-		$this->doValidation();
+		return $this->doValidation();
 	
 	}
 	/**
 	 * Returns the component name
-	 * @return string
+	 * @return string The name of this component
+	 * @access public
 	 */
 	public function getName() {
 	
@@ -191,6 +203,9 @@ abstract class qCal_Component {
 	/**
 	 * Returns true if this component can be attached to $component
 	 * I'm sure there's a better way to do this, but this works for now
+	 * @param qCal_Component $component The component you want to determine if this can attach to
+	 * @return boolean Whether or not this component can be attached to the specified component
+	 * @access public
 	 */
 	public function canAttachTo(qCal_Component $component) {
 	
@@ -199,6 +214,9 @@ abstract class qCal_Component {
 	}
 	/**
 	 * Attach a component to this component (alarm inside event for example)
+	 * @param qCal_Component $component The component to be attached to this component
+	 * @access public
+	 * @return $this
 	 * @todo There may be an issue with the way this is done. When parsing a file, if a component
 	 * or property with a tzid comes before its corresponding vtimezone component, an exception
 	 * will be thrown. I'm don't think the RFC specifies that requirement (that timezone components
@@ -251,19 +269,26 @@ abstract class qCal_Component {
 			}
 		}
 		$this->children[$component->getName()][] = $component;
+		return $this;
 	
 	}
 	/**
 	 * Set the parent of this component
+	 * @param qCal_Component $component The parent component
+	 * @return $this
+	 * @access public
 	 * @todo I'm not sure this will suffice. See the attach method for reasoning behind this.
 	 */
 	public function setParent(qCal_Component $component) {
 	
 		$this->parent = $component;
+		return $this;
 	
 	}
 	/**
 	 * Get the parent of this component (if there is one)
+	 * @return qCal_Component The parent component
+	 * @access public
 	 */
 	public function getParent() {
 	
@@ -272,6 +297,11 @@ abstract class qCal_Component {
 	}
 	/**
 	 * The only thing I need this for so far is the parser, but it may come in handy for the facade as well
+	 * @param string $name The name of the component to be created
+	 * @param array $properties The properties that should be contained in the component
+	 * @return qCal_Component The generated qCal_Component
+	 * @access public
+	 * @static
 	 */
 	static public function factory($name, $properties = array()) {
 	
@@ -295,6 +325,11 @@ abstract class qCal_Component {
 	 * that can be set multiple times is I'll create a method do delete properties based
 	 * on values, parameters, etc. since they don't really have IDs. So I tihnk I'll go
 	 * with addProperty :) 
+	 * @param mixed $property Either the name of a property or a qCal_Property object
+	 * @param mixed $value If $property is the name of a property, this is the value
+	 * @param array $params An array of property parameters
+	 * @access public
+	 * @return $this
 	 */
 	public function addProperty($property, $value = null, $params = array()) {
 	
@@ -308,14 +343,17 @@ abstract class qCal_Component {
 			unset($this->properties[$property->getName()]);
 		}
 		$this->properties[$property->getName()][] = $property;
+		return $this;
 	
 	}
 	/**
 	 * Returns property of this component by name
-	 *
+	 * 
+	 * @param string $name The name of the property you want to retrieve 
+	 * @access public
+	 * @return array of qCal_Property
 	 * @todo Since the same property can appear in a component more than once, this method
 	 * doesn't make that much sense unless it returns all of the instances of the property
-	 * @return array of qCal_Property
 	 */
 	public function getProperty($name) {
 	
@@ -328,8 +366,9 @@ abstract class qCal_Component {
 	
 	/**
 	 * Returns true if this component contains a property of $name
-	 *
+	 * @param string $name The name of the property that is to checked for existence
 	 * @return boolean
+	 * @access public
 	 */
 	public function hasProperty($name) {
 	
@@ -340,8 +379,9 @@ abstract class qCal_Component {
 	
 	/**
 	 * Returns true if this component contains a property of $name
-	 *
+	 * @param string $name The name of the component that is to be checked for existence
 	 * @return boolean
+	 * @access public
 	 */
 	public function hasComponent($name) {
 	
@@ -351,6 +391,9 @@ abstract class qCal_Component {
 	}
 	/**
 	 * Returns the child component requested
+	 * @param string $name The name of the component to be retrieved
+	 * @return qCal_Component The component that was requested
+	 * @access public
 	 */
 	public function getComponent($name) {
 	
@@ -375,12 +418,22 @@ abstract class qCal_Component {
 	}
 	*/
 	
+	/**
+	 * Return an array of properties
+	 * @return array An array of qCal_Property objects
+	 * @access public
+	 */
 	public function getProperties() {
 	
 		return $this->properties;
 	
 	}
 	
+	/**
+	 * Return an array of child components
+	 * @return array An array of child qCal_Component objects
+	 * @access public
+	 */
 	public function getChildren() {
 	
 		return $this->children;
@@ -390,6 +443,8 @@ abstract class qCal_Component {
 	/**
 	 * Gets the parent-most component in the tree. I would really like to come up
 	 * with a cleaner way to access other components from within a component, but oh well.
+	 * @return qCal_Component The parent-most component
+	 * @access public
 	 */
 	public function getRootComponent() {
 	
@@ -405,7 +460,8 @@ abstract class qCal_Component {
 	/**
 	 * Renders the calendar, by default in icalendar format. If you pass
 	 * in a renderer, it will use that instead
-	 *
+	 * @param qCal_Renderer $renderer A renderer object to be used to render this component
+	 * @access public
 	 * @return mixed Depends on the renderer
 	 * @todo Would it make more sense to pass the component to the renderer, or the renderer
 	 * to the component? I'm not sure components should know about rendering.
@@ -420,6 +476,8 @@ abstract class qCal_Component {
 	
 	/**
 	 * Output the icalendar component as a string (render it)
+	 * @return string This object converted to a string
+	 * @access public
 	 */
 	public function __toString() {
 	
@@ -432,6 +490,7 @@ abstract class qCal_Component {
 	 * Looks through all of the data in the calendar and returns a qCal_Component_Vfreebusy object
 	 * with free/busy time from $startdate to $enddate. The component will contain all components, but some
 	 * may have their transparency set to "transparent".
+	 * @return Not sure what this will return yet.
 	 * @todo This cannot be finished until recurring events are finished, since free/busy does not allow
 	 * recurrence rules, each instance of a recurrence would need to be calculated out and passed into the free/busy
 	 * component, so that the component would contain concrete instances of each event recurrence.
@@ -447,7 +506,9 @@ abstract class qCal_Component {
 	
 	}
 	/**
-	 * getTimeZones
+	 * getTimeZones 
+	 * @return array An array of timezones in the iCalendar object
+	 * @access public
 	 */
 	public function getTimezones() {
 	
@@ -470,6 +531,8 @@ abstract class qCal_Component {
 	/**
 	 * Get a specific timezone by tzid
 	 * @param string The timezone identifier
+	 * @access public
+	 * @return qCal_Component_Vtimezone
 	 */
 	public function getTimezone($tzid) {
 	

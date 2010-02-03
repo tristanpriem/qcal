@@ -2,12 +2,13 @@
 /**
  * Exception Date/Times Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  * @todo Make sure allowedComponents is correct. The RFC isn't dead clear.
- *       Perhaps this means that it can be included in any component that
- *       includes an rdate or rrule property?
+ *	   Perhaps this means that it can be included in any component that
+ *	   includes an rdate or rrule property?
  * 
  * RFC 2445 Definition
  * 
@@ -53,24 +54,24 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   exdate     = "EXDATE" exdtparam ":" exdtval *("," exdtval) CRLF
+ *   exdate	 = "EXDATE" exdtparam ":" exdtval *("," exdtval) CRLF
  * 
  *   exdtparam  = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" "VALUE" "=" ("DATE-TIME" / "DATE")) /
- *           (";" tzidparam) /
+ *			  (";" "VALUE" "=" ("DATE-TIME" / "DATE")) /
+ *		   (";" tzidparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
- *   exdtval    = date-time / date
+ *   exdtval	= date-time / date
  *   ;Value MUST match value type
  * 
  * Example: The following is an example of this property:

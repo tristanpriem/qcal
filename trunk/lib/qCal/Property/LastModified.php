@@ -2,6 +2,7 @@
 /**
  * Last Modified Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -15,8 +16,8 @@
  * information associated with the calendar component was last revised
  * in the calendar store.
  * 
- *      Note: This is analogous to the modification date and time for a
- *      file in the file system.
+ *	  Note: This is analogous to the modification date and time for a
+ *	  file in the file system.
  * 
  * Value Type: DATE-TIME
  * 

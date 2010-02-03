@@ -5,6 +5,7 @@
  * specifies the exact start and end time, whereas duration only specifies
  * the amount of time.
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -18,7 +19,7 @@
  * Formal Definition: The data type is defined by the following
  * notation:
  * 
- *   period     = period-explicit / period-start
+ *   period	 = period-explicit / period-start
  * 
  *   period-explicit = date-time "/" date-time
  *   ; [ISO 8601] complete representation basic format for a period of

@@ -2,6 +2,7 @@
 /**
  * Text Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -16,17 +17,17 @@
  * character sets is for future work. The value type is defined by the
  * following notation.
  * 
- *  text       = *(TSAFE-CHAR / ":" / DQUOTE / ESCAPED-CHAR)
+ *  text	   = *(TSAFE-CHAR / ":" / DQUOTE / ESCAPED-CHAR)
  *  ; Folded according to description above
  * 
  *  ESCAPED-CHAR = "\\" / "\;" / "\," / "\N" / "\n")
- *     ; \\ encodes \, \N or \n encodes newline
- *     ; \; encodes ;, \, encodes ,
+ *	 ; \\ encodes \, \N or \n encodes newline
+ *	 ; \; encodes ;, \, encodes ,
  * 
  *  TSAFE-CHAR = %x20-21 / %x23-2B / %x2D-39 / %x3C-5B
- *               %x5D-7E / NON-US-ASCII
- *     ; Any character except CTLs not needed by the current
- *     ; character set, DQUOTE, ";", ":", "\", ","
+ *			   %x5D-7E / NON-US-ASCII
+ *	 ; Any character except CTLs not needed by the current
+ *	 ; character set, DQUOTE, ";", ":", "\", ","
  * 
  *  Note: Certain other character sets may require modification of the
  *  above definitions, but this is beyond the scope of this document.

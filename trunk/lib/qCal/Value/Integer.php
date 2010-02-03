@@ -2,6 +2,7 @@
 /**
  * Integer Value
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -15,7 +16,7 @@
  * Formal Definition: The value type is defined by the following
  * notation:
  * 
- *  integer    = (["+"] / "-") 1*DIGIT
+ *  integer	= (["+"] / "-") 1*DIGIT
  * 
  * Description: If the property permits, multiple "integer" values are
  * specified by a COMMA character (US-ASCII decimal 44) separated list

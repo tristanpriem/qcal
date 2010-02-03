@@ -5,6 +5,7 @@
  * rather complex, such as recur (specifies a date pattern for recurring
  * events and other components).
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License

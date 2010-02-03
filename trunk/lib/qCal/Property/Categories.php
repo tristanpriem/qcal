@@ -2,6 +2,7 @@
 /**
  * Categories Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -31,21 +32,21 @@
  * Format Definition: The property is defined by the following notation:
  * 
  *   categories = "CATEGORIES" catparam ":" text *("," text)
- *                CRLF
+ *				CRLF
  * 
  *   catparam   = *(
  * 
- *              ; the following is optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following is optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" languageparam ) /
+ *			  (";" languageparam ) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following are examples of this property:
  * 

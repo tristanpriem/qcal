@@ -2,6 +2,7 @@
 /**
  * Alarm Component
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -14,104 +15,104 @@
  * Formal Definition: A "VALARM" calendar component is defined by the
  * following notation:
  * 
- *       alarmc     = "BEGIN" ":" "VALARM" CRLF
- *                    (audioprop / dispprop / emailprop / procprop)
- *                    "END" ":" "VALARM" CRLF
+ *	   alarmc	 = "BEGIN" ":" "VALARM" CRLF
+ *					(audioprop / dispprop / emailprop / procprop)
+ *					"END" ":" "VALARM" CRLF
  * 
  *  audioprop  = 2*(
  * 
- *             ; 'action' and 'trigger' are both REQUIRED,
- *             ; but MUST NOT occur more than once
+ *			 ; 'action' and 'trigger' are both REQUIRED,
+ *			 ; but MUST NOT occur more than once
  * 
- *             action / trigger /
+ *			 action / trigger /
  * 
- *             ; 'duration' and 'repeat' are both optional,
- *             ; and MUST NOT occur more than once each,
- *             ; but if one occurs, so MUST the other
+ *			 ; 'duration' and 'repeat' are both optional,
+ *			 ; and MUST NOT occur more than once each,
+ *			 ; but if one occurs, so MUST the other
  * 
- *             duration / repeat /
+ *			 duration / repeat /
  * 
- *             ; the following is optional,
- *             ; but MUST NOT occur more than once
+ *			 ; the following is optional,
+ *			 ; but MUST NOT occur more than once
  * 
- *             attach /
+ *			 attach /
  * 
- *             ; the following is optional,
- *             ; and MAY occur more than once
+ *			 ; the following is optional,
+ *			 ; and MAY occur more than once
  * 
- *             x-prop
+ *			 x-prop
  * 
- *             )
+ *			 )
  * 
  *  dispprop   = 3*(
  * 
- *             ; the following are all REQUIRED,
- *             ; but MUST NOT occur more than once
+ *			 ; the following are all REQUIRED,
+ *			 ; but MUST NOT occur more than once
  * 
- *             action / description / trigger /
+ *			 action / description / trigger /
  * 
- *             ; 'duration' and 'repeat' are both optional,
- *             ; and MUST NOT occur more than once each,
- *             ; but if one occurs, so MUST the other
+ *			 ; 'duration' and 'repeat' are both optional,
+ *			 ; and MUST NOT occur more than once each,
+ *			 ; but if one occurs, so MUST the other
  * 
- *             duration / repeat /
+ *			 duration / repeat /
  * 
- *             ; the following is optional,
- *             ; and MAY occur more than once
+ *			 ; the following is optional,
+ *			 ; and MAY occur more than once
  * 
- *             *x-prop
+ *			 *x-prop
  * 
- *             )
+ *			 )
  * 
  *  emailprop  = 5*(
  * 
- *             ; the following are all REQUIRED,
- *             ; but MUST NOT occur more than once
+ *			 ; the following are all REQUIRED,
+ *			 ; but MUST NOT occur more than once
  * 
- *             action / description / trigger / summary
+ *			 action / description / trigger / summary
  * 
- *             ; the following is REQUIRED,
- *             ; and MAY occur more than once
+ *			 ; the following is REQUIRED,
+ *			 ; and MAY occur more than once
  * 
- *             attendee /
+ *			 attendee /
  * 
- *             ; 'duration' and 'repeat' are both optional,
- *             ; and MUST NOT occur more than once each,
- *             ; but if one occurs, so MUST the other
+ *			 ; 'duration' and 'repeat' are both optional,
+ *			 ; and MUST NOT occur more than once each,
+ *			 ; but if one occurs, so MUST the other
  * 
- *             duration / repeat /
+ *			 duration / repeat /
  * 
- *             ; the following are optional,
- *             ; and MAY occur more than once
+ *			 ; the following are optional,
+ *			 ; and MAY occur more than once
  * 
- *             attach / x-prop
+ *			 attach / x-prop
  * 
- *             )
+ *			 )
  * 
  *  procprop   = 3*(
  * 
- *             ; the following are all REQUIRED,
- *             ; but MUST NOT occur more than once
+ *			 ; the following are all REQUIRED,
+ *			 ; but MUST NOT occur more than once
  * 
- *             action / attach / trigger /
+ *			 action / attach / trigger /
  * 
- *             ; 'duration' and 'repeat' are both optional,
- *             ; and MUST NOT occur more than once each,
- *             ; but if one occurs, so MUST the other
+ *			 ; 'duration' and 'repeat' are both optional,
+ *			 ; and MUST NOT occur more than once each,
+ *			 ; but if one occurs, so MUST the other
  * 
- *             duration / repeat /
+ *			 duration / repeat /
  * 
- *             ; 'description' is optional,
- *             ; and MUST NOT occur more than once
+ *			 ; 'description' is optional,
+ *			 ; and MUST NOT occur more than once
  * 
- *             description /
+ *			 description /
  * 
- *             ; the following is optional,
- *             ; and MAY occur more than once
+ *			 ; the following is optional,
+ *			 ; and MAY occur more than once
  * 
- *             x-prop
+ *			 x-prop
  * 
- *             )
+ *			 )
  * 
  * Description: A "VALARM" calendar component is a grouping of component
  * properties that is a reminder or alarm for an event or a to-do. For
@@ -260,8 +261,8 @@
  *  ATTENDEE:MAILTO:john_doe@host.com
  *  SUMMARY:*** REMINDER: SEND AGENDA FOR WEEKLY STAFF MEETING ***
  *  DESCRIPTION:A draft agenda needs to be sent out to the attendees
- *    to the weekly managers meeting (MGR-LIST). Attached is a
- *    pointer the document template for the agenda file.
+ *	to the weekly managers meeting (MGR-LIST). Attached is a
+ *	pointer the document template for the agenda file.
  *  ATTACH;FMTTYPE=application/binary:http://host.com/templates/agen
  *   da.doc
  *  END:VALARM

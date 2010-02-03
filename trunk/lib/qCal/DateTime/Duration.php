@@ -13,36 +13,55 @@
  */
 class qCal_DateTime_Duration {
 
-	// This is an array of conversions from weeks, days, hours and seconds into seconds.
-	// Things like months and years aren't included here because they are ambiguous. It is
-	// not possible to convert a month into seconds because a month can be anywhere between
-	// 28 and 31 days. Years also cannot be consistently converted into seconds.
-	// IMPORTANT - don't change the order of these
-	protected static $conversions = array ('W' => 604800, 'D' => 86400, 'H' => 3600, 'M' => 60, 'S' => 1);
 	/**
-	 * This defines all of the possible intervals of times that can be passed to the constructor
+	 * @var array
+	 * This is an array of conversions from weeks, days, hours and seconds into
+	 * seconds. Things like months and years aren't included here because they
+	 * are ambiguous. It is not possible to convert arbitrary months into
+	 * seconds because a month can be anywhere between 28 and 31 days. Years
+	 * also cannot be consistently converted into seconds.
+	 * IMPORTANT - don't change the order of these
+	 */
+	protected static $conversions = array ('W' => 604800, 'D' => 86400, 'H' => 3600, 'M' => 60, 'S' => 1);
+	
+	/**
+	 * @var array This defines all of the possible intervals of times that can
+	 * be passed to the constructor
 	 */
 	protected $intervals = array('weeks', 'days', 'hours', 'minutes', 'seconds', 'posneg');
+	
 	/**
-	 * Duration in seconds
+	 * @var integer Duration in seconds
 	 */
 	protected $duration;
+	
 	/**
-	 * If this is negative, this will be a minus symbol. Positive doesn't need a sign, so it is just null
+	 * @var string If this is negative, this will be a minus symbol. Positive
+	 * doesn't need a sign, so it will be either null or a plus symbol.
 	 */
 	protected $sign;
+	
 	/**
 	 * Constructor
-	 * @param array $duration An array with "weeks", "days", "hours", "minutes", and "seconds" as keys and integers as values
-	 * You can also provide the "posneg" key to specify whether it is a positive or negative duration
+	 * @param array $duration An array with "weeks", "days", "hours", "minutes",
+	 * and "seconds" as keys and integers as values. You can also provide the
+	 * "posneg" key to specify whether it is a positive or negative duration
+	 * @param boolean $rollover If set to true, you can provide things like 100
+	 * seconds, which will "rollover" to a 1 minute, 40 seconds
+	 * @access public
 	 */
 	public function __construct(Array $duration, $rollover = true) {
 	
 		$this->setDuration($duration, $rollover);
 	
 	}
+	
 	/**
-	 * Set the duration by array
+	 * Set the duration by array (see the constructor's comments for more info)
+	 * @param array $duration An array of time intervals such as "weeks", "hours", etc.
+	 * @param boolean $rollover Set to true to allow values to "rollover"
+	 * @return $this
+	 * @access protected
 	 */
 	protected function setDuration($duration, $rollover) {
 	
@@ -69,8 +88,14 @@ class qCal_DateTime_Duration {
 		return $this;
 	
 	}
+	
 	/**
-	 * Factory - Set duration - accepts an integer (amount of seconds) or an icalendar-formatted duration string
+	 * A factory method to convert strings into qCal_DateTime_Duration objects.
+	 * @param string $duration Either an integer (amount of seconds) or an
+	 * icalendar-formatted duration string which is then converted to a
+	 * qCal_DateTime_Duration object.
+	 * @return qCal_DateTime_Duration
+	 * @access public
 	 */
 	public static function factory($duration) {
 	
@@ -100,8 +125,14 @@ class qCal_DateTime_Duration {
 		return new qCal_DateTime_Duration(array('seconds' => $durationSeconds, 'posneg' => $posneg));
 	
 	}
+	
 	/**
-	 * Pass in a string like "15W" or "1D" and this will return how many seconds are in it
+	 * This method is used to convert parts of an iCalendar-formatted duration
+	 * string to seconds.
+	 * @param string $duration Pass in something like "1D" for one day, "2W"
+	 * for two weeks, etc.
+	 * @return integer The amount of seconds in the string passed in
+	 * @access protected
 	 */
 	protected static function calculateSeconds($duration) {
 	
@@ -112,7 +143,10 @@ class qCal_DateTime_Duration {
 	
 	}
 	/**
-	 * Converts seconds to an icalendar-formatted duration string
+	 * Converts this object to an iCalendar-formatted duration string such as
+	 * "P2W5D" for two weeks, five days.
+	 * @return string iCalendar-formatted duration string
+	 * @access public
 	 */
 	public function toICal() {
 	
@@ -142,16 +176,23 @@ class qCal_DateTime_Duration {
 		return $this->sign . $return;
 	
 	}
+	
 	/**
+	 * Converts this object to a string (iCalendar format)
+	 * @return string An iCalendar-formatted duration string
 	 * @todo Should this be the string representation? I dont really know.
+	 * @access public
 	 */
 	public function __toString() {
 	
 		return $this->toICal();
 	
 	}
+	
 	/**
 	 * Get duration in seconds
+	 * @return integer The amount of seconds that this duration represents
+	 * @access public
 	 */
 	public function getSeconds() {
 	

@@ -2,6 +2,7 @@
 /**
  * Action Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -27,12 +28,12 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   action     = "ACTION" actionparam ":" actionvalue CRLF
+ *   action	 = "ACTION" actionparam ":" actionvalue CRLF
  * 
- *   actionparam        = *(";" xparam)
+ *   actionparam		= *(";" xparam)
  * 
- *   actionvalue        = "AUDIO" / "DISPLAY" / "EMAIL" / "PROCEDURE"
- *                      / iana-token / x-name
+ *   actionvalue		= "AUDIO" / "DISPLAY" / "EMAIL" / "PROCEDURE"
+ *					  / iana-token / x-name
  * 
  * Example: The following are examples of this property in a "VALARM"
  * calendar component:

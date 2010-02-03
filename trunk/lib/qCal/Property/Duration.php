@@ -2,6 +2,7 @@
 /**
  * Duration Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -32,7 +33,7 @@
  * Format Definition: The property is defined by the following notation:
  * 
  *   duration   = "DURATION" durparam ":" dur-value CRLF
- *                ;consisting of a positive duration of time.
+ *				;consisting of a positive duration of time.
  * 
  *   durparam   = *(";" xparam)
  * 

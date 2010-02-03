@@ -4,6 +4,7 @@
  * Some properties require a timezone offset. This specifies what that
  * offset is
  * @package qCal
+ * @subpackage qCal_Value
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -18,7 +19,7 @@
  * 
  *  utc-offset = time-numzone  ;As defined above in time data type
  * 
- *  time-numzone       = ("+" / "-") time-hour time-minute [time-
+ *  time-numzone	   = ("+" / "-") time-hour time-minute [time-
  *  second]
  * 
  * Description: The PLUS SIGN character MUST be specified for positive

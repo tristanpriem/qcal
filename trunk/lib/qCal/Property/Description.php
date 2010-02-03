@@ -2,6 +2,7 @@
 /**
  * Description Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -35,34 +36,34 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   description        = "DESCRIPTION" descparam ":" text CRLF
+ *   description		= "DESCRIPTION" descparam ":" text CRLF
  * 
  *   descparam  = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" altrepparam) / (";" languageparam) /
+ *			  (";" altrepparam) / (";" languageparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
  * Example: The following is an example of the property with formatted
  * line breaks in the property value:
  * 
  *   DESCRIPTION:Meeting to provide technical review for "Phoenix"
- *     design.\n Happy Face Conference Room. Phoenix design team
- *     MUST attend this meeting.\n RSVP to team leader.
+ *	 design.\n Happy Face Conference Room. Phoenix design team
+ *	 MUST attend this meeting.\n RSVP to team leader.
  * 
  * The following is an example of the property with folding of long
  * lines:
  * 
  *   DESCRIPTION:Last draft of the new novel is to be completed
- *     for the editor's proof today.
+ *	 for the editor's proof today.
  */
 class qCal_Property_Description extends qCal_Property {
 

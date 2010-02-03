@@ -2,6 +2,7 @@
 /**
  * Freebusy Component
  * @package qCal
+ * @subpackage qCal_Component
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -18,23 +19,23 @@
  * following notation:
  * 
  *   freebusyc  = "BEGIN" ":" "VFREEBUSY" CRLF
- *                fbprop
- *                "END" ":" "VFREEBUSY" CRLF
+ *				fbprop
+ *				"END" ":" "VFREEBUSY" CRLF
  * 
- *   fbprop     = *(
+ *   fbprop	 = *(
  * 
- *              ; the following are optional,
- *              ; but MUST NOT occur more than once
+ *			  ; the following are optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              contact / dtstart / dtend / duration / dtstamp /
- *              organizer / uid / url /
+ *			  contact / dtstart / dtend / duration / dtstamp /
+ *			  organizer / uid / url /
  * 
- *              ; the following are optional,
- *              ; and MAY occur more than once
+ *			  ; the following are optional,
+ *			  ; and MAY occur more than once
  * 
- *              attendee / comment / freebusy / rstatus / x-prop
+ *			  attendee / comment / freebusy / rstatus / x-prop
  * 
- *              )
+ *			  )
  * 
  * Description: A "VFREEBUSY" calendar component is a grouping of
  * component properties that represents either a request for, a reply to
@@ -110,10 +111,10 @@
  *   ATTENDEE:MAILTO:john_public@host2.com
  *   DTSTAMP:19970901T100000Z
  *   FREEBUSY;VALUE=PERIOD:19971015T050000Z/PT8H30M,
- *    19971015T160000Z/PT5H30M,19971015T223000Z/PT6H30M
+ *	19971015T160000Z/PT5H30M,19971015T223000Z/PT6H30M
  *   URL:http://host2.com/pub/busy/jpublic-01.ifb
  *   COMMENT:This iCalendar file contains busy time information for
- *     the next three months.
+ *	 the next three months.
  *   END:VFREEBUSY
  * 
  * The following is an example of a "VFREEBUSY" calendar component used

@@ -2,6 +2,7 @@
 /**
  * Dated/Time Created Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -14,8 +15,8 @@
  * information was created by the calendar user agent in the calendar
  * store.
  * 
- *      Note: This is analogous to the creation date and time for a file
- *      in the file system.
+ *	  Note: This is analogous to the creation date and time for a file
+ *	  in the file system.
  * 
  * Value Type: DATE-TIME
  * 
@@ -29,7 +30,7 @@
  * 
  * Format Definition: The property is defined by the following notation:
  * 
- *   created    = "CREATED" creaparam ":" date-time CRLF
+ *   created	= "CREATED" creaparam ":" date-time CRLF
  * 
  *   creaparam  = *(";" xparam)
  * 

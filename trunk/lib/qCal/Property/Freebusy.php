@@ -2,6 +2,7 @@
 /**
  * Free/Busy Time Property
  * @package qCal
+ * @subpackage qCal_Property
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
@@ -43,22 +44,22 @@
  * Format Definition: The property is defined by the following notation:
  * 
  *   freebusy   = "FREEBUSY" fbparam ":" fbvalue
- *                CRLF
+ *				CRLF
  * 
- *   fbparam    = *(
- *              ; the following is optional,
- *              ; but MUST NOT occur more than once
+ *   fbparam	= *(
+ *			  ; the following is optional,
+ *			  ; but MUST NOT occur more than once
  * 
- *              (";" fbtypeparam) /
+ *			  (";" fbtypeparam) /
  * 
- *              ; the following is optional,
- *              ; and MAY occur more than once
+ *			  ; the following is optional,
+ *			  ; and MAY occur more than once
  * 
- *              (";" xparam)
+ *			  (";" xparam)
  * 
- *              )
+ *			  )
  * 
- *   fbvalue    = period *["," period]
+ *   fbvalue	= period *["," period]
  *   ;Time value MUST be in the UTC time format.
  * 
  * Example: The following are some examples of this property:
@@ -68,7 +69,7 @@
  *   FREEBUSY;FBTYPE=FREE:19970308T160000Z/PT3H,19970308T200000Z/PT1H
  * 
  *   FREEBUSY;FBTYPE=FREE:19970308T160000Z/PT3H,19970308T200000Z/PT1H,
- *    19970308T230000Z/19970309T000000Z
+ *	19970308T230000Z/19970309T000000Z
  */
 class qCal_Property_Freebusy extends qCal_Property_MultiValue {
 
