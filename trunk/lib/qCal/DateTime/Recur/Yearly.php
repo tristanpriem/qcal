@@ -11,6 +11,6 @@
  */
 class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 
-	// @todo: implement the required methods...
+	
 
 }
