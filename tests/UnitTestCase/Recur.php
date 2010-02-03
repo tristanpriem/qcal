@@ -41,10 +41,11 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
-	public function testCurrent() {
+	public function testCurrentReturnsStartObjectIfNoRulesAreApplied() {
 	
 		$recur = qCal_DateTime_Recur::factory('yearly', '2010');
 		$this->assertIsA($recur->current(), 'qCal_DateTime_Recur_Recurrence');
+		$this->assertEqual($recur->current()->getDateTime(), qCal_DateTime::factory('2010'));
 	
 	}
 	
