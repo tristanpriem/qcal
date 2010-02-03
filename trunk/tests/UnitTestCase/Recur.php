@@ -19,19 +19,19 @@ class UnitTestCase_Recur extends UnitTestCase {
 	public function testFactoryException() {
 	
 		$this->expectException(new qCal_DateTime_Exception_InvalidRecurrenceFrequency("'decadely' is an unsupported recurrence frequency."));
-		$start = new qCal_DateTime(2010, 10, 23, 12, 0, 0, new qCal_Timezone('America/Los_Angeles'));
+		$start = new qCal_DateTime(2010, 10, 23, 12, 0, 0, qCal_Timezone::factory('America/Los_Angeles'));
 		$recur = qCal_DateTime_Recur::factory('decadely', $start);
 	
 	}
 	
-	/*public function testFactory() {
+	public function testFactory() {
 	
-		$start = new qCal_DateTime(2010, 10, 23, 12, 0, 0, new qCal_Timezone('America/Los_Angeles'));
+		$start = new qCal_DateTime(2010, 10, 23, 12, 0, 0, qCal_Timezone::factory('America/Los_Angeles'));
 		$recur = qCal_DateTime_Recur::factory('yearly', $start);
 		$this->assertIsA($recur, 'qCal_DateTime_Recur_Yearly');
 		$this->assertEqual($recur->getStart(), $start);
 	
-	}*/
+	}
 	
 	public function XXXtestRecurPlayground() {
 	
