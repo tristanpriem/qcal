@@ -11,6 +11,11 @@
  */
 class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 
+	protected function init() {
 	
+		// make a copy of the start date/time to work with
+		$start = $this->start;
+	
+	}
 
 }
