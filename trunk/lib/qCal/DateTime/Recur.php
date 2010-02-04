@@ -45,12 +45,15 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 * Class constructor
 	 * This method instantiates the object by setting its "type" and its start date/time.
 	 * @param mixed $start Either a qCal_DateTime or a string representing one
+	 * @param integer $intvl An interval of years, months or whatever this recurrence type is
+	 * @param array $rules A list of rules to apply to the date/time recurrence
 	 * @throws qCal_DateTime_Exception_InvalidRecurrenceType If an invalid type is specified
 	 * @access public
 	 */
-	public function __construct($start = null, Array $rules = array()) {
+	public function __construct($start = null, $intvl = null, Array $rules = array()) {
 	
-		$this->setStart($start);
+		$this->setStart($start)
+			->setInterval($intvl);
 		foreach ($rules as $rule) {
 			// if rule is not a supported rule type, report it
 			if (!($rule instanceof qCal_DateTime_Recur_Rule)) {
@@ -76,11 +79,12 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 * frequency type (yearly, monthly, weekly, etc.).
 	 * @param string $freq The recurrence frequency
 	 * @param mixed $start Either a qCal_DateTime object or a string representing one
+	 * @param integer $intvl The interval of years, months or whatever the recurrence type is
 	 * @return qCal_DateTime_Recur A date/time recurrence object of the specified frequency
 	 * @access public
 	 * @static
 	 */
-	public static function factory($freq, $start) {
+	public static function factory($freq, $start, $intvl = null) {
 	
 		$freq = strtolower($freq);
 		if (!in_array($freq, self::$validFreq)) {
@@ -119,6 +123,30 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	}
 	
 	/**
+	 * Set the date/time interval. 
+	 * @param integer The interval in years, months or whatever the recurrence type is
+	 * @return $this
+	 * @access public
+	 */
+	public function setInterval($intvl = null) { 
+	
+		if (is_null($intvl)) $intvl = 1;
+		$this->interval = (boolean) $intvl;
+		return $this;
+	
+	}
+	
+	/**
+	 * Retrieve the date/time interval
+	 * @return integer The interval in years, months or whatever the recurrence type is
+	 */
+	public function getInterval() {
+	
+		return $this->interval;
+	
+	}
+	
+	/**
 	 * Add a qCal_DateTime_Recur_Rule object to this recurrence, changing the
 	 * way it recurs. Only one of each rule type is allowed, so if there is
 	 * already a rule of the type you are adding, it is overwritten.
@@ -134,14 +162,14 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	}
 	
 	/**
-	 * Retrieve all recurrences from $start to $end
-	 * @param mixed $start Either a qCal_DateTime object or a string representing one for the start date/time
-	 * @param mixed $end Either a qCal_DateTime object or a string representing one for the end date/time
-	 * @return array A list of all recurrences
+	 * Initialize the "recurrence engine" and return the first recurrence
+	 * @return qCal_DateTime_Recur_Recurrence
+	 * @access protected
 	 */
-	public function getRecurrenceRange($start, $end) {
-	
-		// I'm not sure I even want this method... I'll leave it blank for now... 
+	protected function init() {
+		
+		// there may eventually be something here but for now,
+		// this is to be overridden by child classes...
 	
 	}
 	
@@ -158,7 +186,8 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	public function current() {
 	
 		if (!$this->current) {
-			// initialize the current recurrence if there isn't one
+			// if there is no current recurrence in memory, we need to start up the "recurrence engine"
+			// and find the next one in the set
 			$this->current = new qCal_DateTime_Recur_Recurrence($this->start);
 		}
 		return $this->current;
@@ -198,7 +227,9 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function rewind() {
 	
-		// $this->current = 1;
+		// initialize the "recurrence engine" and
+		// load up the first recurrence in the set
+		$this->current = $this->init();
 	
 	}
 	

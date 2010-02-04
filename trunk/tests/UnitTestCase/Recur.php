@@ -20,7 +20,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 		$this->expectException(new qCal_DateTime_Exception_InvalidRecurrenceFrequency("'decadely' is an unsupported recurrence frequency."));
 		$start = new qCal_DateTime(2010, 10, 23, 12, 0, 0, qCal_Timezone::factory('America/Los_Angeles'));
-		$recur = qCal_DateTime_Recur::factory('decadely', $start);
+		$recur = qCal_DateTime_Recur::factory('decadely', 1, $start);
 	
 	}
 	
@@ -28,7 +28,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 		$this->expectException(new qCal_DateTime_Exception_InvalidRecurrenceRule("'qCal_Date' is an unsupported recurrence rule."));
 		$start = new qCal_DateTime(2012, 1, 1, 12, 0, 0, qCal_Timezone::factory('America/Los_Angeles'));
-		$recur = new qCal_DateTime_Recur_Yearly($start, array(new qCal_Date(2012, 1, 15)));
+		$recur = new qCal_DateTime_Recur_Yearly($start, 1, array(new qCal_Date(2012, 1, 15)));
 	
 	}
 	
@@ -45,6 +45,19 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 		$bymonth = qCal_DateTime_Recur_Rule::factory('month', '1,2,3,4,5,6');
 		$this->assertEqual($bymonth, new qCal_DateTime_Recur_Rule_ByMonth(array(1,2,3,4,5,6)));
+	
+	}
+	
+	public function testYearlyRecurrenceRule() {
+	
+		$yearly = qCal_DateTime_Recur::factory('yearly', '2010-01-01 12:00am');
+		$yearly->addRule(new qCal_DateTime_Recur_Rule_ByMonth(array(1,3,5,7,9,11))) // odd months
+			->addRule(new qCal_DateTime_Recur_Rule_ByMonthDay(array(5,20))) // on the fifth and twentieth
+			->addRule(new qCal_DateTime_Recur_Rule_ByHour(10)) // at 10am
+			->addRule(new qCal_DateTime_Recur_Rule_ByMinute(30)); // make that 10:30
+		
+		// the first recurrence (which will be the first thing returned by current()) should be the date/time below
+		// $this->assertEqual($yearly->current(), new qCal_DateTime_Recur_Recurrence(qCal_DateTime::factory('01-05-2010 10:30am')));
 	
 	}
 	

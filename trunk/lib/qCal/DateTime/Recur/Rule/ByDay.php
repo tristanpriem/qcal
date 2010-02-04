@@ -1,7 +1,8 @@
 <?php
 /**
  * "ByDay" Recurrence Rule
- * This rule specifies how days play into the recurrence rule.
+ * This rule specifies something like "MO" for every Monday or "-1SU" for the
+ * last Sunday of the month
  * 
  * @package qCal
  * @subpackage qCal_DateTime_Recur
