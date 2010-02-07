@@ -68,7 +68,7 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
-	public function testCurrentReturnsARecurrenceObject() {
+	public function testRecurrenceCountable() {
 	
 		$recur = qCal_DateTime_Recur::factory('yearly', '2010-02-04 5:30:30');
 		$recur->addRule(new qCal_DateTime_Recur_Rule_ByMinute(array('15', '30', '45')))
