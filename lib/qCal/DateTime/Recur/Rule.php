@@ -8,6 +8,9 @@
  * @copyright Luke Visinoni (luke.visinoni@gmail.com)
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
+ * @todo I'm not sure that we need all of the subclasses for this. None of them
+ * do anything so far. I'll keep them for now, but if I don't find a use for
+ * them, they're going to get the boot.
  */
 class qCal_DateTime_Recur_Rule {
 
