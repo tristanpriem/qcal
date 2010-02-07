@@ -77,11 +77,24 @@ class UnitTestCase_Recur extends UnitTestCase {
 			->addRule(new qCal_DateTime_Recur_Rule_ByDay(array('-1TU', 'SU')))
 			->addRule(new qCal_DateTime_Recur_Rule_ByWeekNo(array('3','25')))
 			->addRule(new qCal_DateTime_Recur_Rule_ByMonth(array(1, 2, 3, 4, 5, 6)))
-			->addRule(new qCal_DateTime_Recur_Rule_ByMonthDay(array(25, 4, 10)));
-		$recur->rewind();
-		foreach ($recur as $recurrence) {
-			pr($recurrence->__toString());
-		}
+			->addRule(new qCal_DateTime_Recur_Rule_ByMonthDay(array(25, 4, 10)))
+			->setCount(500);
+		
+		// check that current() gets set to the first recurrence
+		$this->assertEqual($recur->current()->format('YmdHis'), '20100204011500');
+		// check that the countable interface works
+		$this->assertEqual(count($recur), 500);
+		// check that calling count explicitly works
+		$this->assertEqual($recur->count(), 500);
+		// check that calling count() rewinds the recurrence pointer
+		$this->assertEqual($recur->current()->format('YmdHis'), '20100204011500');
+		
+		/*$i = 1;
+		foreach ($recur as $r) {
+			echo "<h1>$i</h1>";
+			pr($r->__toString());
+			$i++;
+		}*/
 	
 	}
 	
