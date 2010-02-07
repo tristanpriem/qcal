@@ -14,18 +14,22 @@ class qCal_Date {
 	 * @var unix timestamp
 	 */
 	protected $date;
+	
 	/**
 	 * @var int The start day of the week (defaults to Monday)
 	 */
 	protected $wkst = 1;
+	
 	/**
 	 * @var array The results of a getdate() call
 	 */
 	protected $dateArray = array();
+	
 	/**
 	 * @var string The date format that is used when outputting via __toString() 
 	 */
 	protected $format = "m/d/Y";
+	
 	/**
 	 * @var array This is just a mapping of weekdays to 0 (for Sunday) through 6 (for Saturday)
 	 * which is a direct correlation with PHP's date function's "w" metacharacter
@@ -39,6 +43,17 @@ class qCal_Date {
 		"friday",
 		"saturday",
 	);
+	
+	protected $weekdayAbbr = array(
+		"SU" => "sunday",
+		"MO" => "monday",
+		"TU" => "tuesday",
+		"WE" => "wednesday",
+		"TH" => "thursday",
+		"FR" => "friday",
+		"SA" => "saturday",
+	);
+	
 	/**
 	 * @var array This is an array of months starting at 1 and ending on 12
 	 */
@@ -56,21 +71,25 @@ class qCal_Date {
 		11 => "november",
 		12 => "december",
 	);
+	
 	/**
 	 * @var array The month in a two-dimensional array (picture a calendar)
 	 */
 	protected $monthMap = array();
+	
 	/**
 	 * Class constructor
 	 * @param int The year of this date
 	 * @param int The month of this date
 	 * @param int The day of this date
+	 * @access public
 	 */
 	public function __construct($year = null, $month = null, $day = null, $rollover = false) {
 	
 		$this->setDate($year, $month, $day, $rollover);
 	
 	}
+	
 	/**
 	 * Set the date of this class
 	 * The date defaults to now. If any part of the date is missing, it will default to whatever "now"'s
@@ -82,6 +101,8 @@ class qCal_Date {
 	 * @param int The year of this date
 	 * @param int The month of this date
 	 * @param int The day of this date
+	 * @return $this
+	 * @access protected
 	 * @throws qCal_Date_Exception_InvalidDate
 	 */
 	protected function setDate($year = null, $month = null, $day = null, $rollover = false) {
@@ -113,8 +134,12 @@ class qCal_Date {
 		return $this;
 	
 	}
+	
 	/**
 	 * This is a factory method. It allows you to create a date by string or by another date object (to make a copy)
+	 * @param mixed Either unix timestamp (integer) or a string representing a date
+	 * @return qCal_Date The date for the param passed in
+	 * @access public
 	 */
 	public static function factory($date) {
 	
@@ -134,9 +159,12 @@ class qCal_Date {
 		return new qCal_Date($newdate['year'], $newdate['mon'], $newdate['mday']);
 	
 	}
+	
 	/**
 	 * Set the format that should be used when calling either __toString() or format() without an argument.
 	 * @param string $format
+	 * @return $this
+	 * @access public
 	 */
 	public function setFormat($format) {
 	
@@ -144,10 +172,13 @@ class qCal_Date {
 		return $this;
 	
 	}
+	
 	/**
 	 * Formats the date according to either the existing $this->format, or if the $format arg is passed
 	 * in, it uses that.
 	 * @param string The format that is to be used (according to php's date function). Only date-related metacharacters work.
+	 * @return string This date, formatted as a string, according to the format string passed in
+	 * @access public
 	 */
 	public function format($format) {
 	
@@ -179,79 +210,100 @@ class qCal_Date {
 	/**
 	 * Get the month (number) of this date
 	 * @return integer A number between 1 and 12 inclusively
+	 * @access public
 	 */
 	public function getMonth() {
 	
-		return $this->dateArray["mon"];
+		return (integer) $this->dateArray["mon"];
 	
 	}
+	
 	/**
 	 * Get the month of this date
 	 * @return string The actual name of the month, capitalized
+	 * @access public
 	 */
 	public function getMonthName() {
 	
 		return $this->dateArray["month"];
 	
 	}
+	
 	/**
 	 * Get the day of the month
 	 * @return integer A number between 1 and 31 inclusively
+	 * @access public
 	 */
 	public function getDay() {
 	
-		return $this->dateArray["mday"];
+		return (integer) $this->dateArray["mday"];
 	
 	}
+	
 	/**
 	 * Get the day of the year
 	 * @return integer A number between 0 and 365 inclusively
+	 * @access public
 	 */
 	public function getYearDay($startFromOne = false) {
 	
 		$yearDay = $this->dateArray["yday"] + (integer) $startFromOne;
-		return $yearDay;
+		return (integer) $yearDay;
 	
 	}
+	
 	/**
 	 * Find how many days until the end of the year.
 	 * For instance, if the date is December 25th, there are 6 days until the end of the year
+	 * @return integer The number of days until the end of the year
+	 * @access public
 	 */
 	public function getNumDaysUntilEndOfYear() {
 	
 		$yearday = $this->getYearDay(true);
-		return $this->getNumDaysInYear() - $yearday;
+		return (integer) ($this->getNumDaysInYear() - $yearday);
 	
 	}
+	
 	/**
 	 * Get how many months until the end of the year
+	 * @return integer The number of months until the end of the year
+	 * @access public
 	 * @todo This is really rudimentary. There is more to this, but this works for now...
 	 */
 	public function getNumMonthsUntilEndOfYear() {
 	
-		return 12 - $this->getMonth();
+		return (integer) (12 - $this->getMonth());
 	
 	}
+	
 	/**
 	 * Get the amount of days in the year (365 unless it is a leap-year, then it's 366)
+	 * @return integer The number of days in the year
+	 * @access public
 	 */
 	public function getNumDaysInYear() {
 	
-		return ($this->isLeapYear()) ? 366 : 365;
+		$num = ($this->isLeapYear()) ? 366 : 365;
+		return (integer) $num;
 	
 	}
+	
 	/**
 	 * Return the first day of the month as a qCal_Date object
 	 * @return qCal_Date The first day of the month
+	 * @access public
 	 */
 	public function getFirstDayOfMonth() {
 	
 		return new qCal_Date($this->getYear(), $this->getMonth(), 1);
 	
 	}
+	
 	/**
 	 * Return the last day of the month as a qCal_Date object
 	 * @return qCal_Date The last day of the month
+	 * @access public
 	 */
 	public function getLastDayOfMonth() {
 	
@@ -259,84 +311,104 @@ class qCal_Date {
 		return new qCal_Date($this->getYear(), $this->getMonth(), $lastday);
 	
 	}
+	
 	/**
 	 * Get the number of days until the end of the month
+	 * @return integer The number of days until the end of the month
+	 * @access public
 	 */
 	public function getNumDaysUntilEndOfMonth() {
 	
-		return $this->getNumDaysInMonth() - $this->getDay();
+		return (integer) ($this->getNumDaysInMonth() - $this->getDay());
 	
 	}
+	
 	/**
 	 * Get the year
 	 * @return integer The year of this date, for example 1999
+	 * @access public
 	 */
 	public function getYear() {
 	
-		return $this->dateArray["year"];
+		return (integer) $this->dateArray["year"];
 	
 	}
+	
 	/**
 	 * Get the day of the week 
 	 * @return integer A number between 0 (for Sunday) and 6 (for Saturday).
+	 * @access public
 	 */
 	public function getWeekDay() {
 	
-		return $this->dateArray["wday"];
+		return (integer) $this->dateArray["wday"];
 	
 	}
+	
 	/**
 	 * Get the day of the week
 	 * @return string The actual name of the day of the week, capitalized
+	 * @access public
 	 */
 	public function getWeekDayName() {
 	
 		return $this->dateArray["weekday"];
 	
 	}
+	
 	/**
 	 * Get the amount of days in the current month of this year
 	 * @return integer The number of days in the month
+	 * @access public
 	 */
 	public function getNumDaysInMonth() {
 	
-		return $this->dateArray["t"];
+		return (integer) $this->dateArray["t"];
 	
 	}
+	
 	/**
 	 * Get the week of the year
 	 * @return integer The week of the year (0-51 I think)
+	 * @access public
 	 * @todo This is not accurate if the week start isn't monday. I need to adjust for that
 	 */
 	public function getWeekOfYear() {
 	
-		return $this->dateArray["W"];
+		return (integer) $this->dateArray["W"];
 	
 	}
+	
 	/**
 	 * Get how many weeks until the end of the year
+	 * @access public
 	 * @todo This is really rudimentary. There is more to this, but this works for now...
 	 */
 	public function getWeeksUntilEndOfYear() {
 	
-		return 52 - $this->getWeekOfYear();
+		return (integer) (52 - $this->getWeekOfYear());
 	
 	}
+	
 	/**
 	 * Determine if this is a leap year
+	 * @return boolean Whether or not this date falls on a leap year
+	 * @access public
 	 */
 	public function isLeapYear() {
 	
 		return (boolean) $this->dateArray["L"];
 	
 	}
+	
 	/**
 	 * Get a unix timestamp for the date
 	 * @return integer The amount of seconds since unix epoch (January 1, 1970 UTC)
+	 * @access public
 	 */
 	public function getUnixTimestamp() {
 	
-		return $this->dateArray[0];
+		return (integer) $this->dateArray[0];
 	
 	}
 	
@@ -351,9 +423,11 @@ class qCal_Date {
 	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
 	 * beginning or end of the month.
 	 * @param integer $xth A positive or negative number that determines which weekday of the month we want
-	 * @param string|integer $weekday Either Sunday-Saturday or 0-6 to specify the weekday we want
+	 * @param string|integer $weekday Either Sunday-Saturday or 0-6 to specify the weekday we want (can also be SU through SA)
 	 * @param string|integer $month Either January-December or 1-12 to specify the month we want
 	 * @param integer $year A valid year to specify which year we want
+	 * @return qCal_Date An object representing the xth day of the month
+	 * @access public
 	 */
 	public function getXthWeekdayOfMonth($xth, $weekday = null, $month = null, $year = null) {
 	
@@ -371,6 +445,13 @@ class qCal_Date {
 		if (ctype_digit((string) $weekday)) {
 			if (!array_key_exists($weekday, $this->weekdays)) {
 				throw new qCal_Date_Exception_InvalidWeekday("\"$weekday\" is not a valid weekday.");
+			}
+		} elseif (strlen($weekday) == 2) {
+			// if it isn't in the full weekdays, check the abbreviated list
+			if (array_key_exists($weekday, $this->weekdayAbbr)) {
+				$weekday = $this->weekdayAbbr[$weekday];
+				$wdays = array_flip($this->weekdays);
+				$weekday = $wdays[$weekday];
 			}
 		} else {
 			$weekday = strtolower($weekday);
@@ -461,9 +542,15 @@ class qCal_Date {
 		return $date;
 	
 	}
+	
 	/**
 	 * Determine the number or Tuesdays (or whatever day of the week this date is) since the
 	 * beginning or end of the year.
+	 * @param integer $xth A positive or negative number that determines which weekday of the year we want
+	 * @param string|integer $weekday Either Sunday-Saturday or 0-6 to specify the weekday we want (can also be SU through SA)
+	 * @param integer $year A valid year to specify which year we want
+	 * @return qCal_Date An object representing the xth day of the month
+	 * @access public
 	 */
 	public function getXthWeekdayOfYear($xth, $weekday = null, $year = null) {
 	
@@ -481,6 +568,13 @@ class qCal_Date {
 		if (ctype_digit((string) $weekday)) {
 			if (!array_key_exists($weekday, $this->weekdays)) {
 				throw new qCal_Date_Exception_InvalidWeekday("\"$weekday\" is not a valid weekday.");
+			}
+		} elseif (strlen($weekday) == 2) {
+			// if it isn't in the full weekdays, check the abbreviated list
+			if (array_key_exists($weekday, $this->weekdayAbbr)) {
+				$weekday = $this->weekdayAbbr[$weekday];
+				$wdays = array_flip($this->weekdays);
+				$weekday = $wdays[$weekday];
 			}
 		} else {
 			$weekday = strtolower($weekday);
@@ -564,6 +658,7 @@ class qCal_Date {
 	/**
 	 * Output the date as a string. Options are as follows:
 	 * @return string The formatted date
+	 * @access public
 	 */
 	public function __toString() {
 	
@@ -579,6 +674,9 @@ class qCal_Date {
 	 * Because PHP does not provide a gmgetdate() function, I borrowed this one from the
 	 * comments on the getdate() function page on php.net
 	 * @param integer The timestamp to use to create the date
+	 * @return array The same array as would be returned by PHP's native getdate() function
+	 * @access public
+	 * @static
 	 */
 	public static function gmgetdate($timestamp = null) {
 	
