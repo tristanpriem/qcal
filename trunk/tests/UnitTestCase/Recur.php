@@ -44,14 +44,14 @@ class UnitTestCase_Recur extends UnitTestCase {
 	public function testRuleFactory() {
 	
 		$bymonth = qCal_DateTime_Recur_Rule::factory('month', '1,2,3,4,5,6');
-		$this->assertEqual($bymonth, new qCal_DateTime_Recur_Rule_ByMonth(array(1,2,3,4,5,6)));
+		$this->assertEqual($bymonth, new qCal_DateTime_Recur_Rule_ByMonth(array(1, 2, 3, 4, 5, 6)));
 	
 	}
 	
 	public function testYearlyRecurrenceRule() {
 	
 		$yearly = qCal_DateTime_Recur::factory('yearly', '2010-01-01 12:00am');
-		$yearly->addRule(new qCal_DateTime_Recur_Rule_ByMonth(array(1,3,5,7,9,11))) // odd months
+		$yearly->addRule(new qCal_DateTime_Recur_Rule_ByMonth(array(1, 3, 5, 7, 9, 11))) // odd months
 			->addRule(new qCal_DateTime_Recur_Rule_ByMonthDay(array(5,20))) // on the fifth and twentieth
 			->addRule(new qCal_DateTime_Recur_Rule_ByHour(10)) // at 10am
 			->addRule(new qCal_DateTime_Recur_Rule_ByMinute(30)); // make that 10:30
@@ -64,21 +64,31 @@ class UnitTestCase_Recur extends UnitTestCase {
 	public function testCurrentReturnsStartObjectIfNoRulesAreApplied() {
 	
 		$recur = qCal_DateTime_Recur::factory('yearly', '2010');
-		$this->assertEqual($recur->current()->getDateTime(), qCal_DateTime::factory('2010'));
+		// $this->assertEqual($recur->current()->getDateTime(), qCal_DateTime::factory('2010'));
 	
 	}
 	
 	public function testCurrentReturnsARecurrenceObject() {
 	
-		$recur = qCal_DateTime_Recur::factory('yearly', '2010-02-03');
-		$this->assertIsA($recur->current(), 'qCal_DateTime_Recur_Recurrence');
+		$recur = qCal_DateTime_Recur::factory('yearly', '2010-02-04 5:30:30');
+		$recur->addRule(new qCal_DateTime_Recur_Rule_ByMinute(array('15', '30', '45')))
+			->addRule(new qCal_DateTime_Recur_Rule_BySecond(array('30', '40', '50', '00', '10', '20')))
+			->addRule(qCal_DateTime_Recur_Rule::factory('hour', '4,5,1,2,3'))
+			->addRule(new qCal_DateTime_Recur_Rule_ByDay(array('-1TU', 'SU')))
+			->addRule(new qCal_DateTime_Recur_Rule_ByWeekNo(array('3','25')))
+			->addRule(new qCal_DateTime_Recur_Rule_ByMonth(array(1, 2, 3, 4, 5, 6)))
+			->addRule(new qCal_DateTime_Recur_Rule_ByMonthDay(array(25, 4, 10)));
+		$recur->rewind();
+		foreach ($recur as $recurrence) {
+			pr($recurrence->__toString());
+		}
 	
 	}
 	
 	public function testInstantiateWithArrayOfRules() {
 	
 		$rules = array(
-			new qCal_DateTime_Recur_Rule_ByMonth(array(1,2,3,4,5,6)),
+			new qCal_DateTime_Recur_Rule_ByMonth(array(1, 2, 3, 4, 5, 6)),
 			new qCal_DateTime_Recur_Rule_ByMonthDay(array(1, 5, 10, 15, 20, 25, 30)),
 			new qCal_DateTime_Recur_Rule_ByHour(1),
 			new qCal_DateTime_Recur_Rule_ByMinute(30),

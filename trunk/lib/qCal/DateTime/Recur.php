@@ -37,6 +37,41 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	protected $rules = array();
 	
 	/**
+	 * @var array A list of all of the days in the "current" year. Organized like:
+	 * array(
+	 * 		'1' => array(
+	 * 			'1' => qCal_Date(2010, 1, 1)
+	 * 			'2' => qCal_Date(2010, 1, 2)
+	 * 			...etc...
+	 * 		)
+	 * )
+	 * For every year in the recurrence, this is regenerated
+	 */
+	protected $yearArray = array();
+	
+	/**
+	 * @var array A list of all of the date/time recurrences for the "current"
+	 * day. It is a simple one-dimensional array. Every call to next() advances
+	 * the pointer to the next item in this list until it is exhausted and then
+	 * another is generated for the next day in the recurrence set. Once all of
+	 * the days in the year are exhausted, the yearArray (see above) is 
+	 * regenerated and the process starts all over again.
+	 */
+	protected $timeArray = array();
+	
+	/**
+	 * @var boolean When this is set to true, the yearArray is regenerated when
+	 * next() is called.
+	 */
+	protected $regenerateYearArray = true;
+	
+	/**
+	 * @var boolean When this is set to true, the timeArray is regenerated when
+	 * next() is called.
+	 */
+	protected $regenerateTimeArray = true;
+	
+	/**
 	 * @var qCal_DateTime_Recur_Recurrence The current recurrence in the set
 	 */
 	protected $current;
@@ -52,8 +87,11 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function __construct($start = null, $intvl = null, Array $rules = array()) {
 	
+		// set the start date/time and interval
 		$this->setStart($start)
 			->setInterval($intvl);
+		
+		// loop through the array of rules and add them to this recur object
 		foreach ($rules as $rule) {
 			// if rule is not a supported rule type, report it
 			if (!($rule instanceof qCal_DateTime_Recur_Rule)) {
@@ -162,6 +200,44 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	}
 	
 	/**
+	 * Determine if this recurrence contains the specified rule
+	 * @param string $rule The rule we want to determine the existence of
+	 * @return boolean Whether or not this recurrence contains the specified rule
+	 * @access public
+	 */
+	public function hasRule($rule) {
+	
+		return (boolean) array_key_exists($rule, $this->rules);
+	
+	}
+	
+	/**
+	 * Retrieves the specified rule from the recurrence
+	 * @param string $rule The rule we want to retrieve
+	 * @return qCal_DateTime_Recur_Rule
+	 * @access public
+	 */
+	public function getRule($rule) {
+	
+		if (!$this->hasRule($rule)) {
+			throw new qCal_DateTime_Exception_MissingRecurrenceRule("This recurrence does not contain a '$rule' rule.");
+		}
+		return $this->rules[$rule];
+	
+	}
+	
+	/**
+	 * Retrieve the array of rules that this recurrence contains
+	 * @return array A list of rules that make up this recurrence
+	 * @access public
+	 */
+	public function getRules() {
+	
+		return $this->rules;
+	
+	}
+	
+	/**
 	 * Initialize the "recurrence engine" and return the first recurrence
 	 * @return qCal_DateTime_Recur_Recurrence
 	 * @access protected
@@ -170,6 +246,101 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 		
 		// there may eventually be something here but for now,
 		// this is to be overridden by child classes...
+	
+	}
+	
+	protected function getRulesAsArray() {
+	
+		// make a copy of the start date/time to work with
+		$startDate = $this->getStart()->getDate();
+		$startTime = $this->getStart()->getTime();
+
+		// create a new recurrence (which will be what we return)
+		$rec = new qCal_DateTime_Recur_Recurrence($this->getStart());
+		$ruleArray = array();
+
+		// determine the bySecond rule
+		try {
+			$ruleArray['bySecond'] = $this->getRule("qCal_DateTime_Recur_Rule_BySecond");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// @todo should this default to 0 or should it default to the start time's second value?
+			$ruleArray['bySecond'] = new qCal_DateTime_Recur_Rule_BySecond($startTime->getSecond());
+		}
+
+		// determine the byMinute rule
+		try {
+			$ruleArray['byMinute'] = $this->getRule("qCal_DateTime_Recur_Rule_ByMinute");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// @todo should this default to 0 or should it default to the start time's second value?
+			$ruleArray['byMinute'] = new qCal_DateTime_Recur_Rule_ByMinute($startTime->getMinute());
+		}
+
+		// determine the byHour rule
+		try {
+			$ruleArray['byHour'] = $this->getRule("qCal_DateTime_Recur_Rule_ByHour");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// @todo should this default to 0 or should it default to the start time's second value?
+			$ruleArray['byHour'] = new qCal_DateTime_Recur_Rule_ByHour($startTime->getHour());
+		}
+
+		// determine the byDay rule
+		try {
+			$ruleArray['byDay'] = $this->getRule("qCal_DateTime_Recur_Rule_ByDay");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// we don't have a default byDay...
+			$ruleArray['byDay'] = new qCal_DateTime_Recur_Rule_ByMonth($startDate->getMonth());
+		}
+
+		// determine the byMonth rule
+		try {
+			$ruleArray['byMonth'] = $this->getRule("qCal_DateTime_Recur_Rule_ByMonth");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// no default
+			// $ruleArray['byMonth'] = new qCal_DateTime_Recur_Rule_ByMonth($startDate->getMonth());
+		}
+
+		// determine the byMonthDay rule
+		try {
+			$ruleArray['byMonthDay'] = $this->getRule("qCal_DateTime_Recur_Rule_ByMonthDay");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// no default
+			// $ruleArray['byMonthDay'] = new qCal_DateTime_Recur_Rule_ByMonth($startDate->getDay());
+		}
+
+		// determine the byWeekNo rule
+		try {
+			$ruleArray['byWeekNo'] = $this->getRule("qCal_DateTime_Recur_Rule_ByWeekNo");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// no default
+			// $ruleArray['byWeekNo'] = new qCal_DateTime_Recur_Rule_ByMonth($startDate->getDay());
+		}
+
+		// determine the byYearDay rule
+		try {
+			$ruleArray['byYearDay'] = $this->getRule("qCal_DateTime_Recur_Rule_ByYearDay");
+		} catch (qCal_DateTime_Exception_MissingRecurrenceRule $e) {
+			// no default
+			// $ruleArray['byYearDay'] = new qCal_DateTime_Recur_Rule_ByMonth($startDate->getYearDay());
+		}
+		
+		return $ruleArray;
+	
+	}
+	
+	/**
+	 * Begin Magic Methods
+	 */
+	
+	/**
+	 * Convert this object to a string (used in cases where you do something
+	 * like 'print $datetime')
+	 * @return string The current recurrence as a string
+	 * @access public
+	 */
+	public function __toString() {
+	
+		$recurrence = $this->current();
+		return $recurrence->__toString();
 	
 	}
 	
@@ -185,11 +356,6 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function current() {
 	
-		if (!$this->current) {
-			// if there is no current recurrence in memory, we need to start up the "recurrence engine"
-			// and find the next one in the set
-			$this->current = new qCal_DateTime_Recur_Recurrence($this->start);
-		}
 		return $this->current;
 	
 	}
@@ -203,7 +369,7 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function key() {
 	
-		// return $this->current;
+		return $this->position;
 	
 	}
 	
@@ -215,7 +381,7 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function next() {
 	
-		// $this->current++
+		// delegate to children
 	
 	}
 	
@@ -227,9 +393,10 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function rewind() {
 	
-		// initialize the "recurrence engine" and
-		// load up the first recurrence in the set
-		$this->current = $this->init();
+		// set the "current" variable to the start date to rewind the "pointer"
+		$this->current = $this->getStart();
+		// now use the "next()" method to set "current" to the first actual recurrence
+		$this->next();
 	
 	}
 	
@@ -241,14 +408,7 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function valid() {
 	
-		/*
-		$current = $this->current();
-		if ($current instanceof qCal_DateTime_Recur_Recurrence) {
-			return true;
-		} else {
-			return false;
-		}
-		*/
+		// delegate to children?
 	
 	}
 	
@@ -261,17 +421,7 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function count() {
 	
-		/*
-		if ($this->isInfinite()) {
-			return -1;
-		} else {
-			$total = 0;
-			foreach ($this as $val) {
-				$total++;
-			}
-			return $total; 
-		}
-		*/
+		// delegate to children?
 	
 	}
 
