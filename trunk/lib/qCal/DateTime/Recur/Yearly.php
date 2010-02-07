@@ -18,33 +18,63 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	public function next() {
 	
 		// make a copy of the start date/time to work with
-		$startDate = $this->current->getDate();
-		$startTime = $this->current->getTime();
+		$currentDate = $this->current->getDate();
+		$currentTime = $this->current->getTime();
+		$year = $this->current->getDate()->getYear();
 		
 		// create a convenient array of all of our rules so that we don't have to keep
 		// calling getRule() all the time.
 		$rulesArray = $this->getRulesAsArray();
 		
+		// if there is no "next" recurrence in the timeArray, we need to
+		// regenerate it with new times for the next day in the recurrence list
+		if (!$current = next($this->timeArray)) {
+			// if there is no "next" day in the yearArray, we need to regenerate
+			// the yearArray. It is possible that it hasn't been generated in
+			// the first place, so we need to determine if it should be 
+			// regenerated for the current year, or for the next year interval
+			if (!$currentDay = next($this->yearArray)) {
+				// determine if we need to generate the yearArray with the current
+				// year or with the next year interval
+				if (!empty($this->yearArray)) {
+					$year += $this->getInterval();
+				}
+				// $this->currentDay will be assigned when the yearArray is created
+				// we will now need to regenerate the yearArray with the data above
+				$this->regenerateYearArray = true;
+			} else {
+				$this->currentDay = $currentDay;
+			}
+			// regenerate the timeArray once the yearArray is regenerated
+			$this->regenerateTimeArray = true;
+		} else {
+			$this->current = $current;
+		}
+		
 		// create a multi-dimensional array of dates that will be looped over
 		// when the object is looped over. Each date will have one or more 
 		// times which will result in even more recurrences. We do not build
 		// the time recurrences for the entire year because it takes too long.
+		// @todo If this is not the first time we are building this array, we
+		// need to skip ahead by $this->interval years. 
 		if ($this->regenerateYearArray) {
 		
 			$yearArray = array();
 			for($m = 1; $m <= 12; $m++) {
-				$month = new qCal_Date($startDate->getYear(), $m, 1);
+				$month = new qCal_Date($year, $m, 1);
 				for ($d = 1; $d <= $month->getNumDaysInMonth(); $d++) {
-					$day = new qCal_Date($startDate->getYear(), $m, $d);
+					$day = new qCal_Date($year, $m, $d);
 					if ($this->checkDateAgainstRules($day)) {
-						// if this day is equal or greater than the current date, add it
-						if ($day->getUnixTimestamp() >= $startDate->getUnixTimestamp()) {
+						// if this day is equal to or greater than the current
+						// date, add it to the yearArray
+						if ($day->getUnixTimestamp() >= $currentDate->getUnixTimestamp()) {
 							$yearArray[$day->format("Ymd")] = $day;
 						}
 					}
 				}
 			}
 			$this->yearArray = $yearArray;
+			$this->currentDay = current($this->yearArray);
 			// now that we have cached the yearArray, we don't need to
 			// regenerate it until we have gotten to the next year increment
 			$this->regenerateYearArray = false;
@@ -56,10 +86,11 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 		// time recurrence in the set. If the time recurrences are already
 		// available, move the "current" position ahead one recurrence.
 		if ($this->regenerateTimeArray) {
-			$this->timeArray = $this->findTimeRecurrences($this->current);
+			$this->timeArray = $this->findTimeRecurrences($this->currentDay);
 			// now that we have cached the timeArray, we don't need to 
 			// regenerate it until we have gotten to the next day
 			$this->regenerateTimeArray = false;
+			$this->current = current($this->timeArray);
 		}
 		
 		// now find the "next" recurrence, advance the "current" date and
@@ -69,16 +100,18 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 		// rule set, along with an array of times on each day, and I need to
 		// make this object capable of properly looping over these things.
 		
+		return $this->current;
+		
 		/**
 		 * This is the old code. It was used to create an array containing twelve arrays (one
 		 * for each month) of 28-31 days (one for each day of the month)
 		if (empty($this->yearArray) || $regenerateYearArray) {
 			$yearArray = array();
 			for($m = 1; $m <= 12; $m++) {
-				$month = new qCal_Date($startDate->getYear(), $m, 1);
+				$month = new qCal_Date($currentDate->getYear(), $m, 1);
 				$monthArray = array();
 				for ($d = 1; $d <= $month->getNumDaysInMonth(); $d++) {
-					$day = new qCal_Date($startDate->getYear(), $m, $d);
+					$day = new qCal_Date($currentDate->getYear(), $m, $d);
 					$monthArray[$d] = $day;
 				}
 				$yearArray[$m] = $monthArray;
@@ -165,16 +198,15 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	/**
 	 * Provided a date/time object, use this recurrence's rules to determine
 	 * all of the recurrence times for the date and return them in an array.
-	 * @param qCal_DateTime The date/time object to find time recurrences for
+	 * @param qCal_Date The date object to find time recurrences for
 	 * @return array A list of time recurrences for the specified date/time
 	 * @access protected
+	 * @todo The way this is currently set up allows times before the start
+	 * time because this is passed just a date. So when the start date is passed
+	 * in, this doesn't know not to return times before the start date.
 	 */
-	protected function findTimeRecurrences(qCal_DateTime $dt) {
+	protected function findTimeRecurrences(qCal_Date $date) {
 	
-		// create shortcuts to date/time objects
-		$date = $dt->getDate();
-		$time = $dt->getTime();
-		
 		// create a convenient array of the rules so we don't have to
 		// keep making lengthy ugly calls to getRule()
 		$rulesArray = $this->getRulesAsArray();

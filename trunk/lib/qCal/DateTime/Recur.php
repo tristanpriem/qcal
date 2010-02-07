@@ -11,10 +11,11 @@
  * @author Luke Visinoni (luke.visinoni@gmail.com)
  * @license GNU Lesser General Public License
  */
-class qCal_DateTime_Recur implements Iterator, Countable {
+abstract class qCal_DateTime_Recur implements Iterator, Countable {
 
 	/**
 	 * @var array A list of valid recurrence frequencies
+	 * @access protected
 	 */
 	protected static $validFreq = array(
 		"yearly",
@@ -28,11 +29,20 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	
 	/**
 	 * @var qCal_DateTime The start date/time of this recurrence
+	 * @access protected
 	 */
 	protected $start;
 	
 	/**
+	 * @var integer The interval for this recurrence. For instance, every other year
+	 * would mean the interval is two. Every third year, interval is 3, etc.
+	 * @access protected
+	 */
+	protected $interval = 1;
+	
+	/**
 	 * @var array A list of qCal_DateTime_Recur_Rule objects that define this recurrence
+	 * @access protected
 	 */
 	protected $rules = array();
 	
@@ -46,6 +56,7 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 * 		)
 	 * )
 	 * For every year in the recurrence, this is regenerated
+	 * @access protected
 	 */
 	protected $yearArray = array();
 	
@@ -56,25 +67,62 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 * another is generated for the next day in the recurrence set. Once all of
 	 * the days in the year are exhausted, the yearArray (see above) is 
 	 * regenerated and the process starts all over again.
+	 * @access protected
 	 */
 	protected $timeArray = array();
 	
 	/**
 	 * @var boolean When this is set to true, the yearArray is regenerated when
 	 * next() is called.
+	 * @access protected
 	 */
 	protected $regenerateYearArray = true;
 	
 	/**
 	 * @var boolean When this is set to true, the timeArray is regenerated when
 	 * next() is called.
+	 * @access protected
 	 */
 	protected $regenerateTimeArray = true;
 	
 	/**
-	 * @var qCal_DateTime_Recur_Recurrence The current recurrence in the set
+	 * @var qCal_DateTime The current recurrence in the set (comes from timeArray)
+	 * @todo might want to change this to a qCal_DateTime_Recur_Recurrence
+	 * object or something because this isn't always used for recurring events.
+	 * Sometimes it is to describe daylight savings time, and other things like
+	 * that. If we wrap it in a qCal_DateTime_Recur_Recurrence object, we can
+	 * do things to it that make it more flexible. We'll cross that bridge when
+	 * we get to it though. For now, just use qCal_DateTime.
+	 * @access protected
 	 */
 	protected $current;
+	
+	/**
+	 * @var qCal_Date The current day in yearArray
+	 * @access public
+	 */
+	protected $currentDay;
+	
+	/**
+	 * @var integer The amount of recurrences allowed in the set. If this is
+	 * set to false, then the recurrence set can recur an infinite number of times.
+	 * @access protected
+	 */
+	protected $count = false;
+	
+	/**
+	 * @var qCal_DateTime The date/time that all recurrences must come before.
+	 * If this is set to false, then the recurrence can go on forever.
+	 * @access protected
+	 */
+	protected $until = false;
+	
+	/**
+	 * @var integer The number of recurrences that have been looped over. Used
+	 * to determine at what point to stop recurring when setCount() is used.
+	 * @access protected
+	 */
+	protected $recurrenceCount = 0;
 	
 	/**
 	 * Class constructor
@@ -122,14 +170,14 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 * @access public
 	 * @static
 	 */
-	public static function factory($freq, $start, $intvl = null) {
+	public static function factory($freq, $start, $intvl = null, Array $rules = array()) {
 	
 		$freq = strtolower($freq);
 		if (!in_array($freq, self::$validFreq)) {
 			throw new qCal_DateTime_Exception_InvalidRecurrenceFrequency("'$freq' is an unsupported recurrence frequency.");
 		}
 		$class = 'qCal_DateTime_Recur_' . ucfirst($freq);
-		return new $class($start);
+		return new $class($start, $intvl, $rules);
 	
 	}
 	
@@ -169,7 +217,32 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	public function setInterval($intvl = null) { 
 	
 		if (is_null($intvl)) $intvl = 1;
-		$this->interval = (boolean) $intvl;
+		$this->interval = (integer) $intvl;
+		return $this;
+	
+	}
+	
+	/**
+	 * Retrieve the date/time interval
+	 * @return integer The interval of time (for instance, every 3 years)
+	 * @access public
+	 */
+	public function getInterval() {
+	
+		return (integer) $this->interval;
+	
+	}
+	
+	/**
+	 * Set the number or recurrences that are allowed (recurring stops after
+	 * this many recurrences).
+	 * @param integer The number or recurrences to allow
+	 * @return $this
+	 * @access public
+	 */
+	public function setCount($count) { 
+	
+		$this->count = (integer) $count;
 		return $this;
 	
 	}
@@ -177,10 +250,36 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	/**
 	 * Retrieve the date/time interval
 	 * @return integer The interval in years, months or whatever the recurrence type is
+	 * @access public
 	 */
-	public function getInterval() {
+	public function getCount() {
 	
-		return $this->interval;
+		return (integer) $this->count;
+	
+	}
+	
+	/**
+	 * Set the end date/time for the recurrence set. No recurrences will be returned
+	 * beyond this date/time
+	 * @param mixed Either a qCal_DateTime object or a string representing one
+	 * @return $this
+	 * @access public
+	 */
+	public function setUntil($datetime) { 
+	
+		$this->until = ($datetime instanceof qCal_DateTime) ? $datetime : qCal_DateTime::factory($datetime);
+		return $this;
+	
+	}
+	
+	/**
+	 * Retrieve the date/time that recurrences must come before.
+	 * @return qCal_DateTime The date/time that recurrences must come before
+	 * @access public
+	 */
+	public function getUntil() {
+	
+		return $this->until;
 	
 	}
 	
@@ -234,18 +333,6 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	public function getRules() {
 	
 		return $this->rules;
-	
-	}
-	
-	/**
-	 * Initialize the "recurrence engine" and return the first recurrence
-	 * @return qCal_DateTime_Recur_Recurrence
-	 * @access protected
-	 */
-	protected function init() {
-		
-		// there may eventually be something here but for now,
-		// this is to be overridden by child classes...
 	
 	}
 	
@@ -356,6 +443,7 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function current() {
 	
+		if (!$this->current) $this->rewind();
 		return $this->current;
 	
 	}
@@ -366,24 +454,28 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 * @return integer Each recurrence in the set has an associated key from 1
 	 * to however many recurrences are in the set
 	 * @access public
+	 * @todo Calling $this->get('20100423123000') should return a recurrence if
+	 * there is a recurrence at that date/time. So, returning a "key" should be
+	 * the date/time you want in YmdHis format.
 	 */
 	public function key() {
 	
-		return $this->position;
+		return $this->current->format('YmdHis');
 	
 	}
 	
 	/**
 	 * Next
-	 * Move the pointer to the next recurrence in the set
+	 * Move the pointer to the next recurrence in the set. This method is
+	 * delegated to its children because (at least for now), there is no method
+	 * to get the next recurrence for any type of recurrence (yearly, monthly,
+	 * etc.). Once I am finished with all of the children classes, I may try to
+	 * refactor this class to be capable of finding recurrences for any type.
 	 * @return void
 	 * @access public
+	 * @abstract I want this method to be abstract, but for some reason I can't :(
 	 */
-	public function next() {
-	
-		// delegate to children
-	
-	}
+	public function next() {}
 	
 	/**
 	 * Rewind
@@ -393,35 +485,70 @@ class qCal_DateTime_Recur implements Iterator, Countable {
 	 */
 	public function rewind() {
 	
+		// reset the recurrence count
+		$this->recurrenceCount = 0;
+		
 		// set the "current" variable to the start date to rewind the "pointer"
 		$this->current = $this->getStart();
+		
+		// tell the object to regenerate year and time arrays
+		$this->regenerateYearArray = true;
+		$this->regenerateTimeArray = true;
+		
 		// now use the "next()" method to set "current" to the first actual recurrence
 		$this->next();
+		return true;
 	
 	}
 	
 	/**
 	 * Valid
-	 * Determine if the current recurrence is within the boundry of the recurrence set.
+	 * Determine if the current recurrence is within the boundaries of the recurrence set.
+	 * Recurrence count is computed in this method as well.
 	 * @return boolean If the current recurrence is valid, return true
 	 * @access public
+	 * @todo Child classes may have their own logic to apply here, so check that out...
 	 */
 	public function valid() {
 	
-		// delegate to children?
+		// check to see if this date is past the "until" date
+		if ($this->getUntil()) {
+			if ($this->current->getUnixTimestamp() > $this->getUntil()->getUnixTimestamp()) {
+				return false;
+			}
+		}
+		// check to see if this recurrence makes more than the "count" allows
+		$this->recurrenceCount++;
+		if ($this->getCount()) {
+			if ($this->recurrenceCount > $this->getCount()) {
+				return false;
+			}
+		}
+		
+		return true;
 	
 	}
 	
 	/**
 	 * Count
 	 * If there is a finite number of recurrences, that number is returned.
-	 * If there is an infinite number of recurrences, -1 is returned
+	 * If there is an infinite number of recurrences, -1 is returned.
+	 * Use this method only if you need it. This is a very expensive method.
 	 * @return integer The number of recurrences in the set
 	 * @access public
 	 */
 	public function count() {
 	
-		// delegate to children?
+		if ($this->getCount() || $this->getUntil()) {
+			$count = 0;
+			foreach ($this as $recurrence) {
+				$count++;
+			}
+		} else {
+			$count = -1;
+		}
+		$this->rewind();
+		return $count;
 	
 	}
 
