@@ -14,6 +14,8 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	/**
 	 * Move the internal "pointer" to the next recurrence in the set
 	 * and return it.
+	 * @return qCal_DateTime The next date/time recurrence in the set
+	 * @access public
 	 */
 	public function next() {
 	
@@ -122,6 +124,12 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	
 	}
 	
+	/**
+	 * Check a qCal_Date object against all of the rules for this recurrence.
+	 * @param qCal_Date The date that needs to be checked against the rules
+	 * @return boolean If the rules allow this day, return true
+	 * @access protected
+	 */
 	protected function checkDateAgainstRules(qCal_Date $date) {
 	
 		$rulesArray = $this->getRulesAsArray();
@@ -137,7 +145,8 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 						list($whole, $sign, $dig, $wd) = $matches;
 						// find out if this day matches the specific weekday of month
 						$xth = (integer) ($sign . $dig);
-						// @todo Make sure that getXthWeekDayOfMonth doesn't need to be passed any month or date here...
+						// @todo Make sure that getXthWeekDayOfMonth doesn't need
+						// to be passed any month or date here...
 						$dtWdSpecific = $date->getXthWeekdayOfMonth($xth, $wd);
 						if ($dtWdSpecific->__toString() == $date->__toString()) return true;
 					}
@@ -164,6 +173,7 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 							}
 						}
 					}
+					// @todo Check week day like byMonthDay is done above...
 				}
 			}
 		}

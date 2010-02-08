@@ -78,14 +78,14 @@ class UnitTestCase_Recur extends UnitTestCase {
 			->addRule(new qCal_DateTime_Recur_Rule_ByWeekNo(array('3','25')))
 			->addRule(new qCal_DateTime_Recur_Rule_ByMonth(array(1, 2, 3, 4, 5, 6)))
 			->addRule(new qCal_DateTime_Recur_Rule_ByMonthDay(array(25, 4, 10)))
-			->setCount(500);
+			->setCount(50);
 		
 		// check that current() gets set to the first recurrence
 		$this->assertEqual($recur->current()->format('YmdHis'), '20100204011500');
 		// check that the countable interface works
-		$this->assertEqual(count($recur), 500);
+		$this->assertEqual(count($recur), 50);
 		// check that calling count explicitly works
-		$this->assertEqual($recur->count(), 500);
+		$this->assertEqual($recur->count(), 50);
 		// check that calling count() rewinds the recurrence pointer
 		$this->assertEqual($recur->current()->format('YmdHis'), '20100204011500');
 		
@@ -95,6 +95,47 @@ class UnitTestCase_Recur extends UnitTestCase {
 			pr($r->__toString());
 			$i++;
 		}*/
+	
+	}
+	
+	public function testRecurrenceWorksWithoutRules() {
+	
+		$start = new qCal_DateTime(1997, 1, 5, 8, 30, 0, qCal_Timezone::factory('US/Eastern'));
+		$recur = qCal_DateTime_Recur::factory('yearly', $start);
+		// now check that $recur is valid
+	
+	}
+	
+	public function testYearlyRecurrenceRulesFromRFC() {
+	
+		/**
+     DTSTART;TZID=US-Eastern:19970105T083000
+     RRULE:FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;
+      BYMINUTE=30
+		 */
+		$start = new qCal_DateTime(1997, 1, 5, 8, 30, 0, qCal_Timezone::factory('US/Eastern'));
+		$recur = qCal_DateTime_Recur::factory('yearly', $start);
+		$recur->addRule(new qCal_DateTime_Recur_Rule_ByMonth(1))
+			->addRule(new qCal_DateTime_Recur_Rule_ByDay('SU'))
+			->addRule(new qCal_DateTime_Recur_Rule_ByHour(array(8, 9)))
+			->addRule(new qCal_DateTime_Recur_Rule_ByMinute(30));
+		$recur->rewind();
+		
+		$this->assertEqual($recur->count(), -1);
+		$this->assertEqual($recur->current()->format('YmdHis'), '19970105083000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970105093000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970112083000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970112093000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970119083000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970119093000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970126083000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '19970126093000');
+		
+		// once we are no longer in January, it should move on to the next year
+		// since there are no more days left in the year that are in january
+		// $this->assertEqual($recur->next()->format('YmdHis'), '19970105083000');
+		
+		// the next one should be the next year in january...
 	
 	}
 	
