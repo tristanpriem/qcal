@@ -82,6 +82,16 @@ class qCal_DateTime_Recur_Rule {
 	}
 	
 	/**
+	 * Check that the date provided falls within this rule's values.
+	 * @param qCal_Date The date that you want to check 
+	 * @return boolean True if the date falls within the fules
+	 * @access public
+	 * @todo There is probably a lot of functionality that could be moved up
+	 * on to this level, but for now, I have the child classes doing the work
+	 */
+	public function checkDate(qCal_Date $date) {}
+	
+	/**
 	 * Retrieve the values contained in this rule
 	 * @return array A list of values for this rule
 	 * @access public

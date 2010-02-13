@@ -24,10 +24,6 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 		$currentTime = $this->current->getTime();
 		$year = $this->current->getDate()->getYear();
 		
-		// create a convenient array of all of our rules so that we don't have to keep
-		// calling getRule() all the time.
-		$rulesArray = $this->getRulesAsArray();
-		
 		// if there is no "next" recurrence in the timeArray, we need to
 		// regenerate it with new times for the next day in the recurrence list
 		if (!$current = next($this->timeArray)) {
@@ -132,70 +128,51 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	 */
 	protected function checkDateAgainstRules(qCal_Date $date) {
 	
-		$rulesArray = $this->getRulesAsArray();
-		// find out if there are any recurrences on this day (week day)
-		if (array_key_exists('byDay', $rulesArray)) {
-			foreach ($rulesArray['byDay']->getValues() as $wd) {
-				$char1 = substr($wd, 0, 1);
-				$dtWd = strtoupper(substr($date->getWeekDayName(), 0, 2));
-				if (ctype_digit($char1) || $char1 == "-" || $char1 == "+") {
-					// if the first character is a digit or a plus or minus, we
-					// need to check that date is a specific weekday of the month
-					if (preg_match('/([+-]?)([0-9]+)([a-z]+)/i', $wd, $matches)) {
-						list($whole, $sign, $dig, $wd) = $matches;
-						// find out if this day matches the specific weekday of month
-						$xth = (integer) ($sign . $dig);
-						// @todo Make sure that getXthWeekDayOfMonth doesn't need
-						// to be passed any month or date here...
-						$dtWdSpecific = $date->getXthWeekdayOfMonth($xth, $wd);
-						if ($dtWdSpecific->__toString() == $date->__toString()) return true;
-					}
-				} else {
-					// otherwise, the value is just a weekday name, so just check that
-					if ($wd == $dtWd) {
-						return true;
-					}
-				}
+		// if neither byMonth or byWeekNo is set, then continue on, otherwise,
+		// we need to make sure that this day falls within their restrictions
+		
+		// since without the byweekno and bymonth defined, we assume all are allowed
+		// we set these both to true
+		$withinMonth = true;
+		$withinWeek = true;
+		if ($this->hasRule('qCal_DateTime_Recur_Rule_ByMonth')) {
+			// if the byMonth rule is defined, then withinMonth defaults to false
+			$withinMonth = false;
+			$byMonth = $this->getRule('qCal_DateTime_Recur_Rule_ByMonth');
+			if ($byMonth->checkDate($date)) {
+				$withinMonth = true;
+			}
+		}
+		if ($this->hasRule('qCal_DateTime_Recur_Rule_ByWeekNo')) {
+			// if the byMonth rule is defined, then withinMonth defaults to false
+			$withinWeek = false;
+			$byWeekNo = $this->getRule('qCal_DateTime_Recur_Rule_ByWeekNo');
+			if ($byWeekNo->checkDate($date)) {
+				$withinWeek = true;
 			}
 		}
 		
-		// if the rules specify the date's month
-		if (array_key_exists('byMonth', $rulesArray)) {
-			foreach ($rulesArray['byMonth']->getValues() as $m) {
-				$dtM = $date->getMonth();
-				if ($dtM == $m) {
-					// and the rules specify the date's day
-					if (array_key_exists('byMonthDay', $rulesArray)) {
-						foreach ($rulesArray['byMonthDay']->getValues() as $md) {
-							$dtMd = $date->getDay();
-							if ($md == $dtMd) {
-								return true;
-							}
-						}
-					}
-					// @todo Check week day like byMonthDay is done above...
-				}
-			}
-		}
-		
-		// find out if there are any recurrences on this day of the year
-		if (array_key_exists('byYearDay', $rulesArray)) {
-			foreach ($rulesArray['byYearDay']->getValues() as $yd) {
-				$dtYd = $date->getYearDay();
-				if ($yd == $dtYd) {
+		if ($withinMonth) {
+			// if within the month, check month day
+			if ($this->hasRule('qCal_DateTime_Recur_Rule_ByMonthDay')) {
+				$byMonthDay = $this->getRule('qCal_DateTime_Recur_Rule_ByMonthDay');
+				if ($byMonthDay->checkDate($date)) {
 					return true;
 				}
 			}
 		}
 		
-		// find out if there are any recurrences on this week number
-		// @todo I need to make sure that wkst works correctly here
-		if (array_key_exists('byWeekNo', $rulesArray)) {
-			foreach ($rulesArray['byWeekNo']->getValues() as $wkno) {
-				$dtWn = $date->getWeekOfYear();
-				if ($dtWn == $wkno) {
-					// @todo Should this allow any date that is in the specified week, or just certain days?
-					// @todo I can find out by writing unit tests for all of the examples in the RFC
+		if ($withinMonth || $withinWeek) {
+			// if within either week or month
+			if ($this->hasRule('qCal_DateTime_Recur_Rule_ByYearDay')) {
+				$byYearDay = $this->getRule('qCal_DateTime_Recur_Rule_ByYearDay');
+				if ($byYearDay->checkDate($date)) {
+					return true;
+				}
+			}
+			if ($this->hasRule('qCal_DateTime_Recur_Rule_ByDay')) {
+				$byDay = $this->getRule('qCal_DateTime_Recur_Rule_ByDay');
+				if ($byDay->checkDate($date)) {
 					return true;
 				}
 			}
@@ -211,41 +188,45 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	 * @param qCal_Date The date object to find time recurrences for
 	 * @return array A list of time recurrences for the specified date/time
 	 * @access protected
-	 * @todo The way this is currently set up allows times before the start
-	 * time because this is passed just a date. So when the start date is passed
-	 * in, this doesn't know not to return times before the start date.
+	 * @todo I don't really like the way this is done. Definitely a code smell here.
+	 * Each of the rules should do their own logic. Something like:
+	 * 	$seconds = $bySecond->getTimeInstances();
+	 * 	$minutes = $byMinute->getTimeInstances($seconds);
+	 * 	$hours = $byHour->getTimeInstances($minutes);
 	 */
 	protected function findTimeRecurrences(qCal_Date $date) {
 	
-		// create a convenient array of the rules so we don't have to
-		// keep making lengthy ugly calls to getRule()
-		$rulesArray = $this->getRulesAsArray();
-		
 		// find all of the bySeconds
 		$seconds = array();
-		if (array_key_exists('bySecond', $rulesArray)) {
-			$seconds = $rulesArray['bySecond']->getValues();
+		if ($this->hasRule('qCal_DateTime_Recur_Rule_BySecond')) {
+			$seconds = $this->getRule('qCal_DateTime_Recur_Rule_BySecond')->getValues();
 			sort($seconds);
+		} else {
+			$seconds = array($this->getStart()->getTime()->getSecond());
 		}
 		
 		// find all of the byMinutes
 		$minutes = array();
-		if (array_key_exists('byMinute', $rulesArray)) {
-			$minutesRules = $rulesArray['byMinute']->getValues();
+		if ($this->hasRule('qCal_DateTime_Recur_Rule_ByMinute')) {
+			$minutesRules = $this->getRule('qCal_DateTime_Recur_Rule_ByMinute')->getValues();
 			sort($minutesRules);
-			foreach ($minutesRules as $minute) {
-				$minutes[$minute] = $seconds;
-			}
+		} else {
+			$minutesRules = array($this->getStart()->getTime()->getMinute());
+		}
+		foreach ($minutesRules as $minute) {
+			$minutes[$minute] = $seconds;
 		}
 		
 		// find all of the byHours
 		$hours = array();
-		if (array_key_exists('byHour', $rulesArray)) {
-			$hoursRules = $rulesArray['byHour']->getValues();
+		if ($this->hasRule('qCal_DateTime_Recur_Rule_ByHour')) {
+			$hoursRules = $this->getRule('qCal_DateTime_Recur_Rule_ByHour')->getValues();
 			sort($hoursRules);
-			foreach ($hoursRules as $hour) {
-				$hours[$hour] = $minutes;
-			}
+		} else {
+			$hoursRules = array($this->getStart()->getTime()->getHour());
+		}
+		foreach ($hoursRules as $hour) {
+			$hours[$hour] = $minutes;
 		}
 		
 		// create an array to store times

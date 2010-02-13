@@ -53,7 +53,6 @@ class qCal_Renderer_iCalendar extends qCal_Renderer {
 	 * @param qCal_Property The property that is to be rendered
 	 * @return string The property rendered into iCalendar format
 	 * @access protected
-	 * @todo $proptype is created below and never used... wtf?
 	 */
 	protected function renderProperty(qCal_Property $property) {
 	
