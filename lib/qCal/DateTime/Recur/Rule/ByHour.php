@@ -11,6 +11,6 @@
  */
 class qCal_DateTime_Recur_Rule_ByHour extends qCal_DateTime_Recur_Rule {
 
-	// Add methods that make this rule work...
+	
 
 }
