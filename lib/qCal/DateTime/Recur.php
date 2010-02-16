@@ -47,20 +47,6 @@ abstract class qCal_DateTime_Recur implements Iterator, Countable {
 	protected $rules = array();
 	
 	/**
-	 * @var array A list of all of the days in the "current" year. Organized like:
-	 * array(
-	 * 		'1' => array(
-	 * 			'1' => qCal_Date(2010, 1, 1)
-	 * 			'2' => qCal_Date(2010, 1, 2)
-	 * 			...etc...
-	 * 		)
-	 * )
-	 * For every year in the recurrence, this is regenerated
-	 * @access protected
-	 */
-	protected $yearArray = array();
-	
-	/**
 	 * @var array A list of all of the date/time recurrences for the "current"
 	 * day. It is a simple one-dimensional array. Every call to next() advances
 	 * the pointer to the next item in this list until it is exhausted and then
@@ -70,13 +56,6 @@ abstract class qCal_DateTime_Recur implements Iterator, Countable {
 	 * @access protected
 	 */
 	protected $timeArray = array();
-	
-	/**
-	 * @var boolean When this is set to true, the yearArray is regenerated when
-	 * next() is called.
-	 * @access protected
-	 */
-	protected $regenerateYearArray = true;
 	
 	/**
 	 * @var boolean When this is set to true, the timeArray is regenerated when
@@ -413,8 +392,7 @@ abstract class qCal_DateTime_Recur implements Iterator, Countable {
 		// set the "current" variable to the start date to rewind the "pointer"
 		$this->current = $this->getStart();
 		
-		// tell the object to regenerate year and time arrays
-		$this->regenerateYearArray = true;
+		// tell the object to regenerate date and time arrays
 		$this->regenerateTimeArray = true;
 		
 		// now use the "next()" method to set "current" to the first actual recurrence
