@@ -69,7 +69,6 @@ class qCal_DateTime_Recur_Monthly extends qCal_DateTime_Recur {
 				// determine if we need to generate the monthArray with the current
 				// year or with the next year interval
 				if (!empty($this->monthArray)) {
-					pr($month . "/" . $year);
 					$nextmonth = $month + $this->getInterval();
 					if ($nextmonth > 12) {
 						$nextmonth = $nextmonth - 12;
@@ -102,7 +101,6 @@ class qCal_DateTime_Recur_Monthly extends qCal_DateTime_Recur {
 			$ml = new qCal_Date($year, $month, 1);
 			for ($d = 1; $d <= $ml->getNumDaysInMonth(); $d++) {
 				$day = new qCal_Date($year, $month, $d);
-				pr($day->format('m-d-Y'));
 				if ($this->checkDateAgainstRules($day)) {
 					// if this day is equal to or greater than the start
 					// date, add it to the yearArray

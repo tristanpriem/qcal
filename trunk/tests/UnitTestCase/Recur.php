@@ -189,21 +189,26 @@ class UnitTestCase_Recur extends UnitTestCase {
 	public function testWeeklyRecurrenceRules() {
 	
 		/**
-		    This is a rule for the days my mom works
-			DTSTART;TZID=US-Eastern:20080105T083000
-			RRULE:FREQ=WEEKLY;BYDAY=MO,TU;BYHOUR=1,6;BYMINUTE=30;
-			 INTERVAL=2
+		    This is a rule for the days my mom works (if she worked once every four weeks)
+			DTSTART;TZID=US-Pacific:20100215T080000
+			RRULE:FREQ=WEEKLY;BYDAY=MO,TU;BYHOUR=8;
+			 INTERVAL=4
 		 */
-		$start = new qCal_DateTime(2008, 1, 5, 8, 30, 0, qCal_Timezone::factory('US/Eastern'));
-		$recur = qCal_DateTime_Recur::factory('monthly', $start);
-		$recur->setInterval(2)
+		$start = new qCal_DateTime(2010, 2, 15, 8, 0, 0, qCal_Timezone::factory('US/Pacific'));
+		$recur = qCal_DateTime_Recur::factory('weekly', $start);
+		$recur->setInterval(4)
+			->setCount(25)
 			->addRule(new qCal_DateTime_Recur_Rule_ByDay(array('MO', 'TU')))
-			->addRule(new qCal_DateTime_Recur_Rule_ByHour(array(1, 6)))
-			->addRule(new qCal_DateTime_Recur_Rule_ByMinute(30));
-		$recur->rewind();
+			->addRule(new qCal_DateTime_Recur_Rule_ByHour(8))
+			->rewind(); // is this even necessary? It shouldn't be...
 		
-		$this->assertEqual($recur->count(), -1);
-		$this->assertEqual($recur->current()->format('YmdHis'), '20080107013000');
+		$this->assertEqual($recur->count(), 25);
+		$this->assertEqual($recur->current()->format('Y-m-d H:i:s'), '2008-02-15 08:00:00')
+		$this->assertEqual($recur->next()->format('Y-m-d H:i:s'), '2008-02-16 08:00:00')
+		$this->assertEqual($recur->next()->format('Y-m-d H:i:s'), '2008-03-15 08:00:00')
+		$this->assertEqual($recur->next()->format('Y-m-d H:i:s'), '2008-03-16 08:00:00')
+		$this->assertEqual($recur->next()->format('Y-m-d H:i:s'), '2008-04-12 08:00:00')
+		$this->assertEqual($recur->next()->format('Y-m-d H:i:s'), '2008-04-13 08:00:00');
 	
 	}
 	
