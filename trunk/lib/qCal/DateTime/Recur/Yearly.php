@@ -10,7 +10,40 @@
  * @license GNU Lesser General Public License
  */
 class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
-
+	
+	/**
+	 * @var boolean When this is set to true, the yearArray is regenerated when
+	 * next() is called.
+	 * @access protected
+	 */
+	protected $regenerateYearArray = true;
+	
+	/**
+	 * @var array A list of all of the days in the "current" year. Organized like:
+	 * array(
+	 * 		'1' => array(
+	 * 			'1' => qCal_Date(2010, 1, 1)
+	 * 			'2' => qCal_Date(2010, 1, 2)
+	 * 			...etc...
+	 * 		)
+	 * )
+	 * For every year in the recurrence, this is regenerated
+	 * @access protected
+	 */
+	protected $yearArray = array();
+	
+	/**
+	 * Rewind the recurrence iterator
+	 * @return void
+	 * @access public
+	 */
+	public function rewind() {
+	
+		$this->regenerateYearArray = true;
+		parent::rewind();
+	
+	}
+	
 	/**
 	 * Move the internal "pointer" to the next recurrence in the set
 	 * and return it.
@@ -20,9 +53,9 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 	public function next() {
 	
 		// make a copy of the start date/time to work with
-		$currentDate = $this->current->getDate();
-		$currentTime = $this->current->getTime();
-		$year = $this->current->getDate()->getYear();
+		$startDate = $this->current->getDate();
+		$startTime = $this->current->getTime();
+		$year = $startDate->getYear();
 		
 		// if there is no "next" recurrence in the timeArray, we need to
 		// regenerate it with new times for the next day in the recurrence list
@@ -63,9 +96,9 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 				for ($d = 1; $d <= $month->getNumDaysInMonth(); $d++) {
 					$day = new qCal_Date($year, $m, $d);
 					if ($this->checkDateAgainstRules($day)) {
-						// if this day is equal to or greater than the current
+						// if this day is equal to or greater than the start
 						// date, add it to the yearArray
-						if ($day->getUnixTimestamp() >= $currentDate->getUnixTimestamp()) {
+						if ($day->getUnixTimestamp() >= $startDate->getUnixTimestamp()) {
 							$yearArray[$day->format("Ymd")] = $day;
 						}
 					}
@@ -106,10 +139,10 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 		if (empty($this->yearArray) || $regenerateYearArray) {
 			$yearArray = array();
 			for($m = 1; $m <= 12; $m++) {
-				$month = new qCal_Date($currentDate->getYear(), $m, 1);
+				$month = new qCal_Date($startDate->getYear(), $m, 1);
 				$monthArray = array();
 				for ($d = 1; $d <= $month->getNumDaysInMonth(); $d++) {
-					$day = new qCal_Date($currentDate->getYear(), $m, $d);
+					$day = new qCal_Date($startDate->getYear(), $m, $d);
 					$monthArray[$d] = $day;
 				}
 				$yearArray[$m] = $monthArray;
@@ -143,6 +176,7 @@ class qCal_DateTime_Recur_Yearly extends qCal_DateTime_Recur {
 				$withinMonth = true;
 			}
 		}
+		
 		if ($this->hasRule('qCal_DateTime_Recur_Rule_ByWeekNo')) {
 			// if the byMonth rule is defined, then withinMonth defaults to false
 			$withinWeek = false;

@@ -139,6 +139,75 @@ class UnitTestCase_Recur extends UnitTestCase {
 	
 	}
 	
+	
+	public function testMonthlyRecurrenceRules() {
+	
+		/**
+			DTSTART;TZID=US-Eastern:20080105T083000
+			RRULE:FREQ=MONTHLY;BYDAY=MO,TU;BYHOUR=1,6;BYMINUTE=30;
+			 INTERVAL=2
+		 */
+		$start = new qCal_DateTime(2008, 1, 5, 8, 30, 0, qCal_Timezone::factory('US/Eastern'));
+		$recur = qCal_DateTime_Recur::factory('monthly', $start);
+		$recur->setInterval(2)
+			->addRule(new qCal_DateTime_Recur_Rule_ByDay(array('MO', 'TU')))
+			->addRule(new qCal_DateTime_Recur_Rule_ByHour(array(1, 6)))
+			->addRule(new qCal_DateTime_Recur_Rule_ByMinute(30));
+		$recur->rewind();
+		
+		$this->assertEqual($recur->count(), -1);
+		$this->assertEqual($recur->current()->format('YmdHis'), '20080107013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080107063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080108013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080108063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080114013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080114063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080115013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080115063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080121013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080121063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080122013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080122063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080128013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080128063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080129013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080129063000');
+		// jump to may because this is every other month...
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080303013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080303063000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080304013000');
+		$this->assertEqual($recur->next()->format('YmdHis'), '20080304063000');
+		
+		// once we are no longer in January, it should move on to the next year
+		// since there are no more days left in the year that are in january
+		// $this->assertEqual($recur->next()->format('YmdHis'), '19970105083000');
+		
+		// the next one should be the next year in january...
+	
+	}
+	
+	public function testWeeklyRecurrenceRules() {
+	
+		/**
+		    This is a rule for the days my mom works
+			DTSTART;TZID=US-Eastern:20080105T083000
+			RRULE:FREQ=WEEKLY;BYDAY=MO,TU;BYHOUR=1,6;BYMINUTE=30;
+			 INTERVAL=2
+		 */
+		$start = new qCal_DateTime(2008, 1, 5, 8, 30, 0, qCal_Timezone::factory('US/Eastern'));
+		$recur = qCal_DateTime_Recur::factory('monthly', $start);
+		$recur->setInterval(2)
+			->addRule(new qCal_DateTime_Recur_Rule_ByDay(array('MO', 'TU')))
+			->addRule(new qCal_DateTime_Recur_Rule_ByHour(array(1, 6)))
+			->addRule(new qCal_DateTime_Recur_Rule_ByMinute(30));
+		$recur->rewind();
+		
+		$this->assertEqual($recur->count(), -1);
+		$this->assertEqual($recur->current()->format('YmdHis'), '20080107013000');
+	
+	}
+	
+	
 	public function testInstantiateWithArrayOfRules() {
 	
 		$rules = array(
