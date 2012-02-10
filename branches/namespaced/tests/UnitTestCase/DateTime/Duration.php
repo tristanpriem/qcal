@@ -23,5 +23,12 @@ class UnitTestCase_DateTime_Duration extends \UnitTestCase_DateTime {
         $this->assertEqual($duration->toString(), 'P10WT6H40M');
     
     }
+    
+    public function testGetSeconds() {
+    
+        $duration = new qCal\DateTime\Duration(array('weeks' => 4));
+        $this->assertEqual($duration->getSeconds(), '2419200');
+    
+    }
 
 }

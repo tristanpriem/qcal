@@ -15,6 +15,7 @@ require_once 'qCal/DateTime/Time.php';
 require_once 'qCal/DateTime/Date.php';
 require_once 'qCal/DateTime/DateTime.php';
 require_once 'qCal/DateTime/Duration.php';
+require_once 'qCal/DateTime/Period.php';
 
 // include simpletest classes
 require_once 'simpletest/unit_tester.php';
@@ -46,6 +47,7 @@ $test->addTestCase(new \UnitTestCase_DateTime_Date);
 $test->addTestCase(new \UnitTestCase_DateTime_Time);
 $test->addTestCase(new \UnitTestCase_DateTime_DateTime);
 $test->addTestCase(new \UnitTestCase_DateTime_Duration);
+$test->addTestCase(new \UnitTestCase_DateTime_Period);
 
 if (TextReporter::inCli()) {
     exit ($test->run(new TextReporter()) ? 0 : 1);
