@@ -60,12 +60,6 @@ class Date extends Base {
     
     }
     
-    public function setFormat($format) {
-    
-        $this->_format = (string) $format;
-    
-    }
-    
     protected function _date($letters, $timestamp = null) {
     
         return date($letters, $this->_getTimestamp());

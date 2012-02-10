@@ -18,9 +18,6 @@ class DateTime extends Base {
     
     public function __construct($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $timezone = null) {
     
-        if (!($timezone instanceof TimeZone)) {
-            $timezone = new TimeZone();
-        }
         $this->_date = new Date($year, $month, $day);
         $this->_time = new Time($hour, $minute, $second, $timezone);
     
