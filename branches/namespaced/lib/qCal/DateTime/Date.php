@@ -43,8 +43,21 @@ class Date extends Base {
         'SA' => 'saturday',
     );
     
-    public function __construct($year = null, $month = null, $day = null) {
+    /**
+     * Create new date
+     * Rollover allows you to pass in something like 44 for the day and have it
+     * roll over into the next month rather than throw an exception.
+     */
+    public function __construct($year = null, $month = null, $day = null, $rollover = false) {
     
+        if ($rollover) {
+            // figure out the right date after rollover
+            $time = mktime(0, 0, 0, $month, $day, $year);
+            $dp = getdate($time);
+            $month = $dp['mon'];
+            $day = $dp['mday'];
+            $year = $dp['year'];
+        }
         if (is_null($year) || is_null($month) || is_null($day)) {
             if (is_null($year) && is_null($month) && is_null($day)) {
                 $dp = getdate();
@@ -55,10 +68,12 @@ class Date extends Base {
                 // If any are null but not all, throw an exception. It's all or none. @todo Shouldn't this be MissingArgumentException?
                 throw new \InvalidArgumentException("New date expects year, month, and day. Either all must be null or none.");
             }
-        } else {
+        } elseif (checkdate($month, $day, $year)) {
             $this->_year = $year;
             $this->_month = $month;
             $this->_day = $day;
+        } else {
+            throw new \InvalidArgumentException(sprintf("%04d-%02d-%02d is not a invalid date.", $year, $month, $day));
         }
     
     }
@@ -502,7 +517,42 @@ class Date extends Base {
      */
     public function getXthWeekdayOfYear($xth, $weekday = null, $year = null) {
     
-        
+        $negpos = substr($xth, 0, 1);
+        if ($negpos == "+" || $negpos == "-") {
+            $xth = (integer) substr($xth, 1);
+        } else {
+            $negpos = "+";
+        }
+        $weekday = self::weekDayToNum($weekday);
+        $firstofyear = new Date($year, 1, 1);
+        $numdaysinyear = $firstofyear->getNumDaysInYear();
+        $numweekdays = 0; // the number of weekdays that have occurred within the loop
+        $found = false; // whether or not the specified day has been found
+        if ($negpos == "+") {
+            $day = 1;
+            $wday = $firstofyear->getWeekDay();
+            while ($day <= $numdaysinyear) {
+                if ($weekday == $wday) {
+                    $numweekdays++;
+                    if ($numweekdays == $xth) {
+                        // break out of the loop, we've found the right day! yay!
+                        $found = $day;
+                        break;
+                    }
+                }
+                if ($wday == 6) $wday = 0; // reset to Sunday after Saturday
+                else $wday++;
+                $day++;
+            }
+        } else {
+            
+        }
+        if ($found) {
+            // $date = new qCal_Date($year, 1, $found, true); // takes advantage of the rollover feature :)
+        } else {
+            
+        }
+        return new Date();
     
     }
 

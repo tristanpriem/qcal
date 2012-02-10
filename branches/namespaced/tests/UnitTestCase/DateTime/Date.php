@@ -32,6 +32,20 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
+    public function testNewDateChecksIfDateIsValid() {
+    
+        $this->expectException(new InvalidArgumentException('2012-01-55 is not a invalid date.'));
+        $date = new qCal\DateTime\Date(2012, 1, 55);
+    
+    }
+    
+    public function testNewDateAllowsRolloverIfAskedTo() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 55, true);
+        $this->assertEqual($date->toString('Ymd'), '20120224');
+    
+    }
+    
     public function testCreateFromUnixTimestamp() {
     
         $ts = mktime(0, 0, 0, 4, 23, 2012);
@@ -371,10 +385,18 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
-    public function testGetXthWeekdayOfYear() {
+    // @todo Add exception tests for everything you can
+    public function testGetXthWeekDayThrowsExceptionOnInvalidWeekday() {
     
-        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 1, 2012);
+        
     
     }
+    
+    /*public function testGetXthWeekdayOfYear() {
+    
+        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 1, 2012);
+        $this->assertEqual($tenthMonday->toString('Ymd'), '03052012');
+    
+    }*/
 
 }
