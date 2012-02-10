@@ -243,6 +243,15 @@ class UnitTestCase_DateTime_Time extends \UnitTestCase_DateTime {
     
     }
     
+    public function testToStringOverload() {
+    
+        $time = new qCal\DateTime\Time(1, 30, 0, 'America/Los_Angeles');
+        $this->assertEqual($time->__toString(), '01:30:00');
+        $time->setFormat('g:ia');
+        $this->assertEqual($time->__toString(), '1:30am');
+    
+    }
+    
     /*public function testTimeFormatsTimeZoneChars() {
     
         $time = new qCal\DateTime\Time(15, 4, 2, 'America/Los_Angeles');

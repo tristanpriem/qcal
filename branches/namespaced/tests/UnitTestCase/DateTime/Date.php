@@ -223,5 +223,32 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         $this->assertEqual($date->toString(), 'Saturday September 1st, 2001');
     
     }
+    
+    public function testToStringOverload() {
+    
+        $date = new qCal\DateTime\Date(2001, 9, 1);
+        $this->assertEqual($date->__toString(), '2001-09-01');
+        $date->setFormat('l F jS, Y');
+        $this->assertEqual($date->__toString(), 'Saturday September 1st, 2001');
+    
+    }
+    
+    // convernience methods
+    
+    public function testGetNumDaysInYear() {
+    
+        $date = new qCal\DateTime\Date(2004, 1, 1);
+        $this->assertEqual($date->getNumDaysInYear(), 366);
+        $date->setYear(2001);
+        $this->assertEqual($date->getNumDaysInYear(), 365);
+    
+    }
+    
+    public function testGetNumDaysUntilEndOfYear() {
+    
+        $date = new qCal\DateTime\Date(2004, 1, 1);
+        $this->assertEqual($date->getNumDaysUntilEndOfYear(), 365);
+    
+    }
 
 }

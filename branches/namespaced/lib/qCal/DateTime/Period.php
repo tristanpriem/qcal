@@ -54,5 +54,11 @@ class Period {
         return $start . '/' . $end;
     
     }
+    
+    public function __toString() {
+    
+        return $this->toString();
+    
+    }
 
 }

@@ -36,6 +36,12 @@ abstract class Base {
     
     }
     
+    public function __toString() {
+    
+        return $this->toString();
+    
+    }
+    
     public function setFormat($format) {
     
         $this->_format = (string) $format;

@@ -214,5 +214,18 @@ class Date extends Base {
         return $ly;
     
     }
+    
+    public function getNumDaysInYear() {
+    
+        $num = ($this->isLeapYear()) ? 366 : 365;
+        return (integer) $num;
+    
+    }
+    
+    public function getNumDaysUntilEndOfYear() {
+    
+        
+    
+    }
 
 }

@@ -65,5 +65,14 @@ class UnitTestCase_DateTime_Period extends \UnitTestCase_DateTime {
         $this->assertEqual($period->toString(true), '20120101T080000Z/20120129T080000Z');
     
     }
+    
+    public function testToStringOverload() {
+    
+        $start = new DateTime(2012, 1, 1, 0, 0, 0, 'America/Los_Angeles');
+        $end = new DateTime(2012, 2, 1, 0, 0, 0, 'America/Los_Angeles');
+        $period = new Period($start, $end);
+        $this->assertEqual($period->__toString(), '20120101T080000Z/20120201T080000Z');
+    
+    }
 
 }
