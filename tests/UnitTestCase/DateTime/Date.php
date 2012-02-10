@@ -310,5 +310,52 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         $this->assertEqual($first->toString('Ymd'), '20120131');
     
     }
+    
+    public function testConvertAbbrDayToNum() {
+    
+        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('tu'), 2);
+        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('SU'), 0);
+    
+    }
+    
+    public function testConvertWholeDayToNum() {
+    
+        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('Tuesday'), 2);
+        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('SUNDAY'), 0);
+    
+    }
+    
+    /**
+     * This method is really cool... it gets the Xth weekday of a given month
+     */
+    public function testGetXthWeekDayOfMonth() {
+    
+        // Get the third thursday in November, 2012
+        $thirdThurs = qCal\DateTime\Date::getXthWeekdayOfMonth(3, 4, 11, 2012);
+        $this->assertEqual($thirdThurs->toString('Ymd'), '20121115');
+        
+        // Get the last Sunday of January, 2012
+        $lastSun = qCal\DateTime\Date::getXthWeekdayOfMonth(-1, 0, 1, 2012);
+        $this->assertEqual($lastSun->toString('Ymd'), '20120129');
+    
+    }
+    
+    /*public function testGetXthWeekDayOfMonthUsingAbbrWeekday() {
+    
+        // Get the third thursday in November, 2012
+        $thirdThurs = qCal\DateTime\Date::getXthWeekdayOfMonth(3, 'TH', 11, 2012);
+        $this->assertEqual($thirdThurs->toString('Ymd'), '20121115');
+        
+        // Get the last Sunday of January, 2012
+        $lastSun = qCal\DateTime\Date::getXthWeekdayOfMonth(-1, 'SU', 1, 2012);
+        $this->assertEqual($lastSun->toString('Ymd'), '20120129');
+    
+    }*/
+    
+    public function testGetXthWeekdayOfYear() {
+    
+        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 1, 2012);
+    
+    }
 
 }
