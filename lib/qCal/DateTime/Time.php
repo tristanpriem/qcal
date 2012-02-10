@@ -19,7 +19,7 @@ class Time extends Base {
     
     protected $_format = 'H:i:s';
     
-    protected $_allowedFormatLetters = 'AaBGgHhis';
+    protected $_allowedFormatLetters = 'AaBGgHhis'; // eOPTZ also?
     
     public function __construct($hour = null, $minute = null, $second = 0, $timezone = null) {
     
@@ -139,7 +139,13 @@ class Time extends Base {
     
     protected function _date($fs, $timezone = null) {
     
-        return gmdate($fs, $this->_getTimestamp($timezone));
+        // @todo Nasty hack... fix it!
+        // if (in_array($fs, array('e', 'O', 'P', 'T', 'Z'))) {
+        //     $formatted = $this->getTimeZone()->toString($fs);
+        // } else {
+            $formatted = gmdate($fs, $this->_getTimestamp($timezone));
+        // }
+        return $formatted;
     
     }
 

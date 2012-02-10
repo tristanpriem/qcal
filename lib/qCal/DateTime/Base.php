@@ -36,6 +36,12 @@ abstract class Base {
     
     }
     
+    public function setFormat($format) {
+    
+        $this->_format = (string) $format;
+    
+    }
+    
     protected function _getTimestamp() {
     
         return time();
