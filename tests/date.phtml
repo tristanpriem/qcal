@@ -1,0 +1,89 @@
+<?php
+/**
+ * qCal\Date Use Cases
+ * These are my use cases for the qCal\Date object. I am looking at Zend_Date
+ * and trying to figure out how similar or unsimilar it should be to theirs. I
+ * have decided not to use Zend_Date in this library because it uses one object
+ * for dates, times, and timezones and that does not suit this library well.
+ * Also, I really don't want to tie this library to any one framework. I want it
+ * to be of use to anybody using PHP5.3 or higher. In order to create dates in
+ * the distant past or future, end users will need the bcmath extension as well.
+ */
+
+use qCal\Date;
+
+/**
+ * Creating and setting dates
+ */
+$date = new Date; // Defaults to current date
+$date = new Date('2004-01-23'); // Need to come up with what formats this will support
+$date = Date::fromString('January 6th, 2007'); // This will be used for more arbitrary dates like this and will not be as reliable
+$date->set('2004-01-28');
+$date->setYear(2004); // Sets year to 2004
+$date->setMonth('April');
+$date->setMonth(4); // Sets month to April
+$date->setDay(23); // Sets day to the 23rd
+
+/**
+ * Getting date parts
+ */
+$year = $date->getYear();
+$month = $date->getMonth();
+$day = $date->getDay();
+
+/**
+ * Adding and subtracting dates
+ */
+$date = new Date('2004-04-23'); // Create new date with date set to april 23rd, 2004
+$date->add('4 days'); // Can add by days, months, years, weeks, or anything else in the duration RFC
+$date->add('D'); // I can't remember what durations look like, but they can be added as well
+$date->subtract('15 months'); // Subtraction of 15 months
+$date->subtract('D'); // Durations work here as well
+
+/**
+ * Comparing dates
+ */
+$datenew = new Date('2004-04-23');
+$dateold = new Date('2001-04-23');
+// If this is possible I want to do it, but I don't think it is because PHP doesn't have overload methos for it
+// @update It's not possible. PHP doesn't have this type of operator overloading
+if ($datenew >= $dateold) echo '$datenew happend after $dateold.';
+
+/**
+ * Difference between dates
+ * Gets difference in seconds, minutes, hours, days, weeks, months, and years
+ */
+$difference = $datenew->diff($dateold, Date::MINUTES); // Gets difference in minutes (this will be a positive number because datenew is X many minutes AFTER dateold)
+$difference = $dateold->diff($datenew, Date::DAYS); // Gets difference in days (this will be a negative number because dateold is X many days BEFORE datenew)
+
+/**
+ * Convenience methods
+ * These methods are convenient ways of determining things about a date
+ */
+$date = new Date('2012-01-28');
+$date->isToday(); // true if $date is today
+$date->isToday($otherdate); // These methods can also accept another date to be in comparison to
+$date->isTomorrow();
+$date->isYesterday();
+$date->isEqualTo($otherdate);
+$date->isBefore($otherdate);
+$date->isAfter($otherdate);
+$date->isLeapYear();
+// Possible but not likely
+$date->getSeason(); // summer, autumn, winter, spring
+$date->isDaylightSavings(); // returns true if the date falls within local daylight savings time
+$date->getSunrise(); // gets the time of sunrise
+$date->getSunset(); // gets time of sunset
+
+/**
+ * Outputting dates
+ */
+echo $date->toString(); // outputs date in default format
+echo $date; // does the same thing
+echo $date->toString("m-d-Y"); // Outputs date using date() formatting string
+echo $date->setFormat("m-d-Y"); // Sets default format of output
+
+/**
+ * Converting to an array
+ */
+$date = $date->toArray(); // same array as getdate();
