@@ -263,5 +263,36 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         $this->assertEqual($date->getNumDaysUntilEndOfYear(), 341);
     
     }
+    
+    public function testGetNumMonthsUntilEndOfYear() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 1);
+        $this->assertEqual($date->getNumMonthsUntilEndOfYear(), 11);
+        $date = new qCal\DateTime\Date(2012, 6, 1);
+        $this->assertEqual($date->getNumMonthsUntilEndOfYear(), 6);
+    
+    }
+    
+    public function testGetNumDaysUntilEndOfMonth() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 5);
+        $this->assertEqual($date->getNumDaysUntilEndOfMonth(), 26);
+        $date = new qCal\DateTime\Date(2011, 1, 5);
+        $this->assertEqual($date->getNumDaysUntilEndOfMonth(), 26);
+        $date = new qCal\DateTime\Date(2012, 2, 5);
+        $this->assertEqual($date->getNumDaysUntilEndOfMonth(), 24);
+        $date = new qCal\DateTime\Date(2011, 2, 5);
+        $this->assertEqual($date->getNumDaysUntilEndOfMonth(), 23);
+    
+    }
+    
+    public function testGetWeekDay() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 5);
+        $this->assertEqual($date->getWeekDay(), 4);
+        $date = new qCal\DateTime\Date(2012, 1, 1);
+        $this->assertEqual($date->getWeekDay(), 0);
+    
+    }
 
 }
