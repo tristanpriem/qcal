@@ -405,6 +405,9 @@ class Date extends Base {
      */
     static public function weekDayToNum($weekDayName) {
     
+        if (is_int($weekDayName)) {
+            return $weekDayName;
+        }
         $upper = strtoupper($weekDayName);
         $lower = strtolower($weekDayName);
         $weekdays = array_flip(self::$_weekDays);
@@ -442,6 +445,7 @@ class Date extends Base {
         } else {
             $negpos = "+";
         }
+        $weekday = self::weekDayToNum($weekday);
         $firstofmonth = new Date($year, $month, 1);
         $numdaysinmonth = $firstofmonth->getNumDaysInMonth();
         $numweekdays = 0; // the number of weekdays that have occurred (in the loop)
