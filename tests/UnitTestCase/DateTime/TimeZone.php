@@ -122,5 +122,14 @@ class UnitTestCase_DateTime_TimeZone extends \UnitTestCase_DateTime {
         $this->assertEqual($tz->getGmtOffset(), 0);
     
     }
+    
+    public function testToStringOverload() {
+    
+        $tz = new qCal\DateTime\TimeZone('America/Denver');
+        $this->assertEqual($tz->__toString(), 'America/Denver');
+        $tz->setFormat('O');
+        $this->assertEqual($tz->__toString(), '-0700');
+    
+    }
 
 }

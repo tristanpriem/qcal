@@ -104,6 +104,15 @@ class UnitTestCase_DateTime_DateTime extends \UnitTestCase_DateTime {
         $this->assertEqual($dt->toString(), 'Tue, 11 Sep 2001 04:30:23 -0700');
     
     }
+    
+    public function testToStringOverload() {
+    
+        $dt = new qCal\DateTime\DateTime(2001, 9, 11, 4, 30, 23, new qCal\DateTime\Timezone('America/Denver'));
+        $this->assertEqual($dt->__toString(), '2001-09-11T04:30:23-07:00');
+        $dt->setFormat('r');
+        $this->assertEqual($dt->__toString(), 'Tue, 11 Sep 2001 04:30:23 -0700');
+    
+    }
 /*
     public function testAddToDateTime() {
     

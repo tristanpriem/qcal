@@ -107,6 +107,12 @@ class Duration {
     
     }
     
+    public function __toString() {
+    
+        return $this->toString();
+    
+    }
+    
     /**
      * Get duration in seconds
      * @return integer The amount of seconds that this duration represents
