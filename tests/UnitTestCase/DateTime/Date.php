@@ -244,10 +244,23 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
+    public function testGetYearDay() {
+    
+        $date = new qCal\DateTime\Date(2011, 1, 25);
+        $this->assertEqual($date->getYearDay(), 24);
+        $date = new qCal\DateTime\Date(2011, 12, 25);
+        $this->assertEqual($date->getYearDay(), 358);
+        $date = new qCal\DateTime\Date(2012, 12, 25);
+        $this->assertEqual($date->getYearDay(), 359);
+    
+    }
+    
     public function testGetNumDaysUntilEndOfYear() {
     
-        $date = new qCal\DateTime\Date(2004, 1, 1);
-        $this->assertEqual($date->getNumDaysUntilEndOfYear(), 365);
+        $date = new qCal\DateTime\Date(2004, 12, 25);
+        $this->assertEqual($date->getNumDaysUntilEndOfYear(), 6);
+        $date = new qCal\DateTime\Date(2004, 1, 25);
+        $this->assertEqual($date->getNumDaysUntilEndOfYear(), 341);
     
     }
 

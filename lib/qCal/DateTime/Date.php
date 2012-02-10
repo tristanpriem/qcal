@@ -215,6 +215,11 @@ class Date extends Base {
     
     }
     
+    /**
+     * Get the amount of days in the year (365 unless it is a leap-year, then it's 366)
+     * @return integer The number of days in the year
+     * @access public
+     */
     public function getNumDaysInYear() {
     
         $num = ($this->isLeapYear()) ? 366 : 365;
@@ -222,7 +227,148 @@ class Date extends Base {
     
     }
     
+    /**
+     * Get the month of this date
+     * @return string The actual name of the month, capitalized
+     * @access public
+     */
+    public function getMonthName() {
+    
+        
+    
+    }
+    
+    /**
+     * Get the day of the year
+     * @return integer A number between 0 and 365 inclusively
+     * @access public
+     */
+    public function getYearDay($startFromOne = false) {
+    
+        return (integer) $this->toString('z') + (integer) $startFromOne;
+    
+    }
+    
+    /**
+     * Find how many days until the end of the year.
+     * For instance, if the date is December 25th, there are 6 days until the end of the year
+     * @return integer The number of days until the end of the year
+     * @access public
+     */
     public function getNumDaysUntilEndOfYear() {
+    
+        $yearday = $this->getYearDay(true);
+        return (integer) ($this->getNumDaysInYear() - $yearday);
+    
+    }
+    
+    /**
+     * Get how many months until the end of the year
+     * @return integer The number of months until the end of the year
+     * @access public
+     * @todo This is really rudimentary. There is more to this, but this works for now...
+     */
+    public function getNumMonthsUntilEndOfYear() {
+    
+        
+    
+    }
+    
+    /**
+     * Return the first day of the month as a qCal_Date object
+     * @return qCal_Date The first day of the month
+     * @access public
+     */
+    public function getFirstDayOfMonth() {
+    
+        
+    
+    }
+    
+    /**
+     * Return the last day of the month as a qCal_Date object
+     * @return qCal_Date The last day of the month
+     * @access public
+     */
+    public function getLastDayOfMonth() {
+    
+        
+    
+    }
+    
+    /**
+     * Get the number of days until the end of the month
+     * @return integer The number of days until the end of the month
+     * @access public
+     */
+    public function getNumDaysUntilEndOfMonth() {
+    
+        
+    
+    }
+    
+    /**
+     * Get the day of the week 
+     * @return integer A number between 0 (for Sunday) and 6 (for Saturday).
+     * @access public
+     */
+    public function getWeekDay() {
+    
+        
+    
+    }
+    
+    /**
+     * Get the day of the week
+     * @return string The actual name of the day of the week, capitalized
+     * @access public
+     */
+    public function getWeekDayName() {
+    
+        
+    
+    }
+    
+    /**
+     * Get the amount of days in the current month of this year
+     * @return integer The number of days in the month
+     * @access public
+     */
+    public function getNumDaysInMonth() {
+    
+        
+    
+    }
+    
+    /**
+     * Get the week of the year
+     * @return integer The week of the year (0-51 I think)
+     * @access public
+     * @todo This is not accurate if the week start isn't monday. I need to adjust for that
+     */
+    public function getWeekOfYear() {
+    
+        
+    
+    }
+    
+    /**
+     * Get how many weeks until the end of the year
+     * @access public
+     * @todo This is really rudimentary. There is more to this, but this works for now...
+     */
+    public function getWeeksUntilEndOfYear() {
+    
+        
+    
+    }
+    
+    /**
+     * Get a unix timestamp for the date
+     * @return integer The amount of seconds since unix epoch (January 1, 1970 UTC)
+     * @access public
+     */
+    public function getUnixTimestamp() {
     
         
     
