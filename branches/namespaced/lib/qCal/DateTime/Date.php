@@ -270,7 +270,7 @@ class Date extends Base {
      */
     public function getNumMonthsUntilEndOfYear() {
     
-        
+        return (integer) (12 - $this->getMonth());
     
     }
     
@@ -297,13 +297,25 @@ class Date extends Base {
     }
     
     /**
+     * Get the amount of days in the current month of this year
+     * @return integer The number of days in the month
+     * @access public
+     * @todo test this
+     */
+    public function getNumDaysInMonth() {
+    
+        return (integer) $this->toString('t');
+    
+    }
+    
+    /**
      * Get the number of days until the end of the month
      * @return integer The number of days until the end of the month
      * @access public
      */
     public function getNumDaysUntilEndOfMonth() {
     
-        
+        return (integer) ($this->getNumDaysInMonth() - $this->getDay());
     
     }
     
@@ -314,7 +326,7 @@ class Date extends Base {
      */
     public function getWeekDay() {
     
-        
+        return $this->toString('w');
     
     }
     
@@ -322,21 +334,11 @@ class Date extends Base {
      * Get the day of the week
      * @return string The actual name of the day of the week, capitalized
      * @access public
+     * @todo test this
      */
     public function getWeekDayName() {
     
-        
-    
-    }
-    
-    /**
-     * Get the amount of days in the current month of this year
-     * @return integer The number of days in the month
-     * @access public
-     */
-    public function getNumDaysInMonth() {
-    
-        
+        return $this->toString('l');
     
     }
     
@@ -344,11 +346,11 @@ class Date extends Base {
      * Get the week of the year
      * @return integer The week of the year (0-51 I think)
      * @access public
-     * @todo This is not accurate if the week start isn't monday. I need to adjust for that
+     * @todo Test this
      */
     public function getWeekOfYear() {
     
-        
+        return $this->toString('W');
     
     }
     
@@ -359,7 +361,7 @@ class Date extends Base {
      */
     public function getWeeksUntilEndOfYear() {
     
-        
+        return (integer) (52 - $this->getWeekOfYear());
     
     }
     
