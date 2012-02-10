@@ -9,10 +9,12 @@ set_include_path('../lib' . PATH_SEPARATOR . get_include_path());
  */
 require_once 'functions.php';
 require_once 'qCal.php';
-require_once 'qCal/Timezone.php';
-require_once 'qCal/Time.php';
-require_once 'qCal/Date.php';
-require_once 'qCal/DateTime.php';
+require_once 'qCal/DateTime/Base.php';
+require_once 'qCal/DateTime/Timezone.php';
+require_once 'qCal/DateTime/Time.php';
+require_once 'qCal/DateTime/Date.php';
+require_once 'qCal/DateTime/DateTime.php';
+require_once 'qCal/DateTime/Duration.php';
 
 // include simpletest classes
 require_once 'simpletest/unit_tester.php';
@@ -35,10 +37,15 @@ function __autoload($className) {
 }
 
 require_once 'UnitTestCase/DateTime.php';
+require_once 'UnitTestCase/DateTime/TimeZone.php';
 
 // run tests in html reporter
 $test = new GroupTest(/*qCal::getVersion . */'qCal Library Tests');
-$test->addTestCase(new \UnitTestCase_DateTime);
+$test->addTestCase(new \UnitTestCase_DateTime_TimeZone);
+$test->addTestCase(new \UnitTestCase_DateTime_Date);
+$test->addTestCase(new \UnitTestCase_DateTime_Time);
+$test->addTestCase(new \UnitTestCase_DateTime_DateTime);
+$test->addTestCase(new \UnitTestCase_DateTime_Duration);
 
 if (TextReporter::inCli()) {
     exit ($test->run(new TextReporter()) ? 0 : 1);
