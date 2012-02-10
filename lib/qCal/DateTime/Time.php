@@ -5,9 +5,9 @@
  * Date and time classes have a lot of similar logic. They need to descend from
  * the same class or somehow consolidate their common code
  */
-namespace qCal;
+namespace qCal\DateTime;
 
-class Time {
+class Time extends Base {
 
     protected $_hour;
     
@@ -17,9 +17,9 @@ class Time {
     
     protected $_timezone;
     
-    protected $_allFormatLetters = 'dDjlNSwzWFmMntLoYyaABgGhHiseIOPTZcrU';
+    protected $_format = 'H:i:s';
     
-    protected $_timeFormatLetters = 'AaBGgHhis';
+    protected $_allowedFormatLetters = 'AaBGgHhis';
     
     public function __construct($hour = null, $minute = null, $second = 0, $timezone = null) {
     
@@ -137,25 +137,8 @@ class Time {
     
     }
     
-    public function toString($format, $timezone = null) {
+    protected function _date($fs, $timezone = null) {
     
-        // if (!is_null($format)) {
-            $fs = '';
-            // match all date-format characters and place a slash before any that aren't date-related
-            $pattern = '/\\\?./';
-            if ($ltrs = preg_match_all($pattern, $format, $matches)) {
-                foreach ($matches[0] as $match) {
-                    $chars = str_split($match);
-                    // if character is a format char but not a time-related one, escape it
-                    if (strpos($this->_allFormatLetters, $chars[0]) !== false) {
-                        if (strpos($this->_timeFormatLetters, $chars[0]) === false) {
-                            $match = '\\' . $match;
-                        }
-                    }
-                    $fs .= $match;
-                }
-            }
-        // }
         return gmdate($fs, $this->_getTimestamp($timezone));
     
     }

@@ -5,9 +5,9 @@
  * need for a timezone. That makes this class exceedingly simple. Just set the
  * default timezone in PHP and it will work as you expect in your timezone.
  */
-namespace qCal;
+namespace qCal\DateTime;
 
-class Date {
+class Date extends Base {
 
     protected $_year;
     
@@ -17,9 +17,7 @@ class Date {
     
     protected $_format = 'Y-m-d';
     
-    protected $_allFormatLetters = 'dDjlNSwzWFmMntLoYyaABgGhHiseIOPTZcrU';
-    
-    protected $_dateFormatLetters = 'dDjlNSwzWFmMntLoYy';
+    protected $_allowedFormatLetters = 'dDjlNSwzWFmMntLoYy';
     
     public function __construct($year = null, $month = null, $day = null) {
     
@@ -50,7 +48,7 @@ class Date {
     public function fromUnixTimestamp($ts) {
     
         $dp = getdate($ts);
-        return new \qCal\Date($dp['year'], $dp['mon'], $dp['mday']);
+        return new Date($dp['year'], $dp['mon'], $dp['mday']);
     
     }
     
@@ -58,7 +56,7 @@ class Date {
     
         $ts = strtotime($str);
         $dp = getdate($ts);
-        return new \qCal\Date($dp['year'], $dp['mon'], $dp['mday']);
+        return new Date($dp['year'], $dp['mon'], $dp['mday']);
     
     }
     
@@ -68,10 +66,15 @@ class Date {
     
     }
     
+    protected function _date($letters, $timestamp = null) {
+    
+        return date($letters, $this->_getTimestamp());
+    
+    }
+    
     /**
      * Escapes letters starting with a backspace and only converts date-related
      * characters rather than PHP's full set.
-     */
     public function toString($format = null) {
     
         $fs = $this->_format;
@@ -95,6 +98,7 @@ class Date {
         return date($fs, $this->_getTimestamp());
     
     }
+     */
     
     public function setYear($year) {
     
