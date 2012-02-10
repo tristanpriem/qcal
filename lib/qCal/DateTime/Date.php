@@ -234,7 +234,7 @@ class Date extends Base {
      */
     public function getMonthName() {
     
-        
+        return $this->toString('F');
     
     }
     
@@ -276,23 +276,23 @@ class Date extends Base {
     
     /**
      * Return the first day of the month as a qCal_Date object
-     * @return qCal_Date The first day of the month
+     * @return qCal\DateTime\Date The first day of the month
      * @access public
      */
     public function getFirstDayOfMonth() {
     
-        
+        return new Date($this->getYear(), $this->getMonth(), 1);
     
     }
     
     /**
      * Return the last day of the month as a qCal_Date object
-     * @return qCal_Date The last day of the month
+     * @return qCal\DateTime\Date The last day of the month
      * @access public
      */
     public function getLastDayOfMonth() {
     
-        
+        return new Date($this->getYear(), $this->getMonth(), $this->getNumDaysInMonth());
     
     }
     
