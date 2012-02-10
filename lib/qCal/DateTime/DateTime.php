@@ -3,8 +3,12 @@
  * Base DateTime Class
  * Represents a fixed point in time (a certain time on a certain date in a
  * certain timezone).
+ *
+ * @todo All toString() methods should allow strings as timezones
  */
 namespace qCal\DateTime;
+
+use qCal\DateTime\Duration;
 
 class DateTime extends Base {
 
@@ -84,6 +88,17 @@ class DateTime extends Base {
         }
         date_default_timezone_set($orig);
         return (boolean) $dl;
+    
+    }
+    
+    public function add(Duration $add) {
+    
+        if (!$ts = strtotime($this->toString('Y-m-d H:i:s') . " +" . $add->getSeconds() . ' seconds')) {
+            // @todo Add exception test for this
+            throw new \InvalidArgumentException('Cannot be added to DateTime.');
+        }
+        $dp = getdate($ts);
+        return new DateTime($dp['year'], $dp['mon'], $dp['mday'], $dp['hours'], $dp['minutes'], $dp['seconds'], $this->getTimeZone());
     
     }
     

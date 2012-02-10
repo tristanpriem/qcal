@@ -28,7 +28,7 @@ class Date extends Base {
                 $this->_month = $dp['mon'];
                 $this->_day = $dp['mday'];
             } else {
-                // If any are null but not all, throw an exception. It's all or none.
+                // If any are null but not all, throw an exception. It's all or none. @todo Shouldn't this be MissingArgumentException?
                 throw new \InvalidArgumentException("New date expects year, month, and day. Either all must be null or none.");
             }
         } else {

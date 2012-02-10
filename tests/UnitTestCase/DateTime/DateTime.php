@@ -104,5 +104,49 @@ class UnitTestCase_DateTime_DateTime extends \UnitTestCase_DateTime {
         $this->assertEqual($dt->toString(), 'Tue, 11 Sep 2001 04:30:23 -0700');
     
     }
+/*
+    public function testAddToDateTime() {
+    
+        $date = new qCal\DateTime\DateTime(2010, 4, 23); // worst. day. ever.
+        $plusfourdays = $date->add('4 days');
+        $this->assertEqual($plusfourdays->toString('Y-m-d'), '2010-04-27');
+        $plusfouryears = $date->add('4 years');
+        $this->assertEqual($plusfouryears->toString('Y-m-d'), '2014-04-23');
+        $plustenmonths = $date->add('10 months');
+        $this->assertEqual($plustenmonths->toString('Y-m-d'), '2011-02-23');
+        $plushunthousandseconds = $date->add('100000 seconds'); // plus a little over 27 hours
+        $this->assertEqual($plushunthousandseconds->toString('Y-m-d'), '2010-04-24');
+    
+    }
+    
+    public function testAddToThrowsExceptionOnInvalidInput() {
+    
+        $date = new qCal\DateTime\Date(2001, 9, 11);
+        $this->expectException(new InvalidArgumentException('"baby food" cannot be added to a date.'));
+        $date->add('baby food');
+    
+    }
+    
+    public function testSubtractFromDateTime() {
+    
+        $date = new qCal\DateTime\Date(2010, 4, 23); // worst. day. ever.
+        $minusfourdays = $date->subtract('4 days');
+        $this->assertEqual($minusfourdays->toString('Y-m-d'), '2010-04-19');
+        $minusfouryears = $date->subtract('4 years');
+        $this->assertEqual($minusfouryears->toString('Y-m-d'), '2006-04-23');
+        $minustenmonths = $date->subtract('10 months');
+        $this->assertEqual($minustenmonths->toString('Y-m-d'), '2009-06-23');
+        $minushunthousandseconds = $date->subtract('100000 seconds'); // minus a little over 27 hours
+        $this->assertEqual($minushunthousandseconds->toString('Y-m-d'), '2010-04-21');
+    
+    }
+    
+    public function testSubtractFromThrowsExceptionOnInvalidInput() {
+    
+        $date = new qCal\DateTime\Date(2001, 9, 11);
+        $this->expectException(new InvalidArgumentException('"baby food" cannot be subtracted from a date.'));
+        $date->subtract('baby food');
+    
+    }*/
 
 }
