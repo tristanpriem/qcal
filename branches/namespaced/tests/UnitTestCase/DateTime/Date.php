@@ -294,5 +294,21 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         $this->assertEqual($date->getWeekDay(), 0);
     
     }
+    
+    public function testGetFirstDayOfMonthObject() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 13);
+        $first = $date->getFirstDayOfMonth();
+        $this->assertEqual($first->toString('Ymd'), '20120101');
+    
+    }
+    
+    public function testGetLastDayOfMonthObject() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 13);
+        $first = $date->getLastDayOfMonth();
+        $this->assertEqual($first->toString('Ymd'), '20120131');
+    
+    }
 
 }
