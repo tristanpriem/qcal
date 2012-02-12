@@ -346,6 +346,20 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
+    public function testConvertMonthNameToNum() {
+    
+        $this->assertEqual(qCal\DateTime\Date::monthNameToNum('february'), 2);
+        $this->assertEqual(qCal\DateTime\Date::monthNameToNum('December'), 12);
+    
+    }
+    
+    public function testMonthNameToNumReturnsNumIfPassedNum() {
+    
+        $this->assertEqual(qCal\DateTime\Date::monthNameToNum(2), 2);
+        $this->assertEqual(qCal\DateTime\Date::monthNameToNum(12), 12);
+    
+    }
+    
     /**
      * This method is really cool... it gets the Xth weekday of a given month
      */
@@ -386,17 +400,48 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     }
     
     // @todo Add exception tests for everything you can
-    public function testGetXthWeekDayThrowsExceptionOnInvalidWeekday() {
+    /*public function testGetXthWeekDayThrowsExceptionOnInvalidWeekday() {
     
+        $this->expectException(new \InvalidArgumentException('There is no 10th Thursday in January'));
+        $tenthThurs = qCal\DateTime\Date::getXthWeekdayOfMonth(10, 'TH', 1, 2012);
+    
+    }*/
+    
+    public function testGetXthWeekdayOfYear() {
+    
+        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 1, 2012);
+        $this->assertEqual($tenthMonday->toString('Ymd'), '20120305');
         
+        $lastSunday = qCal\DateTime\Date::getXthWeekdayOfYear(-1, 0, 2011);
+        $this->assertEqual($lastSunday->toString('Ymd'), '20111225');
     
     }
     
-    /*public function testGetXthWeekdayOfYear() {
+    public function testGetXthWeekdayOfYearUsingAbbrWeekday() {
     
-        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 1, 2012);
-        $this->assertEqual($tenthMonday->toString('Ymd'), '03052012');
+        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 'mo', 2012);
+        $this->assertEqual($tenthMonday->toString('Ymd'), '20120305');
+        
+        $lastSunday = qCal\DateTime\Date::getXthWeekdayOfYear(-1, 'SU', 2011);
+        $this->assertEqual($lastSunday->toString('Ymd'), '20111225');
     
-    }*/
+    }
+    
+    public function testGetXthWeekdayOfYearUsingWholeWeekday() {
+    
+        $tenthMonday = qCal\DateTime\Date::getXthWeekdayOfYear(10, 'monday', 2012);
+        $this->assertEqual($tenthMonday->toString('Ymd'), '20120305');
+        
+        $lastSunday = qCal\DateTime\Date::getXthWeekdayOfYear(-1, 'SUNday', 2011);
+        $this->assertEqual($lastSunday->toString('Ymd'), '20111225');
+    
+    }
+    
+    public function testGetUnixTimestamp() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 1);
+        $this->assertEqual($date->getUnixTimestamp(), '1325376000');
+    
+    }
 
 }

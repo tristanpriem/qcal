@@ -1,24 +1,50 @@
 <?php
 /**
  * qCal Date
- * Date class without an associated time. Because there is no time, there is no
- * need for a timezone. That makes this class exceedingly simple. Just set the
- * default timezone in PHP and it will work as you expect in your timezone.
+ * This is an object representation of a date. It has no associated time or
+ * timezone. It works in UTC, but actually that's irrelevant because having no
+ * associated time removes it from timezones altogether.
+ *
+ * @package     qCal
+ * @subpackage  DateTime
+ * @author      Luke Visinoni <luke.visinoni@gmail.com>
+ * @copyright   Luke Visinoni <luke.visinoni@gmail.com>
+ * @version     $Id$
  */
 namespace qCal\DateTime;
 
 class Date extends Base {
 
+    /**
+     * @var integer Four-digit year
+     */
     protected $_year;
     
+    /**
+     * @var integer Month
+     */
     protected $_month;
     
+    /**
+     * @var integer Day
+     */
     protected $_day;
     
+    /**
+     * @var string Default output format
+     * @todo I might change this to Ymd because that is the default in iCal
+     */
     protected $_format = 'Y-m-d';
     
+    /**
+     * @var string The PHP date format chars allowed in this class
+     */
     protected $_allowedFormatLetters = 'dDjlNSwzWFmMntLoYy';
     
+    /**
+     * @var array This array allows association between week day names and their
+     *            integer counterparts in PHP 0 = sun and 6 = sat
+     */
     static protected $_weekDays = array(
         0 => 'sunday',
         1 => 'monday',
@@ -30,7 +56,7 @@ class Date extends Base {
     );
     
     /**
-     * @var Array A list of weekdays and associated numbers in accordance with
+     * @var array A list of weekdays and associated numbers in accordance with
      *            the RFC. 0 = Sunday, 6 = Saturday
      */
     static protected $_abbrWeekDays = array(
@@ -44,9 +70,33 @@ class Date extends Base {
     );
     
     /**
-     * Create new date
-     * Rollover allows you to pass in something like 44 for the day and have it
-     * roll over into the next month rather than throw an exception.
+     * @var array An array of month names with their numbers as keys
+     */
+    static protected $_monthNames = array(
+        1 => 'january',
+        2 => 'february',
+        3 => 'march',
+        4 => 'april',
+        5 => 'may',
+        6 => 'june',
+        7 => 'july',
+        8 => 'august',
+        9 => 'september',
+        10 => 'october',
+        11 => 'november',
+        12 => 'december',
+    );
+    
+    /**
+     * Class constructor
+     *
+     * @param integer Four digit year
+     * @param integer Month
+     * @param integer Day
+     * @param boolean Set to true to allow days and months to roll over, meaning
+     *                you can pass in something like 32 for $day and have it
+     *                accept it as the first of the following month (depending
+     *                on the month)
      */
     public function __construct($year = null, $month = null, $day = null, $rollover = false) {
     
@@ -78,6 +128,11 @@ class Date extends Base {
     
     }
     
+    /**
+     * @todo I'm not sure I need this any more. Date now uses UTC time instead
+     * of relying on the local timezone. So it uses gmdate() and gmmktime() rather
+     * than using this.
+     */
     protected function _getTimestamp() {
     
         return mktime(0, 0, 0, $this->_month, $this->_day, $this->_year);
@@ -101,37 +156,9 @@ class Date extends Base {
     
     protected function _date($letters, $timestamp = null) {
     
-        return date($letters, $this->_getTimestamp());
+        return gmdate($letters, $this->getUnixTimestamp());
     
     }
-    
-    /**
-     * Escapes letters starting with a backspace and only converts date-related
-     * characters rather than PHP's full set.
-    public function toString($format = null) {
-    
-        $fs = $this->_format;
-        if (!is_null($format)) {
-            $fs = '';
-            // match all date-format characters and place a slash before any that aren't date-related
-            $pattern = '/\\\?./';
-            if ($ltrs = preg_match_all($pattern, $format, $matches)) {
-                foreach ($matches[0] as $match) {
-                    $chars = str_split($match);
-                    // if character is a format char but not a date-related one, escape it
-                    if (strpos($this->_allFormatLetters, $chars[0]) !== false) {
-                        if (strpos($this->_dateFormatLetters, $chars[0]) === false) {
-                            $match = '\\' . $match;
-                        }
-                    }
-                    $fs .= $match;
-                }
-            }
-        }
-        return date($fs, $this->_getTimestamp());
-    
-    }
-     */
     
     public function setYear($year) {
     
@@ -411,18 +438,17 @@ class Date extends Base {
      */
     public function getUnixTimestamp() {
     
-        
+        return gmmktime(0, 0, 0, $this->_month, $this->_day, $this->_year);
     
     }
     
     /**
      * Converts either whole or abbreviated weekday name to its associated number
+     * @todo Throw Invalid Arg Exception
      */
     static public function weekDayToNum($weekDayName) {
     
-        if (is_int($weekDayName)) {
-            return $weekDayName;
-        }
+        if (is_int($weekDayName)) return $weekDayName;
         $upper = strtoupper($weekDayName);
         $lower = strtolower($weekDayName);
         $weekdays = array_flip(self::$_weekDays);
@@ -431,6 +457,20 @@ class Date extends Base {
             return $weekdays[$weekday];
         } elseif (array_key_exists($lower, $weekdays)) {
             return $weekdays[$lower];
+        }
+    
+    }
+    
+    /**
+     * Converts month name into its associated number
+     */
+    static public function monthNameToNum($month) {
+    
+        if (is_int($month)) return $month;
+        $month = strtolower($month);
+        if (in_array($month, self::$_monthNames)) {
+            $monthNums = array_flip(self::$_monthNames);
+            return $monthNums[$month];
         }
     
     }
@@ -502,7 +542,7 @@ class Date extends Base {
         if ($foundday && checkdate($month, $foundday, $year)) {
             return new Date($year, $month, $foundday);
         }
-        // No day found, throw exception
+        // @todo No day found, throw exception
     
     }
     
@@ -545,14 +585,26 @@ class Date extends Base {
                 $day++;
             }
         } else {
-            
+            $lastofyear = new Date($year, 12, 31);
+            $day = $numdaysinyear;
+            $wday = $lastofyear->getWeekDay();
+            while ($day >= 1) {
+                if ($weekday == $wday) {
+                    $numweekdays++;
+                    if ($numweekdays == $xth) {
+                        $found = $day;
+                        break;
+                    }
+                }
+                if ($wday == 0) $wday = 6; // reset to Saturday after Sunday
+                else $wday--;
+                $day--;
+            }
         }
         if ($found) {
-            // $date = new qCal_Date($year, 1, $found, true); // takes advantage of the rollover feature :)
-        } else {
-            
+            return new Date($year, 1, $found, true); // takes advantage of the rollover feature :)
         }
-        return new Date();
+        // @todo No date found, throw exception
     
     }
 
