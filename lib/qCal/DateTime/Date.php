@@ -388,7 +388,6 @@ class Date extends Base {
      * Get the day of the week
      * @return string The actual name of the day of the week, capitalized
      * @access public
-     * @todo test this
      */
     public function getWeekDayName() {
     
@@ -398,13 +397,18 @@ class Date extends Base {
     
     /**
      * Get the week of the year
-     * @return integer The week of the year (0-51 I think)
+     * This method makes use of PHP's native date() format method, which counts
+     * Monday as the first day of the week. It is not possible to change this
+     * behavior, so the iCalendar requirement that you must be able to change
+     * the day that weeks start on cannot be satisfied through date(). I will
+     * have to rewrite this method manually without the use of PHP's date().
+     * @return integer The week of the year (1-52)
      * @access public
-     * @todo Test this
+     * @todo Rewrite this manually (without date())
      */
     public function getWeekOfYear() {
     
-        return $this->toString('W');
+        return (integer) $this->toString('W');
     
     }
     

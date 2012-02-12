@@ -456,5 +456,36 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         $this->assertEqual($date->getNumDaysInMonth(), 30);
     
     }
-
+    
+    public function testGetWeekDayName() {
+    
+        $date = new qCal\DateTime\Date(2012, 2, 12);
+        $this->assertEqual($date->getWeekdayName(), 'Sunday');
+        $date = new qCal\DateTime\Date(2012, 1, 12);
+        $this->assertEqual($date->getWeekdayName(), 'Thursday');
+        $date = new qCal\DateTime\Date(2001, 9, 11);
+        $this->assertEqual($date->getWeekdayName(), 'Tuesday');
+    
+    }
+    
+    /**
+     * PHP's date() method starts the week on Monday, so the first week of the
+     * year doesn't officially start until the first Monday of the year.
+     */
+    public function testGetWeekOfYear() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 1);
+        $this->assertEqual($date->getWeekOfYear(), 52); // 2012 starts on a Sunday
+        $date = new qCal\DateTime\Date(2012, 1, 2);
+        $this->assertEqual($date->getWeekOfYear(), 1); // 1-2-2012 is a Monday
+        
+        // same thing happens in 2011
+        $date = new qCal\DateTime\Date(2011, 1, 1);
+        $this->assertEqual($date->getWeekOfYear(), 52); // 1-1-2011 is a Saturday
+        $date = new qCal\DateTime\Date(2011, 1, 2);
+        $this->assertEqual($date->getWeekOfYear(), 52); // Still last week of year
+        $date = new qCal\DateTime\Date(2011, 1, 3);
+        $this->assertEqual($date->getWeekOfYear(), 1); // A monday!!
+    
+    }
 }
