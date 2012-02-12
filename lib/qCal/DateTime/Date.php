@@ -355,7 +355,6 @@ class Date extends Base {
      * Get the amount of days in the current month of this year
      * @return integer The number of days in the month
      * @access public
-     * @todo test this
      */
     public function getNumDaysInMonth() {
     

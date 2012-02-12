@@ -443,5 +443,18 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         $this->assertEqual($date->getUnixTimestamp(), '1325376000');
     
     }
+    
+    public function testGetNumDaysInMonth() {
+    
+        $date = new qCal\DateTime\Date(2012, 2, 1);
+        $this->assertEqual($date->getNumDaysInMonth(), 29);
+        $date = new qCal\DateTime\Date(2012, 1, 1);
+        $this->assertEqual($date->getNumDaysInMonth(), 31);
+        $date = new qCal\DateTime\Date(2011, 2, 1);
+        $this->assertEqual($date->getNumDaysInMonth(), 28);
+        $date = new qCal\DateTime\Date(2010, 9, 1);
+        $this->assertEqual($date->getNumDaysInMonth(), 30);
+    
+    }
 
 }
