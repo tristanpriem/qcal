@@ -123,8 +123,7 @@ class Date extends Base {
             $this->_month = $month;
             $this->_day = $day;
         } else {
-            // @todo This may not be the right exception
-            throw new \InvalidArgumentException(sprintf("%04d-%02d-%02d is not a invalid date.", $year, $month, $day));
+            throw new \InvalidArgumentException(sprintf("%04d-%02d-%02d is not a valid date.", $year, $month, $day));
         }
     
     }
