@@ -21,7 +21,7 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     public function testNewDateObjectThrowsExceptionSomeButNotAllArgs() {
     
-        $this->expectException(new InvalidArgumentException("New date expects year, month, and day. Either all must be null or none."));
+        $this->expectException(new BadMethodCallException("New date expects year, month, and day. Either all must be null or none."));
         $date = new qCal\DateTime\Date(2005);
     
     }
