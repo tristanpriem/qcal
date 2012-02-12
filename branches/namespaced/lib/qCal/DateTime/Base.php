@@ -90,6 +90,8 @@ abstract class Base {
      * Get the timestamp representation of this object
      * 
      * @return integer UNIX timestamp
+     * @todo   Date has this as well as getUnixTimestamp(), seems ambiguous.
+     *         Maybe just make this public and change it to getUnixTimestamp()?
      */
     protected function _getTimestamp() {
     
