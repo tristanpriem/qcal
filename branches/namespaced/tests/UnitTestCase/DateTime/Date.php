@@ -34,7 +34,7 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     public function testNewDateChecksIfDateIsValid() {
     
-        $this->expectException(new InvalidArgumentException('2012-01-55 is not a invalid date.'));
+        $this->expectException(new InvalidArgumentException('2012-01-55 is not a valid date.'));
         $date = new qCal\DateTime\Date(2012, 1, 55);
     
     }
