@@ -115,14 +115,15 @@ class Date extends Base {
                 $this->_month = $dp['mon'];
                 $this->_day = $dp['mday'];
             } else {
-                // If any are null but not all, throw an exception. It's all or none. @todo Shouldn't this be MissingArgumentException?
-                throw new \InvalidArgumentException("New date expects year, month, and day. Either all must be null or none.");
+                // If any are null but not all, throw an exception. It's all or none.
+                throw new \BadMethodCallException("New date expects year, month, and day. Either all must be null or none.");
             }
         } elseif (checkdate($month, $day, $year)) {
             $this->_year = $year;
             $this->_month = $month;
             $this->_day = $day;
         } else {
+            // @todo This may not be the right exception
             throw new \InvalidArgumentException(sprintf("%04d-%02d-%02d is not a invalid date.", $year, $month, $day));
         }
     
