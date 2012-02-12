@@ -127,18 +127,7 @@ class Date extends Base {
         }
     
     }
-    
-    /**
-     * @todo I'm not sure I need this any more. Date now uses UTC time instead
-     * of relying on the local timezone. So it uses gmdate() and gmmktime() rather
-     * than using this.
-     */
-    protected function _getTimestamp() {
-    
-        return mktime(0, 0, 0, $this->_month, $this->_day, $this->_year);
-    
-    }
-    
+        
     public function fromUnixTimestamp($ts) {
     
         $dp = getdate($ts);
@@ -156,7 +145,7 @@ class Date extends Base {
     
     protected function _date($letters, $timestamp = null) {
     
-        return gmdate($letters, $this->getUnixTimestamp());
+        return gmdate($letters, $this->_getTimestamp());
     
     }
     
@@ -431,6 +420,12 @@ class Date extends Base {
     
     }
     
+    protected function _getTimestamp() {
+    
+        return gmmktime(0, 0, 0, $this->_month, $this->_day, $this->_year);
+    
+    }
+    
     /**
      * Get a unix timestamp for the date
      * @return integer The amount of seconds since unix epoch (January 1, 1970 UTC)
@@ -438,7 +433,7 @@ class Date extends Base {
      */
     public function getUnixTimestamp() {
     
-        return gmmktime(0, 0, 0, $this->_month, $this->_day, $this->_year);
+        return $this->_getTimestamp();
     
     }
     
