@@ -415,7 +415,7 @@ class Date extends Base {
     /**
      * Get how many weeks until the end of the year
      * @access public
-     * @todo This is really rudimentary. There is more to this, but this works for now...
+     * @todo This will be rewritten when getWeekOfYear() is
      */
     public function getWeeksUntilEndOfYear() {
     
@@ -442,7 +442,6 @@ class Date extends Base {
     
     /**
      * Converts either whole or abbreviated weekday name to its associated number
-     * @todo Throw Invalid Arg Exception
      */
     static public function weekDayToNum($weekDayName) {
     
@@ -456,6 +455,8 @@ class Date extends Base {
         } elseif (array_key_exists($lower, $weekdays)) {
             return $weekdays[$lower];
         }
+        // Not found, throw exception
+        throw new \InvalidArgumentException(sprintf('"%s" is not a valid weekday name.', $weekDayName));
     
     }
     
@@ -470,6 +471,8 @@ class Date extends Base {
             $monthNums = array_flip(self::$_monthNames);
             return $monthNums[$month];
         }
+        // Not found, throw exception
+        throw new \InvalidArgumentException(sprintf('"%s" is not a valid month name.', $month));
     
     }
     

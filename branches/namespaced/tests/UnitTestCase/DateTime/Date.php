@@ -346,6 +346,13 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
+    public function testWeekDayToNumThrowsExceptionIfInvalidArg() {
+    
+        $this->expectException(new InvalidArgumentException('"pokemon" is not a valid weekday name.'));
+        qCal\DateTime\Date::weekDayToNum('pokemon');
+    
+    }
+    
     public function testConvertMonthNameToNum() {
     
         $this->assertEqual(qCal\DateTime\Date::monthNameToNum('february'), 2);
@@ -357,6 +364,13 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
         $this->assertEqual(qCal\DateTime\Date::monthNameToNum(2), 2);
         $this->assertEqual(qCal\DateTime\Date::monthNameToNum(12), 12);
+    
+    }
+    
+    public function testMonthNameToNumThrowsExceptionIfInvalidArg() {
+    
+        $this->expectException(new InvalidArgumentException('"pokemon" is not a valid month name.'));
+        qCal\DateTime\Date::monthNameToNum('pokemon');
     
     }
     
