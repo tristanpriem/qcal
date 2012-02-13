@@ -9,6 +9,7 @@ set_include_path('../lib' . PATH_SEPARATOR . get_include_path());
  */
 require_once 'functions.php';
 require_once 'qCal.php';
+require_once 'qCal/Humanize.php';
 require_once 'qCal/DateTime/Base.php';
 require_once 'qCal/DateTime/Timezone.php';
 require_once 'qCal/DateTime/Time.php';
@@ -37,11 +38,9 @@ function __autoload($className) {
 
 }
 
-require_once 'UnitTestCase/DateTime.php';
-require_once 'UnitTestCase/DateTime/TimeZone.php';
-
 // run tests in html reporter
 $test = new GroupTest(/*qCal::getVersion . */'qCal Library Tests');
+$test->addTestCase(new \UnitTestCase_Humanize);
 $test->addTestCase(new \UnitTestCase_DateTime_TimeZone);
 $test->addTestCase(new \UnitTestCase_DateTime_Date);
 $test->addTestCase(new \UnitTestCase_DateTime_Time);
