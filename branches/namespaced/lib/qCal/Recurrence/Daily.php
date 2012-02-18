@@ -1,9 +1,8 @@
 <?php
 /**
- * Secondly recurrence pattern
+ * Daily recurrence pattern
  * This class allows the creation of date/time recurrence patterns that happen
- * on intervals of seconds. For instance, every thirty seconds, or every ten
- * seconds. Or every second.
+ * on intervals of days. For instance, every other day.
  * 
  * @package     qCal
  * @subpackage  Humanize
@@ -14,7 +13,7 @@
 namespace qCal\Recurrence;
 use qCal\Recurrence\Pattern;
 
-class Secondly extends Pattern {
+class Daily extends Pattern {
 
     
 
