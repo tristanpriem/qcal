@@ -137,11 +137,55 @@ class UnitTestCase_Recurrence_Pattern extends UnitTestCase {
     
     }
     
+    /**
+     * @todo Pattern should implement the Iterator interface so that it is as
+     * easy as looping over the object to get instances
+     */
+    public function testPatternImplementsIterator() {
+    
+        
+    
+    }
+    
+    public function testPatternCanBeCastToString() {
+    
+        // @todo test __toString() method
+    
+    }
+    
     public function testAddRules() {
     
         $secondly = new Secondly(100);
         $secondly->addRule(new BySecond(30));
     
     }
+
+    /*
+    If multiple BYxxx rule parts are specified, then after evaluating the
+    specified FREQ and INTERVAL rule parts, the BYxxx rule parts are
+    applied to the current set of evaluated occurrences in the following
+    order: BYMONTH, BYWEEKNO, BYYEARDAY, BYMONTHDAY, BYDAY, BYHOUR,
+    BYMINUTE, BYSECOND and BYSETPOS; then COUNT and UNTIL are evaluated.
+    
+    Here is an example of evaluating multiple BYxxx rule parts.
+    
+      DTSTART;TZID=US-Eastern:19970105T083000
+      RRULE:FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;
+       BYMINUTE=30
+    
+    First, the "INTERVAL=2" would be applied to "FREQ=YEARLY" to arrive
+    at "every other year". Then, "BYMONTH=1" would be applied to arrive
+    at "every January, every other year". Then, "BYDAY=SU" would be
+    applied to arrive at "every Sunday in January, every other year".
+    Then, "BYHOUR=8,9" would be applied to arrive at "every Sunday in
+    January at 8 AM and 9 AM, every other year". Then, "BYMINUTE=30"
+    would be applied to arrive at "every Sunday in January at 8:30 AM and
+    9:30 AM, every other year". Then, lacking information from RRULE, the
+    second is derived from DTSTART, to end up in "every Sunday in January
+    at 8:30:00 AM and 9:30:00 AM, every other year". Similarly, if the
+    BYMINUTE, BYHOUR, BYDAY, BYMONTHDAY or BYMONTH rule part were
+    missing, the appropriate minute, hour, day or month would have been
+    retrieved from the "DTSTART" property.
+    */
 
 }

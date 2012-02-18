@@ -8,7 +8,7 @@ namespace qCal\Recurrence;
 use qCal\DateTime\DateTime,
     qCal\Humanize;
 
-abstract class Pattern implements \Countable {
+abstract class Pattern implements \Countable, \Iterator {
 
     /**
      * @var DateTime Optional start date/time
@@ -36,6 +36,12 @@ abstract class Pattern implements \Countable {
      * @var integer The interval for the pattern
      */
     protected $_interval = 1;
+    
+    /**
+     * According to the RFC, rule parts are to be evaluated in this order. There
+     * is an example of how this order is used in the tests for this class.
+     */
+    protected $_ruleOrder = array('ByMonth', 'ByWeekNo', 'ByYearDay', 'ByMonthDay', 'ByDay', 'ByHour', 'ByMinute', 'BySecond', 'BySetPos');
     
     /**
      * Class constructor
@@ -117,16 +123,6 @@ abstract class Pattern implements \Countable {
     
     }
     
-    /**
-     * This class implements Countable and therefor must ahve this method
-     * @todo Implement this for real
-     */
-    public function count() {
-    
-        return 0;
-    
-    }
-    
     public function setWeekStart($wkst) {
     
         if (strlen($wkst) == 2) {
@@ -143,7 +139,56 @@ abstract class Pattern implements \Countable {
     
     }
     
+    /**
+     * @todo Find out whether it is allowable to have multiple rules of the same type or not
+     */
     public function addRule(Pattern\Rule $rule) {
+    
+        $this->_rules[get_class($rule)] = $rule;
+    
+    }
+    
+    public function __toString() {
+    
+        
+    
+    }
+    
+    /**
+     * This class implements Countable and therefor must ahve this method
+     * @todo Implement this for real
+     */
+    public function count() {
+    
+        return 0;
+    
+    }
+    
+    public function rewind() {
+    
+        
+    
+    }
+    
+    public function current() {
+    
+        
+    
+    }
+    
+    public function next() {
+    
+        
+    
+    }
+    
+    public function key() {
+    
+        
+    
+    }
+    
+    public function valid() {
     
         
     

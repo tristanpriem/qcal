@@ -20,7 +20,12 @@ require_once 'qCal/DateTime/Period.php';
 
 require_once 'qCal/Recurrence/Pattern.php';
 require_once 'qCal/Recurrence/Secondly.php';
+require_once 'qCal/Recurrence/Minutely.php';
+require_once 'qCal/Recurrence/Hourly.php';
+require_once 'qCal/Recurrence/Daily.php';
+require_once 'qCal/Recurrence/Weekly.php';
 require_once 'qCal/Recurrence/Monthly.php';
+require_once 'qCal/Recurrence/Yearly.php';
 
 require_once 'qCal/Recurrence/Pattern/Rule.php';
 require_once 'qCal/Recurrence/Pattern/BySecond.php';
