@@ -30,11 +30,19 @@ class TimeZone extends Base {
     
     }
     
+    /**
+     * Finds the first timezone with this offset...
+    static public function fromOffset() {
+    
+        $tzs = DateTimeZone::listAbbreviations();
+    
+    }
+     */
+    
     public function set($tz) {
     
         if (!@timezone_open($tz)) {
-            // @todo I'm having a really hard time getting Exception\InvalidArgumentException to work...
-            throw new \InvalidArgumentException("Timezone ($tz) is not a valid timezone");
+            throw new \InvalidArgumentException(sprintf('"%s" is not a valid timezone.', $tz));
         }
         $this->_tz = $tz;
     

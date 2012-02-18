@@ -32,6 +32,13 @@ class UnitTestCase_DateTime_DateTime extends \UnitTestCase_DateTime {
     
     }
     
+    public function testFromStringThrowsExceptionOnInvalidInput() {
+    
+        $this->expectException(new InvalidArgumentException('"pokemon" is not a valid date/time.'));
+        $dt = qCal\DateTime\DateTime::fromString('pokemon', 'America/Denver');
+    
+    }
+    
     public function testDateTimeCanRevertTheDateWhenNecessaryForTimeZoneAdjustment() {
     
         $tz = new qCal\DateTime\TimeZone('GMT');

@@ -50,7 +50,7 @@ class UnitTestCase_DateTime_TimeZone extends \UnitTestCase_DateTime {
     public function testNewTZDoesntAcceptInvalidTZ() {
     
         $zone = 'NotACountry/NotATimezone';
-        $this->expectException(new InvalidArgumentException("Timezone ($zone) is not a valid timezone"));
+        $this->expectException(new InvalidArgumentException('"NotACountry/NotATimezone" is not a valid timezone.'));
         $tz = new qCal\DateTime\TimeZone($zone);
     
     }
@@ -59,7 +59,7 @@ class UnitTestCase_DateTime_TimeZone extends \UnitTestCase_DateTime {
     
         $zone = 'NotACountry/NotATimezone';
         $tz = new qCal\DateTime\TimeZone();
-        $this->expectException(new InvalidArgumentException("Timezone ($zone) is not a valid timezone"));
+        $this->expectException(new InvalidArgumentException('"NotACountry/NotATimezone" is not a valid timezone.'));
         $tz->set($zone);
     
     }
@@ -87,12 +87,11 @@ class UnitTestCase_DateTime_TimeZone extends \UnitTestCase_DateTime {
     /**
      * Need to find a way to do the conversion...
      * Maybe something like qCal\DateTime\TimeZone::fromOffset() or something
-     * 
     public function testNewTZAcceptsOffset() {
     
         // @todo I need access to the PHP manual for this one...
         $zone = '+01:00';
-        $tz = new qCal\DateTime\TimeZone($zone);
+        $tz = qCal\DateTime\TimeZone::fromOffset($zone);
         $this->assertEqual($tz->toString(), $zone);
     
     }
