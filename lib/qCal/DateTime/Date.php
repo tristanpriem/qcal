@@ -12,6 +12,7 @@
  * @version     $Id$
  */
 namespace qCal\DateTime;
+use qCal\Humanize;
 
 class Date extends Base {
 
@@ -31,6 +32,11 @@ class Date extends Base {
     protected $_day;
     
     /**
+     * @var integer Weekday that week starts on
+     */
+    protected $_weekdayStart = 1; // defaults to Monday
+    
+    /**
      * @var string Default output format
      * @todo I might change this to Ymd because that is the default in iCal
      */
@@ -40,52 +46,6 @@ class Date extends Base {
      * @var string The PHP date format chars allowed in this class
      */
     protected $_allowedFormatLetters = 'dDjlNSwzWFmMntLoYy';
-    
-    /**
-     * @var array This array allows association between week day names and their
-     *            integer counterparts in PHP 0 = sun and 6 = sat
-     */
-    static protected $_weekDays = array(
-        0 => 'sunday',
-        1 => 'monday',
-        2 => 'tuesday',
-        3 => 'wednesday',
-        4 => 'thursday',
-        5 => 'friday',
-        6 => 'saturday',
-    );
-    
-    /**
-     * @var array A list of weekdays and associated numbers in accordance with
-     *            the RFC. 0 = Sunday, 6 = Saturday
-     */
-    static protected $_abbrWeekDays = array(
-        'SU' => 'sunday',
-        'MO' => 'monday',
-        'TU' => 'tuesday',
-        'WE' => 'wednesday',
-        'TH' => 'thursday',
-        'FR' => 'friday',
-        'SA' => 'saturday',
-    );
-    
-    /**
-     * @var array An array of month names with their numbers as keys
-     */
-    static protected $_monthNames = array(
-        1 => 'january',
-        2 => 'february',
-        3 => 'march',
-        4 => 'april',
-        5 => 'may',
-        6 => 'june',
-        7 => 'july',
-        8 => 'august',
-        9 => 'september',
-        10 => 'october',
-        11 => 'november',
-        12 => 'december',
-    );
     
     /**
      * Class constructor
@@ -397,29 +357,65 @@ class Date extends Base {
     
     /**
      * Get the week of the year
-     * This method makes use of PHP's native date() format method, which counts
-     * Monday as the first day of the week. It is not possible to change this
-     * behavior, so the iCalendar requirement that you must be able to change
-     * the day that weeks start on cannot be satisfied through date(). I will
-     * have to rewrite this method manually without the use of PHP's date().
-     * @return integer The week of the year (1-52)
+     * This method starts the year at the first "weekday start" weekday. So if
+     * that is set to Monday, the year doesn't start until the first Monday and
+     * until Monday, it is week 52.
      * @access public
-     * @todo Rewrite this manually (without date())
+     * @return integer The number week the current day falls on
      */
     public function getWeekOfYear() {
     
-        return (integer) $this->toString('W');
+        $woy = 0;
+        $doy = 1;
+        $startofyear = new Date($this->getYear(), 1, 1);
+        $diy = $startofyear->getNumDaysInYear();
+        $dow = $startofyear->getWeekDay();
+        while ($doy <= $diy) { // loop through all days of the year
+            if ($dow == $this->getWeekdayStart()) {
+                $woy++;
+            }
+            // if $doy == the day in the loop, break then return $woy;
+            if ($doy == $this->getYearDay(true)) break;
+            // loop through all days of the week
+            $doy++;
+            if ($dow == 6) $dow = 0;
+            else $dow++;
+        }
+        if ($woy == 0) $woy = 52;
+        return $woy;
     
     }
     
     /**
      * Get how many weeks until the end of the year
      * @access public
-     * @todo This will be rewritten when getWeekOfYear() is
+     * @return integer The number of weeks until the end of the year
+     * @see getWeekOfYear()
      */
     public function getWeeksUntilEndOfYear() {
     
         return (integer) (52 - $this->getWeekOfYear());
+    
+    }
+    
+    /**
+     * Set the day each week starts on
+     * @param mixed Either 0-6, SU or Sunday string
+     */
+    public function setWeekdayStart($start) {
+    
+        $this->_weekdayStart = Humanize::weekdayNameToNum($start);
+        return $this;
+    
+    }
+    
+    /**
+     * Get the weekday that weeks start on
+     * @return integer 0 for Sunday through 6 for Saturday
+     */
+    public function getWeekdayStart() {
+    
+        return $this->_weekdayStart;
     
     }
     
@@ -441,42 +437,6 @@ class Date extends Base {
     }
     
     /**
-     * Converts either whole or abbreviated weekday name to its associated number
-     */
-    static public function weekDayToNum($weekDayName) {
-    
-        if (is_int($weekDayName)) return $weekDayName;
-        $upper = strtoupper($weekDayName);
-        $lower = strtolower($weekDayName);
-        $weekdays = array_flip(self::$_weekDays);
-        if (array_key_exists($upper, self::$_abbrWeekDays)) {
-            $weekday = self::$_abbrWeekDays[$upper];
-            return $weekdays[$weekday];
-        } elseif (array_key_exists($lower, $weekdays)) {
-            return $weekdays[$lower];
-        }
-        // Not found, throw exception
-        throw new \InvalidArgumentException(sprintf('"%s" is not a valid weekday name.', $weekDayName));
-    
-    }
-    
-    /**
-     * Converts month name into its associated number
-     */
-    static public function monthNameToNum($month) {
-    
-        if (is_int($month)) return $month;
-        $month = strtolower($month);
-        if (in_array($month, self::$_monthNames)) {
-            $monthNums = array_flip(self::$_monthNames);
-            return $monthNums[$month];
-        }
-        // Not found, throw exception
-        throw new \InvalidArgumentException(sprintf('"%s" is not a valid month name.', $month));
-    
-    }
-    
-    /**
      * Date magic
      * This class is capable of doing some really convenient things with dates.
      * It is capable of determining things such as how many days until the end of the year,
@@ -493,7 +453,7 @@ class Date extends Base {
      * @return qCal\DateTime\Date An object representing the xth day of the month
      * @access public
      */
-    static public function getXthWeekdayOfMonth($xth, $weekday = null, $month = null, $year = null) {
+    static public function getXthWeekdayOfMonth($xth, $weekday, $month, $year) {
     
         $negpos = substr($xth, 0, 1);
         if ($negpos == "+" || $negpos == "-") {
@@ -501,7 +461,7 @@ class Date extends Base {
         } else {
             $negpos = "+";
         }
-        $weekday = self::weekDayToNum($weekday);
+        $weekday = Humanize::weekDayNameToNum($weekday);
         $firstofmonth = new Date($year, $month, 1);
         $numdaysinmonth = $firstofmonth->getNumDaysInMonth();
         $numweekdays = 0; // the number of weekdays that have occurred (in the loop)
@@ -543,7 +503,7 @@ class Date extends Base {
         if ($foundday && checkdate($month, $foundday, $year)) {
             return new Date($year, $month, $foundday);
         }
-        // @todo No day found, throw exception
+        throw new \BadMethodCallException(sprintf('There is no %s %s in %s.', Humanize::ordinal($xth), Humanize::weekDayNumToName($weekday, true), $firstofmonth->getMonthName()));
     
     }
     
@@ -556,7 +516,7 @@ class Date extends Base {
      * @return qCal_Date An object representing the xth day of the month
      * @access public
      */
-    public function getXthWeekdayOfYear($xth, $weekday = null, $year = null) {
+    public function getXthWeekdayOfYear($xth, $weekday, $year) {
     
         $negpos = substr($xth, 0, 1);
         if ($negpos == "+" || $negpos == "-") {
@@ -564,7 +524,7 @@ class Date extends Base {
         } else {
             $negpos = "+";
         }
-        $weekday = self::weekDayToNum($weekday);
+        $weekday = Humanize::weekDayNameToNum($weekday);
         $firstofyear = new Date($year, 1, 1);
         $numdaysinyear = $firstofyear->getNumDaysInYear();
         $numweekdays = 0; // the number of weekdays that have occurred within the loop
@@ -605,7 +565,7 @@ class Date extends Base {
         if ($found) {
             return new Date($year, 1, $found, true); // takes advantage of the rollover feature :)
         }
-        // @todo No date found, throw exception
+        throw new \BadMethodCallException(sprintf('There is no %s %s in %d.', Humanize::ordinal($xth), Humanize::weekDayNumToName($weekday, true), $year));
     
     }
 

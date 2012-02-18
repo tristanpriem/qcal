@@ -27,14 +27,13 @@ class DateTime extends Base {
     
     }
     
-    /**
-     * @todo Throw exception on invalid date/time
-     */
     static public function fromString($string, $timezone = null) {
     
-        $time = strtotime($string);
-        $date = getdate($time);
-        return new DateTime($date['year'], $date['mon'], $date['mday'], $date['hours'], $date['minutes'], $date['seconds'], $timezone);
+        if ($time = strtotime($string)) {
+            $date = getdate($time);
+            return new DateTime($date['year'], $date['mon'], $date['mday'], $date['hours'], $date['minutes'], $date['seconds'], $timezone);
+        }
+        throw new \InvalidArgumentException(sprintf('"%s" is not a valid date/time.', $string));
     
     }
     

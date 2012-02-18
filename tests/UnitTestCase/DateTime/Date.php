@@ -325,55 +325,6 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
-    public function testConvertAbbrDayToNum() {
-    
-        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('tu'), 2);
-        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('SU'), 0);
-    
-    }
-    
-    public function testConvertWholeDayToNum() {
-    
-        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('Tuesday'), 2);
-        $this->assertEqual(qCal\DateTime\Date::weekDayToNum('SUNDAY'), 0);
-    
-    }
-    
-    public function testWeekDayToNumReturnsNumIfPassedNum() {
-    
-        $this->assertEqual(qCal\DateTime\Date::weekDayToNum(2), 2);
-        $this->assertEqual(qCal\DateTime\Date::weekDayToNum(0), 0);
-    
-    }
-    
-    public function testWeekDayToNumThrowsExceptionIfInvalidArg() {
-    
-        $this->expectException(new InvalidArgumentException('"pokemon" is not a valid weekday name.'));
-        qCal\DateTime\Date::weekDayToNum('pokemon');
-    
-    }
-    
-    public function testConvertMonthNameToNum() {
-    
-        $this->assertEqual(qCal\DateTime\Date::monthNameToNum('february'), 2);
-        $this->assertEqual(qCal\DateTime\Date::monthNameToNum('December'), 12);
-    
-    }
-    
-    public function testMonthNameToNumReturnsNumIfPassedNum() {
-    
-        $this->assertEqual(qCal\DateTime\Date::monthNameToNum(2), 2);
-        $this->assertEqual(qCal\DateTime\Date::monthNameToNum(12), 12);
-    
-    }
-    
-    public function testMonthNameToNumThrowsExceptionIfInvalidArg() {
-    
-        $this->expectException(new InvalidArgumentException('"pokemon" is not a valid month name.'));
-        qCal\DateTime\Date::monthNameToNum('pokemon');
-    
-    }
-    
     /**
      * This method is really cool... it gets the Xth weekday of a given month
      */
@@ -413,13 +364,12 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
-    // @todo Add exception tests for everything you can
-    /*public function testGetXthWeekDayThrowsExceptionOnInvalidWeekday() {
+    public function testGetXthWeekDayThrowsExceptionOnInvalidWeekday() {
     
-        $this->expectException(new \InvalidArgumentException('There is no 10th Thursday in January'));
+        $this->expectException(new \BadMethodCallException('There is no 10th Thursday in January.'));
         $tenthThurs = qCal\DateTime\Date::getXthWeekdayOfMonth(10, 'TH', 1, 2012);
     
-    }*/
+    }
     
     public function testGetXthWeekdayOfYear() {
     
@@ -448,6 +398,17 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
         
         $lastSunday = qCal\DateTime\Date::getXthWeekdayOfYear(-1, 'SUNday', 2011);
         $this->assertEqual($lastSunday->toString('Ymd'), '20111225');
+    
+    }
+    
+    /**
+     * @todo getXthWeekdayOfX methods should throw an exception when null/invalid args
+     */
+    
+    public function testGetXthWeekDayOfYearThrowsExceptionOnInvalidWeekday() {
+    
+        $this->expectException(new \BadMethodCallException('There is no 502nd Wednesday in 2012.'));
+        $tenthThurs = qCal\DateTime\Date::getXthWeekdayOfYear(502, 'WE', 2012);
     
     }
     
@@ -482,24 +443,68 @@ class UnitTestCase_DateTime_Date extends \UnitTestCase_DateTime {
     
     }
     
-    /**
-     * PHP's date() method starts the week on Monday, so the first week of the
-     * year doesn't officially start until the first Monday of the year.
-     */
     public function testGetWeekOfYear() {
     
-        $date = new qCal\DateTime\Date(2012, 1, 1);
-        $this->assertEqual($date->getWeekOfYear(), 52); // 2012 starts on a Sunday
-        $date = new qCal\DateTime\Date(2012, 1, 2);
-        $this->assertEqual($date->getWeekOfYear(), 1); // 1-2-2012 is a Monday
-        
-        // same thing happens in 2011
-        $date = new qCal\DateTime\Date(2011, 1, 1);
-        $this->assertEqual($date->getWeekOfYear(), 52); // 1-1-2011 is a Saturday
-        $date = new qCal\DateTime\Date(2011, 1, 2);
-        $this->assertEqual($date->getWeekOfYear(), 52); // Still last week of year
-        $date = new qCal\DateTime\Date(2011, 1, 3);
-        $this->assertEqual($date->getWeekOfYear(), 1); // A monday!!
+        $date = new qCal\DateTime\Date(2012, 1, 24);
+        $date->setWeekdayStart('wednesday');
+        $this->assertEqual($date->getWeekOfYear(), 3); 
+        $date->setDay(25);
+        $this->assertEqual($date->getWeekOfYear(), 4);
+        $date->setDay(1);
+        $this->assertEqual($date->getWeekOfYear(), 52);
+        $date->setMonth(12);
+        $date->setDay(31);
+        $this->assertEqual($date->getWeekOfYear(), 52);
+        $date->setDay(25);
+        $this->assertEqual($date->getWeekOfYear(), 51);
+        $date->setWeekdayStart('monday');
+        $this->assertEqual($date->getWeekOfYear(), 52);
     
     }
+    
+    public function testGetWeeksUntilEndOfYear() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 24);
+        $date->setWeekdayStart('wednesday');
+        $this->assertEqual($date->getWeeksUntilEndOfYear(), 49); 
+        $date->setDay(25);
+        $this->assertEqual($date->getWeeksUntilEndOfYear(), 48);
+        $date->setDay(1);
+        $this->assertEqual($date->getWeeksUntilEndOfYear(), 0);
+        $date->setMonth(12);
+        $date->setDay(31);
+        $this->assertEqual($date->getWeeksUntilEndOfYear(), 0);
+        $date->setDay(25);
+        $this->assertEqual($date->getWeeksUntilEndOfYear(), 1);
+        $date->setWeekdayStart('monday');
+        $this->assertEqual($date->getWeeksUntilEndOfYear(), 0);
+    
+    }
+    
+    public function testSetWeekdayStart() {
+    
+        $date = new qCal\DateTime\Date(2012, 1, 1);
+        
+        $date->setWeekdayStart(0);
+        $this->assertIdentical($date->getWeekdayStart(), 0);
+        
+        $date->setWeekdayStart('monday');
+        $this->assertIdentical($date->getWeekdayStart(), 1);
+        
+        $date->setWeekdayStart('SA');
+        $this->assertIdentical($date->getWeekdayStart(), 6);
+    
+    }
+    
+    /**
+     *  Note: Assuming a Monday week start, week 53 can only occur when
+     *  Thursday is January 1 or if it is a leap year and Wednesday is
+     *  January 1.
+     */
+    public function testSpecialCircumstancesLeadingTo53WeeksInYear() {
+    
+        // @todo Write edge case tests for the special circumstances listed above
+    
+    }
+
 }
