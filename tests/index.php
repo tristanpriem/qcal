@@ -29,6 +29,14 @@ require_once 'qCal/Recurrence/Yearly.php';
 
 require_once 'qCal/Recurrence/Pattern/Rule.php';
 require_once 'qCal/Recurrence/Pattern/BySecond.php';
+require_once 'qCal/Recurrence/Pattern/ByMinute.php';
+require_once 'qCal/Recurrence/Pattern/ByHour.php';
+require_once 'qCal/Recurrence/Pattern/ByDay.php';
+require_once 'qCal/Recurrence/Pattern/ByMonthDay.php';
+require_once 'qCal/Recurrence/Pattern/ByYearDay.php';
+require_once 'qCal/Recurrence/Pattern/ByMonth.php';
+require_once 'qCal/Recurrence/Pattern/BySetPos.php';
+require_once 'qCal/Recurrence/Pattern/ByWeekNo.php';
 
 // include simpletest classes
 require_once 'simpletest/unit_tester.php';
@@ -60,6 +68,8 @@ $test->addTestCase(new \UnitTestCase_DateTime_DateTime);
 $test->addTestCase(new \UnitTestCase_DateTime_Duration);
 $test->addTestCase(new \UnitTestCase_DateTime_Period);
 $test->addTestCase(new \UnitTestCase_Recurrence_Pattern);
+$test->addTestCase(new \UnitTestCase_Recurrence_Yearly);
+$test->addTestCase(new \UnitTestCase_Recurrence_Rule);
 
 if (TextReporter::inCli()) {
     exit ($test->run(new TextReporter()) ? 0 : 1);

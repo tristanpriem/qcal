@@ -8,7 +8,7 @@ namespace qCal\Recurrence;
 use qCal\DateTime\DateTime,
     qCal\Humanize;
 
-abstract class Pattern implements \Countable, \Iterator {
+abstract class Pattern implements \Countable, \SeekableIterator {
 
     /**
      * @var DateTime Optional start date/time
@@ -38,6 +38,16 @@ abstract class Pattern implements \Countable, \Iterator {
     protected $_interval = 1;
     
     /**
+     * @var array A list of rules applied to this recurrence pattern
+     */
+    protected $_rules = array();
+    
+    /**
+     * @var integer Represents this object's internal pointer to the current iteration
+     */
+    protected $_position = 0;
+    
+    /**
      * According to the RFC, rule parts are to be evaluated in this order. There
      * is an example of how this order is used in the tests for this class.
      */
@@ -62,8 +72,10 @@ abstract class Pattern implements \Countable, \Iterator {
         if (is_null($interval)) return $this;
         $int = (integer) $interval;
         $str = (string) $interval;
+        // if interval is an integer (or a string representing an integer)
         if ($str === (string) $int) {
-             if (abs($int) === $int) {
+            // if interval is positive
+            if (abs($int) === $int) {
                 $this->_interval = $int;
                 return $this;
             }
@@ -145,9 +157,42 @@ abstract class Pattern implements \Countable, \Iterator {
     public function addRule(Pattern\Rule $rule) {
     
         $this->_rules[get_class($rule)] = $rule;
+        return $this;
     
     }
     
+    public function getRules() {
+    
+        return $this->_rules;
+    
+    }
+    
+    public function hasRule($rule) {
+    
+        $srch = array_shift(array_reverse(explode('\\', $rule)));
+        $rules = array_keys($this->_rules);
+        foreach ($rules as $rl) {
+            $find = array_shift(array_reverse(explode('\\', $rl)));
+            if ($srch == $find) return true;
+        }
+        return false;
+    
+    }
+    
+    public function getRule($rule) {
+    
+        $srch = array_shift(array_reverse(explode('\\', $rule)));
+        foreach ($this->_rules as $key => $rl) {
+            $find = array_shift(array_reverse(explode('\\', $key)));
+            if ($srch == $find) return $rl;
+        }
+        throw new \BadMethodCallException(sprintf('This pattern does not contain a "%s" rule.', $rule));
+    
+    }
+    
+    /**
+     * @todo This should print the recurrence rule in iCalendar format
+     */
     public function __toString() {
     
         
@@ -157,6 +202,7 @@ abstract class Pattern implements \Countable, \Iterator {
     /**
      * This class implements Countable and therefor must ahve this method
      * @todo Implement this for real
+     * @todo If this pattern goes on infinitely in either direction, return -1
      */
     public function count() {
     
@@ -164,6 +210,15 @@ abstract class Pattern implements \Countable, \Iterator {
     
     }
     
+    public function seek($position) {
+    
+        
+    
+    }
+    
+    /**
+     * Rewind the iterator to the beginning and initialize it
+     */
     public function rewind() {
     
         
@@ -176,6 +231,11 @@ abstract class Pattern implements \Countable, \Iterator {
     
     }
     
+    /**
+     * Advance the internal pointer to the next recurrence
+     * @note delegates to each individual pattern type
+     * @return void
+     */
     public function next() {
     
         
@@ -193,5 +253,11 @@ abstract class Pattern implements \Countable, \Iterator {
         
     
     }
+    
+    /**
+     * @todo Return recurrences from DTSTART to UNTIL/COUNT or $start to $end
+     * Throw exception if recurrences are infinite and there is no $start and $end
+     */
+    /*abstract*/ public function getRecurrences() {}
 
 }

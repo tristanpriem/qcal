@@ -1,6 +1,5 @@
 <?php
 
-use qCal\Recurrence\Pattern\BySecond;
 use qCal\DateTime\DateTime;
 use qCal\Recurrence\Secondly;
 use qCal\Recurrence\Monthly; /*,
@@ -10,6 +9,15 @@ use qCal\Recurrence\Monthly; /*,
     qCal\Recurrence\Weekly,
     qCal\Recurrence\Monthly,
     qCal\Recurrence\Yearly;*/
+use qCal\Recurrence\Pattern\ByDay,
+    qCal\Recurrence\Pattern\ByHour,
+    qCal\Recurrence\Pattern\ByMinute,
+    qCal\Recurrence\Pattern\ByMonth,
+    qCal\Recurrence\Pattern\ByMonthDay,
+    qCal\Recurrence\Pattern\BySecond,
+    qCal\Recurrence\Pattern\BySetPos,
+    qCal\Recurrence\Pattern\ByWeekNo,
+    qCal\Recurrence\Pattern\ByYearDay;
 
 class UnitTestCase_Recurrence_Pattern extends UnitTestCase {
 
@@ -153,13 +161,58 @@ class UnitTestCase_Recurrence_Pattern extends UnitTestCase {
     
     }
     
-    public function testAddRules() {
+    public function testAddRulesGetRules() {
     
         $secondly = new Secondly(100);
-        $secondly->addRule(new BySecond(30));
+        $bs = new BySecond(30);
+        $bm = new ByMonth(array(1, 2, 3));
+        $secondly->addRule($bs)
+                 ->addRule($bm);
+        $this->assertEqual($secondly->getRules(), array('qCal\Recurrence\Pattern\BySecond' => $bs, 'qCal\Recurrence\Pattern\ByMonth' => $bm));
     
     }
-
+    
+    public function testHasRule() {
+    
+        $sec = new Secondly(30);
+        $sec->addRule(new ByMinute(2));
+        $this->assertTrue($sec->hasRule('ByMinute')); // shortcut for convenience
+        $this->assertTrue($sec->hasRule('qCal\Recurrence\Pattern\ByMinute'));
+        $this->assertFalse($sec->hasRule('ByHour'));
+        $this->assertFalse($sec->hasRule('qCal\Recurrence\Pattern\ByHour'));
+    
+    }
+    
+    public function testGetRule() {
+    
+        $sec = new Secondly(30);
+        $bm = new ByMinute(2);
+        $sec->addRule($bm);
+        $this->assertEqual($sec->getRule('ByMinute'), $bm); // shortcut for convenience
+        $this->assertEqual($sec->getRule('qCal\Recurrence\Pattern\ByMinute'), $bm);
+    
+    }
+    
+    public function testGetRuleThrowsExceptionIfRuleDoesntExist() {
+    
+        $sec = new Secondly(30);
+        $bm = new ByMinute(2);
+        $sec->addRule($bm);
+        $this->expectException(new BadMethodCallException('This pattern does not contain a "ByHour" rule.'));
+        $sec->getRule('ByHour');
+    
+    }
+    
+    public function testGetRuleThrowsExceptionIfFullRuleDoesntExist() {
+    
+        $sec = new Secondly(30);
+        $bm = new ByMinute(2);
+        $sec->addRule($bm);
+        $this->expectException(new BadMethodCallException('This pattern does not contain a "qCal\Recurrence\Pattern\ByHour" rule.'));
+        $sec->getRule('qCal\Recurrence\Pattern\ByHour');
+    
+    }
+    
     /*
     If multiple BYxxx rule parts are specified, then after evaluating the
     specified FREQ and INTERVAL rule parts, the BYxxx rule parts are
@@ -187,5 +240,6 @@ class UnitTestCase_Recurrence_Pattern extends UnitTestCase {
     missing, the appropriate minute, hour, day or month would have been
     retrieved from the "DTSTART" property.
     */
+    
 
 }

@@ -12,9 +12,38 @@
  * @version     $Id$
  */
 namespace qCal\Recurrence\Pattern;
+use qCal\Humanize,
+    qCal\DateTime\Date;
 
 class ByWeekNo extends Rule {
 
+    protected function _validateValue($value) {
     
+        $int = (integer) $value;
+        if (($int > 0 && $int <= 53) || ($int < 0 && $int >= -53)) {
+            return true;
+        }
+        throw new \InvalidArgumentException(sprintf('"%s" is not a valid week number.', $value));
+    
+    }
+    
+    /**
+     * @todo Make sure this can be passed the correct day to start the week
+     */
+    public function checkDate(Date $date) {
+    
+        foreach ($this->getValues() as $value) {
+            $int = (integer) $value;
+            if (abs($int) !== $int) {
+                // negative
+                if ($date->getWeeksUntilEndOfYear() == abs($value)) return true;
+            } else {
+                // positive
+                if ($date->getWeekOfYear() == $value) return true;
+            }
+        }
+        return false;
+    
+    }
 
 }
