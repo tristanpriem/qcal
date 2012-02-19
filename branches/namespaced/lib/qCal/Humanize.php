@@ -176,6 +176,23 @@ class Humanize {
     }
     
     /**
+     * Converts a number and week day to an array. So if passed in something like
+     * 1SU, it will return array('num' => 1, 'weekday' => 'SU').
+     */
+    static public function weekDayNumAndAbbrToArray($numAndAbbr) {
+    
+        $pattern = '~([+-]?[0-9]{1,2})?([A-Z]{2})~i';
+        if (preg_match($pattern, $numAndAbbr, $matches)) {
+            return array(
+                'num' => $matches[1],
+                'weekday' => $matches[2],
+            );
+        }
+        // @todo throw exception
+    
+    }
+    
+    /**
      * Converts 1 to 1st, 2 to 2nd, etc.
      * I got both the idea and the logic of this from django.
      * 

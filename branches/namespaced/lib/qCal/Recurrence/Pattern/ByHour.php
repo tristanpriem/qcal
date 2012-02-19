@@ -12,9 +12,18 @@
  * @version     $Id$
  */
 namespace qCal\Recurrence\Pattern;
+use qCal\DateTime\Time;
 
 class ByHour extends Rule {
 
+    protected function _validateValue($value) {
     
+        if ((integer) $value > 24 || (integer) $value < 0) {
+            // @todo maybe throw OutOfBoundsException here instead?
+            throw new \InvalidArgumentException(sprintf('"%d" is not a valid hour.', $value));
+        }
+        return true;
+    
+    }
 
 }

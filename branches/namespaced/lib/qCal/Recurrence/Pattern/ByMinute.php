@@ -12,9 +12,21 @@
  * @version     $Id$
  */
 namespace qCal\Recurrence\Pattern;
+use qCal\DateTime\Time;
 
 class ByMinute extends Rule {
 
+    protected function _validateValue($value) {
     
+        $int = (integer) $value;
+        $str = (string) $value;
+        if ($str === (string) $int) {
+            if ($int >= 0 && $int < 60) {
+                return true;
+            }
+        }
+        throw new \InvalidArgumentException(sprintf('"%s" is not a valid minute.', $value));
+    
+    }
 
 }

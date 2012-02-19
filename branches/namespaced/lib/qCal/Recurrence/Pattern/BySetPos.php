@@ -17,6 +17,15 @@ namespace qCal\Recurrence\Pattern;
 
 class BySetPos extends Rule {
 
+    protected function _validateValue($value) {
     
+        $int = (integer) $value;
+        $str = (string) $value;
+        if ($str === (string) $int) {
+            return true;
+        }
+        throw new \InvalidArgumentException(sprintf('"%s" is not a valid set position.', $value));
+    
+    }
 
 }
